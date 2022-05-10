@@ -12,6 +12,9 @@ asdf
 
 <script>
 
+        fetch('http://localhost:18000/getMemberList')
+        .then(res => res.text())
+        .then(res => console.log(res))
 
 </script>
 
