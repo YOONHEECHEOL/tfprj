@@ -1,0 +1,33 @@
+html, body {
+    font-size: 10px !important;
+}
+
+/* common */
+.p-ab {
+    position: relative;
+    overflow: hidden;
+}
+
+/* header */
+.logo > img {
+    width: 24vw;
+}
+
+.header {
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.header__menu {
+    position: fixed;
+    top: 5vh;
+    left: 5vw;
+}
