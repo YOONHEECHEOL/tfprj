@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class StockController {
+public class AdmStockController {
     @RequestMapping("/adm/stockManage")
     public String admStockManage(){
         return "admin/stock/stock_manage";

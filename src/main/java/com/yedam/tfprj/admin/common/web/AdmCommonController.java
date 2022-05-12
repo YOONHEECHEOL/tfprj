@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class CommonController {
+public class AdmCommonController {
 
     @RequestMapping("/adm/index")
     public String admIndex() {
