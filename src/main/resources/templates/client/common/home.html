@@ -2,16 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/cli_layout">
-<head>
-  <meta charset="UTF-8">
-  <title>Insert title here</title>
-</head>
-<body>-----   gg----
+
 <th:block layout:fragment="content">
-  <!-- Begin Page Content -->
-  <div class="container-fluid">
-    <h1>레이아웃을 사용해 페이지 구성하기!</h1>
+
+  <div class="cover--black vh100">
+    <img th:src="@{/images/cli/main_bg.jpg}" class="vh100" alt="">
   </div>
+
+
 </th:block>
-</body>
+
 </html>

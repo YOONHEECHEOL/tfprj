@@ -3,19 +3,31 @@
 
 <th:block th:fragment="topbarFragment">
 
-    <!-- Topbar -->
-    <header class="header">
+  <!-- header -->
+  <header class="header">
 
-        <div class="row justify-content-center align-content-center align-items-center">
+    <div class="row w100 justify-content-between align-items-center">
 
-            <div class="col-12">
-                <img th:src="@{/images/cli/menu.svg}" class="header__menu" alt="">
-                <a href="/" class="logo"><img th:src="@{/images/cli/c_logo.svg}" alt=""></a>
-            </div>
+      <div class="col-auto">
+<!--        <a href="/" class="logo"><img th:src="@{/images/cli/c_logo.svg}" alt=""></a>-->
+      </div>
+      <div class="col-auto" >
+        <img th:src="@{/images/cli/menu.svg}" id="cli-slider-menu" class="header__menu" alt="">
+      </div>
 
-        </div>
+    </div>
 
-    </header>
+  </header>
+
+  <!-- slider menu -->
+  <nav class="nav" id="cli-slider-nav">
+    <ul>
+      <li>
+        <a href="">마이페이지</a>
+
+      </li>
+    </ul>
+  </nav>
 
 </th:block>
 </html>
