@@ -18,11 +18,12 @@
     <!-- 상단바-->
     <th:block th:replace="/layout/cli_fragments/top :: topbarFragment"></th:block>
 
-    <!--    <main class="contents">-->
+    <div th:if="${#request.getRequestURI()} != '/'"  class="main-margin" />
 
-    <!--    </main>-->
     <!-- 본문-->
-    <th:block layout:fragment="content"></th:block>
+    <main class="contents">
+      <th:block layout:fragment="content"></th:block>
+    </main>
 
 
     <!-- 공통 하단-->

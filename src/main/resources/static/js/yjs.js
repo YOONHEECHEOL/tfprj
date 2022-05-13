@@ -12,9 +12,9 @@
 
 let cliSliderMenu = document.querySelector('#cli-slider-menu')
 let cliSliderNav = document.querySelector('#cli-slider-nav')
-console.log(cliSliderNav)
-
+let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
 
 cliSliderMenu.addEventListener('click', () => {
   cliSliderNav.classList.toggle('active')
+  cliSliderNavBg.classList.toggle('active')
 })

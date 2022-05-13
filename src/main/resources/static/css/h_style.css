@@ -59,22 +59,29 @@ html, body {
     justify-content: center;
     align-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 9998;
+}
+.header-black {
+    background-color: #111;
 }
 .header__menu {
 }
 
-.contents {
+
+/* contents */
+.main-margin {
     margin-top: 8vh;
 }
-
+main.contents {
+    min-height: calc(100vh - 8vh);
+}
 
 /* nav */
 .nav {
     width: 80%;
     height: 100vh;
     background-color: #fff;
-    z-index: 9998;
+    z-index: 9999;
     position: fixed;
     top: 0;
     left: -100vw;
@@ -82,11 +89,21 @@ html, body {
 }
 .nav.active {
     width: 80%;
-    height: 100vh;
-    background-color: #fff;
-    z-index: 9998;
+    left: 0;
+}
+.csn-bg {
     position: fixed;
     top: 0;
+    left: -100vw;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.6);
+    z-index: 9997;
+    opacity: 0;
+    transition: opacity .5s;
+}
+.csn-bg.active {
+    opacity: 1;
     left: 0;
 }
 

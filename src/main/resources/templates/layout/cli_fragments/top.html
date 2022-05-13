@@ -4,7 +4,8 @@
 <th:block th:fragment="topbarFragment">
 
   <!-- header -->
-  <header class="header">
+<!--  <header th:unless="${#request.getRequestURI()} != '/'" class="header">-->
+  <header th:attr="class=${(#request.getRequestURI() == '/') ? 'header' : 'header header-black'}" >
 
     <div class="row w100 justify-content-between align-items-center">
 
@@ -28,6 +29,7 @@
       </li>
     </ul>
   </nav>
+  <div class="csn-bg" id="cli-slider-nav-bg"></div>
 
 </th:block>
 </html>
