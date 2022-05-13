@@ -3,16 +3,19 @@ package com.yedam.tfprj.client.league.web;
 import com.yedam.tfprj.client.league.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CliLeagueController {
 
     @Autowired
-    LeagueService leagueServiceImpl2;
+    LeagueService leagueServiceImpl;
 
     @RequestMapping("/cli/league")
-    public String league() {
+    public String league(Model model) {
+        model.addAttribute("currentLeagueList", leagueServiceImpl.getLeagueList().getCurrentList());
+        model.addAttribute("passedLeagueList", leagueServiceImpl.getLeagueList().getPassedList());
         return "client/league/league";
     }
 
