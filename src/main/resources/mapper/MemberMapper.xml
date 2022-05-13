@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.client.common.mapper.MemberMapper">
+
+    <insert id="insertClient"
+            parameterType="com.yedam.tfprj.client.common.mapper.MemberVO">
+
+        INSERT INTO MEMBER
+        (member_id, password, member_name, tel)
+        VALUES
+        (#{member_id}, #{password}, #{member_name}, #{tel})
+    </insert>
+
+
+
+</mapper>
