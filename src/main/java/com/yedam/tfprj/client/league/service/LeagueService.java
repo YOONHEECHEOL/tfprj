@@ -4,9 +4,11 @@ import com.yedam.tfprj.client.league.mapper.LeagueMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 public interface LeagueService {
 
-    public String sayHi();
+    public LeagueCurrentPassedVO getLeagueList();
 
 }
