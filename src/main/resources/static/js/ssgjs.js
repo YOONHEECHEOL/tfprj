@@ -21,3 +21,11 @@ $(function() {
         }
     });
 });
+//client 예약 목록 전체 조회
+ function reservationList(){
+     $.ajax({
+         url : '/reservationList'
+     }).done(function (data){
+                 console.log(data);
+     })
+ }
