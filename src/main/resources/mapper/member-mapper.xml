@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.tfprj.client.member.mapper.MemberMapper">
-
+    <!--회원가입-->
     <insert id="insertClient"
             parameterType="com.yedam.tfprj.client.member.service.MemberVO">
 
@@ -10,7 +10,7 @@
             (member_id, password, member_name, tel)
         VALUES (#{memberId}, #{password}, #{memberName}, #{tel})
     </insert>
-
+    <!--로그인처리-->
     <select id="selectMember"
             parameterType="com.yedam.tfprj.client.member.service.MemberVO"
             resultType="com.yedam.tfprj.client.member.service.MemberVO">
@@ -19,6 +19,12 @@
         WHERE MEMBER_ID = #{memberId}
           AND PASSWORD = #{password}
     </select>
-
+    <!--멤버 단건조회-->
+    <select id="findOne" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
+    resultType="com.yedam.tfprj.client.member.service.MemberVO">
+        SELECT*
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 
 </mapper>

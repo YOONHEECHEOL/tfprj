@@ -1,24 +1,43 @@
 package com.yedam.tfprj.client.member.web;
 
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
+import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.reservation.mapper.ReservationMapper;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class CliMemberController {
     @Autowired
     MemberMapper memberMapper;
+    @Autowired
     ReservationMapper reservationMapper;
-    Reservation rsv;
+
 
     @RequestMapping("/cli/myInfo")
-    public String cliMyInfo(){
+    public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        vo.setMemberId((String)(session.getAttribute("memberId")));
+        model.addAttribute("member", memberMapper.findOne(vo));
         return "client/member/my_info";
+    }
+    @RequestMapping("/cli/myInfoUpdateForm")
+    public String cliMyInfoUpdateForm(String memberId, HttpServletRequest request, Model model){
+        String id = request.getParameter(memberId);
+        model.addAttribute("memberid",id);
+
+        return "client/member/my_info_update_form";
+    }
+    @RequestMapping("/cli/myInfoUpdate")
+    public String cliMyInfoUpdate(){
+
+        return "redirect:my_info_update_form";
     }
 
     @RequestMapping("/cli/myScore")
@@ -36,14 +55,15 @@ public class CliMemberController {
         return "client/member/my_message";
     }
 
-    @RequestMapping("/cli/myReservation/{memberId}")
-    public String cliMyReservation(@PathVariable String memberId, Model model){
-        rsv.setMemberId("TEST");
+    @RequestMapping("/cli/myReservation/")
+    public String cliMyReservation(Reservation rsv , Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        rsv.setMemberId((String)(session.getAttribute("memberId")));
         model.addAttribute("rsList", reservationMapper.findMemberReservation(rsv));
         return "client/member/my_reservation";
     }
 
-    @RequestMapping("cli/myReserVationDetail")
+    @RequestMapping("cli/myReservationDetail")
     public String cliMyReservationDetail(){
         return "client/member/my_reservation_detail";
     }

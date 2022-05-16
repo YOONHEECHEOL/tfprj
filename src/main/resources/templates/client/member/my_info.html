@@ -4,8 +4,38 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-
-
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h1>내 정보 조회</h1>
+        </div>
     </div>
-</th:block>>
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h3>나의 정보</h3>
+        </div>
+    </div>
+    <form th:id="myView" method="POST">
+    <div th:class="row">
+        <div th:class="col-auto">
+            <div th:each="member, i : ${member}">
+                <span th:text="${member.memberId}"></span><br>
+                <span th:text="${member.memberName}"></span><br>
+                <span th:text="${member.tel}"></span><br>
+                <span th:text="${member.grade}"></span><br>
+                <input th:type="button" th:attr="onclick=|memberUpdate('${member.memberId}')|" th:value="update">
+            </div>
+        </div>
+        <input th:type="hidden" th:id="memberId" th:name="memberId">
+    </div>
+
+    </form>
+    <script>
+        function memberUpdate(n){
+            myView.memberId.value = n;
+            myView.action = "/cli/myInfoUpdateForm";
+            myView.submit();
+        }
+    </script>
+</th:block>
+
 </html>
