@@ -6,4 +6,8 @@
         SELECT *
         FROM reservation
     </select>
+
+    <select id="findMemberReservation" parameterType="Reservation" resultType="Reservation">
+        SELECT*FROM RESERVATION WHERE MEMBER_ID=#{memberId}
+    </select>
 </mapper>

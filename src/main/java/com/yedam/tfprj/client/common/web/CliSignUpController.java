@@ -1,7 +1,8 @@
 package com.yedam.tfprj.client.common.web;
 
-import com.yedam.tfprj.client.common.mapper.MemberService;
-import com.yedam.tfprj.client.common.mapper.MemberVO;
+
+import com.yedam.tfprj.client.member.service.MemberService;
+import com.yedam.tfprj.client.member.service.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
