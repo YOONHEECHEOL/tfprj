@@ -7,8 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface ReservationMapper {
-    List<Reservation> findReservation();
-    int insertReservation(Reservation rsv);
-    int updateReservation(Reservation rsv);
-    int deleteReservation(Reservation rsv);
+    public List<Reservation> findReservation();
+    public int insertReservation(Reservation rsv);
+    public int updateReservation(Reservation rsv);
+    public int deleteReservation(Reservation rsv);
 }
