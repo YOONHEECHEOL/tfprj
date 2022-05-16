@@ -131,12 +131,8 @@ class convertCommonCode extends HTMLElement {
     // out.innerText = this.getAttribute('data');
 
     function convertCode(data) {
-      fetch('/convertCommonCode', {
-        method: 'post',
-        headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({
-          codeName: data
-        })
+      fetch('http://localhost:18000/convertCommonCode?code=' + data, {
+          method: 'get'
       })
         .then(res => res.text())
         .then(res => console.log(res))

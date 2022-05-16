@@ -11,7 +11,7 @@ public class ConvertCommonCodeServiceImpl implements ConvertCommonCodeService {
     ConvertCommonCodeMapper convertCommonCodeMapper;
 
     @Override
-    public String convertCode(CodeVO code) {
+    public CodeVO convertCode(String code) {
         return convertCommonCodeMapper.convertCode(code);
     }
 }

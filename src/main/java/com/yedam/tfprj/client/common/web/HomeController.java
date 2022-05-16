@@ -18,9 +18,9 @@ public class HomeController {
         return "client/common/home";
     }
 
-    @RequestMapping(value = "/convertCommonCode", method = RequestMethod.POST)
+    @RequestMapping(value = "/convertCommonCode", method = RequestMethod.GET)
     @ResponseBody
-    public String convertCommonCode(@RequestBody CodeVO code) {
+    public CodeVO convertCommonCode(@RequestParam(value = "code") String code) {
 
         return convertCommonCodeServiceImpl.convertCode(code);
     }

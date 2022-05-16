@@ -56,7 +56,8 @@ h3.h3 {
 .cover--black {
     position: relative;
     overflow: hidden;
-    width: 100%;
+    width: calc(100% + 4%);
+    margin-left: -2%;
 }
 .cover--black > img {
     position: absolute;

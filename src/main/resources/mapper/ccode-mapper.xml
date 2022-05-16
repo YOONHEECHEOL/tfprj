@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.tfprj.client.common.mapper.ConvertCommonCodeMapper">
-    <select id="convertCode" resultType="String" parameterType="com.yedam.tfprj.client.common.service.CodeVO">
---         select convertCode( #{code} ) from dual;
-        select code_value from common_code where code_name = #{codeName}
-    </select>
+<!--    <select id="convertCode" resultType="com.yedam.tfprj.client.common.service.CodeVO" parameterType="String">-->
+<!--&#45;&#45;         select convertCode( #{code} ) from dual;-->
+<!--        select * from common_code where code_name = '501'-->
+<!--    </select>-->
 </mapper>
