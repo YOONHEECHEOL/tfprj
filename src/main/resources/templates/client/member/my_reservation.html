@@ -4,6 +4,18 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
+<div th:each="mresv, i : ${rsList}">
+    <span th:text="${mresv.resId}"></span>
+    <span th:text="${mresv.memberId}"></span>
+    <span th:text="${mresv.startTime}"></span>
+    <span th:text="${mresv.endTime}"></span>
+    <span th:text="${mresv.room}"></span>
+    <span th:text="${mresv.status}"></span>
+    <span th:text="${mresv.gameId}"></span>
+    <span th:text="${mresv.resDate}"></span>
+    <span th:text="${mresv.tel}"></span>
+    <span th:text="${mresv.name}"></span>
 
+</div>
 </th:block>>
 </html>
