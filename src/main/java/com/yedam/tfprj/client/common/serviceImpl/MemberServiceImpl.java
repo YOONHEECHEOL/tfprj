@@ -12,8 +12,14 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     MemberMapper map;
 
-    @Override
+    @Override //회원가입
     public int insertClient(MemberVO vo) {
         return map.insertClient(vo);
+    }
+
+    @Override //로그인
+    public MemberVO selectMember(MemberVO vo) {
+        // 단일 리스트 또는 로그인
+        return map.selectMember(vo);
     }
 }
