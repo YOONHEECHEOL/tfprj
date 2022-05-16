@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../../../static/css/captcha.css">
+
+    <title>Login In</title>
 </head>
 <body>
 <div class="contain">
@@ -35,51 +36,15 @@
             </form>
 
 
-            <input type="text" id="capt" readonly="readonly">
-            <div id="refresh"><img src="refresh.png" width="50px" onclick="cap()"></div>
-
-            <input type="text" id="textinput">
-            <button onclick="validcap()">check</button>
         </div>
 
 
         <div>
-            <a href="">회원가입</a><br>
+            <a href="signup.html">회원가입</a><br>
         </div>
     </div>
 </div>
-<script>
-    function cap() {
-        var alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'
-            , 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'
-            , 'w', 'x', 'y', 'z'];
 
-        var a = alpha[Math.floor(Math.random() * 62)];
-        var b = alpha[Math.floor(Math.random() * 62)];
-        var c = alpha[Math.floor(Math.random() * 62)];
-        var d = alpha[Math.floor(Math.random() * 62)];
-        var e = alpha[Math.floor(Math.random() * 62)];
-        var f = alpha[Math.floor(Math.random() * 62)];
-
-        var sum = a + b + c + d + e + f;
-
-        document.getElementById("capt").value = sum;
-    }
-
-    function validcap() {
-        var string1 = document.getElementById('capt').value;
-        var string2 = document.getElementById('textinput').value;
-        if (string1 == string2) {
-            alert("두 문자가 일치합니다");
-            return true;
-        } else {
-            alert("똑바로 보고 해라");
-            return false;
-
-        }
-    }
-
-</script>
 
 <script type="text/javascript">
     function formCheck() {
