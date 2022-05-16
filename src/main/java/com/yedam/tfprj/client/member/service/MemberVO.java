@@ -1,4 +1,4 @@
-package com.yedam.tfprj.client.common.mapper;
+package com.yedam.tfprj.client.member.service;
 
 import lombok.Data;
 
