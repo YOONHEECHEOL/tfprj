@@ -74,6 +74,7 @@ class tH1 extends HTMLElement {
   }
 }
 
+// h2 custrom tag
 class tH2 extends HTMLElement {
   connectedCallback() {
     let tit = this.shadowRoot.querySelector('#tit');
@@ -98,7 +99,7 @@ class tH2 extends HTMLElement {
     style.innerText = `            
       h2.h2 {
           font-family: 'esM';
-          font-size: 3.2rem;
+          font-size: 2.8rem;
           font-weight: 500;
           position: relative;
           padding: 0.8rem 0 0;
@@ -124,7 +125,42 @@ class tH2 extends HTMLElement {
   }
 }
 
+class convertCommonCode extends HTMLElement {
+  connectedCallback() {
+    // let out = this.shadowRoot.querySelector('');
+    // out.innerText = this.getAttribute('data');
+
+    function convertCode(data) {
+      fetch('/convertCommonCode', {
+        method: 'post',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          codeName: data
+        })
+      })
+        .then(res => res.text())
+        .then(res => console.log(res))
+    }
+
+    console.log(this.getAttribute('data'))
+    convertCode(this.getAttribute('data').toString())
+
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({mode:'open'});
+
+    let span = document.createElement('span');
+    span.setAttribute('class', 'converted');
+
+    shadow.append(span);
+  }
+}
+
 customElements.define('t-h1',tH1)
 customElements.define('t-h2',tH2)
+customElements.define('convert-c-code',convertCommonCode)
 
 
