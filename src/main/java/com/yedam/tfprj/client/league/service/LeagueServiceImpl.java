@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,8 +48,16 @@ public class LeagueServiceImpl implements LeagueService{
     }
 
     public LocalDate toLocalDateInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String returnDate = dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+                .toLocalDate().format(formatter);
+
+        return LocalDate.parse(returnDate);
     }
+
+
 }
