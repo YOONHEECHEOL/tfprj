@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/cli_layout">
+<th:block layout:fragment="content">
+<table>
+    <tbody>
+    <tr th:each="resv , i : ${rList}">
+        <td th:text="${resv.resId}"></td>
+        <td th:text="${resv.memberId}"></td>
+        <td th:text="${resv.startTime}"></td>
+        <td th:text="${resv.endTime}"></td>
+        <td th:text="${resv.room}"></td>
+        <td th:text="${resv.status}"></td>
+        <td th:text="${resv.gameId}"></td>
+        <td th:text="${resv.resDate}"></td>
+        <td th:text="${resv.tel}"></td>
+        <td th:text="${resv.name}"></td>
+    </tr>
+    </tbody>
+</table>
+</th:block>>
+</html>
