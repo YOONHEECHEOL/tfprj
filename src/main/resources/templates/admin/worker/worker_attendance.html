@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-md-6 mb-4">
+                <span><h1>현재 근무자 조회</h1></span>
+                <span>
+            <table>
+                <tr>
+                    <th th:width="100">근무자명</th>
+                    <th th:width="100">출근시간</th>
+                    <th th:width="100">퇴근시간</th>
+                </tr>
+                <tr>
+                    <td th:width="100">홍길동</td>
+                    <td th:width="100">13:00</td>
+                    <td th:width="100">18:00</td>
+                </tr>
+                <tr>
+                    <td th:width="100"></td>
+                    <td th:width="100">실제시간</td>
+                    <td th:width="100"></td>
+                </tr>
+                <tr>
+                    <th th:width="100">총 지각횟수</th>
+                    <th th:width="100">주간지각</th>
+                    <th th:width="100">월간 지각</th>
+                    <th th:width="100">결근</th>
+                </tr>
+                <tr>
+                    <td th:width="100">5회</td>
+                    <td th:width="100">2회</td>
+                    <td th:width="100">4회</td>
+                    <td th:width="100">0회</td>
+                </tr>
+                <tr>
+                    <th th:width="100">근무 시작일</th>
+                    <th th:width="100">직책</th>
+                    <th th:width="300">지금까지 지급한 금액</th>
+                </tr>
+                <tr>
+                    <td th:width="400">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
+                    <td th:width="100">월/목 알바</td>
+                    <td th:width="100">컴마 붙여서 숫자 표현</td>
+                </tr>
+            </table>
+            </span>
+                <br><br>
+                <div>
+                <span>다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
+                    <div>기홍길</div>
+                </span>
+                    <br><br>
+                    <button>근무표 작성</button>
+                    <button>인사관리</button>
+                    <button>새로운 근무자 등록</button>
+                    <button>근태관리</button>
+                </div>
+                <hr>
+                <div>
+                    주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <th th:width="400">오늘날짜</th>
+                            <th th:width="400">오늘날짜</th>
+                            <th th:width="400">오늘날짜</th>
+                            <th th:width="400">오늘날짜</th>
+                            <th th:width="400">오늘날짜</th>
+                            <th th:width="400">오늘날짜</th>
+                            <th th:width="400">오늘날짜</th>
+                        </tr>
+                        <tr>
+                            <th th:width="100">1부 13:00 ~ 19:00</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                        </tr>
+                        <tr>
+                            <th th:width="100">2부 19:00 ~ 24:00</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
 </body>
 </html>

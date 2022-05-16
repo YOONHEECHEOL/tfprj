@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8 col-md-6 mb-4">
+                <span>현재 근무자</span>
+                <span style="float: right"><button>새로운 근무자 등록</button></span>
+                <span style="float: right"><button>엑셀 다운로드</button></span>
 
+                <div>
+                    <table>
+                        <hr>
+                        <tr>
+                            <th th:width="100">이름</th>
+                            <th th:width="300">근무 시작일</th>
+                            <th th:width="100">총 지각</th>
+                            <th th:width="100">총 결근</th>
+                            <th th:width="100">직책</th>
+                            <th th:width="200">지급 금액</th>
+                            <th th:width="100">상태</th>
+                            <th th:width="200">상세조회</th>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <br><br><br>
+                    <span>현재 근무자</span>
+                    <span style="float: right"><button>새로운 근무자 등록</button></span>
+
+                    <table>
+                        <hr>
+                        <tr>
+                            <th th:width="100">이름</th>
+                            <th th:width="300">근무 시작일</th>
+                            <th th:width="100">총 지각</th>
+                            <th th:width="100">총 결근</th>
+                            <th th:width="100">직책</th>
+                            <th th:width="200">지급 금액</th>
+                            <th th:width="100">상태</th>
+                            <th th:width="200">상세조회</th>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                        <tr>
+                            <td th:width="100">홍길동</td>
+                            <td th:width="300">2022/01/04 - (123일째)</td>
+                            <td th:width="100">5 회</td>
+                            <td th:width="100">0 회</td>
+                            <td th:width="100">월/목알바</td>
+                            <td th:width="200">4,320,000</td>
+                            <td th:width="100"><select><option>알바 중</option><option>퇴사</option></select></td>
+                            <td th:width="200"><button>조회</button></td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <div>페이징</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</th:block>
 </body>
 </html>
