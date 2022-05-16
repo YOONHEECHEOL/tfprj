@@ -1,3 +1,23 @@
+@font-face {
+    font-family: 'esM';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'esB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'esL';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 html, body {
     font-size: 10px !important;
 }
@@ -17,6 +37,42 @@ html, body {
 .vh100 {
     height: 100vh;
 }
+
+/* title */
+.t-blue {
+    background: #3765C7 !important;
+}
+h1.h1{font-family:esB;font-size:4rem;position:absolute;color:#3765c7;bottom:0;left:0;padding:2rem 0 0;margin:0;display:inline-block}.h1__box{position:relative;height:12rem}.h1__box>div>span{font-family:esB;position:absolute;bottom:-1.8rem;font-size:4.4rem;color:#fff}.h1__box>div{height:6rem;width:calc(100% + 4%);padding:0 2%;transform:translate(-2%,0);background:#eee}.h1__box>img{position:absolute;top:0;right:0}h2.h2{font-family:esM;font-size:3.2rem;position:relative;padding:1.4rem 0 0;margin:0;display:inline-block}.h2__box{padding:1.2rem 0 .8rem}h2.h2::before{content:'';display:block;position:absolute;top:0;left:0;width:100%;height:.4rem;background-color:#bbb}
+h3.h3 {
+    font-family: "esM";
+    font-size: 2rem;
+}
+
+.button {
+    border: 0;
+    background: #fff;
+    font-family: esM;
+    font-size: 2rem;
+    padding: 0 1.6rem;
+    margin: 0;
+    height: 4.6rem;
+    line-height: 4.6rem;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+}
+.button::after {
+    content: '';
+    width: 100%;
+    height: 4.6rem;
+    background: #222;
+    position: absolute;
+    right: -1rem;
+    bottom: -1rem;
+    z-index: 1;
+}
+
 
 /* 색상 cover */
 .cover--black {
@@ -74,6 +130,7 @@ html, body {
 }
 main.contents {
     min-height: calc(100vh - 8vh);
+    margin: 0 2%;
 }
 
 /* nav */
