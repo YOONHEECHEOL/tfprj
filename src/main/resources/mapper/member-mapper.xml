@@ -9,9 +9,16 @@
         INSERT INTO MEMBER
         (member_id, password, member_name, tel)
         VALUES
-        (#{member_id}, #{password}, #{member_name}, #{tel})
+        (#{memberId}, #{password}, #{memberName}, #{tel})
     </insert>
 
+    <select id="selectMember"
+            parameterType="com.yedam.tfprj.client.common.mapper.MemberVO"
+            resultType="com.yedam.tfprj.client.common.mapper.MemberVO">
+        SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
+            AND PASSWORD = #{password}
+        <!-- 로그인 기능 -->
+    </select>
 
 
 </mapper>

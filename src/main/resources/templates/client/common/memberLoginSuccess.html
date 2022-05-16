@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인성공</title>
+</head>
+<script th:inline="javascript">
+  alert([[${session.memberId}+'님 환영합니다.']]);
+  location.href = "/";
+</script>
+<body>
+</body>

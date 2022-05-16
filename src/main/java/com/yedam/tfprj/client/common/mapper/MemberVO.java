@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class MemberVO {
-    private String member_id;
-    private String member_name;
+    private String memberId;
+    private String memberName;
     private String tel;
     private int    grade;
     private String password;
-    private int    blacklist_yn;
-    private String blacklist_reason;
+    private int    blacklistYn;
+    private String blacklistReason;
     private String trophy;
     private String preferred;
-    private int    team_id;
+    private int    teamId;
 }
