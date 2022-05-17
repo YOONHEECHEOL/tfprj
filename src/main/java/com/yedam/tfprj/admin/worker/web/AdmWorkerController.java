@@ -1,10 +1,17 @@
 package com.yedam.tfprj.admin.worker.web;
 
+import com.yedam.tfprj.admin.worker.service.WorkerService;
+import com.yedam.tfprj.admin.worker.service.WorkerVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AdmWorkerController {
+    @Autowired
+    WorkerService workerServiceImpl;
     @RequestMapping("/adm/worker_attendance")
     public String admWorkerAttendance(){
         return "admin/worker/worker_attendance";
@@ -18,6 +25,12 @@ public class AdmWorkerController {
     @RequestMapping("/adm/worker_hrm_detail")
     public String admWorkerHrmDetail(){
         return "admin/worker/worker_hrm_detail";
+    }
+
+    @PostMapping("/adm/worker_hrm_detail_write")
+    public String admWorkerHrmWrite(WorkerVO vo){
+        System.out.println(vo);
+        return "admin/worker/worker_hrm";
     }
 
     @RequestMapping("/adm/workerManage")

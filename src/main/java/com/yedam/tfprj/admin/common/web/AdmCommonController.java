@@ -1,6 +1,6 @@
 package com.yedam.tfprj.admin.common.web;
 
-import com.yedam.tfprj.admin.worker.mapper.WorkerVO;
+import com.yedam.tfprj.admin.worker.service.WorkerVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
