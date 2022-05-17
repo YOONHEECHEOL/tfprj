@@ -2,8 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.tfprj.admin.worker.mapper.WorkerMapper">
-    <select id="getList" resultType="WorkerVO">
-        SELECT *
-        FROM staff_information
+    <select id="getWorkerList" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
+        select worker_id,
+               staff_status_cd,
+               worker_name,
+               profile_pic,
+               phone_no,
+               birth,
+               military_cd,
+               address,
+               memo,
+               startday,
+               position_cd,
+               late,
+               absence,
+               usertype,
+               to_char(going_time, 'HH24:mi'),
+               to_char(quitting_time, 'hh24:mi')
+        from staff_information
+        WHERE staff_Status_Cd = 0
     </select>
+
+    <select id="getWorkerListStaffCd1" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
+        select worker_id,
+               staff_status_cd,
+               worker_name,
+               profile_pic,
+               phone_no,
+               birth,
+               military_cd,
+               address,
+               memo,
+               startday,
+               position_cd,
+               late,
+               absence,
+               usertype,
+               to_char(going_time, 'HH24:mi'),
+               to_char(quitting_time, 'hh24:mi')
+        from staff_information
+        WHERE staff_Status_Cd = 1
+    </select>
+
+
+    <update id="staffStatusCdUpdate">
+        UPDATE staff_information SET staff_status_cd = #{staffStatusCd}
+        WHERE worker_id = #{workerId}
+    </update>
 </mapper>
