@@ -4,7 +4,47 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h1>내 정보 수정</h1>
+        </div>
+    </div>
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h3>나의 정보</h3>
+        </div>
+    </div>
+    <form th:id="updateView" action="/cli/myInfoUpdate" method="POST">
+        <div th:class="row">
+            <div th:class="col-auto">
+                <div th:each="member, i : ${member}">
+                    <table>
+                        <tr>
+                            <th>아이디</th>
+                            <td><input th:type="text" th:name="memberId" th:value="${member.memberId}" readonly></td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td><input th:type="password" th:name="memberName" th:value="${member.password}"></td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td><input th:type="text" th:name="password" th:value="${member.memberName}" readonly></td>
+                        </tr>
+                        <tr>
+                            <th>전화번호</th>
+                            <td><input th:type="text" th:name="tel" th:value="${member.tel}"></td>
+                        </tr>
+                        <tr>
+                            <th>회원등급</th>
+                            <td><input th:type="text" th:name="grade" th:value="${member.grade}" readonly></td>
+                        </tr>
+                    </table>
+                    <button type="submit">변경사항저장</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </th:block>
 
 </html>

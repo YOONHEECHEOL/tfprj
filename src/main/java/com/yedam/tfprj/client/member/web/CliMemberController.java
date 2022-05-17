@@ -28,16 +28,17 @@ public class CliMemberController {
         return "client/member/my_info";
     }
     @RequestMapping("/cli/myInfoUpdateForm")
-    public String cliMyInfoUpdateForm(String memberId, HttpServletRequest request, Model model){
-        String id = request.getParameter(memberId);
-        model.addAttribute("memberid",id);
-
+    public String cliMyInfoUpdateForm(MemberVO vo, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        vo.setMemberId((String)(session.getAttribute("memberId")));
+        model.addAttribute("member", memberMapper.findOne(vo));
         return "client/member/my_info_update_form";
     }
     @RequestMapping("/cli/myInfoUpdate")
-    public String cliMyInfoUpdate(){
-
-        return "redirect:my_info_update_form";
+    public String cliMyInfoUpdate(MemberVO vo,  Model model, HttpServletRequest request){
+        vo.setPassword(request.getParameter("password"));
+        vo.setTel(request.getParameter("tel"));
+        return "client/member/my_info_update_form";
     }
 
     @RequestMapping("/cli/myScore")
