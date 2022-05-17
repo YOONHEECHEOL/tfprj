@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/cli_layout}">
+
+<th:block layout:fragment="content">
     <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+
     <style>
         * {
             padding: 0;
@@ -170,58 +171,61 @@
 
         }
     </style>
-</head>
-<body>
-<div class="page-container">
-    <div class="login-form-container shadow">
-        <div class="login-form-right-side">
-            <div class="top-logo-wrap">
 
-            </div>
-            <h1>마 로그인해라</h1>
-            <p>응~ 어쩔티비~저쩔티비~안물티비~안궁티비~뇌절티비~우짤래미~저짤래미~쿠쿠루삥뽕 지금 화났죠? 개킹받죠 그냥 화났죠?
-                냬~ 알걨섑니댸~ 아무도 안물 안궁~ 물어본 사람? 궁금한 사람? 응 근데 어쩔티비죠? 약올리죠? 응~ 어쩔 저쩔 안물 안궁</p>
-        </div>
-        <div class="login-form-left-side">
-            <div class="login-top-wrap">
-                <span>아이디없뉘?</span>
-                <button class="create-account-btn shadow-light" onclick="location.href = '/SignUp'">회원가입</button>
-            </div>
-            <form id="frm" name="frm" action="/cli/login" method="post">
-                <div class="login-input-container">
-                    <div class="login-input-wrap input-id">
-                        <i class="far fa-envelope"></i>
-                        <input placeholder="아이디" type="text" name="memberId">
-                    </div>
-                    <div class="login-input-wrap input-password">
-                        <i class="fas fa-key"></i>
-                        <input placeholder="패스워드" type="password" name="password">
-                    </div>
+
+    <div class="page-container">
+        <div class="login-form-container shadow">
+            <div class="login-form-right-side">
+                <div class="top-logo-wrap">
+
                 </div>
-                <div class="login-btn-wrap">
-                    <input type="button" onclick="formCheck()"
-                           class="login-btn" value="로그인">
-                    <a href="#">Forgot password?</a>
+                <h1>마 로그인해라</h1>
+                <p>응~ 어쩔티비~저쩔티비~안물티비~안궁티비~뇌절티비~우짤래미~저짤래미~쿠쿠루삥뽕 지금 화났죠? 개킹받죠 그냥 화났죠?
+                    냬~ 알걨섑니댸~ 아무도 안물 안궁~ 물어본 사람? 궁금한 사람? 응 근데 어쩔티비죠? 약올리죠? 응~ 어쩔 저쩔 안물 안궁</p>
+            </div>
+            <div class="login-form-left-side">
+                <div class="login-top-wrap">
+                    <span>아이디없뉘?</span>
+                    <button class="create-account-btn shadow-light" onclick="location.href = '/SignUp'">회원가입</button>
                 </div>
-            </form>
+                <form id="frm" name="frm" action="/cli/login" method="post">
+                    <div class="login-input-container">
+                        <div class="login-input-wrap input-id">
+                            <i class="far fa-envelope"></i>
+                            <input placeholder="아이디" type="text" name="memberId">
+                        </div>
+                        <div class="login-input-wrap input-password">
+                            <i class="fas fa-key"></i>
+                            <input placeholder="패스워드" type="password" name="password">
+                        </div>
+                    </div>
+                    <div class="login-btn-wrap">
+                        <input type="button" onclick="formCheck()"
+                               class="login-btn" value="로그인">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
-<script type="text/javascript">
-    function formCheck() {
-        if (frm.memberId.value == "") {
-            alert("아이디를 입력하세요.");
-            frm.memberId.focus();
-            return false;
-        }
 
-        if (frm.password.value == "") {
-            alert("패스워드를 입력하세요.");
-            frm.memberPassword.focus();
-            return false;
+    <script type="text/javascript">
+        function formCheck() {
+            if (frm.memberId.value == "") {
+                alert("아이디를 입력하세요.");
+                frm.memberId.focus();
+                return false;
+            }
+
+            if (frm.password.value == "") {
+                alert("패스워드를 입력하세요.");
+                frm.memberPassword.focus();
+                return false;
+            }
+            frm.submit();
         }
-        frm.submit();
-    }
-</script>
+    </script>
+
+</th:block>
+
+</html>

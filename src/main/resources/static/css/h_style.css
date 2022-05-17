@@ -216,7 +216,14 @@ main.contents {
     border-radius: 1.6rem;
 }
 .c-button.active {
+    background: #3765C7;
+    color: #fff;
+    border: 1px solid #3765C7;
+}
+.c-button.disabled {
     background: #bbb;
+    color: #999;
+    border: 1px solid #999;
 }
 
 /* table */

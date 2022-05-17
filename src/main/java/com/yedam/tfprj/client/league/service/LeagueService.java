@@ -13,6 +13,6 @@ public interface LeagueService {
     public LeagueCurrentPassedVO getLeagueList();
 
     // league detail
-    public LeagueVO getLeagueDetail(int lno);
+    public LeagueVO getLeagueDetail(int lno, String memberId);
 
 }

@@ -8,14 +8,13 @@
     <t-h1 en="LEAGUE" ko="리그"></t-h1>
 
 
-    <t-h2 ko="리그게시판"></t-h2>
+    <t-h2 th:ko="${l.leagueName}"></t-h2>
 
     <table class="table">
         <tbody>
             <tr>
                 <td>
-                    <span th:text="${l.leagueId}"></span>
-                    <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                    <span th:text="${l.leagueId}"></span><br>
                     <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code><br>
                     <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
                     <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
@@ -25,13 +24,20 @@
             </tr>
             <tr>
                 <td>
+                    <!-- 세션을 통해 팀 조회, 없으면 팀생성 버튼 -->
+                    <h3>팀조회</h3>
+
+                    <!-- 팀이 있으면 팀원 option 생성 후 select 에 append -->
+                    <h3>팀원 선택</h3>
 
                 </td>
             </tr>
         </tbody>
     </table>
 
-
+    <div class="button__box">
+        <button class="c-button">신청하기</button>
+    </div>
 
 </th:block>
 

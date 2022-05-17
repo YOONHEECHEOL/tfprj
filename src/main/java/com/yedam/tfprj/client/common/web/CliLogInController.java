@@ -6,7 +6,7 @@ import com.yedam.tfprj.client.member.service.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,34 +16,21 @@ import javax.servlet.http.HttpSession;
 public class CliLogInController {
 
     @Autowired
-    MemberService memberService;
+    MemberService memberServiceImpl;
 
 
     @RequestMapping("/cli/login")
-    public String login(Model model, HttpServletRequest request, HttpServletResponse response, MemberVO vo) {
+    public String login(HttpServletRequest request, MemberVO vo) {
+
+        String viewPage;
 
         // 로그인 처리 과정
         HttpSession session = request.getSession();
 
-        vo = memberService.selectMember(vo);
+        vo = memberServiceImpl.selectMember(request, vo);
         /*model.addAttribute("member", vo);*/
-        String viewPage;
 
         if (vo != null) {
-
-            //여기서 세션 처리하고
-            session.setAttribute("memberId", vo.getMemberId());
-            session.setAttribute("member", vo);
-                    /*
-                    session.setAttribute("tel", vo.getTel());
-                    session.setAttribute("grade", vo.getGrade());
-                    session.setAttribute("member_password", vo.getPassword());
-                    session.setAttribute("password", vo.getPassword());
-                    session.setAttribute("blacklist_yn", vo.getBlacklist_yn());
-                    session.setAttribute("blacklist_reason", vo.getBlacklist_reason());
-                    session.setAttribute("trophy", vo.getTrophy());
-                    session.setAttribute("preferred", vo.getPreferred());
-                    session.setAttribute("team_id", vo.getTeam_id());*/
             viewPage = "client/common/memberLoginSuccess";
         } else {
             viewPage = "client/common/memberLoginFail";
@@ -51,10 +38,42 @@ public class CliLogInController {
         return viewPage;
     }
 
+    @GetMapping("/cli/idCheck")
+    @ResponseBody
+    public String idCheck(HttpServletRequest request, String memberId) {
+
+        MemberVO memberVO = new MemberVO();
+        memberVO.setMemberId(memberId);
+
+        memberVO = memberServiceImpl.selectMember(request, memberVO);
+        if(memberVO != null) {
+            return "y";
+        } else
+            return "n";
+    }
+
+    // login page 이동
     @RequestMapping("/cli/loginview")
     public String loginview(Model model) {
         return "client/common/login";
     }
 
+
+    // 회원가입
+    @GetMapping("/cli/signUp")
+    public String SignUp(Model model , MemberVO vo){
+        return "client/common/signup";
+    }
+
+    // 회원가입 처리
+    @PostMapping("/cli/insertMember")
+    public String insert(MemberVO vo){
+        System.out.println("vo = " + vo.getMemberId());
+        System.out.println("vo = " + vo.getPassword());
+        System.out.println("vo = " + vo.getTel());
+
+        memberServiceImpl.insertMember(vo);
+        return "redirect:/cli/loginview";
+    }
 
 }

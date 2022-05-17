@@ -9,13 +9,12 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
     //멤버 전체 조회
-    public List<MemberVO> findAll();
-    //멤버 단건 조회
-    public MemberVO findOne(MemberVO vo);
+    public List<MemberVO> selectAll();
     
-    
-    //로그인
-    MemberVO selectMember(MemberVO vo); //로그인 0516
-    int insertClient(MemberVO vo);  //회원가입 0513
+    //로그인 + 단건 조회 (password 미 입력 시 단건조회)
+    MemberVO selectMember(MemberVO vo);
+
+    // 회원가입
+    int insertMember(MemberVO vo);
  
 }
