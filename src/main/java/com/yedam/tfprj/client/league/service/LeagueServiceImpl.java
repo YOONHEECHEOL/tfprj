@@ -47,6 +47,13 @@ public class LeagueServiceImpl implements LeagueService{
         return leagueCurrentPassed;
     }
 
+    @Override
+    public LeagueVO getLeagueDetail(int lno) {
+
+        return leagueMapper.getLeagueDetail(lno);
+    }
+
+    // localDate 크기 비교를 위한 변경
     public LocalDate toLocalDateInstant(Date dateToConvert) {
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

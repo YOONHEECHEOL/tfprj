@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/cli_layout}">
 
-</body>
+<th:block layout:fragment="content">
+
+    <t-h1 en="LEAGUE" ko="리그"></t-h1>
+
+
+    <t-h2 ko="리그게시판"></t-h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <span th:text="${l.leagueId}"></span>
+                    <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                    <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code><br>
+                    <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                    <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
+                    <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
+                    <span th:text="${l.winningTeam}">승리팀</span><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</th:block>
+
 </html>

@@ -6,4 +6,10 @@
         select *
         from league
     </select>
+
+    <select id="getLeagueDetail" resultType="com.yedam.tfprj.client.league.service.LeagueVO" parameterType="int">
+        select  *
+        from    league
+        where   league_id = #{lno}
+    </select>
 </mapper>

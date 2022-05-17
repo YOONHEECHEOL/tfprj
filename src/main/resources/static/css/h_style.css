@@ -19,6 +19,7 @@
 
 
 html, body {
+    font-family: 'Noto Sans kr';
     font-size: 10px !important;
 }
 
@@ -48,37 +49,15 @@ h3.h3 {
     font-size: 2rem;
 }
 
-.button {
-    border: 0;
-    background: #fff;
-    font-family: esM;
-    font-size: 2rem;
-    padding: 0 1.6rem;
-    margin: 0;
-    height: 4.6rem;
-    line-height: 4.6rem;
-    display: inline-block;
-    position: relative;
-    z-index: 2;
-    background: #fff;
-}
-.button::after {
-    content: '';
-    width: 100%;
-    height: 4.6rem;
-    background: #222;
-    position: absolute;
-    right: -1rem;
-    bottom: -1rem;
-    z-index: 1;
-}
+
 
 
 /* 색상 cover */
 .cover--black {
     position: relative;
     overflow: hidden;
-    width: 100%;
+    width: calc(100% + 4%);
+    margin-left: -2%;
 }
 .cover--black > img {
     position: absolute;
@@ -180,3 +159,64 @@ main.contents {
     margin: 0 0 3rem;
     background-color: #EE4136;
 }
+
+
+.button {
+    border: 0;
+    background: #fff;
+    font-family: esM;
+    font-size: 1.8rem;
+    text-align: center;
+    margin: 0;
+    width: calc(100% - 4.2rem);
+    height: 4.2rem;
+    line-height: 4.6rem;
+    background: #fff;
+    border: .5rem solid #222;
+    box-sizing: content-box;
+    transform: skewX(-15deg);
+}
+.button.button-primary {
+    box-shadow: 8px 8px 0px #6193FF;
+}
+.button.button-danger {
+    box-shadow: 8px 8px 0px #EE4136;
+}
+.button.button-success {
+    box-shadow: 8px 8px 0px #69E83C;
+}
+.button.button-common {
+    box-shadow: 8px 8px 0px #BBBBBB;
+}
+.button > span {
+    transform: skewX(15deg);
+}
+.button__box {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding: 0 3% 0 2%;
+    margin: 0.7rem 0 1.5rem;
+    column-gap: 1.4rem;
+}
+.c-button {
+    border: 0;
+    color: #222;
+    background: #fff;
+    font-size: 1.6rem;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 3.2rem;
+    line-height: 3rem;
+    position: relative;
+    background: #fff;
+    border: .1rem solid #bbb;
+    border-radius: 1.6rem;
+}
+.c-button.active {
+    background: #bbb;
+}
+
+/* table */

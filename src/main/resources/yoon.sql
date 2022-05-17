@@ -99,3 +99,29 @@ insert into notice_board
 values (2, 'test',sysdate, 1, 'hello world!');
 
 desc notice_board;
+
+select * from notice_board;
+select n_no from notice_board where n_no = 1;
+
+desc notice_board;
+
+drop table notice_board;
+
+create sequence n_seq
+    start with 1
+    increment by 1;
+insert into notice_board values (n_seq.nextVal, 'test', sysdate, 1, 'test test');
+commit;
+create table notice_board
+(
+    n_no number primary key,
+    title varchar(100),
+    wdate date,
+    views number,
+    details varchar(3000)
+);
+
+select * from tab;
+
+select * from common_code;
+select code_value_id from common_code;
