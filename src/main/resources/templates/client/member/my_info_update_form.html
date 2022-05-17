@@ -25,11 +25,11 @@
                         </tr>
                         <tr>
                             <th>이름</th>
-                            <td><input th:type="password" th:name="memberName" th:value="${member.password}"></td>
+                            <td><input th:type="text" th:name="memberName" th:value="${member.memberName}" readonly></td>
                         </tr>
                         <tr>
                             <th>비밀번호</th>
-                            <td><input th:type="text" th:name="password" th:value="${member.memberName}" readonly></td>
+                            <td><input th:type="password" th:name="password" th:value="${member.password}" ></td>
                         </tr>
                         <tr>
                             <th>전화번호</th>

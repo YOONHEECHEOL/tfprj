@@ -1,6 +1,7 @@
 package com.yedam.tfprj.client.member.web;
 
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
+import com.yedam.tfprj.client.member.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.reservation.mapper.ReservationMapper;
 import com.yedam.tfprj.client.reservation.service.Reservation;
@@ -19,63 +20,72 @@ public class CliMemberController {
     @Autowired
     ReservationMapper reservationMapper;
 
-
     @RequestMapping("/cli/myInfo")
-    public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request){
+    public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        vo.setMemberId((String)(session.getAttribute("memberId")));
-        model.addAttribute("member", memberMapper.findOne(vo));
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        model.addAttribute("member", memberMapper.selectMember(vo));
         return "client/member/my_info";
     }
+
     @RequestMapping("/cli/myInfoUpdateForm")
-    public String cliMyInfoUpdateForm(MemberVO vo, Model model, HttpServletRequest request){
+    public String cliMyInfoUpdateForm(MemberVO vo, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        vo.setMemberId((String)(session.getAttribute("memberId")));
-        model.addAttribute("member", memberMapper.findOne(vo));
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        model.addAttribute("member", memberMapper.selectMember(vo));
         return "client/member/my_info_update_form";
     }
+
     @RequestMapping("/cli/myInfoUpdate")
-    public String cliMyInfoUpdate(MemberVO vo,  Model model, HttpServletRequest request){
-        vo.setPassword(request.getParameter("password"));
-        vo.setTel(request.getParameter("tel"));
-        return "client/member/my_info_update_form";
+    public String cliMyInfoUpdate(MemberVO vo) {
+        vo.setPassword(vo.getPassword());
+        vo.setTel(vo.getTel());
+        memberMapper.updateMember(vo);
+        return "redirect:/cli/myInfoUpdateForm";
     }
 
     @RequestMapping("/cli/myScore")
-    public String cliMyScore(){
+    public String cliMyScore(Model model, MemberVO vo ,GameVO gvo, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String)session.getAttribute("memberId"));
+        model.addAttribute("score", memberMapper.selectGame(vo));
+
         return "client/member/my_score";
     }
 
     @RequestMapping("/cli/myLeague")
-    public String cliMyLeague(){
+    public String cliMyLeague() {
         return "client/member/my_league";
     }
 
     @RequestMapping("/cli/myMessage")
-    public String cliMyMessage(){
+    public String cliMyMessage() {
         return "client/member/my_message";
     }
 
     @RequestMapping("/cli/myReservation/")
-    public String cliMyReservation(Reservation rsv , Model model, HttpServletRequest request){
+    public String cliMyReservation(Reservation rsv, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        rsv.setMemberId((String)(session.getAttribute("memberId")));
+        rsv.setMemberId((String) (session.getAttribute("memberId")));
         model.addAttribute("rsList", reservationMapper.findMemberReservation(rsv));
         return "client/member/my_reservation";
     }
 
     @RequestMapping("cli/myReservationDetail")
-    public String cliMyReservationDetail(){
+    public String cliMyReservationDetail() {
         return "client/member/my_reservation_detail";
     }
 
     @RequestMapping("cli/myTrophy")
-    public String cliMyTrophy(){
+    public String cliMyTrophy() {
         return "client/member/my_trophy";
     }
 
     @RequestMapping("/cli/myTeam")
-    public String cliMyTeam(){
+    public String cliMyTeam(MemberVO vo, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        memberMapper.selectMember(vo);
         return "client/member/my_team";
     }
 }

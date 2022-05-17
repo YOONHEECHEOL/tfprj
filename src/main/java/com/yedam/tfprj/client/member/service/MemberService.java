@@ -12,4 +12,8 @@ public interface MemberService {
     MemberVO selectMember(HttpServletRequest request, MemberVO vo); // 로그인 0516
     int insertMember(MemberVO vo); // 회원가입 0513
 
+    int updateMember(MemberVO vo);
+
+    GameVO selectGame(MemberVO vo);
+
 }

@@ -22,8 +22,21 @@
     </select>
 
     <select id="selectAll" resultType="com.yedam.tfprj.client.member.service.MemberVO">
-        select  *
-        from    member
+        select *
+        from member
     </select>
 
+    <update id="updateMember" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
+        UPDATE MEMBER
+        SET PASSWORD = #{password},
+            TEL      = #{tel}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <select id="selectGame" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
+            resultType="com.yedam.tfprj.client.member.service.GameVO">
+        SELECT*
+        FROM GAME
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>
