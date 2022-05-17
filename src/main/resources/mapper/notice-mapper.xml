@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.admin.community.mapper.AdmNoticeMapper">
+
+
+    <!-- 전체조회  -->
+    <select id="AdmNoticeList" resultType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
+        SELECT n_no, title, wdate, views
+        FROM notice_board
+        ORDER BY n_no ASC
+    </select>
+
+
+</mapper>
