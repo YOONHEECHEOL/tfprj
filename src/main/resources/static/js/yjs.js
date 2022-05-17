@@ -125,17 +125,20 @@ class tH2 extends HTMLElement {
   }
 }
 
+// 공통 코드 뽑기
 class convertCommonCode extends HTMLElement {
   connectedCallback() {
-    // let out = this.shadowRoot.querySelector('');
-    // out.innerText = this.getAttribute('data');
+    let out = this.shadowRoot.querySelector('.converted');
 
     function convertCode(data) {
       fetch('http://localhost:18000/convertCommonCode?code=' + data, {
           method: 'get'
       })
-        .then(res => res.text())
-        .then(res => console.log(res))
+        .then(res => res.json())
+        .then(res => {
+          // 출력
+          out.innerText = res.codeValue;
+        })
     }
 
     console.log(this.getAttribute('data'))

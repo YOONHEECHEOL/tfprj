@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CliLeagueController {
@@ -19,6 +20,14 @@ public class CliLeagueController {
         return "client/league/league";
     }
 
+    @RequestMapping("/cli/leagueDetail")
+    public String leagueDetail(@RequestParam int lno, Model model) {
+
+        model.addAttribute("l", leagueServiceImpl.getLeagueDetail(lno));
+
+        return "client/league/league_detail";
+    }
+
     @RequestMapping("/cli/leagueApply")
     public String leagueApply() {
         return "client/league/league_apply";
@@ -27,11 +36,6 @@ public class CliLeagueController {
     @RequestMapping("/cli/leagueApplyDone")
     public String leagueApplyDone() {
         return "client/league/league_apply_done";
-    }
-
-    @RequestMapping("/cli/leagueDetail")
-    public String leagueDetail() {
-        return "client/league/league_detail";
     }
 
     @RequestMapping("/cli/leaguePay")
