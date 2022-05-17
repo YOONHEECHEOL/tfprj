@@ -15,14 +15,5 @@ public class CliSignUpController {
     @Autowired
     MemberService Service;
 
-    @GetMapping("/SignUp")
-    public String SignUp(Model model , MemberVO vo){
-        return "client/common/signup";
-    }
 
-    @PostMapping("/SignUp")
-    public String insert(Model model , MemberVO vo){
-        Service.insertClient(vo);
-        return "redirect:login";
-    }
 }
