@@ -3,13 +3,16 @@ package com.yedam.tfprj.client.league.service;
 import com.yedam.tfprj.client.league.mapper.LeagueMapper;
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import com.yedam.tfprj.client.member.service.MemberVO;
+import com.yedam.tfprj.client.team.service.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +27,10 @@ public class LeagueServiceImpl implements LeagueService{
     MemberMapper memberMapper;
 
     @Override
-    public LeagueCurrentPassedVO getLeagueList() {
+    public LeagueServiceVO getLeagueList() {
         LocalDate now = LocalDate.now();
         List<LeagueVO> leagueList = leagueMapper.getLeagueList();
-        LeagueCurrentPassedVO leagueCurrentPassed = new LeagueCurrentPassedVO();
+        LeagueServiceVO leagueCurrentPassed = new LeagueServiceVO();
 
         // 현재 진행 중인 리스트 목록
         List<LeagueVO> currentLeagueList = new ArrayList<>();
@@ -53,18 +56,35 @@ public class LeagueServiceImpl implements LeagueService{
     }
 
     @Override
-    public LeagueVO getLeagueDetail(int lno, String memberId) {
+    public LeagueServiceVO getLeagueDetail(int lno, String memberId) {
 
-        // session - memberId를 통해 팀 조회
-        MemberVO memberVO = new MemberVO();
-        memberVO.setMemberId(memberId);
-        memberVO = memberMapper.selectMember(memberVO);
+        LeagueServiceVO leagueServiceVO = new LeagueServiceVO();
 
-//        if(memberVO.getTeamId() != ) {
-//
-//        }
+        // 멤버 조회
+        leagueServiceVO.loginedMember.setMemberId(memberId);
+        leagueServiceVO.loginedMember = memberMapper.selectMember(leagueServiceVO.loginedMember);
 
-        return leagueMapper.getLeagueDetail(lno);
+        // 리그 조회
+        leagueServiceVO.leagueVO = leagueMapper.getLeagueDetail(lno);
+
+        // 팀 조회
+        final String uri = "http://localhost:18000/cli/getTeam?teamId=";
+
+        System.out.println("leagueServiceVO.loginedMember = " + leagueServiceVO.loginedMember);
+        
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<TeamVO> result = restTemplate.exchange(uri + leagueServiceVO.loginedMember.getTeamId(), HttpMethod.GET, null, TeamVO.class);
+
+        // team 입력
+        leagueServiceVO.teamVO = result.getBody();
+
+        System.out.println("result = " + result);
+
+        if(leagueServiceVO.loginedMember != null)
+            return leagueServiceVO;
+        else
+            return null;
+
     }
 
     // localDate 크기 비교를 위한 변경
