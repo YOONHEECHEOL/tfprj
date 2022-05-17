@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface LeagueService {
 
+    // league list 출력
     public LeagueCurrentPassedVO getLeagueList();
+
+    // league detail
+    public LeagueVO getLeagueDetail(int lno);
 
 }

@@ -74,6 +74,7 @@ class tH1 extends HTMLElement {
   }
 }
 
+// h2 custrom tag
 class tH2 extends HTMLElement {
   connectedCallback() {
     let tit = this.shadowRoot.querySelector('#tit');
@@ -98,7 +99,7 @@ class tH2 extends HTMLElement {
     style.innerText = `            
       h2.h2 {
           font-family: 'esM';
-          font-size: 3.2rem;
+          font-size: 2.8rem;
           font-weight: 500;
           position: relative;
           padding: 0.8rem 0 0;
@@ -124,7 +125,41 @@ class tH2 extends HTMLElement {
   }
 }
 
+// 공통 코드 뽑기
+class convertCommonCode extends HTMLElement {
+  connectedCallback() {
+    let out = this.shadowRoot.querySelector('.converted');
+
+    function convertCode(data) {
+      fetch('http://localhost:18000/convertCommonCode?code=' + data, {
+          method: 'get'
+      })
+        .then(res => res.json())
+        .then(res => {
+          // 출력
+          out.innerText = res.codeValue;
+        })
+    }
+
+    console.log(this.getAttribute('data'))
+    convertCode(this.getAttribute('data').toString())
+
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({mode:'open'});
+
+    let span = document.createElement('span');
+    span.setAttribute('class', 'converted');
+
+    shadow.append(span);
+  }
+}
+
 customElements.define('t-h1',tH1)
 customElements.define('t-h2',tH2)
+customElements.define('convert-c-code',convertCommonCode)
 
 
