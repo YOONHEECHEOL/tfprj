@@ -2,27 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/cli_layout">
-
 <th:block layout:fragment="content">
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-    <div th:each="scr, i : ${score}">
-        <span th:text="${scr.ground}"></span>
-        <span th:text="${scr.score}"></span>
-        <span th:text="${scr.distance}"></span>
-        <span th:text="${scr.hits}"></span>
-        <span th:text="${scr.homerun}"></span>
-        <span th:text="${scr.winLose}"></span>
-        <span th:text="${scr.batCounts}"></span>
-        <span th:text="${scr.innings}"></span>
-        <span th:text="${scr.difficultyCd}"></span>
-        <div id="piechart" style="width: 900px; height: 500px;">
-
-        </div>
-        <div id="chart_div">
-
+    <div th:if="${score eq null}">
+        <span>zzz</span>
+    </div>
+    <div th:unless="${score eq null}">
+        <div th:each="scr, i : ${score}">
+            <span th:text="${scr.ground}"></span>
+            <span th:text="${scr.score}"></span>
+            <span th:text="${scr.distance}"></span>
+            <span th:text="${scr.hits}"></span>
+            <span th:text="${scr.homerun}"></span>
+            <span th:text="${scr.winLose}"></span>
+            <span th:text="${scr.batCounts}"></span>
+            <span th:text="${scr.innings}"></span>
+            <span th:text="${scr.difficultyCd}"></span>
         </div>
     </div>
+    <div id="piechart" style="width: 900px; height: 500px;">
+
+    </div>
+    <div id="chart_div">
+
+    </div>
+
     <script>
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
@@ -79,5 +84,6 @@
         }
     </script>
 </th:block>
->
+
+
 </html>

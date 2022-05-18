@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.client.team.mapper.TeamMapper">
+    <resultMap type="com.yedam.tfprj.client.team.service.TeamVO" id="teamMap">
+        <id property="teamId" column="TEAM_ID"/>
+        <result property="leader" column="LEADER"/>
+        <result property="win" column="WIN"/>
+        <result property="totalGameCnt" column="TOTAL_GAME_CNT"/>
+        <result property="lose" column="LOSE"/>
+        <result property="teamName" column="TEAM_NAME"/>
+    </resultMap>
+
+    <insert id="createTeam" parameterType="com.yedam.tfprj.client.team.service.TeamVO">
+        <selectKey keyProperty="teamId" resultType="int" order="BEFORE">
+            SELECT CASE WHEN MAX(TEAM_ID)IS NULL THEN 1 ELSE MAX(TEAM_ID)+1 END AS ID FROM TEAM
+        </selectKey>
+        INSERT INTO TEAM VALUES(#{teamId},#{leader},0,0,0,#{teamName})
+    </insert>
+
+
+</mapper>

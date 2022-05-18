@@ -5,6 +5,8 @@ import com.yedam.tfprj.client.member.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.reservation.mapper.ReservationMapper;
 import com.yedam.tfprj.client.reservation.service.Reservation;
+import com.yedam.tfprj.client.team.mapper.TeamMapper;
+import com.yedam.tfprj.client.team.service.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,8 @@ public class CliMemberController {
     MemberMapper memberMapper;
     @Autowired
     ReservationMapper reservationMapper;
-
+    @Autowired
+    TeamMapper teamMapper;
     @RequestMapping("/cli/myInfo")
     public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -71,12 +74,12 @@ public class CliMemberController {
         return "client/member/my_reservation";
     }
 
-    @RequestMapping("cli/myReservationDetail")
+    @RequestMapping("/cli/myReservationDetail")
     public String cliMyReservationDetail() {
         return "client/member/my_reservation_detail";
     }
 
-    @RequestMapping("cli/myTrophy")
+    @RequestMapping("/cli/myTrophy")
     public String cliMyTrophy() {
         return "client/member/my_trophy";
     }
@@ -85,7 +88,11 @@ public class CliMemberController {
     public String cliMyTeam(MemberVO vo, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         vo.setMemberId((String) (session.getAttribute("memberId")));
-        memberMapper.selectMember(vo);
+        vo = memberMapper.selectMember(vo);
+        System.out.println(vo.getTeamId());
+        model.addAttribute("team",teamMapper.selectTeam(vo.getTeamId()));
         return "client/member/my_team";
     }
+
+
 }

@@ -11,8 +11,21 @@
     </div>
     <div th:class="row">
         <div th:class="col-auto">
-
+            <div th:if="${team eq null}">
+                <button th:type="button" >팀생성</button>
+            </div>
+            <div th:unless="${team eq null}">
+                <div th:each="team, i : ${team}">
+                    <span th:text="${team.teamId}"></span><br>
+                    <span th:text="${team.leader}"></span><br>
+                    <span th:text="${team.win}"></span><br>
+                    <span th:text="${team.totalGameCnt}"></span><br>
+                    <span th:text="${team.teamName}"></span><br>
+                </div>
+            </div>
         </div>
     </div>
-</th:block>>
+
+</th:block>
+
 </html>

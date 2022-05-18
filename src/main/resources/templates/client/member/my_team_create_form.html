@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/cli_layout">
+
+<th:block layout:fragment="content">
+<input th:type="text" th:id="teamName" th:name="teamName">
+    <input th:type="text" th:id="reader" th:name="reader" th:value="|${session.memberId}|">
+
+
+</th:block>
+</html>
