@@ -4,7 +4,7 @@ class tH1 extends HTMLElement {
     let en = this.shadowRoot.getElementById('enTit');
     let ko = this.shadowRoot.getElementById('koTit');
     en.innerText = this.getAttribute('en');
-    ko.innerText = this.getAttribute('ko')
+    ko.innerText = this.getAttribute('ko');
   }
 
   constructor(params) {

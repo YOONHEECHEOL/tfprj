@@ -18,7 +18,8 @@
     <!-- 상단바-->
     <th:block th:replace="/layout/cli_fragments/top :: topbarFragment"></th:block>
 
-    <div th:if="${#request.getRequestURI()} != '/'"  class="main-margin" />
+<!--    <div th:if="${#request.getRequestURI()} != '/cli/home' || #request.getRequestURI() == '/cli/login' ? true : false"  class="main-margin" />-->
+    <div th:attr="class=${(#request.getRequestURI() == '/cli/home' || #request.getRequestURI() == '/cli/login') ? 'main-margin disabled' : 'main-margin'}" />
     <th:block th:replace="/layout/common/script :: scriptFragment"></th:block>
     <!-- 본문-->
     <main class="contents">

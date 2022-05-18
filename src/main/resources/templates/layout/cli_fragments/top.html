@@ -5,12 +5,12 @@
 
   <!-- header -->
 <!--  <header th:unless="${#request.getRequestURI()} != '/'" class="header">-->
-  <header th:attr="class=${(#request.getRequestURI() == '/') ? 'header' : 'header header-black'}" >
+  <header th:attr="class=${(#request.getRequestURI() == '/cli/home' || #request.getRequestURI() == '/cli/login') ? 'header' : 'header header-black'}" >
 
     <div class="row w100 justify-content-between align-items-center">
 
       <div class="col-auto">
-<!--        <a href="/" class="logo"><img th:src="@{/images/cli/c_logo.svg}" alt=""></a>-->
+        <a href="/" class="logo"><img th:src="@{/images/cli/c_logo.svg}" alt=""></a>
       </div>
       <div class="col-auto" >
         <img th:src="@{/images/cli/menu.svg}" id="cli-slider-menu" class="header__menu" alt="">
@@ -19,6 +19,11 @@
     </div>
 
   </header>
+
+  <div id="hmodal" class="hmodal" >
+    <span th:if="${#session.getAttribute('message') != 'n'}" th:text="${#session.getAttribute('message')}">message</span>
+<!--    <span>asdf</span>-->
+  </div>
 
   <!-- slider menu -->
   <nav class="nav" id="cli-slider-nav">
@@ -55,19 +60,48 @@
       <li>
         <a href=""><h3 class="h3">스토어</h3></a>
       </li>
+      <li>
+        <a href="/cli/home" class="btn btn-dark">home</a>
+        <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
+           href="/cli/loginview" class="btn btn-primary">login</a>
+        <a th:if="${#session.getAttribute('log') == 'y'}"
+           th:href="${'/cli/logout?memberId=' + #session.getAttribute('memberId')}" class="btn btn-danger">logout</a>
+      </li>
     </ul>
   </nav>
   <div class="csn-bg" id="cli-slider-nav-bg"></div>
 
   <script>
-    let cliSliderMenu = document.querySelector('#cli-slider-menu')
-    let cliSliderNav = document.querySelector('#cli-slider-nav')
-    let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
+    // slider
+    const slider = () => {
+      let cliSliderMenu = document.querySelector('#cli-slider-menu')
+      let cliSliderNav = document.querySelector('#cli-slider-nav')
+      let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
 
-    cliSliderMenu.addEventListener('click', () => {
-      cliSliderNav.classList.toggle('active')
-      cliSliderNavBg.classList.toggle('active')
-    })
+      cliSliderMenu.addEventListener('click', () => {
+        cliSliderNav.classList.toggle('active')
+        cliSliderNavBg.classList.toggle('active')
+      })
+    }
+    slider();
+
+    // hmodal
+    const hmodal = () => {
+      let h = document.querySelector('#hmodal')
+      let t = document.querySelector('#hmodal > span')
+      if(t.innerHTML != '') {
+        h.classList.add('active')
+        setTimeout(() => {
+          h.classList.remove('active')
+          fetch('http://localhost:18000/cli/resetMessage')
+            .then(res => res.text())
+            .then(res => console.log(res))
+          // h.remove();
+        }, 1500)
+        // session message 삭제
+      }
+    }
+    hmodal();
   </script>
 
 </th:block>

@@ -9,11 +9,22 @@ public interface MemberService {
     //멤버 단건 조회
     public MemberVO findOne(MemberVO vo);
 
-    MemberVO selectMember(HttpServletRequest request, MemberVO vo); // 로그인 0516
-    int insertMember(MemberVO vo); // 회원가입 0513
+    // login
+    MemberVO selectMember(HttpServletRequest request, MemberVO vo);
+
+    // logout
+    public String logoutMember(HttpServletRequest request, MemberVO vo);
+
+    // logout message 생성
+    public void logoutMessage(HttpServletRequest request ,String message);
+
+    // 회원가입
+    int insertMember(MemberVO vo);
 
     int updateMember(MemberVO vo);
 
     GameVO selectGame(MemberVO vo);
+
+
 
 }
