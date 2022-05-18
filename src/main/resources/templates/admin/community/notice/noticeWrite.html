@@ -3,42 +3,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <!-- 클래식 에디터 -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
-    <title>공지사항 작성</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+    <script src="<%=ctx%>/vendor/ckeditor/ckfinder/ckfinder.js"></script>
 
-    <!-- 넓이 높이 조절 -->
-    <style>
-        .ck.ck-editor {
-            max-width: 500px;
-        }
-        .ck-editor__editable {
-            min-height: 300px;
-        }
-    </style>
+    <script type="text/javascript" src="../../../../static/ckeditor/ckeditor.js"></script>
 </head>
 <body>
-<h3>공지사항 작성 폼</h3>
-<div id="editor">
-    <p>This is some sample content.</p>
+<div class="editor_wrap">
+    <textarea name="content" id="review_editor" placeholder="후기 내용을 입력해 주세요."></textarea>
 </div>
-<script>
-    ClassicEditor
-        .create(document.querySelector("#editor"),
-            {
-                language: "ko",
-                simpleUpload:
-                    {
-                        uploadUrl: "/upload/image",
-                        withCredentials: true,
-                    }
-            })
-        .then(newEditor => {
-            editor = newEditor;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
+<button onclick="location.href = '/admNotice'">뒤로가기</button>
 </body>
 </html>
+<script type="text/javascript">
+    var myEditor;
+    ClassicEditor
+        .create( document.querySelector( '#review_editor' ), {
+            ckfinder: {
+                uploadUrl: '/ck/fileupload' // 내가 지정한 업로드 url (post로 요청감)
+            },
+            alignment: {
+                options: [ 'left', 'center', 'right' ]
+            }
+        } )
+        .then( editor => {
+            console.log( 'Editor was initialized', editor );
+            myEditor = editor;
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
