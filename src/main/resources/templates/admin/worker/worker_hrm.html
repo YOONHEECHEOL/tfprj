@@ -157,7 +157,7 @@
             $('#tbody').on('click', '.readWorker', function (){
                 console.log($(this).closest('tr').data('workerid'));
                 workerId = $(this).closest('tr').data('workerid');
-                let popUrl = "worker_hrm_detail?workerId="+workerId+'';
+                let popUrl = "worker_hrm_detail_read?workerId="+workerId+'';
                 let popOption = 'left=600, width=600, height=800, location=no, status=no, scrollbars=yes'
                 window.open(popUrl, "name", popOption);
             })
@@ -165,7 +165,7 @@
             $('#tbodyOut').on('click', '.readWorker', function (){
                 console.log($(this).closest('tr').data('workerid'));
                 workerId = $(this).closest('tr').data('workerid');
-                let popUrl = "worker_hrm_detail?workerId="+workerId+'';
+                let popUrl = "worker_hrm_detail_read?workerId="+workerId+'';
                 let popOption = 'left=600, width=600, height=800, location=no, status=no, scrollbars=yes'
                 window.open(popUrl, "name", popOption);
             })

@@ -44,9 +44,36 @@
         WHERE staff_Status_Cd = 1
     </select>
 
+    <select id="getWorker" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
+        select * from staff_information
+        where worker_id = #{workerId}
+    </select>
 
     <update id="staffStatusCdUpdate">
         UPDATE staff_information SET staff_status_cd = #{staffStatusCd}
         WHERE worker_id = #{workerId}
     </update>
+
+    <update id="workerDetailUpdate">
+        UPDATE staff_information
+        <set>
+            <if test="phoneNo != null and phoneNo != ''">
+                phone_No = #{phoneNo},
+            </if>
+                gender = #{gender},
+                military_cd = #{militaryCd},
+            <if test="postcode != ''">
+                postcode = #{postcode},
+                roadAddress = #{roadAddress},
+                detailAddress = #{detailAddress},
+                jibunAddress = #{jibunAddress},
+            </if>
+            <if test="memo != null and memo != ''">
+                memo = #{memo}
+            </if>
+
+        </set>
+        where worker_id = #{workerId}
+    </update>
 </mapper>
+

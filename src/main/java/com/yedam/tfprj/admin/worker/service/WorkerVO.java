@@ -33,4 +33,9 @@ public class WorkerVO {
     private int userType;
     private String goingTime;
     private String quittingTime;
+    private int gender;
+    private int postcode;
+    private String roadAddress;
+    private String detailAddress;
+    private String jibunAddress;
 }
