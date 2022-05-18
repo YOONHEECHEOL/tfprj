@@ -20,9 +20,19 @@ public class WorkerServiceImpl implements WorkerService {
         return mapper.getWorkerListStaffCd1();
     }
 
+    @Override
+    public WorkerVO getWorker(String workerId) {
+        return mapper.getWorker(workerId);
+    }
+
 
     @Override
     public int staffStatusCdUpdate(WorkerVO vo) {
         return mapper.staffStatusCdUpdate(vo);
+    }
+
+    @Override
+    public int workerDetailUpdate(WorkerVO vo) {
+        return mapper.workerDetailUpdate(vo);
     }
 }

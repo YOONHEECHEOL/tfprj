@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        // 성별에 따라서 라디오버튼이 선택됨.
+        var gender = '[[${workerInfo.gender}]]';
+        $("input:radio[name='gender']").val([gender])
+
+        //selectBox 필 미필 구분.
+        var military = [[${workerInfo.militaryCd}]];
+        console.log(military)
+        $('#militaryCd').val(military).prop("selected",true);
+
+        //근무자 상태(알바중, 퇴직) 구분.
+        var staffCd = [[${workerInfo.staffStatusCd}]]
+        $('#staffStatusCd').val(staffCd).prop("selected",true);
+
+        //근무자 출근시간, 퇴근시간 날짜 없애고 시간만 남기기.
+        let goingTime = [[${workerInfo.goingTime}]];
+        console.log(goingTime.slice(11));
+        goingTime = goingTime.slice(11);
+        $('#goingTime').html(goingTime);
+
+        let quittingTime = [[${workerInfo.quittingTime}]];
+        quittingTime = quittingTime.slice(11);
+        $('#quittingTime').html(quittingTime);
+
+        //근무자 직책이 0이면 월/목, 근무자 직책이 1이면 화/수/금
+        let position = [[${workerInfo.positionCd}]]
+        if(position == 0){
+            $('#workDay').html('월/목')
+        }else{
+            $('#workDay').html('화/수/금')
+        }
+    })
+    function validateForm(){
+        $('#submitFrm').submit();
+        alert('수정완료.')
+    }
+</script>
+<div>
+    <h3>상세조회 </h3>
+    <h4>근무자 세부정보</h4>
+    <div>
+        <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_update}">
+            - 아이디 : <input type="text" th:value="${workerInfo.workerId}" name="workerId"><br><br>
+            - 이름 : <input type="text" th:value="${workerInfo.workerName}" name="workerName"> <br><br>
+            - 연락처 : <input type="text" th:value="${workerInfo.phoneNo}" name="phoneNo"> <br><br>
+            - 성별 : <input type="radio" value="0" name="gender">남성
+                    <input type="radio" value="1" name="gender"> 여성<br><br>
+            - 생년월일 : <input type="text" id="datepicker" th:value="${#dates.format(workerInfo.birth, 'yyyy-MM-dd')}" name="birth"><br><br>
+            - 병역 : <select id="militaryCd" name="militaryCd">
+                                              <option value="0">필</option>
+                                              <option value="1">미필</option>
+                    </select>
+            - 프로필 : <input type="file"><br><br>
+            <div id="profilePic"></div>
+            <input type="text" th:value="${workerInfo.postcode}" id="sample4_postcode" placeholder="우편번호" name="postcode">
+            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" th:value="${workerInfo.roadAddress}" id="sample4_roadAddress" placeholder="도로명주소" name="roadAddress">
+            <input type="text" th:value="${workerInfo.jibunAddress}" id="sample4_jibunAddress" placeholder="지번주소" name="jibunAddress">
+            <span id="guide" style="color:#999;display:none"></span>
+            <input type="text" th:value="${workerInfo.detailAddress}" id="sample4_detailAddress" placeholder="상세주소" name="detailAddress">
+
+            <br><br>
+            - 메모 : <textarea th:text="${workerInfo.memo}" name="memo"></textarea><br><br>
+
+            - 상태 <select id="staffStatusCd" name="staffStatusCd">
+                     <option value="0">알바 중</option>
+                     <option value="1">퇴직</option>
+                  </select>
+            <table>
+                <tr>
+                    <th th:width="100">근무자명</th>
+                    <th th:width="100">출근시간</th>
+                    <th th:width="100">퇴근시간</th>
+                </tr>
+                <tr>
+                    <td th:width="100" th:text="${workerInfo.workerName}">-</td>
+                    <td th:width="100" id="goingTime">-</td>
+                    <td th:width="100" id="quittingTime">-</td>
+                </tr>
+                <tr>
+                    <th th:width="100">총 지각횟수</th>
+                    <th th:width="100">주간지각</th>
+                    <th th:width="100">월간지각</th>
+                    <th th:width="100">결근 </th>
+                </tr>
+                <tr>
+                    <td th:text="${workerInfo.late}">0회</td>
+                    <td>0회</td>
+                    <td>0회</td>
+                    <td th:text="${workerInfo.absence}">0회</td>
+                </tr>
+                <tr>
+                    <th th:width="100">근무시작일</th>
+                    <th th:width="100">직책</th>
+                    <th th:width="100">지금까지 지급한 금액</th>
+                </tr>
+                <tr>
+                    <td th:text="${#dates.format(workerInfo.startDay, 'yyyy/MM/dd')}">0회</td>
+                    <td id="workDay">0회</td>
+                    <td>0회</td>
+                </tr>
+            </table>
+            <span><button type="button" onclick="validateForm()">저장하기</button></span>
+            <span><button>취소하기</button></span>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    $("#datepicker").datepicker();
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
+
+</html>
