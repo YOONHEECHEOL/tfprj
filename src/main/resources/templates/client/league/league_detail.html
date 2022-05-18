@@ -8,24 +8,31 @@
     <t-h1 en="LEAGUE" ko="리그"></t-h1>
 
 
-    <t-h2 th:ko="${l.leagueName}"></t-h2>
+    <t-h2 th:ko="${l.leagueVO.leagueName}"></t-h2>
 
     <table class="table">
         <tbody>
             <tr>
                 <td>
-                    <span th:text="${l.leagueId}"></span><br>
-                    <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code><br>
-                    <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-                    <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
-                    <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
-                    <span th:text="${l.winningTeam}">승리팀</span><br>
+                    <span th:text="${l.leagueVO.leagueId}"></span><br>
+                    <convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code><br>
+                    <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                    <span>상금 : </span><span th:text="${l.leagueVO.prizeMoney}">상금</span><br>
+                    <span th:text="${'참가비 : ' + l.leagueVO.entryFee}">참가비</span><br>
+                    <span th:text="${l.leagueVO.winningTeam}">승리팀</span><br>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td th:if="${l.teamVO.getTeamId() != 0}">
                     <!-- 세션을 통해 팀 조회, 없으면 팀생성 버튼 -->
                     <h3>팀조회</h3>
+                    <span th:text="${l.teamVO.getTeamId()}">팀아이디</span><br>
+                    <span th:text="${l.teamVO.getLeader()}">팀장</span><br>
+                    <span th:text="${l.teamVO.getTeamName()}">팀이름</span><br>
+                    <span th:text="${l.teamVO.getTotalGameCnt()}">팀 게임수</span><br>
+                    <span th:text="${l.teamVO.getWin()}">팀 승수</span>
+
+
 
                     <!-- 팀이 있으면 팀원 option 생성 후 select 에 append -->
                     <h3>팀원 선택</h3>
