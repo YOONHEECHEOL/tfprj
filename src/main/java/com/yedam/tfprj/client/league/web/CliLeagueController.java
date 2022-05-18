@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class CliLeagueController {
 
@@ -21,9 +23,9 @@ public class CliLeagueController {
     }
 
     @RequestMapping("/cli/leagueDetail")
-    public String leagueDetail(@RequestParam int lno, Model model) {
+    public String leagueDetail(@RequestParam int lno, Model model, HttpServletRequest request) {
 
-        model.addAttribute("l", leagueServiceImpl.getLeagueDetail(lno));
+        model.addAttribute("l", leagueServiceImpl.getLeagueDetail(lno, request.getSession().getAttribute("memberId").toString()));
 
         return "client/league/league_detail";
     }

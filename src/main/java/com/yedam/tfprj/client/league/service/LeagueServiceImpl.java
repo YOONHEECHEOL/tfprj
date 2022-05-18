@@ -1,6 +1,8 @@
 package com.yedam.tfprj.client.league.service;
 
 import com.yedam.tfprj.client.league.mapper.LeagueMapper;
+import com.yedam.tfprj.client.member.mapper.MemberMapper;
+import com.yedam.tfprj.client.member.service.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class LeagueServiceImpl implements LeagueService{
 
     @Autowired
     LeagueMapper leagueMapper;
+
+    @Autowired
+    MemberMapper memberMapper;
 
     @Override
     public LeagueCurrentPassedVO getLeagueList() {
@@ -48,7 +53,16 @@ public class LeagueServiceImpl implements LeagueService{
     }
 
     @Override
-    public LeagueVO getLeagueDetail(int lno) {
+    public LeagueVO getLeagueDetail(int lno, String memberId) {
+
+        // session - memberId를 통해 팀 조회
+        MemberVO memberVO = new MemberVO();
+        memberVO.setMemberId(memberId);
+        memberVO = memberMapper.selectMember(memberVO);
+
+//        if(memberVO.getTeamId() != ) {
+//
+//        }
 
         return leagueMapper.getLeagueDetail(lno);
     }
