@@ -4,18 +4,34 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-<div th:each="mresv, i : ${rsList}">
-    <span th:text="${mresv.resId}"></span>
-    <span th:text="${mresv.memberId}"></span>
-    <span th:text="${mresv.startTime}"></span>
-    <span th:text="${mresv.endTime}"></span>
-    <span th:text="${mresv.room}"></span>
-    <span th:text="${mresv.status}"></span>
-    <span th:text="${mresv.gameId}"></span>
-    <span th:text="${mresv.resDate}"></span>
-    <span th:text="${mresv.tel}"></span>
-    <span th:text="${mresv.name}"></span>
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h1>내 예약 조회</h1>
+        </div>
+    </div>
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h3>나의 예약</h3>
+        </div>
+    </div>
+    <div th:class="row">
+        <div th:class="col-auto">
+            <div th:each="mresv, i : ${rsList}">
+                <span th:text="${mresv.resId}"></span><br>
+                <span th:text="${mresv.startTime}"></span><br>
+                <span th:text="${mresv.endTime}"></span><br>
+                <span th:text="${mresv.room}"></span><br>
+                <span th:text="${mresv.status}"></span><br>
+                <span th:text="${mresv.resDate}"></span><br>
+                <span th:if="${mresv.status eq '경기종료'}"><button type="text" th:class="finGameDetail">경기 결과 조회</button></span>
+                <span th:if="${mresv.status eq '경기전'}"><button type="text" th:class="rsvDetail">예약 조회</button></span>
+            </div>
+        </div>
+    </div>
 
-</div>
-</th:block>>
+<script>
+
+</script>
+</th:block>
+
 </html>

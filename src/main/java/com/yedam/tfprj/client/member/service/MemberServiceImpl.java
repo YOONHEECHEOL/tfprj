@@ -31,6 +31,17 @@ public class MemberServiceImpl implements MemberService {
         return '1';
     }
 
+    @Override
+    public int updateMember(MemberVO vo) {
+        memberMapper.updateMember(vo);
+        return 0;
+    }
+
+    @Override
+    public GameVO selectGame(MemberVO vo) {
+        return null;
+    }
+
     @Override //로그인
     public MemberVO selectMember(HttpServletRequest request, MemberVO vo) {
 

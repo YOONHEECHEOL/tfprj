@@ -1,60 +1,91 @@
 package com.yedam.tfprj.client.member.web;
 
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
+import com.yedam.tfprj.client.member.service.GameVO;
+import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.reservation.mapper.ReservationMapper;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class CliMemberController {
     @Autowired
     MemberMapper memberMapper;
+    @Autowired
     ReservationMapper reservationMapper;
-    Reservation rsv;
 
     @RequestMapping("/cli/myInfo")
-    public String cliMyInfo(){
+    public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        model.addAttribute("member", memberMapper.selectMember(vo));
         return "client/member/my_info";
     }
 
+    @RequestMapping("/cli/myInfoUpdateForm")
+    public String cliMyInfoUpdateForm(MemberVO vo, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        model.addAttribute("member", memberMapper.selectMember(vo));
+        return "client/member/my_info_update_form";
+    }
+
+    @RequestMapping("/cli/myInfoUpdate")
+    public String cliMyInfoUpdate(MemberVO vo) {
+        vo.setPassword(vo.getPassword());
+        vo.setTel(vo.getTel());
+        memberMapper.updateMember(vo);
+        return "redirect:/cli/myInfoUpdateForm";
+    }
+
     @RequestMapping("/cli/myScore")
-    public String cliMyScore(){
+    public String cliMyScore(Model model, MemberVO vo ,GameVO gvo, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String)session.getAttribute("memberId"));
+        model.addAttribute("score", memberMapper.selectGame(vo));
+
         return "client/member/my_score";
     }
 
     @RequestMapping("/cli/myLeague")
-    public String cliMyLeague(){
+    public String cliMyLeague() {
         return "client/member/my_league";
     }
 
     @RequestMapping("/cli/myMessage")
-    public String cliMyMessage(){
+    public String cliMyMessage() {
         return "client/member/my_message";
     }
 
-    @RequestMapping("/cli/myReservation/{memberId}")
-    public String cliMyReservation(@PathVariable String memberId, Model model){
-        rsv.setMemberId("TEST");
+    @RequestMapping("/cli/myReservation/")
+    public String cliMyReservation(Reservation rsv, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        rsv.setMemberId((String) (session.getAttribute("memberId")));
         model.addAttribute("rsList", reservationMapper.findMemberReservation(rsv));
         return "client/member/my_reservation";
     }
 
-    @RequestMapping("cli/myReserVationDetail")
-    public String cliMyReservationDetail(){
+    @RequestMapping("cli/myReservationDetail")
+    public String cliMyReservationDetail() {
         return "client/member/my_reservation_detail";
     }
 
     @RequestMapping("cli/myTrophy")
-    public String cliMyTrophy(){
+    public String cliMyTrophy() {
         return "client/member/my_trophy";
     }
 
     @RequestMapping("/cli/myTeam")
-    public String cliMyTeam(){
+    public String cliMyTeam(MemberVO vo, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        memberMapper.selectMember(vo);
         return "client/member/my_team";
     }
 }

@@ -4,6 +4,80 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-</th:block>>
+    <div th:each="scr, i : ${score}">
+        <span th:text="${scr.ground}"></span>
+        <span th:text="${scr.score}"></span>
+        <span th:text="${scr.distance}"></span>
+        <span th:text="${scr.hits}"></span>
+        <span th:text="${scr.homerun}"></span>
+        <span th:text="${scr.winLose}"></span>
+        <span th:text="${scr.batCounts}"></span>
+        <span th:text="${scr.innings}"></span>
+        <span th:text="${scr.difficultyCd}"></span>
+        <div id="piechart" style="width: 900px; height: 500px;">
+
+        </div>
+        <div id="chart_div">
+
+        </div>
+    </div>
+    <script>
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work', 11],
+                ['Eat', 2],
+                ['Commute', 2],
+                ['Watch TV', 2],
+                ['Sleep', 7]
+            ]);
+
+            var options = {
+                title: 'My Daily Activities'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['City', '2010 Population',],
+                ['1월', 54343545434],
+                ['2월', 4534545345],
+                ['3월', 45345],
+                ['4월', 4534534353],
+                ['5월', 4537373753]
+            ]);
+
+            var options = {
+                title: 'Population of Largest U.S. Cities',
+                chartArea: {width: '50%'},
+                hAxis: {
+                    title: 'Total Population',
+                    minValue: 0
+                },
+                vAxis: {
+                    title: 'City'
+                }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</th:block>
+>
 </html>
