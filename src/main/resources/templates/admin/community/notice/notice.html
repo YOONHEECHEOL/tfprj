@@ -8,13 +8,12 @@
             rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous">
-    <style>
-        .odd { background-color: #eeeeee;}
-    </style>
+
 </head>
 <body>
 <a href="#"></a>
-<table  class="table">
+<form th:id="details" method="post">
+<table class="table">
     <thead>
     <tr>
         <th>no</th>
@@ -24,14 +23,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="notice : ${admNotice}" >
-        <td th:text="${notice.nNo}">1</td>
-        <td th:text="${notice.title}">제목일걸</td>
-        <td th:text="${notice.wdate}">2021-01-03</td>
-        <td th:text="${notice.views}">1</td>
-    </tr>
+    <div id="notice">
+        <tr th:attr="onclick=|callDetails('${notice.nNo}')|" th:each="notice : ${admNotice}" onmouseover='this.style.background="#fcecae";'
+            onmouseleave='this.style.background="#FFFFFF";'>
+            <td th:text="${notice.nNo}"></td>
+            <td  th:text="${notice.title}"></td>
+            <td th:text="${notice.wdate}"></td>
+            <td th:text="${notice.views}"></td>
+        </tr>
+    </div>
     </tbody>
 </table>
-<button class="create-account-btn shadow-light"  onclick="location.href = '/noticeWrite'" style="float: right">작성</button>
+    <input th:type="hidden" th:id="nNo" th:name="nNo">
+</form>
+<button onclick="location.href = '/noticeWrite'" style="float: right">작성</button>
+<button onclick="location.href = '/adm/index'" style="float: right">홈</button>
 </body>
 </html>
+<script>
+    function callDetails(n){
+        details.nNo.value = n;
+        details.action = "/noticeDetail";
+        details.submit();
+    }
+</script>

@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface AdmNoticeMapper {
     public List<AdmNoticeVO> AdmNoticeList(AdmNoticeVO vo);
+    AdmNoticeVO AdmNoticeSelect(AdmNoticeVO vo);
+    int noticeDelete(AdmNoticeVO vo);
 }

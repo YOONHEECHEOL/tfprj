@@ -23,6 +23,6 @@ public class CliSignUpController {
     @PostMapping("/SignUp")
     public String insert(Model model , MemberVO vo){
         Service.insertClient(vo);
-        return "redirect:login";
+        return "redirect:/cil/loginview";
     }
 }

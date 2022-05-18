@@ -16,4 +16,13 @@ public class AdmNoticeServiceImpl implements AdmNoticeService {
     public List<AdmNoticeVO> AdmNoticeList(AdmNoticeVO vo) {
         return map.AdmNoticeList(vo);
     }
+    @Override
+    public AdmNoticeVO AdmNoticeSelect(AdmNoticeVO vo) {
+        return map.AdmNoticeSelect(vo);
+    }
+    @Override
+    public int noticeDelete(AdmNoticeVO vo) {
+        return map.noticeDelete(vo);
+    }
+
 }

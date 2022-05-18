@@ -12,5 +12,16 @@
         ORDER BY n_no ASC
     </select>
 
+    <select id="AdmNoticeSelect" resultType="com.yedam.tfprj.admin.community.service.AdmNoticeVO"
+    parameterType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
+        select n_no, wdate, title, details
+        from notice_board
+        where n_no = #{nNo}
+    </select>
+
+    <delete id="noticeDelete"
+            parameterType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
+            DELETE FROM NOTICE_BOARD WHERE N_NO = #{nNo}
+    </delete>
 
 </mapper>
