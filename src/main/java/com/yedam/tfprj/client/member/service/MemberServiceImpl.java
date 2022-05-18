@@ -15,6 +15,46 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     MemberMapper memberMapper;
 
+    // 로그인
+    @Override
+    public MemberVO selectMember(HttpServletRequest request, MemberVO vo) {
+
+        HttpSession httpSession = request.getSession();
+
+        vo = memberMapper.selectMember(vo);
+        if(vo != null) {
+            httpSession.setAttribute("member", vo);
+            httpSession.setAttribute("memberId", vo.getMemberId());
+            httpSession.setAttribute("log", "y");
+            httpSession.setAttribute("message", vo.getMemberId() + "님 로그인되었습니다.");
+
+            // 단일 리스트 또는 로그인
+            return vo;
+        } else
+            return null;
+
+    }
+
+    // 로그아웃
+    @Override
+    public String logoutMember(HttpServletRequest request, MemberVO vo) {
+        HttpSession httpSession = request.getSession();
+
+        String result = httpSession.getAttribute("memberId") + "님 로그아웃 되었습니다.";
+
+        httpSession.invalidate();
+
+        return result;
+    }
+
+    @Override
+    public void logoutMessage(HttpServletRequest request, String message) {
+
+        HttpSession httpSession = request.getSession();
+        httpSession.setAttribute("message", message);
+
+    }
+
     @Override
     public List<MemberVO> findAll() {
         return null;
@@ -42,20 +82,5 @@ public class MemberServiceImpl implements MemberService {
         return null;
     }
 
-    @Override //로그인
-    public MemberVO selectMember(HttpServletRequest request, MemberVO vo) {
 
-        HttpSession httpSession = request.getSession();
-
-        vo = memberMapper.selectMember(vo);
-        if(vo != null) {
-            httpSession.setAttribute("member", vo);
-            httpSession.setAttribute("memberId", vo.getMemberId());
-
-            // 단일 리스트 또는 로그인
-            return vo;
-        } else
-            return null;
-
-    }
 }

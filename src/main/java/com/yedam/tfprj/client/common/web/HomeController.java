@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 
@@ -15,6 +18,17 @@ public class HomeController {
 
     @RequestMapping("/")
     public String toHome() {
+        return "redirect:/cli/home";
+    }
+
+    @RequestMapping("/cli/home")
+    public String toClientHome(HttpServletRequest request) {
+        // login 임시 체크
+        HttpSession session = request.getSession();
+
+        if(session.getAttribute("log") == null) {
+            session.setAttribute("log", "null");
+        }
         return "client/common/home";
     }
 

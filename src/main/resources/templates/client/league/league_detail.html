@@ -23,7 +23,7 @@
                 </td>
             </tr>
             <tr>
-                <td th:if="${l.teamVO.getTeamId() != 0}">
+                <td th:if="${l.loginedMember.getTeamId() != 0}">
                     <!-- 세션을 통해 팀 조회, 없으면 팀생성 버튼 -->
                     <h3>팀조회</h3>
                     <span th:text="${l.teamVO.getTeamId()}">팀아이디</span><br>

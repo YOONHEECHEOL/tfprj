@@ -18,26 +18,27 @@ public class CliLogInController {
     @Autowired
     MemberService memberServiceImpl;
 
-
+    // login
     @RequestMapping("/cli/login")
     public String login(HttpServletRequest request, MemberVO vo) {
 
-        String viewPage;
+        memberServiceImpl.selectMember(request, vo);
 
-        // 로그인 처리 과정
-        HttpSession session = request.getSession();
-
-        vo = memberServiceImpl.selectMember(request, vo);
-        /*model.addAttribute("member", vo);*/
-
-        if (vo != null) {
-            viewPage = "client/common/memberLoginSuccess";
-        } else {
-            viewPage = "client/common/memberLoginFail";
-        }
-        return viewPage;
+        return "redirect:/cli/home";
     }
 
+    // logout
+    @RequestMapping("/cli/logout")
+    public String logout(HttpServletRequest request, MemberVO vo) {
+
+        // session invalidate() 처리 및 message 생성
+        String returnVal = memberServiceImpl.logoutMember(request, vo);
+        memberServiceImpl.logoutMessage(request, returnVal);
+
+        return "redirect:/cli/home";
+    }
+
+    // id 중복체크
     @GetMapping("/cli/idCheck")
     @ResponseBody
     public String idCheck(HttpServletRequest request, String memberId) {
@@ -68,12 +69,18 @@ public class CliLogInController {
     // 회원가입 처리
     @PostMapping("/cli/insertMember")
     public String insert(MemberVO vo){
-        System.out.println("vo = " + vo.getMemberId());
-        System.out.println("vo = " + vo.getPassword());
-        System.out.println("vo = " + vo.getTel());
 
         memberServiceImpl.insertMember(vo);
         return "redirect:/cli/loginview";
+    }
+
+    @GetMapping("/cli/resetMessage")
+    @ResponseBody
+    public String resetMessage(HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        httpSession.removeAttribute("message");
+
+        return "session message 삭제";
     }
 
 }

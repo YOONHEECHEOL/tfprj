@@ -109,11 +109,34 @@ h3.h3 {
 }
 .header__menu {
 }
-
+.hmodal {
+    padding: 4rem 0;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 8vh;
+    left: -100vw;
+    width: 100%;
+    z-index: 9997;
+    opacity: 0;
+    transition: all .3s;
+}
+.hmodal > span {
+    color: #3765C7;
+    font-size: 1.8rem;
+}
+.hmodal.active {
+    opacity: 1;
+    top: 8vh;
+    left: 0;
+}
 
 /* contents */
 .main-margin {
     margin-top: 8vh;
+}
+.main-margin.disabled {
+    margin-top: 0;
 }
 main.contents {
     min-height: calc(100vh - 8vh);

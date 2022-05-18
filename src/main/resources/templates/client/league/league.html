@@ -6,6 +6,13 @@
 
 <th:block layout:fragment="content">
 
+  <span class="asdf" id="testspan" suhan=""></span>
+
+  <script>
+    document.getElementById()
+    document.querySelector('#testspan').getAttribute('suhan')
+  </script>
+
   <t-h1 en="LEAGUE" ko="리그"></t-h1>
 <!--  <t-h2 ko="리그게시판"></t-h2>-->
 
@@ -25,7 +32,7 @@
 <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
           <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
           <span th:text="${l.winningTeam}">승리팀</span><br>
-          <div class="button__box">
+          <div class="button__box" th:if="${#session.getAttribute('memberId') != null}">
             <a class="c-button" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}">참가하기</a>
           </div>
         </td>
