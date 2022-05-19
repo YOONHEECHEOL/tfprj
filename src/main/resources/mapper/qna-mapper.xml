@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.admin.community.mapper.AdmQnaMapper">
+
+    <select id="AdmQnaList" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        SELECT *
+        FROM qna_board
+        ORDER BY q_no ASC
+    </select>
+
+    <select id="AdmQnaSelect" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO"
+            parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        select *
+        from qna_board
+        where q_no = #{qNo}
+    </select>
+
+    <delete id="AdmQnaDelete"
+            parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        DELETE
+        FROM QNA_BOARD
+        WHERE Q_NO = #{qNo}
+    </delete>
+
+    <update id="AdmQnaUpdate"  parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        update qna_board
+        set title   = #{title},
+            details = #{details}
+        where q_no = #{qNo}
+    </update>
+
+    <insert id="AdmNoticeInsert" parameterType="com.yedam.tfprj.admin.community.service.notice.AdmNoticeVO">
+        INSERT INTO NOTICE_BOARD
+        VALUES(qno_seq.nextval, admin, #{title}, sysdate, 0, #{details})
+    </insert>
+
+</mapper>

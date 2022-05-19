@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>마 이게 공지사항 아이가</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <style>
+        body {
+            padding: 100px;
+        }
+    </style>
+    <h1>QNA</h1>
 </head>
 <body>
+<form th:id="details" method="post">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>no</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div id="qna">
+            <tr th:attr="onclick=|callDetails('${qna.qNo}')|" th:each="qna : ${admQna}"
+                onmouseover='this.style.background="#fcecae";'
+                onmouseleave='this.style.background="#FFFFFF";'>
+                <td th:text="${qna.qNo}"></td>
+                <td th:text="${qna.title}"></td>
+                <td th:text="${qna.writer}"></td>
+                <td th:text="${qna.wdate}"></td>
+                <td th:text="${qna.views}"></td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+    <input th:type="hidden" th:id="qNo" th:name="qNo">
+</form>
+<button onclick="location.href = '/adm/qnaWrite'" style="float: right">작성</button>
+<button onclick="location.href = '/adm/index'" style="float: right">홈</button>
+
+<script>
+    function callDetails(n) {
+        details.qNo.value = n;
+        details.action = "/adm/qnaDetail";
+        details.submit();
+    }
+</script>
 
 </body>
 </html>
+

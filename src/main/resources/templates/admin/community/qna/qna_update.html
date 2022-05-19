@@ -19,35 +19,40 @@
 <div class="container">
 
     <div>
-        <h1>공지사항 상세보기</h1>
+        <h1>QNA 수정</h1>
     </div>
 
 
-    <form th:id="notice" method="post" action="/adm/noticeUpdateForm">
+    <form th:id="qna" method="post" action="/adm/qnaUpdateForm">
         <div>
             <label>게시글 번호</label>
-            <input name="nNo" readonly="readonly" class="form-control" th:value="${notice.nNo}">
+            <input name="qNo" readonly="readonly" class="form-control" th:value="${qna.qNo}">
+        </div>
+        <div>
+            <label>작성자</label>
+            <input name="writer" readonly="readonly" class="form-control" th:value="${qna.writer}">
         </div>
         <div>
             <label>제목</label>
-            <input name="title" type="text" class="form-control" th:value="${notice.title}">
+            <input name="title" type="text" class="form-control" th:value="${qna.title}">
         </div>
         <div class="form-group form-group-lg">
             <label>내용</label>
-            <textarea name="details" type="text" class="form-control" rows="5" th:value="${notice.details}" th:text="${notice.details}"></textarea>
+            <textarea name="details" type="text" class="form-control" rows="5" th:value="${qna.details}" th:text="${qna.details}"></textarea>
         </div>
         <button type="submit" id="frm" style="float: left">전송</button>
     </form>
 
-    <input type="hidden" id="nNo" name="nNo" th:value="${notice.nNo}">
-    <input type="hidden" id="title" name="title" th:value="${notice.title}">
-    <input type="hidden" id="tdetails" name="details" th:value="${notice.details}">
+    <input type="hidden" id="qNo" name="qNo" th:value="${qna.qNo}">
+    <input type="hidden" id="writer" name="writer" th:value="${qna.writer}">
+    <input type="hidden" id="title" name="title" th:value="${qna.title}">
+    <input type="hidden" id="qdetails" name="details" th:value="${qna.details}">
 
 </div>
 
 <script>
     frm.addEventListener('click', () => {
-        notice.submit()
+        qna.submit()
     })
 </script>
 </body>
