@@ -12,4 +12,5 @@ public interface WorkerMapper {
     public WorkerVO getWorker(String workerId);
     public int staffStatusCdUpdate(WorkerVO vo);
     public int workerDetailUpdate(WorkerVO vo);
+    public int admWorkerHrmWrite(WorkerVO vo);
 }

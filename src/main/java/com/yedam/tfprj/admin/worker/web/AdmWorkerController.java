@@ -9,11 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 @Controller
 public class AdmWorkerController {
@@ -34,11 +40,7 @@ public class AdmWorkerController {
         return "admin/worker/worker_hrm_detail";
     }
 
-    @PostMapping("/adm/worker_hrm_detail_write")
-    public String admWorkerHrmWrite(WorkerVO vo){
-        System.out.println(vo);
-        return "admin/worker/worker_hrm";
-    }
+
 
     @RequestMapping("/adm/workerManage")
     public String admWorkerManage(){
@@ -57,16 +59,26 @@ public class AdmWorkerController {
         return "admin/worker/worker_hrm_detail_read";
     }
 
+    @PostMapping("/adm/worker_hrm_detail_write")
+    public void admWorkerHrmWrite(@RequestParam String staffStatusCd,
+                                  @RequestParam String birth,
+                                  WorkerVO vo,
+                                  MultipartFile file,
+                                  HttpServletResponse response)
+                                  throws IOException, ParseException {
+//        System.out.println(vo);
+
+        workerServiceImpl.admWorkerHrmWrite(vo, file, birth, response);
+    }
+
     @PostMapping("/adm/worker_hrm_detail_update")
-    public String admWorkerHrmDetailUpdate(@RequestParam String staffStatusCd, HttpServletResponse response, WorkerVO vo) throws IOException {
-        System.out.println("호출확인");
-        System.out.println(vo.getGender());
-        vo.setStaffStatusCd(Integer.parseInt(staffStatusCd));
-        workerServiceImpl.workerDetailUpdate(vo);
-        PrintWriter out = response.getWriter();
-        out.println("<script>window.close()</script> ");
-        // 자바스크립트에서 window.close()를 사용할 경우 데이터를 submit 하기전에 window.close()가 실행되기 때문에,
-        // 컨트롤러에서 스크립트 코드 사용
-        return null;
+    public void admWorkerHrmDetailUpdate(@RequestParam String staffStatusCd,
+                                         @RequestParam String birth ,
+                                         HttpServletResponse response,
+                                         MultipartFile file,
+                                         WorkerVO vo)
+                                         throws IOException, ParseException {
+
+        workerServiceImpl.workerDetailUpdate(staffStatusCd, birth, response, file, vo);
     }
 }

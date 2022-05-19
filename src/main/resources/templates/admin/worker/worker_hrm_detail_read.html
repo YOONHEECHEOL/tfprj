@@ -46,6 +46,7 @@
             $('#workDay').html('화/수/금')
         }
     })
+    //정보 수정 후 확인 버튼을 눌렀을 때 알림창
     function validateForm(){
         $('#submitFrm').submit();
         alert('수정완료.')
@@ -55,19 +56,20 @@
     <h3>상세조회 </h3>
     <h4>근무자 세부정보</h4>
     <div>
-        <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_update}">
+        <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_update}" enctype="multipart/form-data">
             - 아이디 : <input type="text" th:value="${workerInfo.workerId}" name="workerId"><br><br>
             - 이름 : <input type="text" th:value="${workerInfo.workerName}" name="workerName"> <br><br>
             - 연락처 : <input type="text" th:value="${workerInfo.phoneNo}" name="phoneNo"> <br><br>
             - 성별 : <input type="radio" value="0" name="gender">남성
                     <input type="radio" value="1" name="gender"> 여성<br><br>
-            - 생년월일 : <input type="text" id="datepicker" th:value="${#dates.format(workerInfo.birth, 'yyyy-MM-dd')}" name="birth"><br><br>
+            - 생년월일 : <input type="text" id="datepicker" name="birth" th:value="${#dates.format(workerInfo.birth, 'yyyy-MM-dd')}" ><br><br>
             - 병역 : <select id="militaryCd" name="militaryCd">
                                               <option value="0">필</option>
                                               <option value="1">미필</option>
                     </select>
-            - 프로필 : <input type="file"><br><br>
-            <div id="profilePic"></div>
+            - 프로필 : <input type="file" name="file" onchange="setThumbnail(event);"><br><br>
+            <div id="image_container"></div>
+            <div id="image"><img th:src="@{'/images/adm/'  + ${workerInfo.fileName}}" style="width:250px; height:300px;"/></div>
             <input type="text" th:value="${workerInfo.postcode}" id="sample4_postcode" placeholder="우편번호" name="postcode">
             <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
             <input type="text" th:value="${workerInfo.roadAddress}" id="sample4_roadAddress" placeholder="도로명주소" name="roadAddress">
@@ -75,7 +77,7 @@
             <span id="guide" style="color:#999;display:none"></span>
             <input type="text" th:value="${workerInfo.detailAddress}" id="sample4_detailAddress" placeholder="상세주소" name="detailAddress">
 
-            <br><br>
+            <br><br>"
             - 메모 : <textarea th:text="${workerInfo.memo}" name="memo"></textarea><br><br>
 
             - 상태 <select id="staffStatusCd" name="staffStatusCd">
@@ -122,8 +124,46 @@
     </div>
 </div>
 </body>
+
+
 <script>
-    $("#datepicker").datepicker();
+
+    //업로드 된 사진이 없을경우 프로필 사진 숨김처리.
+    if($('#image').attr('img').includes('null'))
+
+    // 파일 선택 후 썸네일을 업로드.
+    function setThumbnail(event) {
+        $('#image').remove();
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("style", "width=10px; height=10px")
+            document.querySelector("div#image_container").appendChild(img);
+        };
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+
+<script>
+    //데이트피커
+    $("#datepicker").datepicker({
+        dateFormat: 'yy-mm-dd' //Input Display Format 변경
+        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+        ,changeYear: true //콤보박스에서 년 선택 가능
+        ,changeMonth: true //콤보박스에서 월 선택 가능
+        ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
+        ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+        ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+        ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
+        ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+        ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+    });
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

@@ -12,7 +12,6 @@ public class WorkerVO {
     private String password;
     private int staffStatusCd;
     private String workerName;
-    private String profilePic;
     private String phoneNo;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -20,7 +19,6 @@ public class WorkerVO {
     private Date birth;
 
     private int militaryCd;
-    private String address;
     private String memo;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -38,4 +36,8 @@ public class WorkerVO {
     private String roadAddress;
     private String detailAddress;
     private String jibunAddress;
+
+    private String fileName;
+    private String filePath;
+    private String originalFileName;
 }

@@ -6,11 +6,9 @@
         select worker_id,
                staff_status_cd,
                worker_name,
-               profile_pic,
                phone_no,
                birth,
                military_cd,
-               address,
                memo,
                startday,
                position_cd,
@@ -27,11 +25,9 @@
         select worker_id,
                staff_status_cd,
                worker_name,
-               profile_pic,
                phone_no,
                birth,
                military_cd,
-               address,
                memo,
                startday,
                position_cd,
@@ -69,11 +65,63 @@
                 jibunAddress = #{jibunAddress},
             </if>
             <if test="memo != null and memo != ''">
-                memo = #{memo}
+                memo = #{memo},
             </if>
-
+                birth = #{birth},
+            <if test="originalFileName != null and originalFileName != ''">
+                fileName = #{fileName},
+                filePath = #{filePath},
+            </if>
         </set>
         where worker_id = #{workerId}
     </update>
+
+    <insert id="admWorkerHrmWrite" parameterType="com.yedam.tfprj.admin.worker.service.WorkerVO">
+        INSERT INTO staff_information(worker_id,
+                                      staff_status_cd,
+                                      worker_name,
+                                      phone_no,
+                                      birth,
+                                      military_cd,
+                                      memo,
+                                      startday,
+                                      position_cd,
+                                      late,
+                                      absence,
+                                      usertype,
+                                      going_time,
+                                      quitting_time,
+                                      password,
+                                      gender,
+                                      postcode,
+                                      roadaddress,
+                                      jibunaddress,
+                                      filename,
+                                      filepath)
+        VALUES(
+            #{workerId},
+            #{staffStatusCd},
+            #{workerName},
+            #{phoneNo},
+            #{birth},
+            #{militaryCd},
+            #{memo},
+            sysdate,
+            0,
+            0,
+            0,
+            0,
+            to_date(#{goingTime},'hh24:mi'),
+            to_date(#{quittingTime},'hh24:mi'),
+            #{password},
+            #{gender},
+            #{postcode},
+            #{roadAddress},
+            #{jibunAddress},
+            #{fileName},
+            #{filePath})
+    </insert>
+
+
 </mapper>
 
