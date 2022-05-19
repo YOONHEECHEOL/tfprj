@@ -1,15 +1,10 @@
 package com.yedam.tfprj.client.league.service;
 
-import com.yedam.tfprj.client.league.mapper.LeagueMapper;
+import com.yedam.tfprj.client.league.mapper.CliLeagueMapper;
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
-import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.team.mapper.TeamMapper;
-import com.yedam.tfprj.client.team.service.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -19,10 +14,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class LeagueServiceImpl implements LeagueService{
+public class CliLeagueServiceImpl implements LeagueService{
 
     @Autowired
-    LeagueMapper leagueMapper;
+    CliLeagueMapper cliLeagueMapper;
 
     @Autowired
     MemberMapper memberMapper;
@@ -31,10 +26,10 @@ public class LeagueServiceImpl implements LeagueService{
     TeamMapper teamMapper;
 
     @Override
-    public LeagueServiceVO getLeagueList() {
+    public CliLeagueServiceVO getLeagueList() {
         LocalDate now = LocalDate.now();
-        List<LeagueVO> leagueList = leagueMapper.getLeagueList();
-        LeagueServiceVO leagueCurrentPassed = new LeagueServiceVO();
+        List<LeagueVO> leagueList = cliLeagueMapper.getLeagueList();
+        CliLeagueServiceVO leagueCurrentPassed = new CliLeagueServiceVO();
 
         // 현재 진행 중인 리스트 목록
         List<LeagueVO> currentLeagueList = new ArrayList<>();
@@ -60,16 +55,16 @@ public class LeagueServiceImpl implements LeagueService{
     }
 
     @Override
-    public LeagueServiceVO getLeagueDetail(int lno, String memberId) {
+    public CliLeagueServiceVO getLeagueDetail(int lno, String memberId) {
 
-        LeagueServiceVO leagueServiceVO = new LeagueServiceVO();
+        CliLeagueServiceVO leagueServiceVO = new CliLeagueServiceVO();
 
         // 멤버 조회
         leagueServiceVO.loginedMember.setMemberId(memberId);
         leagueServiceVO.loginedMember = memberMapper.selectMember(leagueServiceVO.loginedMember);
 
         // 리그 조회
-        leagueServiceVO.leagueVO = leagueMapper.getLeagueDetail(lno);
+        leagueServiceVO.leagueVO = cliLeagueMapper.getLeagueDetail(lno);
 
         // 팀 조회
 //        final String uri = "http://localhost:18000/cli/getTeam?teamId=";

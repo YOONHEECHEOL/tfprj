@@ -162,15 +162,48 @@ class convertCommonCode extends HTMLElement {
 class teamMembers extends HTMLElement {
   connectedCallback() {
     // attribute로 teamId 받기
+    let teamId = this.getAttribute('teamId');
+    let doFnc = this.getAttribute('do');
 
-    function getMemberList() {
+    let root = this.shadowRoot;
+
+    function getMemberList(teamId, doFnc) {
       // memberList 조회
-      fetch('')
+      fetch('/cli/selectTeamMembers?teamId=' + teamId)
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(res => {
+          let ul = document.createElement('ul')
+          ul.setAttribute('id', 'et')
+
+          res.forEach(res => {
+
+            let output = document.createElement('li');
+            let inner = document.createElement('div')
+            inner.innerText = res.memberId;
+            output.append(inner);
+            ul.append(output);
+
+          })
+
+          root.append(ul);
+
+
+
+          let eventTarget = root.getElementById('et');
+          eventTarget.addEventListener('click', (r) => {
+            console.log(r.composedPath()[0].innerText)
+            // doFnc(r.composedPath()[0].innerText)
+            // return r.composedPath()[0].innerText;
+          })
+        })
     }
 
-    getMemberList();
+    getMemberList(teamId, doFnc);
+
+
+    // eventTarget.addEventListener('click', () => {
+    //   console.log(event.target)
+    // })
   }
 
   constructor() {
@@ -178,7 +211,20 @@ class teamMembers extends HTMLElement {
 
     const shadow = this.attachShadow({mode: 'open'});
 
+    let style = document.createElement('style')
+    style.innerText = `
+      ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+      li * {
+        font-family: "esM";
+        font-size: 1.8rem;
+      }
+    `
 
+    shadow.append(style)
 
   }
 }
@@ -189,4 +235,83 @@ customElements.define('t-h2',tH2)
 customElements.define('convert-c-code',convertCommonCode)
 customElements.define('team-members', teamMembers)
 
+
+
+// Admin 관리자
+
+class aH1 extends HTMLElement {
+  connectedCallback() {
+    let en = this.shadowRoot.getElementById('enTit');
+    let ko = this.shadowRoot.getElementById('koTit');
+    en.innerText = this.getAttribute('en');
+    ko.innerText = this.getAttribute('ko');
+  }
+
+  constructor(params) {
+    super();
+
+    const shadow = this.attachShadow({mode: 'open'});
+
+    const h1Box = document.createElement('div')
+    h1Box.setAttribute('class', 'h1__box')
+
+    const tBlue = document.createElement('div')
+    const tBlueText = document.createElement('span')
+    tBlueText.setAttribute('id', 'enTit')
+    // tBlueText.innerText = 'LEAGUE';
+    tBlue.append(tBlueText);
+
+    const h1 = document.createElement('h1')
+    h1.setAttribute('id', 'koTit')
+    h1.setAttribute('class', 'h1')
+
+    const img = document.createElement('img')
+    img.setAttribute('src', '/images/cli/t1_deco.svg')
+
+    h1Box.append(tBlue, h1, img);
+
+    const style = document.createElement('style')
+    style.innerText = `
+      h1.h1 {
+          font-family: "esB";
+          font-size: 4rem;
+          position: absolute;
+          color: #3765C7;
+          bottom: 0;
+          left: 2rem;
+          padding: 2rem 0 0;
+          margin: 0;
+          display: inline-block;
+      }
+      .h1__box {
+          position: relative;
+          height: 12rem;
+          overflow: hidden;
+      }
+      .h1__box > div > span {
+          font-family: "esB";
+          position: absolute;
+          bottom: 4.2rem;
+          left: 2rem;
+          font-size: 4.4rem;
+          color: #fff;
+      }
+      .h1__box > div {
+          height: 6rem;
+          background: #3765C7;
+      }
+      .h1__box > img {
+          position: absolute;
+          top: 0;
+          right: 0;
+      }
+    `;
+
+    shadow.append(style, h1Box);
+
+
+  }
+}
+
+customElements.define('a-h1',aH1)
 
