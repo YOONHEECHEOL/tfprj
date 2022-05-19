@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-넘길려고하는데
+<h3 class="h3">지난 리그</h3>
+<div th:each="l, status: ${dayResList}">
+    <span th:text="${l.startTime}">xxxx</span><br>
+    <span th:text="${#dates.format(l.startTime, 'yyyy-MM-dd')}">시작일</span><br>
+</div>
+
+
 </body>
+
 </html>

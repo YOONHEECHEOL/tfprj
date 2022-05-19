@@ -9,4 +9,5 @@ public interface LeagueService {
     // league detail
     public LeagueServiceVO getLeagueDetail(int lno, String memberId);
 
+
 }
