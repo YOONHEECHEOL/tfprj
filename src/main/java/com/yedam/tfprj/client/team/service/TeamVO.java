@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TeamVO {
 
-    private String teamId;
+    private int teamId;
     private String leader;
     private int win;
     private int totalGameCnt;

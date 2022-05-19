@@ -15,4 +15,14 @@ public class TeamServiceImpl implements TeamService {
 
         return teamMapper.selectTeam(teamId);
     }
+
+    @Override
+    public int createTeam(TeamVO vo) {
+        return teamMapper.createTeam(vo);
+    }
+
+    @Override
+    public TeamVO findTeam(TeamVO vo) {
+        return teamMapper.findTeam(vo);
+    }
 }

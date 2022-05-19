@@ -11,4 +11,8 @@ public interface TeamMapper {
     @Select("select * from team where team_id = #{teamId}")
     public TeamVO selectTeam(int teamId);
 
+    public int createTeam(TeamVO vo);
+
+    public TeamVO findTeam(TeamVO vo);
+
 }
