@@ -6,5 +6,9 @@ public interface AdmNoticeService {
 
     AdmNoticeVO AdmNoticeSelect(AdmNoticeVO vo);
 
-    int noticeDelete(AdmNoticeVO vo);
+    public void AdmNoticeDelete(AdmNoticeVO vo);
+
+    AdmNoticeVO AdmNoticeUpdate(AdmNoticeVO vo);
+
+
 }

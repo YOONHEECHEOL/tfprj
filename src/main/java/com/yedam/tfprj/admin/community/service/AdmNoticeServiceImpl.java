@@ -21,8 +21,12 @@ public class AdmNoticeServiceImpl implements AdmNoticeService {
         return map.AdmNoticeSelect(vo);
     }
     @Override
-    public int noticeDelete(AdmNoticeVO vo) {
-        return map.noticeDelete(vo);
+    public void AdmNoticeDelete(AdmNoticeVO vo) {
+       map.AdmNoticeDelete(vo);
     }
 
+    @Override
+    public AdmNoticeVO AdmNoticeUpdate(AdmNoticeVO vo) {
+       return  map.AdmNoticeUpdate(vo);
+    }
 }

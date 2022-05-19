@@ -6,15 +6,15 @@
 </head>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-
 <div class="container">
-    <form th:id="details" method="post">
+    <form th:id="details" method="post" action="/adm/noticeUpdate">
+
         <div>
             <h1>공지사항 상세보기</h1>
         </div>
 
-        <div class="container" style="max-width: 880px;" >
-            <table th:each="n, status : ${notice}" border="1" class="card">
+        <div class="container" style="max-width: 880px;">
+            <table th:each="n, status : ${notice}" border="1" class="card" id="frm">
                 <tr>
                     <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
                     <td th:text="${n.nNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
@@ -34,22 +34,31 @@
                         </textarea>
                     </td>
                 </tr>
+
+                <input type="hidden" id="nNo" name="nNo" th:value="${n.nNo}">
+                <input type="hidden" id="title" name="title" th:value="${n.title}">
+                <input type="hidden" id="wdate" name="wdate" th:value="${n.wdate}">
+                <input type="hidden" id="views" name="views" th:value="${n.views}">
+                <input type="hidden" id="tdetails" name="details" th:value="${n.details}">
+
             </table>
         </div>
         <br>
         <input th:type="hidden" th:id="nNo" th:name="nNo">
     </form>
 </div>
-<button onclick="location.href = '/admNotice'">뒤로가기</button>
-<!--<button id="delete" th:onclick="location.href='noticeDelete?nNo=${nNo}'" style="float: right">삭제</button>-->
-<button onclick="location.href = '#'" style="float: right">수정</button>
+
+<button onclick="location.href = '/adm/notice'">뒤로가기</button>
+<button th:onclick="|location.href = '@{/adm/noticeDelete?nNo={no}(no=${notice.nNo})}'|" style="float: right">삭제</button>
+<button id="submitFrm" style="float: right">수정</button>
+
+<script>
+
+    submitFrm.addEventListener('click', () => {
+        details.submit()
+    })
+
+</script>
+
 </body>
 </html>
-<!--
-<script>
-    function boardDelete(n){
-        details.nNo.value = n;
-        board.action = "noticeDelete";
-        board.submit();
-    }
-</script>-->

@@ -13,15 +13,24 @@
     </select>
 
     <select id="AdmNoticeSelect" resultType="com.yedam.tfprj.admin.community.service.AdmNoticeVO"
-    parameterType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
+            parameterType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
         select n_no, wdate, title, details
         from notice_board
         where n_no = #{nNo}
     </select>
 
-    <delete id="noticeDelete"
+    <delete id="AdmNoticeDelete"
             parameterType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
-            DELETE FROM NOTICE_BOARD WHERE N_NO = #{nNo}
+        DELETE
+        FROM NOTICE_BOARD
+        WHERE N_NO = #{nNo}
     </delete>
+
+    <update id="AdmNoticeUpdate"  parameterType="com.yedam.tfprj.admin.community.service.AdmNoticeVO">
+        update notice_board
+        set title   = #{title},
+            details = #{details}
+        where n_no = #{nNo}
+    </update>
 
 </mapper>

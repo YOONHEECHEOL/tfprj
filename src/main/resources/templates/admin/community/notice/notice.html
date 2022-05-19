@@ -36,14 +36,17 @@
 </table>
     <input th:type="hidden" th:id="nNo" th:name="nNo">
 </form>
-<button onclick="location.href = '/noticeWrite'" style="float: right">작성</button>
+<button onclick="location.href = '/adm/noticeWrite'" style="float: right">작성</button>
 <button onclick="location.href = '/adm/index'" style="float: right">홈</button>
-</body>
-</html>
+
 <script>
     function callDetails(n){
         details.nNo.value = n;
-        details.action = "/noticeDetail";
+        details.action = "/adm/noticeDetail";
         details.submit();
     }
 </script>
+
+</body>
+</html>
+

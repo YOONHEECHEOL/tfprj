@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<div class="container">
+    <form th:id="notice" method="post" action="/adm/noticeUpdateForm">
+
+        <div>
+            <label>제목</label>
+            <input name="title" type="text"  th:value="${notice.title}">
+        </div>
+        <div class="form-group form-group-lg">
+            <label>내용</label>
+            <input name="details" type="text"  th:value="${notice.details}">
+        </div>
+        <button type="submit" id="frm" style="float: left">전송</button>
+    </form>
+
+    <input type="hidden" id="nNo" name="nNo" th:value="${notice.nNo}">
+    <input type="hidden" id="title" name="title" th:value="${notice.title}">
+    <input type="hidden" id="tdetails" name="details" th:value="${notice.details}">
+
+</div>
+
+<script>
+    frm.addEventListener('click', () => {
+        notice.submit()
+    })
+</script>
+
+</body>
+</html>

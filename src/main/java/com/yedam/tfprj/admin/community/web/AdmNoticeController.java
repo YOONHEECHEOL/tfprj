@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AdmNoticeController {
@@ -13,15 +14,15 @@ public class AdmNoticeController {
     @Autowired
     AdmNoticeService service;
 
-    @RequestMapping("/admNotice") //리스트
+    @RequestMapping("/adm/notice") //리스트
     public String AdmNoticeList(Model model, AdmNoticeVO vo) {
 
         model.addAttribute("admNotice", service.AdmNoticeList(vo));
         return "admin/community/notice/notice";
     }
 
-    @RequestMapping("/noticeDetail")
-    public String NoticeDetail(Model model, AdmNoticeVO vo){
+    @RequestMapping("/adm/noticeDetail")
+    public String NoticeDetail(Model model, AdmNoticeVO vo) {
         vo.setNNo(vo.getNNo());
         System.out.println(vo.getNNo());
         model.addAttribute("notice", service.AdmNoticeSelect(vo));
@@ -29,18 +30,32 @@ public class AdmNoticeController {
         return "admin/community/notice/notice_detail";
     }
 
-    @RequestMapping("/noticeDelete")
-    public String noticeDelete(Model model, AdmNoticeVO vo){
+    @RequestMapping(value = "/adm/noticeDelete", method = RequestMethod.GET)
+    public String noticeDelete(AdmNoticeVO vo) {
+        service.AdmNoticeDelete(vo);
+        vo.setNNo(vo.getNNo());
+        return "redirect:/adm/notice";
+    }
 
-        service.noticeDelete(vo);
+    @RequestMapping(value = "/adm/noticeUpdate", method = RequestMethod.POST)
+    public String noticeUpdate(Model model, AdmNoticeVO vo) {
 
-        return "redirect:/admNotice";
+        model.addAttribute("notice", service.AdmNoticeSelect(vo));
+
+        return "admin/community/notice/notice_update";
+    }
+    @RequestMapping("/adm/noticeUpdateForm")
+    public String AdmNoticeUpdate(Model model, AdmNoticeVO vo){
+
+        service.AdmNoticeUpdate(vo);
+
+        return "admin/community/notice/notice";
     }
 
 
-
-    @RequestMapping("/noticeWrite")
+    @RequestMapping("/adm/noticeWrite")
     public String NoticeWrite(Model model, AdmNoticeVO vo) {
+        service.AdmNoticeDelete(vo);
         return "admin/community/notice/noticeWrite";
     }
 
