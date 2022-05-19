@@ -184,6 +184,18 @@ main.contents {
     left: 0;
 }
 
+.message-caution {
+    padding: .8rem 0;
+    text-align: center;
+    color: #FF4F4F;
+    font-size: 2rem;
+    word-break: keep-all;
+}
+.message-caution > span {
+    font-size: 1.6rem;
+    color: #999;
+}
+
 
 /* footer */
 .footer {
@@ -262,7 +274,7 @@ main.contents {
     border: 1px solid #3765C7;
 }
 .c-button.disabled {
-    background: #bbb;
+    background: #f1f1f1;
     color: #999;
     border: 1px solid #999;
 }

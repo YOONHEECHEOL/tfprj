@@ -158,8 +158,35 @@ class convertCommonCode extends HTMLElement {
   }
 }
 
+// 팀원 불러오는 태그
+class teamMembers extends HTMLElement {
+  connectedCallback() {
+    // attribute로 teamId 받기
+
+    function getMemberList() {
+      // memberList 조회
+      fetch('')
+        .then(res => res.json())
+        .then(res => console.log(res))
+    }
+
+    getMemberList();
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({mode: 'open'});
+
+
+
+  }
+}
+
+
 customElements.define('t-h1',tH1)
 customElements.define('t-h2',tH2)
 customElements.define('convert-c-code',convertCommonCode)
+customElements.define('team-members', teamMembers)
 
 
