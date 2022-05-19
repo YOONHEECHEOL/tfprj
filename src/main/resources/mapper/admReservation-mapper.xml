@@ -8,4 +8,10 @@
 
     </select>
 
+    <select id="dayResList" resultType="com.yedam.tfprj.admin.reservation.service.ReservationVO">
+        SELECT *
+        FROM RESERVATION
+        WHERE TO_CHAR(START_TIME,'yyyy-MM-dd') = #{startStr}
+    </select>
+
 </mapper>
