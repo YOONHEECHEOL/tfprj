@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>귀찮게 꼭 디테일하게 해야하냐</title>
 </head>
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
+<div class="container">
+    <form th:id="details" method="post" action="/adm/noticeUpdate">
+
+        <div>
+            <h1>공지사항 상세보기</h1>
+        </div>
+
+        <div class="container" style="max-width: 880px;">
+            <table th:each="n, status : ${notice}" border="1" class="card" id="frm">
+                <tr>
+                    <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
+                    <td th:text="${n.nNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
+
+                    <th width="105" height="39" style="padding: 1px 1px 1px 10px">작성일자</th>
+                    <td th:text="${n.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
+                </tr>
+                <tr>
+                    <th height="39" style="padding: 1px 1px 1px 10px">제목</th>
+                    <td th:text="${n.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
+                </tr>
+                <tr>
+                    <th style="padding:1px 1px 1px 10px">내용</th>
+                    <td th:text="${n.details}" colspan="6">
+                        <textarea id="details" name="details" class="form-control" rows="10" cols="80"
+                                  required="required">
+                        </textarea>
+                    </td>
+                </tr>
+
+                <input type="hidden" id="nNo" name="nNo" th:value="${n.nNo}">
+                <input type="hidden" id="title" name="title" th:value="${n.title}">
+                <input type="hidden" id="wdate" name="wdate" th:value="${n.wdate}">
+                <input type="hidden" id="views" name="views" th:value="${n.views}">
+                <input type="hidden" id="tdetails" name="details" th:value="${n.details}">
+
+            </table>
+        </div>
+        <br>
+        <input th:type="hidden" th:id="nNo" th:name="nNo">
+    </form>
+</div>
+
+<button onclick="location.href = '/adm/notice'">뒤로가기</button>
+<button th:onclick="|location.href = '@{/adm/noticeDelete?nNo={no}(no=${notice.nNo})}'|" style="float: right">삭제</button>
+<button id="submitFrm" style="float: right">수정</button>
+
+<script>
+
+    submitFrm.addEventListener('click', () => {
+        details.submit()
+    })
+
+</script>
 
 </body>
 </html>
