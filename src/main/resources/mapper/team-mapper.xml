@@ -12,11 +12,13 @@
     </resultMap>
 
     <insert id="createTeam" parameterType="com.yedam.tfprj.client.team.service.TeamVO">
-        <selectKey keyProperty="teamId" resultType="int" order="BEFORE">
-            SELECT CASE WHEN MAX(TEAM_ID)IS NULL THEN 1 ELSE MAX(TEAM_ID)+1 END AS ID FROM TEAM
-        </selectKey>
-        INSERT INTO TEAM VALUES(#{teamId},#{leader},0,0,0,#{teamName})
+        INSERT INTO TEAM VALUES( seq_team.nextVal, #{leader},0,0,0,#{teamName})
     </insert>
+
+    <select id="findTeam" resultType="com.yedam.tfprj.client.team.service.TeamVO"
+            parameterType="com.yedam.tfprj.client.team.service.TeamVO">
+        SELECT * FROM TEAM WHERE LEADER=#{leader}
+    </select>
 
 
 </mapper>

@@ -4,9 +4,11 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-<input th:type="text" th:id="teamName" th:name="teamName">
-    <input th:type="text" th:id="reader" th:name="reader" th:value="|${session.memberId}|">
-
-
+    <form method="POST" action="/cli/myTeamCreate">
+<input th:type="hidden" th:id="memberId" th:name="memberId" th:value="|${session.memberId}|">
+<input th:type="text" th:id="teamName" th:name="teamName"><br>
+    <input th:type="text" th:id="leader" th:name="leader" th:value="|${session.memberId}|"><br>
+        <button th:type="submit" th:id="createBtn" >저장하기</button>
+    </form>
 </th:block>
 </html>

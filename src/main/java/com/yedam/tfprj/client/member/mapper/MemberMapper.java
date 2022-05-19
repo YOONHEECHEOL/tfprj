@@ -22,6 +22,7 @@ public interface MemberMapper {
     //멤버 정보 수정
     int updateMember(MemberVO vo);
 
+    int updateMember2(MemberVO vo);
     //멤버 스코어 조회
     GameVO selectGame(MemberVO vo);
 }

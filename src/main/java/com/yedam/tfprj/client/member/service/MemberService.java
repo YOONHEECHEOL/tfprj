@@ -23,6 +23,8 @@ public interface MemberService {
 
     int updateMember(MemberVO vo);
 
+    int updateMember2(MemberVO vo);
+
     GameVO selectGame(MemberVO vo);
 
 

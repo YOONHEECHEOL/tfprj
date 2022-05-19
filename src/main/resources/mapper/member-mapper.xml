@@ -33,6 +33,12 @@
         WHERE MEMBER_ID = #{memberId}
     </update>
 
+    <update id="updateMember2" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
+        UPDATE MEMBER
+        SET TEAM_ID = #{teamId}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
     <select id="selectGame" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
             resultType="com.yedam.tfprj.client.member.service.GameVO">
         SELECT*

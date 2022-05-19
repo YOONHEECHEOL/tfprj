@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 
 @Controller
 public class CliMemberController {
@@ -41,8 +43,6 @@ public class CliMemberController {
 
     @RequestMapping("/cli/myInfoUpdate")
     public String cliMyInfoUpdate(MemberVO vo) {
-        vo.setPassword(vo.getPassword());
-        vo.setTel(vo.getTel());
         memberMapper.updateMember(vo);
         return "redirect:/cli/myInfoUpdateForm";
     }
@@ -89,9 +89,26 @@ public class CliMemberController {
         HttpSession session = request.getSession();
         vo.setMemberId((String) (session.getAttribute("memberId")));
         vo = memberMapper.selectMember(vo);
-        System.out.println(vo.getTeamId());
         model.addAttribute("team",teamMapper.selectTeam(vo.getTeamId()));
         return "client/member/my_team";
+    }
+    @RequestMapping("/cli/myTeamCreateForm")
+    public String cliMyTeamCreateForm(){
+
+        return "client/member/my_team_create_form";
+    }
+
+    @RequestMapping(value = "/cli/myTeamCreate", method = RequestMethod.POST)
+    public String cliMyTeamCreate(TeamVO vo, MemberVO mvo){
+
+        teamMapper.createTeam(vo);
+        TeamVO tvo = teamMapper.findTeam(vo);
+
+        System.out.println(tvo.getTeamId());
+        mvo.setTeamId(tvo.getTeamId());
+        System.out.println(mvo.getTeamId());
+        memberMapper.updateMember2(mvo);
+        return "redirect:/cli/myTeam";
     }
 
 
