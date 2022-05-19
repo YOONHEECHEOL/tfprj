@@ -1,5 +1,6 @@
 package com.yedam.tfprj.client.member.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import com.yedam.tfprj.client.member.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
@@ -12,10 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CliMemberController {
@@ -108,8 +113,14 @@ public class CliMemberController {
         mvo.setTeamId(tvo.getTeamId());
         System.out.println(mvo.getTeamId());
         memberMapper.updateMember2(mvo);
-        return "redirect:/cli/myTeam";
+        return "redirect:cli/myTeam";
     }
 
+    @RequestMapping("/cli/searchMember")
+    @ResponseBody
+    public List<MemberVO> cliSearchMember(MemberVO vo){
+        System.out.println(vo.getMemberId());
 
+        return memberMapper.searchMember(vo);
+    }
 }

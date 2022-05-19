@@ -86,5 +86,10 @@ public class MemberServiceImpl implements MemberService {
         return null;
     }
 
+    @Override
+    public List<MemberVO> searchMember(MemberVO vo) {
+        return memberMapper.searchMember(vo);
+    }
+
 
 }

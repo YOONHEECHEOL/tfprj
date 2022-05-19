@@ -20,12 +20,18 @@ public interface MemberService {
 
     // 회원가입
     int insertMember(MemberVO vo);
-
+    
+    //회원정보수정
     int updateMember(MemberVO vo);
-
+    
+    //팀아이디수정
     int updateMember2(MemberVO vo);
-
+    
+    //기록 조회
     GameVO selectGame(MemberVO vo);
+    
+    //멤버 검색
+    List<MemberVO> searchMember(MemberVO vo);
 
 
 
