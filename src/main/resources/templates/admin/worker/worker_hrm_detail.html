@@ -32,7 +32,9 @@
             - 퇴근시간 : <input type="time" name="quittingTime"> <br><br>
             - 성별 : <input type="radio" value="0" name="gender">남성
                     <input type="radio" value="1" name="gender"> 여성<br><br>
-            - 생년월일 : <input type="text" id="datepicker" name="birth"><br><br>
+            - 생년월일 : <input type="text" class="datepicker" name="birth" readonly><br><br>
+            - 근무시작일 : <input type="text" class="datepicker" name="startDay" readonly><br><br>
+            - 근무자타입 : <select name="positionCd"><option value="0">월/목</option><option value="1">화/수/금</option></select><br><br>
             - 병역 : <select name="militaryCd"><option value="0">필</option><option value="1">미필</option></select>
             - 프로필 : <input type="file" name="file" onchange="setThumbnail(event);"><br><br>
             <div id="image_container"></div>
@@ -155,7 +157,8 @@
 </script>
 <script>
     //데이트피커
-    dateFormat: 'yy-mm-dd' //Input Display Format 변경
+    $(".datepicker").datepicker({
+        dateFormat: 'yy-mm-dd' //Input Display Format 변경
         ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
         ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
         ,changeYear: true //콤보박스에서 년 선택 가능
@@ -164,7 +167,6 @@
         ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
         ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
         ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
-    $("#datepicker").datepicker({
         ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
         ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
         ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트

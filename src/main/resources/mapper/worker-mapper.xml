@@ -21,6 +21,13 @@
         WHERE staff_Status_Cd = 0
     </select>
 
+    <select id="getExecl" resultType="map">
+        select worker_id as "workerId",
+               staff_status_cd as "staffStatusCd",
+               worker_name as "workerName"
+        from staff_information
+    </select>
+
     <select id="getWorkerListStaffCd1" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
         select worker_id,
                staff_status_cd,
@@ -72,6 +79,9 @@
                 fileName = #{fileName},
                 filePath = #{filePath},
             </if>
+            <if test="positionCd != ''">
+                position_cd = #{positionCd},
+            </if>
         </set>
         where worker_id = #{workerId}
     </update>
@@ -106,8 +116,8 @@
             #{birth},
             #{militaryCd},
             #{memo},
-            sysdate,
-            0,
+            #{startDay},
+            #{positionCd},
             0,
             0,
             0,
