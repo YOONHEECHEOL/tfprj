@@ -13,12 +13,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
     @Autowired
     WorkerMapper mapper;
+
+    @Override
+    public List<Map<String, Object>> getExecl() {
+        return mapper.getExecl();
+    }
 
     @Override
     public List<WorkerVO> getWorkerList() {

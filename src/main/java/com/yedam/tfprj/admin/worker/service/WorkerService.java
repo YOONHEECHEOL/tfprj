@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 public interface WorkerService {
+    public List<Map<String, Object>> getExecl();
     public List<WorkerVO> getWorkerList();
     public List<WorkerVO> getWorkerListStaffCd1();
     public WorkerVO getWorker(String workerId);

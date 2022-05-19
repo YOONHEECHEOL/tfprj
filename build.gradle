@@ -24,6 +24,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    implementation 'org.apache.poi:poi-ooxml:3.14'
+
 }
 
 tasks.named('test') {

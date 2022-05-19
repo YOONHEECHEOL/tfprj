@@ -81,4 +81,13 @@ public class AdmWorkerController {
 
         workerServiceImpl.workerDetailUpdate(staffStatusCd, birth, response, file, vo);
     }
+
+    @RequestMapping("/adm/worker_excel")
+    public String excel(Model model){
+        String[] header = {"workerId", "staffStatusCd", "workerName"};
+        model.addAttribute("headers", header);
+        model.addAttribute("filename", "workerList");
+        model.addAttribute("datas", workerServiceImpl.getExecl());
+        return "commonExcelView";
+    }
 }
