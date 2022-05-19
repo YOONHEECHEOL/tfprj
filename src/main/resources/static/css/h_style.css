@@ -280,3 +280,19 @@ main.contents {
 }
 
 /* table */
+
+
+/* modal */
+.modal {
+    width: calc(100% - 4%) !important;
+    height: calc(80vh - 3.2rem) !important;
+    padding: 1.6rem;
+    top: 10vh !important;
+    left: 2% !important;
+    background: #fff !important;
+    border: 1px solid #bbb;
+    z-index: 9999;
+}
+.modal-content {
+    border: 0 !important;
+}

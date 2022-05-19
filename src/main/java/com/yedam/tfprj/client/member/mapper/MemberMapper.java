@@ -25,4 +25,7 @@ public interface MemberMapper {
     int updateMember2(MemberVO vo);
     //멤버 스코어 조회
     GameVO selectGame(MemberVO vo);
+    
+    //멤버명 검색
+    List<MemberVO> searchMember(MemberVO vo);
 }
