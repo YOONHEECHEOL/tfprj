@@ -3,12 +3,11 @@ package com.yedam.tfprj.client.league.service;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.team.service.TeamVO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-public class LeagueServiceVO {
+public class CliLeagueServiceVO {
 
     private List<LeagueVO> currentList;
     private List<LeagueVO> passedList;
@@ -16,15 +15,15 @@ public class LeagueServiceVO {
     protected LeagueVO leagueVO;
     protected TeamVO teamVO;
 
-    public LeagueServiceVO() {
+    public CliLeagueServiceVO() {
         this.loginedMember = new MemberVO();
     }
 
-    public LeagueServiceVO(LeagueVO leagueVO) {
+    public CliLeagueServiceVO(LeagueVO leagueVO) {
         this.leagueVO = new LeagueVO();
     }
 
-    public LeagueServiceVO(TeamVO teamVO) {
+    public CliLeagueServiceVO(TeamVO teamVO) {
         this.teamVO = new TeamVO();
     }
 }
