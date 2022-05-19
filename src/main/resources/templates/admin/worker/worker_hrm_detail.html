@@ -5,20 +5,37 @@
     <title>Title</title>
 </head>
 <body>
+<script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script>
+    //근무자 정보 작성 후 확인 버튼을 눌렀을 때 알림창
+    function validateForm(){
+    $('#submitFrm').submit();
+    alert('작성완료.')
+    }
+</script>
 <div>
     <h3>상세조회</h3>
     <h4>근무자 등록</h4>
     <div>
-        <form method="post" th:action="@{/adm/worker_hrm_detail_write}">
+        <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_write}" enctype="multipart/form-data">
             - 아이디 : <input type="text" name="workerId"><br><br>
             - 이름 : <input type="text" name="workerName"> <br><br>
             - 비밀번호 : <input type="password" name="password"> <br><br>
             - 연락처 : <input type="text" name="phoneNo"> <br><br>
-            - 성별 : <input type="radio" name="0"> 남성 <input type="radio" name="1"> 여성<br><br>
-            - 생년월일 : <input type="text" name="birth"><br><br>
+            - 출근시간 : <input type="time" name="goingTime"> <br><br>
+            - 퇴근시간 : <input type="time" name="quittingTime"> <br><br>
+            - 성별 : <input type="radio" value="0" name="gender">남성
+                    <input type="radio" value="1" name="gender"> 여성<br><br>
+            - 생년월일 : <input type="text" id="datepicker" name="birth"><br><br>
             - 병역 : <select name="militaryCd"><option value="0">필</option><option value="1">미필</option></select>
-            - 프로필 : <input type="file"><br><br>
-            <div id="profilePic"></div>
+            - 프로필 : <input type="file" name="file" onchange="setThumbnail(event);"><br><br>
+            <div id="image_container"></div>
             <input type="text" id="sample4_postcode" placeholder="우편번호" name="postcode">
             <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
             <input type="text" id="sample4_roadAddress" placeholder="도로명주소" name="roadAddress">
@@ -67,7 +84,7 @@
             <td>0회</td>
         </tr>
     </table>
-    <span><button>저장하기</button></span>
+    <span><button type="button" onclick="validateForm()">저장하기</button></span>
     <span><button>취소하기</button></span>
     </form>
 </div>
@@ -120,6 +137,40 @@
             }
         }).open();
     }
+</script>
+<script>
+
+    // 파일 선택 후 썸네일을 업로드.
+    function setThumbnail(event) {
+        $('#image').remove();
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("style", "width=10px; height=10px")
+            document.querySelector("div#image_container").appendChild(img);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+<script>
+    //데이트피커
+    dateFormat: 'yy-mm-dd' //Input Display Format 변경
+        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+        ,changeYear: true //콤보박스에서 년 선택 가능
+        ,changeMonth: true //콤보박스에서 월 선택 가능
+        ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
+        ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+        ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+        ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
+    $("#datepicker").datepicker({
+        ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+        ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+    });
 </script>
 
 </html>
