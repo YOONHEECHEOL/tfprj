@@ -3,15 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script th:defer th:src="@{/js/yjs.js}" ></script>
 </head>
 <body>
-<h3 class="h3">지난 리그</h3>
+<h1>일별 조회</h1>
+<h3 th:text="${date}"></h3>
+<h4>근무자 등록</h4>
+<table th:border="1">
+    <thead>
+    <tr>
+        <th th:width="100">no</th>
+        <th th:width="100">룸</th>
+        <th th:width="500">시간</th>
+        <th th:width="150">금액</th>
+        <th th:width="150">예약자</th>
+        <th th:width="150">결제상태</th>
+        <th th:width="150">결제방법</th>
+        <th th:width="150">게임상태</th>
+        <th th:width="150">예약설정</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="l, index : ${dayResList}">
+        <td th:text="${l.getResId()}">no</td>
+        <td th:text="${l.getRoom()}">룸</td>
+        <td th:class="time" th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간</td>
+        <td th:class="price">금액</td>
+        <td th:text="${l.getName()}">예약자</td>
+        <td>
+            <convert-c-code th:data="${l.getPaymentStatusCd()}"></convert-c-code>
+        </td>
+        <td >
+            <convert-c-code th:data="${l.getPaymentMethodCd()}"></convert-c-code>
+        </td>
+        <td th:if="${#dates.format(l.startTime, 'HH:mm')}"게임상태></td>
+        <td>예약설정</td>
+    </tr>
+
+    </tbody>
+
+</table>
 <div th:each="l, status: ${dayResList}">
-    <span th:text="${l.startTime}">xxxx</span><br>
+
     <span th:text="${#dates.format(l.startTime, 'yyyy-MM-dd')}">시작일</span><br>
 </div>
 
 
 </body>
+<script>
+    let timeList = $("tbody").children().find(".time");
+    let priceList = $("tbody").children().find(".price");
+    let gameStatusList = $("tbody").children().find(".gameStatus");
+    console.log(timeList);
+    console.log(priceList);
+
+
+    let length =  timeList.length;
+    for(let i=0; i<length; i++){
+        var text = timeList[i].innerHTML;
+        var startTime = text.substring(0,2);
+        var endTime = text.substring(8,10);
+        var time = endTime-startTime;
+        console.log(text);
+        timeList[i].innerHTML = text+ "&nbsp"+ "("+time + "시간)";
+        priceList[i].innerHTML=  time * 50000;
+    }
+    console.log(length);
+</script>
 
 </html>
