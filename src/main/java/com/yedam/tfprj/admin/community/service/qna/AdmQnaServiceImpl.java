@@ -33,7 +33,17 @@ public class AdmQnaServiceImpl implements AdmQnaService {
     }
 
     @Override
-    public void AmdQnaInsert(AdmQnaVO vo){
-        map.AmdQnaInsert(vo);
+    public void AdmQnaInsert(AdmQnaVO vo){
+        map.AdmQnaInsert(vo);
+    }
+
+    @Override
+    public List<AdmQnaVO> AdmReplyList(AdmQnaVO vo){
+        return map.AdmReplyList(vo);
+    }
+
+    @Override
+    public void AdmQnaAnswerInsert(AdmQnaVO vo){
+        map.AdmQnaAnswerInsert(vo);
     }
 }

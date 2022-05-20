@@ -10,6 +10,14 @@
         ORDER BY q_no ASC
     </select>
 
+    <select id="AdmReplyList" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, Q.Q_NO
+        FROM    QNA_ANSWER C, QNA_BOARD Q
+        WHERE   Q.Q_NO = C.Q_NO
+        AND     Q.Q_NO = #{qNo}
+        ORDER BY C_NO ASC
+    </select>
+
     <select id="AdmQnaSelect" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO"
             parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
         select *
@@ -31,9 +39,13 @@
         where q_no = #{qNo}
     </update>
 
-    <insert id="AdmNoticeInsert" parameterType="com.yedam.tfprj.admin.community.service.notice.AdmNoticeVO">
-        INSERT INTO NOTICE_BOARD
-        VALUES(qno_seq.nextval, admin, #{title}, sysdate, 0, #{details})
+    <insert id="AdmQnaInsert" parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        INSERT INTO QNA_BOARD
+        VALUES(qno_seq.nextval, #{title}, 'admin', sysdate, 0, #{details})
     </insert>
 
+    <insert id="AdmQnaAnswerInsert" parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        INSERT INTO QNA_ANSWER
+        VALUES(qcno_seq.nextval, sysdate, #{cdetails}, 'admin', #{qNo})
+    </insert>
 </mapper>

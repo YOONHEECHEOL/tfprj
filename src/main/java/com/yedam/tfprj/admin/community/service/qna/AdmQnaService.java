@@ -13,5 +13,9 @@ public interface AdmQnaService {
 
     public void AdmQnaUpdate(AdmQnaVO vo);
 
-    public void AmdQnaInsert(AdmQnaVO vo);
+    public void AdmQnaInsert(AdmQnaVO vo);
+
+    public List<AdmQnaVO> AdmReplyList(AdmQnaVO vo);
+
+    public void AdmQnaAnswerInsert(AdmQnaVO vo);
 }

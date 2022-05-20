@@ -27,9 +27,9 @@
 <article>
     <div class="container" role="main">
 
-        <h1>공지사항 작성</h1>
+        <h1>QNA 작성</h1>
 
-        <form name="form" id="form" role="form" method="post" action="/adm/noticeInsert">
+        <form  name="form" id="form" role="form" method="post" action="/adm/qnaInsert">
 
             <div class="mb-3">
                 <label for="title">제목</label>
@@ -42,17 +42,10 @@
                           placeholder="내용을 입력해 주세요"></textarea>
             </div>
 
-
-            <!--  <div class="mb-3">
-                  <label for="tag">TAG</label>
-                  <input type="text" class="form-control" name="tag" id="tag" placeholder="태그를 입력해 주세요">
-              </div>-->
-
-
             <div>
                 <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
 
-                <button type="button" style="float: right" onclick="location.href = '/adm/notice'"
+                <button type="button" style="float: right" onclick="location.href = '/adm/qna'"
                         class="btn btn-sm btn-primary">목록
                 </button>
             </div>
@@ -61,8 +54,6 @@
 
     </div>
 </article>
-</body>
-</html>
 <script>
     ClassicEditor
 
@@ -80,3 +71,5 @@
 
         } );
 </script>
+</body>
+</html>

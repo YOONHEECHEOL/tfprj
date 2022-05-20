@@ -34,4 +34,5 @@ public class AdmNoticeServiceImpl implements AdmNoticeService {
     public void AdmNoticeInsert(AdmNoticeVO vo){
         map.AdmNoticeInsert(vo);
     }
+
 }

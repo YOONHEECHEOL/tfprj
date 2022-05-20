@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>귀찮게 꼭 디테일하게 해야하냐</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
-<html xmlns:th="http://www.thymeleaf.org">
+<style>
+     #frm{
+        padding-top: 50px;
+        padding-bottom: 50px;
+        border: none;
+    }
+     #table2{
+         padding-top: 50px;
+         padding-bottom: 50px;
+     }
+</style>
+
 <body>
 <div class="container">
     <form th:id="details" method="post" action="/adm/qnaUpdate">
@@ -42,6 +55,8 @@
                 <input type="hidden" id="qdetails" name="details" th:value="${q.details}">
                 <input type="hidden" id="writer" name="writer" th:value="${q.writer}">
             </table>
+
+
         </div>
         <br>
         <input th:type="hidden" th:id="qNo" th:name="qNo">
@@ -51,6 +66,51 @@
 <button onclick="location.href = '/adm/qna'">뒤로가기</button>
 <button th:onclick="|location.href = '@{/adm/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right">삭제</button>
 <button id="submitFrm" style="float: right">수정</button>
+
+<h1>답글</h1>
+
+<form method="post" action="/adm/qnaAnswerInsert">
+    <div class="mb-3">
+        <label for="cdetails">내용</label>
+        <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
+                  placeholder="내용을 입력해 주세요"></textarea>
+    </div>
+    <div>
+        <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="작성">
+    </div>
+    <input type="hidden" name="qNo" th:value="${qna.qNo}">
+</form>
+
+
+
+<div class="container" >
+    <form>
+        <table id="table2" class="table">
+            <thead>
+            <tr>
+                <th>작성자 + 작성일</th>
+                <th>내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div id="qna" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
+                <tr>
+                    <td th:text="${re.cwriter}"></td>
+
+                    <td th:text="${re.cdetails}"></td>
+                </tr>
+                <tr>
+                    <td th:text="${re.cdate}"></td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+        <input th:type="hidden" th:id="qNo" th:name="qNo">
+    </form>
+</diV>
+
+
+
 <script>
 
     submitFrm.addEventListener('click', () => {

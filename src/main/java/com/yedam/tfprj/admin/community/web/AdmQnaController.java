@@ -25,8 +25,16 @@ public class AdmQnaController {
     @RequestMapping("/adm/qnaDetail")
     public String qnaDetail(Model model, AdmQnaVO vo){
         vo.setQNo(vo.getQNo());
-        model.addAttribute("qna",service.AdmQnaSelect(vo));
+        model.addAttribute("qna",service.AdmQnaSelect(vo)); //디테일 출력
+        model.addAttribute("reply", service.AdmReplyList(vo)); // 코맨트 리스트
         return "admin/community/qna/qna_detail";
+    }
+
+    @RequestMapping("/adm/qnaAnswerInsert")
+    public String qnaAnswerInsert(Model model, AdmQnaVO vo){
+        service.AdmQnaAnswerInsert(vo); // 코멘트 인서트
+
+        return "redirect:/adm/qnaDetail?qNo="+vo.getQNo();
     }
 
     @RequestMapping(value = "/adm/qnaDelete", method = RequestMethod.GET)
@@ -49,16 +57,21 @@ public class AdmQnaController {
         return "redirect:/adm/qna";
     }
 
-    @RequestMapping("/adm/noticeWrite")
+
+    @RequestMapping("/adm/qnaWrite")
     public String AdmQnaWrite(Model model, AdmQnaVO vo){
-        model.addAttribute("Qna", vo);
+        model.addAttribute("qna", vo);
         return "/admin/community/qna/qnaWrite";
     }
 
-    @RequestMapping("/adm/qnaInsert")
-    public String AdmQnaInsert(Model model, AdmQnaVO vo){
 
-        return "redirect/adm/qna";
+    @RequestMapping("/adm/qnaInsert")
+    public String AmdQnaInsert(Model model, AdmQnaVO vo){
+        service.AdmQnaInsert(vo);
+        return "redirect:/adm/qna";
     }
+
+
+
 
 }

@@ -10,4 +10,9 @@ public class AdmQnaVO {
     private int     views;
     private String  details;
     private String  writer;
+    private int     cNo;
+    private String  cdate;
+    private String  cdetails;
+    private String  cwriter;
+
 }
