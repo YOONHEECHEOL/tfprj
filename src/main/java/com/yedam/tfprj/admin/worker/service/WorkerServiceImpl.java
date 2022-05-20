@@ -22,6 +22,11 @@ public class WorkerServiceImpl implements WorkerService {
     WorkerMapper mapper;
 
     @Override
+    public List<WorkerVO> allWorkerList() {
+        return mapper.allWorkerList();
+    }
+
+    @Override
     public List<Map<String, Object>> getExecl() {
         return mapper.getExecl();
     }

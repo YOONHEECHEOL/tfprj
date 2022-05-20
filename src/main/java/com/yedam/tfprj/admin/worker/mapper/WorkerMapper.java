@@ -8,6 +8,7 @@ import java.util.Map;
 
 @Mapper
 public interface WorkerMapper {
+    public List<WorkerVO> allWorkerList();
     public List<WorkerVO> getWorkerList();
     public List<Map<String, Object>> getExecl();
     public List<WorkerVO> getWorkerListStaffCd1();

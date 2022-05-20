@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.admin.workerAttendance.mapper.WorkerAttendanceMapper">
+
+    <select id="getNowWorker" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        select *
+        from staff_attendance a, staff_information i
+        where a.worker_id = i.worker_id
+        and to_char(sysdate, 'hh24:mi') between a.in_time and a.out_time
+    </select>
+
+</mapper>
+

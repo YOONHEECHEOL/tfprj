@@ -83,11 +83,11 @@ public class AdmWorkerController {
     }
 
     @RequestMapping("/adm/worker_excel")
-    public String excel(Model model){
+    public CommonExcelView excel(Model model){
         String[] header = {"workerId", "staffStatusCd", "workerName"};
         model.addAttribute("headers", header);
         model.addAttribute("filename", "workerList");
         model.addAttribute("datas", workerServiceImpl.getExecl());
-        return "commonExcelView";
+        return new CommonExcelView();
     }
 }
