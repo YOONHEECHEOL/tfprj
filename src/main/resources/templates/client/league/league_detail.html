@@ -7,9 +7,8 @@
 
     <t-h1 en="LEAGUE" ko="리그"></t-h1>
 
-
     <t-h2 th:ko="${l.leagueVO.leagueName}"></t-h2>
-
+    <h3 class="h3">리그 정보</h3>
     <table class="table">
         <tbody>
             <tr>
@@ -19,7 +18,7 @@
                     <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'yyyy-MM-dd')}">시작일</span><br>
                     <span>상금 : </span><span th:text="${l.leagueVO.prizeMoney}">상금</span><br>
                     <span th:text="${'참가비 : ' + l.leagueVO.entryFee}">참가비</span><br>
-                    <span th:text="${'승리팀 : ' + l.leagueVO.winningTeam}">승리팀</span><br>
+<!--                    <span th:text="${'승리팀 : ' + l.leagueVO.winningTeam}">승리팀</span><br>-->
                 </td>
             </tr>
             <tr>
@@ -38,28 +37,113 @@
                 <!-- 팀이 있는 경우 -->
                 <td th:if="${l.loginedMember.getTeamId() != 0}">
                     <!-- 세션을 통해 팀 조회, 없으면 팀생성 버튼 -->
-                    <h3>팀조회</h3>
-                    <span th:text="${l.teamVO.getTeamId()}">팀아이디</span><br>
-                    <span th:text="${l.teamVO.getLeader()}">팀장</span><br>
-                    <span th:text="${l.teamVO.getTeamName()}">팀이름</span><br>
-                    <span th:text="${l.teamVO.getTotalGameCnt()}">팀 게임수</span><br>
-                    <span th:text="${l.teamVO.getWin()}">팀 승수</span>
+                    <h3 class="h3">나의 팀</h3>
+<!--                    <span th:text="${l.teamVO.getTeamId()}">팀아이디</span><br>-->
+                    <div class="row">
+                        <div class="col-6">
+                            <h4 class="h4" th:text="${'[팀명] ' + l.teamVO.getTeamName()}">팀이름</h4>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="h4" th:text="${'[팀장] ' + l.teamVO.getLeader()}">팀장</h4>
+                        </div>
+                    </div>
+
+                    <hr>
+<!--                    <span th:text="${l.teamVO.getTotalGameCnt()}">팀 게임수</span><br>-->
+<!--                    <span th:text="${l.teamVO.getWin()}">팀 승수</span>-->
 
                     <!-- 팀이 있으면 팀원 option 생성 후 select 에 append -->
-                    <h3 class="h3">팀원 선택</h3>
-                    <select name="" id="" class="form-control">
-                    <!-- option 을 불러오는 태그 필요 -->
-                        <team-members></team-members>
-                    </select>
-                    <div class="button__box">
-                        <a class="c-button" href="">참가하기</a>
+                    <h3 class="h3" th:data="${l.leagueVO.getParticipationMember()}" id="sm">팀원 선택</h3>
+                    <form method="post" id="leagueSubmitFrm" action="/cli/leagueApply">
+                        <input type="hidden" th:value="${l.leagueVO.getLeagueId()}" name="lno">
+                        <input type="hidden" value="" id="formVal" name="formVal">
+                        <div class="row " id="outputSelect">
+                            <div class="col-12">
+                                <span>🏏 1번 타자</span>
+                                <select name="fs0" id="fs0" class="form-control"  >
+                                    <option th:each="members, status: ${l.teamMembers}" th:text="${members.getMemberId()}" th:value="${members.getMemberId()}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="button__box mt20">
+                        <button class="c-button" onclick="leagueSubmit()" >참가하기</button>
                     </div>
+<!--                    th:href="${'/cli/leagueApply?lno=' + l.leagueVO.getLeagueId()}"-->
                 </td>
 
             </tr>
         </tbody>
     </table>
 
+    <script>
+
+        $.fn.serializeObject = function() {
+            "use strict"
+            var result = {}
+            var extend = function(i, element) {
+                var node = result[element.name]
+                if ("undefined" !== typeof node && node !== null) {
+                    if ($.isArray(node)) {
+                        node.push(element.value)
+                    } else {
+                        result[element.name] = [node, element.value]
+                    }
+                } else {
+                    result[element.name] = element.value
+                }
+            }
+
+            $.each(this.serializeArray(), extend)
+            return result
+        }
+
+        if(document.querySelector('#sm') != undefined) {
+            console.log(document.querySelector('#sm').getAttribute('data'))
+            let cnt = document.querySelector('#sm').getAttribute('data')
+            let s = document.querySelector('#outputSelect')
+            let fs = document.querySelector('#fs0')
+            let fsCnt = document.querySelector('#fs0').children.length
+            let fsArr = document.querySelector('#fs0').children // 팀에 속한 멤버 수, array 반환
+
+            let valArr = []
+            for(let i =0; i < fsCnt; i++) {
+                valArr.push(fsArr[i].getAttribute('value'))
+            }
+            console.log(valArr)
+
+            for(let i=0; i < cnt-1; i++ ) {
+               let col = document.createElement('div');
+               col.setAttribute('class', 'col-12 mt12')
+
+               let span = document.createElement('span')
+               span.innerText = '🏏' + (i+2) + '번 타자';
+
+              let sel = fs.cloneNode(true);
+               sel.id = 'fs'+(i+1);
+               sel.setAttribute('name', 'fs'+(i+1));
+               col.append(span, sel)
+               s.append(col);
+            }
+
+        }
+
+        function leagueSubmit() {
+            let arr = []
+            let fsCnt = document.querySelector('#fs0').children.length
+
+            let data = document.querySelector('#leagueSubmitFrm')
+            console.log( JSON.stringify( $('#leagueSubmitFrm').serializeArray() ) )
+
+            let input = JSON.stringify( $('#leagueSubmitFrm').serializeArray() );
+            document.querySelector('#formVal').setAttribute('value', input);
+
+            data.submit()
+        }
+
+
+    </script>
 
 
 </th:block>

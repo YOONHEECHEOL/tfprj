@@ -34,6 +34,6 @@ public class AdmQnaServiceImpl implements AdmQnaService {
 
     @Override
     public void AmdQnaInsert(AdmQnaVO vo){
-        map.AmdQnaInsert(vo);
+//        map.AmdQnaInsert(vo);
     }
 }

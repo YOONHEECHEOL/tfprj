@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/cli_layout}">
 
-</body>
+<th:block layout:fragment="content">
+
+    <t-h1 ko="리그신청완료" en="LEAGUE"></t-h1>
+
+    <t-h2 th:ko="${l.leagueVO.leagueName}"></t-h2>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>
+                <span th:text="${l.leagueVO.leagueId}"></span><br>
+                <convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code><br>
+                <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                <span>상금 : </span><span th:text="${l.leagueVO.prizeMoney}">상금</span><br>
+                <span th:text="${'참가비 : ' + l.leagueVO.entryFee}">참가비</span><br>
+<!--                <span th:text="${'승리팀 : ' + l.leagueVO.winningTeam}">승리팀</span><br>-->
+            </td>
+        </tr>
+        <tr>
+            <td th:if="${l.loginedMember.getTeamId() != 0}">
+                <!-- 세션을 통해 팀 조회, 없으면 팀생성 버튼 -->
+                <h3 class="h3">나의 팀</h3>
+                <!--                    <span th:text="${l.teamVO.getTeamId()}">팀아이디</span><br>-->
+                <div class="row">
+                    <div class="col-6">
+                        <h4 class="h4" th:text="${'[팀명] ' + l.teamVO.getTeamName()}">팀이름</h4>
+                    </div>
+                    <div class="col-6">
+                        <h4 class="h4" th:text="${'[팀장] ' + l.teamVO.getLeader()}">팀장</h4>
+                    </div>
+                </div>
+
+                <hr>
+                <!--                    <span th:text="${l.teamVO.getTotalGameCnt()}">팀 게임수</span><br>-->
+                <!--                    <span th:text="${l.teamVO.getWin()}">팀 승수</span>-->
+
+                <!-- 팀이 있으면 팀원 option 생성 후 select 에 append -->
+                <h3 class="h3" th:data="${l.leagueVO.getParticipationMember()}" id="sm">선발 타자</h3>
+                    <input type="hidden" th:value="${l.leagueVO.getLeagueId()}" name="lno">
+                    <input type="hidden" value="" id="formVal" name="formVal">
+                    <div class="row " id="outputSelect">
+                        <div class="col-12" th:each="m, status: ${selectedMember}" >
+                            <!-- 선택된 멤버 입력 -->
+                            <span th:text="${status.index + '번 타자 : ' + m.value}"></span>
+                        </div>
+                    </div>
+                <div class="message-caution mt20">
+                    리그 참가 신청이 완료되었습니다.<br>
+                    <span>관리자 승인 후 리그 참가가 확정됩니다.</span>
+                </div>
+
+                <div class="button__box mt20">
+                    <button class="c-button" onclick="" >나의 리그신청</button>
+                    <button class="c-button" onclick="" >신청취소</button>
+                </div>
+                <!--                    th:href="${'/cli/leagueApply?lno=' + l.leagueVO.getLeagueId()}"-->
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</th:block>
+
 </html>

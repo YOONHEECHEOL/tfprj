@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +31,15 @@ public class CliLeagueController {
         return "client/league/league_detail";
     }
 
-    @RequestMapping("/cli/leagueApply")
-    public String leagueApply() {
+    @RequestMapping(value = "/cli/leagueApply", method = RequestMethod.POST)
+    public String leagueApply(int lno, Model model, HttpServletRequest request, String formVal) {
+
+        model.addAttribute("selectedMember", leagueServiceImpl.getLeagueParticipatedMember(formVal));
+        model.addAttribute("l", leagueServiceImpl.getLeagueDetail(lno, request.getSession().getAttribute("memberId").toString()));
+        
+        // insert 처리
+        leagueServiceImpl.insertLeagueApply(leagueServiceImpl.getLeagueDetail(lno, request.getSession().getAttribute("memberId").toString()) ,leagueServiceImpl.getLeagueParticipatedMember(formVal));
+
         return "client/league/league_apply";
     }
 
