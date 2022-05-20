@@ -34,10 +34,10 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         String StrJsonList = "";
         try {
-            StrJsonList = mapper.writeValueAsString(jsonList);
+            StrJsonList = objectMapper.writeValueAsString(jsonList);
             System.out.println(StrJsonList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,8 +47,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationVO> dayResList(String startStr) {
-
-        return mapper.dayResList(startStr);
+        List<ReservationVO> list = mapper.dayResList(startStr);
+        System.out.println(list);
+        return list;
     }
 
 

@@ -25,4 +25,7 @@ public class ReservationVO {
     private Date resDate;
     private String tel;
     private String name;
+    private String paymentId;
+    private String paymentStatusCd;
+    private String paymentMethodCd;
 }

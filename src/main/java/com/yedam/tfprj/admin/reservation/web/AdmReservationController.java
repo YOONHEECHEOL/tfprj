@@ -19,6 +19,7 @@ public class AdmReservationController {
     public String resDay(@RequestParam String startStr, Model model){
         System.out.println(startStr);
         model.addAttribute("dayResList",reservationServiceImpl.dayResList(startStr));
+        model.addAttribute("date",startStr);
 
         return "admin/reservation/reservation_day";
     }
