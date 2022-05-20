@@ -123,4 +123,14 @@ public class CliMemberController {
 
         return memberMapper.searchMember(vo);
     }
+
+    @RequestMapping("/cli/isTeam")
+    public String cliIsTeam(MemberVO vo,TeamVO tvo, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        memberMapper.selectMember(vo);
+
+
+        return "client/team/team_info_leader";
+    }
 }
