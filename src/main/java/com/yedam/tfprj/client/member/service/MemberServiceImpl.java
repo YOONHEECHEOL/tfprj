@@ -91,5 +91,10 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.searchMember(vo);
     }
 
+    @Override
+    public MemberVO isTeam(MemberVO vo) {
+        return memberMapper.isTeam(vo);
+    }
+
 
 }

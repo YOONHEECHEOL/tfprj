@@ -33,6 +33,9 @@ public interface MemberService {
     //멤버 검색
     List<MemberVO> searchMember(MemberVO vo);
 
+    //팀에 속해 있는 멤버 조회
+    MemberVO isTeam(MemberVO vo);
+
 
 
 }

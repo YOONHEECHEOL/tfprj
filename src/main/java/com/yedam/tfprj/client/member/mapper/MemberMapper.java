@@ -6,6 +6,7 @@ import com.yedam.tfprj.client.member.service.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
 
+
 import java.util.List;
 
 @Mapper
@@ -28,4 +29,7 @@ public interface MemberMapper {
     
     //멤버명 검색
     List<MemberVO> searchMember(MemberVO vo);
+
+    //팀에 속해 있는 멤버 조회
+    MemberVO isTeam(MemberVO vo);
 }

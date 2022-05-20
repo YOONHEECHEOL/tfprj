@@ -65,7 +65,7 @@
             <!-- 여기서 -->
             <div class="button__box">
                 <button class="button button-common" id="cancelBtn">취소하기</button>
-                <button class="button button-primary" id="addMemberBtn">등록하기</button>
+                <button class="button button-primary" id="regMemberBtn">등록하기</button>
             </div>
         </div>
     </div>
@@ -84,16 +84,36 @@
             cliSliderNavBg.classList.remove('active');
         })
 
+        //등록버튼 클릭시 체크된 memberId값을 넘겨 ajax호출
+        $("#regMemberBtn").on("click", function () {
+            var checkbox = $('input[id=checkbox]:checked');
+            var tr = checkbox.parent().parent();
+            var td = tr.children();
+            var code = td.eq(1).text();
+
+            var tdArray = new Array();
+            checkbox.each(function(i){
+                tr = checkbox.parent().parent().eq(i);
+                td = tr.children();
+                code = td.eq(1).text();
+                tdArray.push({memberId: code});
+            });
+            console.log(tdArray);
+            for(list of tdArray){
+                makeAdd(list);
+            }
+            $(".modal").fadeOut();
+            cliSliderNavBg.classList.remove('active');
+        });
+
         //search 버튼 클릭시 멤버 검색 ajax호출
         $("#searchBtn").on("click", function () {
             $.ajax({
                 url: "/cli/searchMember",
                 data: {memberId: $("#searchVal").val()}
             }).done(function (data) {
-                console.log(data);
                 $("#memberList").html('');
                 for (list of data) {
-                    console.log(list.memberId);
                     $("#memberList").append(makeTr(list));
                 }
             })
@@ -101,11 +121,17 @@
 
         //검색 결과 출력
         function makeTr(list) {
-            console.log(list);
             var tr = $("<tr>");
-            tr.append(`<td class="text-center">\ ${list.memberId} </td>`)
+            tr.append(`<td class="text-center"><input type="checkbox" id="checkbox"></td>
+            <td class="text-center">${list.memberId}</td>`)
             return tr;
         }
+        //팀원추가 결과 draw
+        function makeAdd(list){
+            $("#addMem").prepend(`<span>${list.memberId}</span><br>`)
+        }
+
+
     </script>
 </th:block>
 </html>
