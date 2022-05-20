@@ -296,3 +296,12 @@ main.contents {
 .modal-content {
     border: 0 !important;
 }
+
+.bg-gradient-primary {
+    background-color: #222 !important;
+    background-image: none !important;
+}
+#adm-content {
+    flex: 1 0 auto;
+    padding: 0 2rem;
+}

@@ -278,7 +278,7 @@ class aH1 extends HTMLElement {
           position: absolute;
           color: #3765C7;
           bottom: 0;
-          left: 2rem;
+          left: 0rem;
           padding: 2rem 0 0;
           margin: 0;
           display: inline-block;
@@ -286,17 +286,18 @@ class aH1 extends HTMLElement {
       .h1__box {
           position: relative;
           height: 12rem;
-          overflow: hidden;
       }
       .h1__box > div > span {
           font-family: "esB";
           position: absolute;
-          bottom: 4.2rem;
+          bottom: -2rem;
           left: 2rem;
           font-size: 4.4rem;
           color: #fff;
       }
       .h1__box > div {
+          width: calc(100% + 4rem);
+          transform: translate(-2rem, 0);
           height: 6rem;
           background: #3765C7;
       }
