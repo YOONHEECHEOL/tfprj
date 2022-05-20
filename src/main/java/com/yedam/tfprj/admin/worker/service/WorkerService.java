@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface WorkerService {
+    public List<WorkerVO> allWorkerList();
     public List<Map<String, Object>> getExecl();
     public List<WorkerVO> getWorkerList();
     public List<WorkerVO> getWorkerListStaffCd1();
