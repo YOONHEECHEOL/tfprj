@@ -21,6 +21,14 @@
         </if>
     </select>
 
+    <select id="findOne"
+            parameterType="com.yedam.tfprj.client.member.service.MemberVO"
+            resultType="com.yedam.tfprj.client.member.service.MemberVO">
+        SELECT *
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
     <select id="selectAll" resultType="com.yedam.tfprj.client.member.service.MemberVO">
         select *
         from member
@@ -56,6 +64,6 @@
     <select id="isTeam" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
             resultType="com.yedam.tfprj.client.member.service.MemberVO">
         SELECT*FROM MEMBER
-        WHERE TEAM_ID = #{teamId}
+        WHERE TEAM_ID IN (select team_id from member where member_id = #{memberId})
     </select>
 </mapper>
