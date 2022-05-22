@@ -99,14 +99,14 @@ public class CliLeagueServiceImpl implements LeagueService{
     @Override
     public void insertLeagueApply(CliLeagueServiceVO cliLeagueServiceVO, List<Map<String, Object>> getLeagueParticipatedMember) {
 
-        final String[] dd = {""};
-        getLeagueParticipatedMember.forEach(res -> {
-            String returnVal = res.get("value").toString();
-            dd[0] += returnVal;
-        });
-        for(int i=0; i<getLeagueParticipatedMember.size(); i++) {
-            dd[i] += getLeagueParticipatedMember.get(i).get("value");
-        }
+//        final String[] dd = {""};
+//        getLeagueParticipatedMember.forEach(res -> {
+//            String returnVal = res.get("value").toString();
+//            dd[0] += returnVal;
+//        });
+//        for(int i=0; i<getLeagueParticipatedMember.size(); i++) {
+//            dd[i] += getLeagueParticipatedMember.get(i).get("value");
+//        }
 
 
         getLeagueParticipatedMember.forEach(res -> {
@@ -115,7 +115,9 @@ public class CliLeagueServiceImpl implements LeagueService{
             leagueApplyVO.setLeagueId(cliLeagueServiceVO.getLeagueVO().getLeagueId());
             leagueApplyVO.setIsApprove("501");
             leagueApplyVO.setEntryFee(cliLeagueServiceVO.getLeagueVO().getEntryFee());
-            leagueApplyVO.setMemberId(dd[0]);
+//            leagueApplyVO.setMemberId(dd[0]);
+            // 팀 멤버는 temaId 를 넣어서 <team-members teamId="teamId 값"></team-members> 를 사용
+            leagueApplyVO.setMemberId(Integer.toString(cliLeagueServiceVO.getTeamVO().getTeamId()));
             leagueApplyVO.setTeamMember(getLeagueParticipatedMember.toString());
 
             System.out.println("======================leagueApplyVO = " + leagueApplyVO);
@@ -124,7 +126,7 @@ public class CliLeagueServiceImpl implements LeagueService{
         });
     }
 
-    public String convertWithStream(Map<String, ?> map) {
+    public String convertWithStream(Map<Integer, ?> map) {
         String mapAsString = map.keySet().stream()
                 .map(key -> key + "=" + map.get(key))
                 .collect(Collectors.joining(", ", "{", "}"));

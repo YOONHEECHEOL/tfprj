@@ -23,4 +23,7 @@ public class AdmLeagueController {
         return "admin/league/league_create";
     }
 
+    @RequestMapping("/adm/trophyTest")
+  public String trophyTest() { return "admin/league/trophyTest"; }
+
 }
