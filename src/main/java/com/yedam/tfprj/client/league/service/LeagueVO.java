@@ -34,5 +34,6 @@ public class LeagueVO {
     private String leagueStatusCd;
     private int tournamentId;
     private int entryFee;
+    private String isApply;
 
 }

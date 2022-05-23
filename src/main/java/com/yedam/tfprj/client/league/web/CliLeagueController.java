@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,9 +18,9 @@ public class CliLeagueController {
     LeagueService leagueServiceImpl;
 
     @RequestMapping("/cli/league")
-    public String league(Model model) {
-        model.addAttribute("currentLeagueList", leagueServiceImpl.getLeagueList().getCurrentList());
-        model.addAttribute("passedLeagueList", leagueServiceImpl.getLeagueList().getPassedList());
+    public String league(Model model, HttpServletRequest request) {
+        model.addAttribute("currentLeagueList", leagueServiceImpl.getLeagueList(request).getCurrentList());
+        model.addAttribute("passedLeagueList", leagueServiceImpl.getLeagueList(request).getPassedList());
         return "client/league/league";
     }
 
@@ -61,6 +62,14 @@ public class CliLeagueController {
     @RequestMapping("/cli/leaguePlan")
     public String leaguePlan() {
         return "client/league/league_plan";
+    }
+
+    @RequestMapping("/cli/myLeague")
+    public String cliMyLeague(HttpServletRequest request, Model model) {
+
+        model.addAttribute("ml", leagueServiceImpl.getMyLeague(request));
+
+        return "client/member/my_league";
     }
 
 }

@@ -16,6 +16,8 @@ public class CliLeagueServiceVO {
     protected LeagueVO leagueVO;
     protected TeamVO teamVO;
     private LeagueApplyVO leagueApplyVO;
+    private List<LeagueVO> participatedLeague;
+    private List<LeagueVO> notParticipatedLeague;
 
     public CliLeagueServiceVO() {
         this.loginedMember = new MemberVO();

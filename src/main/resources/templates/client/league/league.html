@@ -26,11 +26,14 @@
           <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
           <span th:text="${'참가팀 : ' + l.getParticipationTeam()}">참가팀</span><br>
           <span th:text="${l.winningTeam}">승리팀</span><br>
+          <!-- 로그인 시 -->
           <div class="button__box" th:if="${#session.getAttribute('memberId') != null}">
-            <a class="c-button" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}">참가하기</a>
+            <a th:if="${l.getIsApply() == 'y'}" class="c-button disabled">이미 참가한 리그</a>
+            <a th:if="${l.getIsApply() == 'n'}" class="c-button" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}">참가하기</a>
           </div>
+          <!-- 비로그인 -->
           <div class="button__box" th:if="${#session.getAttribute('memberId') == null}">
-            <a class="c-button disabled" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}">로그인 필요</a>
+            <a class="c-button" th:href="${'/cli/loginview'}">로그인 필요</a>
           </div>
         </td>
       </tr>

@@ -45,7 +45,7 @@
           <a href="/cli/league"><h3 class="h3">리그</h3></a>
           <ul>
             <li><a href="/cli/league">리그 현황</a></li>
-            <li><a href="/cli/myLeague">나의 리그</a></li>
+            <li th:if="${#session.getAttribute('memberId') != null}"><a href="/cli/myLeague">나의 리그</a></li>
           </ul>
       </li>
       <li>

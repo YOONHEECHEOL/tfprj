@@ -3,6 +3,8 @@ package com.yedam.tfprj.client.league.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yedam.tfprj.client.league.mapper.CliLeagueMapper;
+import org.apache.commons.compress.archivers.sevenz.CLI;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -14,6 +16,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class CliLeagueServiceImplTest {
 
   ObjectMapper obejectMapper = new ObjectMapper();
+
+  CliLeagueServiceImpl cliLeagueService = new CliLeagueServiceImpl();
+
+  @Test
+  void isLeaugeApply() {
+
+      LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
+      leagueApplyVO.setLeagueId(1);
+      leagueApplyVO.setMemberId("lee");
+
+      System.out.println("leagueApplyVO = " + cliLeagueService.checkLeagueApply(leagueApplyVO));
+
+//      System.out.println("testVal = " + cliLeagueService.checkLeagueApply("lee", 1));
+  }
+
 
   @Test
     void getLeagueParticipatedMember() {
@@ -47,14 +64,9 @@ class CliLeagueServiceImplTest {
         e.printStackTrace();
       }
 
-      final String[] dd = {""};
+
       List<String> ddd = new ArrayList<>();
-//      if (returnVal != null) {
-//        returnVal.forEach(res -> {
-//          String rd = res.get("value").toString() + " ";
-//          dd[0] += rd;
-//        });
-//      }
+
       if (returnVal != null) {
         for(int i=2; i<returnVal.size(); i++) {
 //          dd[0] += returnVal.get(i).get("value");

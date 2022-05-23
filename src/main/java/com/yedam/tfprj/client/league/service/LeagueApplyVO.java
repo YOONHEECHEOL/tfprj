@@ -11,5 +11,6 @@ public class LeagueApplyVO {
     private String isApprove; // 공통코드 삽입
     private String memberId;
     private int entryFee;
+    private int teamId;
 
 }

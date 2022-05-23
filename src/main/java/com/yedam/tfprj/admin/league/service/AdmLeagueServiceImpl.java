@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AdmLeagueService implements LeagueService{
+public class AdmLeagueServiceImpl implements LeagueService{
 
     @Autowired
     AdmLeagueMapper admLeagueMapper;
@@ -42,6 +42,13 @@ public class AdmLeagueService implements LeagueService{
     @Override
     public AdmLeagueServiceVO getLeagueDetail(int lno) {
         return null;
+    }
+
+    @Override
+    public void insertLeague(LeagueVO leagueVO) {
+
+        admLeagueMapper.insertLeague(leagueVO);
+
     }
 
     // localDate 크기 비교를 위한 변경

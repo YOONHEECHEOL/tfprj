@@ -16,5 +16,5 @@ public interface AdmQnaMapper {
 
     public void AdmQnaUpdate(AdmQnaVO vo);
 
-//    public void AmdQnaInsert(AdmQnaVO vo);
+    public void AmdQnaInsert(AdmQnaVO vo);
 }
