@@ -2,9 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>FAQ</title>
+<style>
+    input[id*="answer"]{
+        display: none;
+    }
+    input[id*="answer"] + label{
+        display: block;
+        padding-top: 20px;
+        border: 1px solid #2d4373;
+        border-bottom: 0;
+        color: #ebebeb;
+        font-weight: 900;
+        background: #2d4373;
+        cursor: pointer;
+        position: relative;
+    }
+    input[id*="answer"] label em{
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        margin-top: 15px;
+        display: inline-block;
+        background: url("./img/arrow.png") 0 0 no-repeat;
+    }
+    input[id*="answer"] + label + div {
+        max-height: 0;
+        transition: all .35s;
+        overflow: hidden;
+        background: #ebebeb;
+        font-size: 11px;
+    }
+    input[id*="answer"] + label + div p {
+        display: inline-block;
+    }
+    input[id*="answer"]:checked + label + div {
+        max-height: 100px;
+    }
+    input[id*="answer"]:checked + label em {
+        background-position: 0 30px; }
+    }
+</style>
 </head>
 <body>
+<h1>FAQ</h1>
+<input placeholder="대분류 이름을 입력하시오"><input type="button" value="대분류 생성">
 
+<div class="accordion">
+    <input type="radio" name="accordion" id="answer01">
+    <label for="answer01">컨텐츠 제목 부분<em></em></label>
+    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+            내용내용내용내용내용내용내용내용내용내용내용내용
+            내용내용내용내용내용내용내용내용내용내용내용내용
+            내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+    <input type="radio" name="accordion" id="answer02">
+    <label for="answer02">컨텐츠 제목 부분<em></em></label>
+    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+    <input type="radio" name="accordion" id="answer03">
+    <label for="answer03">컨텐츠 제목 부분<em></em></label>
+    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+    <input type="radio" name="accordion" id="answer04">
+    <label for="answer04">컨텐츠 제목 부분<em></em></label>
+    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+    <input type="radio" name="accordion" id="answer05">
+    <label for="answer05">컨텐츠 제목 부분<em></em></label>
+    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+    <input type="radio" name="accordion" id="answer06">
+    <label for="answer06">컨텐츠 제목 부분<em></em></label>
+    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용
+        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+</div>
 </body>
 </html>

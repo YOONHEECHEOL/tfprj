@@ -21,4 +21,6 @@ public interface AdmQnaMapper {
     public List<AdmQnaVO> AdmReplyList(AdmQnaVO vo);
 
     public void AdmQnaAnswerInsert(AdmQnaVO vo);
+    
+    public void AdmQnaAnswerDelete(AdmQnaVO vo);
 }

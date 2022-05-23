@@ -71,7 +71,14 @@ public class AdmQnaController {
         return "redirect:/adm/qna";
     }
 
+    //수정 필요
+    @RequestMapping("adm/qnaAnswerDelete")
+    public String AdmQnaDelete(Model model, AdmQnaVO vo){
+        service.AdmQnaAnswerDelete(vo);
+        vo.setCNo(vo.getCNo());
 
+        return "redirect:/adm/qna";
+    }
 
 
 }

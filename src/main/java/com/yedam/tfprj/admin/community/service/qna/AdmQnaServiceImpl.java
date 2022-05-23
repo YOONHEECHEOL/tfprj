@@ -46,4 +46,9 @@ public class AdmQnaServiceImpl implements AdmQnaService {
     public void AdmQnaAnswerInsert(AdmQnaVO vo){
         map.AdmQnaAnswerInsert(vo);
     }
+
+    @Override
+    public void AdmQnaAnswerDelete(AdmQnaVO vo){
+        map.AdmQnaAnswerDelete(vo);
+    }
 }

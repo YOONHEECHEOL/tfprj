@@ -48,4 +48,9 @@
         INSERT INTO QNA_ANSWER
         VALUES(qcno_seq.nextval, sysdate, #{cdetails}, 'admin', #{qNo})
     </insert>
+
+    <delete id="AdmQnaAnswerDelete" parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
+        DELETE FROM QNA_ANSWER
+        WHERE C_NO = #{cNo}
+    </delete>
 </mapper>

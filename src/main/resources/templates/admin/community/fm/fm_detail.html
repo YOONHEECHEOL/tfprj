@@ -7,72 +7,72 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 <style>
-     #frm{
+    #frm{
         padding-top: 50px;
         padding-bottom: 50px;
         border: none;
     }
-     #table2{
-         padding-top: 50px;
-         padding-bottom: 50px;
-     }
-     body{
-         padding-top: 100px;
-     }
+    #table2{
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    body{
+        padding-top: 100px;
+    }
 </style>
 
 <body>
 <div class="container">
-    <form th:id="details" method="post" action="/adm/qnaUpdate">
+    <form th:id="details" method="post" action="/adm/fmUpdate">
 
         <div>
-            <h1>QNA 상세보기</h1>
+            <h1>덤비라 조팝나무야</h1>
         </div>
 
         <div class="container" style="max-width: 880px;">
-            <table th:each="q, status : ${qna}" border="1" class="card" id="frm">
+            <table th:each="f, status : ${fm}" border="1" class="card" id="frm">
                 <tr>
                     <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
-                    <td th:text="${q.qNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
+                    <td th:text="${f.fNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
                     <th width="105" style="padding: 1px 1px 1px 10px">작성자</th>
-                    <td th:text="${q.writer}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
+                    <td th:text="${f.writer}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
                     <th width="105" height="39" style="padding: 1px 1px 1px 10px">작성일자</th>
-                    <td th:text="${q.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
+                    <td th:text="${f.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
                 </tr>
                 <tr>
                     <th height="39" style="padding: 1px 1px 1px 10px">제목</th>
-                    <td th:text="${q.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
+                    <td th:text="${f.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
                 </tr>
                 <tr>
                     <th style="padding:50px 50px 50px 50px">내용</th>
-                    <td th:text="${q.details}" colspan="6">
+                    <td th:text="${f.details}" colspan="6">
                         <textarea id="details" name="details" class="form-control" rows="10" cols="80"
                                   required="required">
                         </textarea>
                     </td>
                 </tr>
-                <input type="hidden" id="qNo" name="qNo" th:value="${q.qNo}">
-                <input type="hidden" id="title" name="title" th:value="${q.title}">
-                <input type="hidden" id="wdate" name="wdate" th:value="${q.wdate}">
-                <input type="hidden" id="views" name="views" th:value="${q.views}">
-                <input type="hidden" id="qdetails" name="details" th:value="${q.details}">
-                <input type="hidden" id="writer" name="writer" th:value="${q.writer}">
+                <input type="hidden" id="fNo" name="fNo" th:value="${f.fNo}">
+                <input type="hidden" id="title" name="title" th:value="${f.title}">
+                <input type="hidden" id="wdate" name="wdate" th:value="${f.wdate}">
+                <input type="hidden" id="views" name="views" th:value="${f.views}">
+                <input type="hidden" id="fdetails" name="details" th:value="${f.details}">
+                <input type="hidden" id="writer" name="writer" th:value="${f.writer}">
             </table>
 
 
         </div>
         <br>
-        <input th:type="hidden" th:id="qNo" th:name="qNo">
+        <input th:type="hidden" th:id="fNo" th:name="fNo">
     </form>
 </div>
 
-<button onclick="location.href = '/adm/qna'">뒤로가기</button>
-<button th:onclick="|location.href = '@{/adm/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right">삭제</button>
+<button onclick="location.href = '/adm/fm'">뒤로가기</button>
+<button th:onclick="|location.href = '@{/adm/fmDelete?fNo={no}(no=${fm.fNo})}'|" style="float: right">삭제</button>
 <button id="submitFrm" style="float: right">수정</button>
 
 <h1>답글</h1>
 
-<form method="post" action="/adm/qnaAnswerInsert">
+<form method="post" action="/adm/fmAnswerInsert">
     <div class="mb-3">
         <label for="cdetails">내용</label>
         <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
@@ -81,7 +81,7 @@
     <div>
         <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="작성">
     </div>
-    <input type="hidden" name="qNo" th:value="${qna.qNo}">
+    <input type="hidden" name="fNo" th:value="${fm.fNo}">
 </form>
 
 
@@ -96,7 +96,7 @@
             </tr>
             </thead>
             <tbody>
-            <div id="qna" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
+            <div id="fm" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
                 <tr>
                     <td th:text="${re.cwriter}"></td>
 
@@ -106,12 +106,12 @@
                     <td th:text="${re.cdate}"></td>
                 </tr>
                 <tr>
-                    <td><button type="button" style="float: right" th:onclick="|location.href = '@{/adm/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제</button></td>
+                    <td><button type="button" style="float: right" th:onclick="|location.href = '@{/adm/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제</button></td>
                 </tr>
             </div>
             </tbody>
         </table>
-        <input th:type="hidden" th:id="qNo" th:name="qNo">
+        <input th:type="hidden" th:id="fNo" th:name="fNo">
     </form>
 </diV>
 
