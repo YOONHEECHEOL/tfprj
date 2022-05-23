@@ -49,7 +49,7 @@ public class AdmQnaController {
         return "redirect:/adm/qna";
     }
 
-    @RequestMapping("/adm/noticeWrite")
+    @RequestMapping("/adm/qnaWrite")
     public String AdmQnaWrite(Model model, AdmQnaVO vo){
         model.addAttribute("Qna", vo);
         return "/admin/community/qna/qnaWrite";

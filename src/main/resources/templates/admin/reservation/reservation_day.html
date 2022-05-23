@@ -16,41 +16,43 @@
 <table th:border="1">
     <thead>
     <tr>
-        <th th:width="100">no</th>
-        <th th:width="100">룸</th>
-        <th th:width="500">시간</th>
-        <th th:width="150">금액</th>
-        <th th:width="150">예약자</th>
-        <th th:width="150">결제상태</th>
-        <th th:width="150">결제방법</th>
-        <th th:width="150">게임상태</th>
-        <th th:width="150">예약설정</th>
+        <th th:align="center" th:width="100">no</th>
+        <th th:align="center"  th:width="100">룸</th>
+        <th th:align="center"  th:width="500">시간</th>
+        <th th:align="center" th:width="150">금액</th>
+        <th th:align="center" th:width="150">예약자</th>
+        <th th:align="center" th:width="150">결제상태</th>
+        <th th:align="center" th:width="150">결제방법</th>
+        <th th:align="center" th:width="150">게임상태</th>
+        <th th:align="center" th:width="150">예약설정</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="l, index : ${dayResList}">
-        <td th:text="${l.getResId()}">no</td>
-        <td th:text="${l.getRoom()}">룸</td>
-        <td th:class="time" th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간</td>
-        <td th:class="price">금액</td>
-        <td th:text="${l.getName()}">예약자</td>
-        <td>
-            <convert-c-code th:data="${l.getPaymentStatusCd()}"></convert-c-code>
+        <td th:align="center" th:text="${l.getResId()}">no</td>
+        <td th:align="center" th:text="${l.getRoom()}">룸</td>
+        <td th:align="center" th:class="time" th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간</td>
+        <td th:align="center" th:class="price">금액</td>
+        <td th:align="center" th:text="${l.getName()}">예약자</td>
+        <td th:align="center" class="gameStatus" >
+            <convert-c-code  th:data="${l.getPaymentStatusCd()}"></convert-c-code>
         </td>
-        <td >
+        <td th:align="center" >
             <convert-c-code th:data="${l.getPaymentMethodCd()}"></convert-c-code>
         </td>
-        <td th:if="${#dates.format(l.startTime, 'HH:mm')}"게임상태></td>
-        <td>예약설정</td>
+        <td th:align="center" >
+            <convert-c-code th:data="${l.getStatusCd()}"></convert-c-code>
+        </td>
+        <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "><button th:id="${index.index}+_cancel">취소</button></td>
+        <td th:align="center" th:unless="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "></td>
+
+        <td th:align="center" th:width="150"><button>상세히 보기</button></td>
     </tr>
 
     </tbody>
 
 </table>
-<div th:each="l, status: ${dayResList}">
 
-    <span th:text="${#dates.format(l.startTime, 'yyyy-MM-dd')}">시작일</span><br>
-</div>
 
 
 </body>
@@ -73,6 +75,10 @@
         priceList[i].innerHTML=  time * 50000;
     }
     console.log(length);
+</script>
+
+<script>
+    console.log($(".cancel"));
 </script>
 
 </html>
