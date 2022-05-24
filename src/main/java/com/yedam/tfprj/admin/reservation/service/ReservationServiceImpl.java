@@ -52,5 +52,11 @@ public class ReservationServiceImpl implements ReservationService {
         return list;
     }
 
+    @Override
+    public int updatePaymentCd(String resId) {
+        mapper.updatePaymentCd(resId);
+        return 0;
+    }
+
 
 }

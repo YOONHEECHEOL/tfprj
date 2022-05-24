@@ -7,5 +7,6 @@ public interface ReservationService {
 
     public List<ReservationVO> dayResList(String startStr);
 
+    public int updatePaymentCd(String resId);
 
 }

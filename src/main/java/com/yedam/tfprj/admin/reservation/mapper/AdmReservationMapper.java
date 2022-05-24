@@ -11,5 +11,7 @@ public interface AdmReservationMapper {
     //start_time 조건 전체리스트
     public List<ReservationVO> dayResList(String startStr);
 
+    public int updatePaymentCd(String resId);
+
 
 }

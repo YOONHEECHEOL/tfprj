@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.tfprj.admin.reservation.mapper.AdmReservationMapper">
+
     <select id="resList" resultType="com.yedam.tfprj.admin.reservation.service.ReservationVO">
         select r.*, p.payment_status_cd "paymentStatusCd", p.payment_method_cd "paymentMethodCd"
         from reservation r, payment p
@@ -15,5 +16,12 @@
         where r.payment_id = p.payment_id
         and TO_CHAR(r.START_TIME,'yyyy-MM-dd') = #{starStr}
     </select>
+
+    <update id="updatePaymentCd" parameterType="string">
+        update reservation
+        set status_cd = 704
+        where res_id = #{resId}
+
+    </update>
 
 </mapper>
