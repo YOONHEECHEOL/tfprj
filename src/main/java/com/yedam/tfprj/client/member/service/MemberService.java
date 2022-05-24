@@ -45,7 +45,9 @@ public interface MemberService {
     //관리자 - 회원등급수정
     int gradeUpdate(MemberVO vo);
 
+    public List<MemberVO> findAll();
 
+    public List<MemberVO> findBlack();
 
 
 

@@ -112,7 +112,15 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.gradeUpdate(vo);
     }
 
+    @Override
+    public List<MemberVO> findAll() {
+        return memberMapper.findAll();
+    }
 
+    @Override
+    public List<MemberVO> findBlack() {
+        return memberMapper.findBlack();
+    }
 
 
 }
