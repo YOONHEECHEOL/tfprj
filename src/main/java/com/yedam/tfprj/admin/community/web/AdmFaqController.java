@@ -16,7 +16,14 @@ public class AdmFaqController {
     @RequestMapping("/adm/faq")
     public String AdmFmList(Model model, AdmFaqVO vo){
 
+        model.addAttribute("faq", service.AdmFaqList(vo));
         return "admin/community/faq/faq";
+    }
+
+    @RequestMapping("/adm/faqWrite")
+    public String AdmFaqWrite(Model model, AdmFaqVO vo){
+
+        return "/admin/community/faq/faq_write";
     }
 
 }

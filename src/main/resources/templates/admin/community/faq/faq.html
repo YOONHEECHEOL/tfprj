@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>FAQ</title>
@@ -46,31 +46,32 @@
     }
     input[id*="answer"]:checked + label em {
         background-position: 0 30px; }
+    body{
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 50px;
+    }
 </style>
 </head>
 <body>
+
 <h1>FAQ</h1>
-<div class="mb-3">
+<div class="mb-3" id="big">
     <label for="title">제목</label>
-    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
-    <input type="button"  value="대분류 생성">
+    <input type="text" class="form-control" name="title" id="title" placeholder="입력해 주세요">
+    <input type="button"  value="대분류 생성" id="create">
 </div>
-<h3>대분류</h3><input type="button" value="생성">
+
+<h3>대분류</h3><input type="button" value="생성" id="subcreate">
 <div class="accordion">
-    <input type="radio" name="accordion" id="answer01">
-    <label for="answer01">컨텐츠 제목 부분<em></em></label>
-    <div><p>내용내용내용내용내용내용내용내용내용내용내용
+    <th:block th:each="f:${faq}">
+    <input type="radio" name="accordion" th:id="'answer' + ${fStat.count}">
+    <label th:for="'answer' + ${fStat.count}" th:text="${f.subTitle}">컨텐츠 제목 부분<em></em></label>
+    <div><p th:text="${f.details}">내용내용내용내용내용내용내용내용내용내용내용
             내용내용내용내용내용내용내용내용내용내용내용내용
             내용내용내용내용내용내용내용내용내용내용내용내용
             내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-<h3>대분류</h3><input type="button" value="생성">
-
-    <input type="radio" name="accordion" id="answer02">
-    <label for="answer02">컨텐츠 제목 부분<em></em></label>
-    <div><p>내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-    <input type="radio" name="accordion" id="answer03">
+    </th:block>
+</div>
 </body>
 </html>
