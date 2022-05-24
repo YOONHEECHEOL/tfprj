@@ -38,6 +38,12 @@ html, body {
 .vh100 {
     height: 100vh;
 }
+.mt20 {
+    margin-top: 2rem !important;
+}
+.mt12 {
+    margin-top: 1.2rem !important;
+}
 a {
     color: #222;
 }
@@ -55,8 +61,12 @@ h1.h1{font-family:esB;font-size:4rem;position:absolute;color:#3765c7;bottom:0;le
 h3.h3 {
     font-family: "esM";
     font-size: 2rem;
+    margin-top: 1.2rem;
 }
-
+h4.h4 {
+    font-family: 'esL';
+    font-size: 1.6rem;
+}
 
 
 
@@ -253,6 +263,7 @@ main.contents {
     column-gap: 1.4rem;
 }
 .c-button {
+    font-family: 'esL';
     border: 0;
     color: #222;
     background: #fff;
@@ -277,6 +288,7 @@ main.contents {
     background: #f1f1f1;
     color: #999;
     border: 1px solid #999;
+    pointer-events: none;
 }
 
 /* table */

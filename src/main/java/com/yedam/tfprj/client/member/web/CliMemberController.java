@@ -50,10 +50,10 @@ public class CliMemberController {
         return "client/member/my_score";
     }
 
-    @RequestMapping("/cli/myLeague")
-    public String cliMyLeague() {
-        return "client/member/my_league";
-    }
+//    @RequestMapping("/cli/myLeague")
+//    public String cliMyLeague() {
+//        return "client/member/my_league";
+//    }
 
     @RequestMapping("/cli/myMessage")
     public String cliMyMessage() {

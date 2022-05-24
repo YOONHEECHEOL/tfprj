@@ -176,11 +176,9 @@ class teamMembers extends HTMLElement {
   connectedCallback() {
     // attribute로 teamId 받기
     let teamId = this.getAttribute('teamId');
-    let doFnc = this.getAttribute('do');
-
     let root = this.shadowRoot;
 
-    function getMemberList(teamId, doFnc) {
+    function getMemberList(teamId) {
       // memberList 조회
       fetch('/cli/selectTeamMembers?teamId=' + teamId)
         .then(res => res.json())
@@ -211,7 +209,7 @@ class teamMembers extends HTMLElement {
         })
     }
 
-    getMemberList(teamId, doFnc);
+    getMemberList(teamId);
 
 
     // eventTarget.addEventListener('click', () => {

@@ -62,9 +62,8 @@ public class AdmNoticeController {
     @RequestMapping("/adm/noticeInsert")
     public String AdmNoticeInsert(Model model, AdmNoticeVO vo){
         System.out.println(vo);
-      service.AdmNoticeInsert(vo);
+        service.AdmNoticeInsert(vo);
         return "redirect:/adm/notice";
     }
 
 }
-

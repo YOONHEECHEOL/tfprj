@@ -77,9 +77,9 @@
 
         c.innerHTML = `
                         <t-h2 ko="리그 생성하기"></t-h2>
-                        <form onsubmit="" class="" method="post">
+                        <form action="/adm/insertLeague" id="frm" class="" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="리그명">
+                                <input type="text" class="form-control" placeholder="리그명" name="leagueName" value="tea league">
                             </div>
                             <div class="form-group">
                                 <label for="room">구장선택</label>
@@ -92,35 +92,66 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="file" class="form-control" placeholder="우승 트로피">
+                                <input type="date" name="startDate">
+                                <span> - </span>
+                                <input type="date" name="endDate">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="참가비">
+                                <input type="text" class="form-control" placeholder="리그상금" name="prizeMoney" value="1000">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="참가팀 수" name="participationTeam" value="8">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="1000" name="participationMember" value="3">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="우승 트로피" name="prizeGood" value="1000">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="우승 트로피" name="winningTeam" value="none">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="우승 트로피" name="leagueStatusCd" value="501">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="우승 트로피" name="tournamentId" value="1">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" value="1000" class="form-control" placeholder="1000" name="entryFee">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" value="n" class="form-control" placeholder="1000" name="isApply">
                             </div>
                             <div class="form-group">
                                 <input type="button" value="🔻">
-                                <input type="text" value="4">
+                                <input type="text" value="4" name="participationMember">
                                 <input type="button" value="🔺">
                             </div>
-                            <div class="form-group">
-                                <input type="date">
-                                <span> - </span>
-                                <input type="date">
-                            </div>
+
                         </form>
                         <div class="button__box">
                             <button class="c-button">취소하기</button>
-                            <button class="c-button">리그생성</button>
+                            <button class="c-button" id="submitFrm">리그생성</button>
                         </div>
                     `
 
         output.append(c);
+        submitFrm()
       } else {
         output.children[1].remove()
       }
     })
 
+
     // 리그 생성 validate
+    const submitFrm = () => {
+      let frmBtn = document.querySelector('#submitFrm');
+
+      frmBtn.addEventListener('click', () => {
+        document.querySelector('#frm').submit()
+      })
+    }
 
 
   </script>
