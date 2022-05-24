@@ -20,7 +20,7 @@ public class ReservationVO {
     @JsonFormat(pattern = "yyyy-MM-dd hh24:mm:ss", timezone = "Asia/Seoul")
     private Date endTime;
     private int room;
-    private String status;
+    private String statusCd;
     private int gameId;
     private Date resDate;
     private String tel;

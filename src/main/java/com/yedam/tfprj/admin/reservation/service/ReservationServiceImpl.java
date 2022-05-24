@@ -26,7 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         for(int i=0; i<list.size();i++){
             map = new HashMap<String, Object>();
-            map.put("title", list.get(i).getGameId());
+            map.put("title", list.get(i).getGameId() + "번 게임");
             map.put("start", list.get(i).getStartTime());
             map.put("end", list.get(i).getEndTime());
 
@@ -50,6 +50,12 @@ public class ReservationServiceImpl implements ReservationService {
         List<ReservationVO> list = mapper.dayResList(startStr);
         System.out.println(list);
         return list;
+    }
+
+    @Override
+    public int updatePaymentCd(String resId) {
+        mapper.updatePaymentCd(resId);
+        return 0;
     }
 
 
