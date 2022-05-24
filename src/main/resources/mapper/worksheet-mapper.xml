@@ -8,5 +8,32 @@
         FROM WORKSHEET
     </select>
 
+    <select id="worksheetList" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
+        SELECT worksheet_no, work_dt, worker_id, position_cd, user_type, going_time, quitting_time
+        FROM WORKSHEET
+        WHERE work_dt IN(trunc(sysdate,'d'), trunc(sysdate,'d')+1, trunc(sysdate,'d')+2, trunc(sysdate,'d')+3, trunc(sysdate,'d')+4, trunc(sysdate,'d')+5, trunc(sysdate,'d')+6)
+    </select>
+
+    <select id="sheetValidation" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
+        SELECT work_dt
+        FROM worksheet
+        WHERE
+        <![CDATA[work_dt >= TO_DATE(#{firstDate},'YYYY-MM-DD')]]>
+        AND
+        <![CDATA[work_dt < TO_DATE(#{lastDate},'YYYY-MM-DD')+1]]>
+    </select>
+
+    <update id="updateWorksheet">
+        UPDATE worksheet
+        SET worker_Id = #{workerId}, color = #{color}, textColor = #{textColor}, backgroundColor = #{backgroundColor}
+        where going_time = TO_DATE(#{goingTime},'YYYY-MM-DD hh24:mi')
+        and   quitting_time = TO_DATE(#{quittingTime}, 'YYYY-MM-DD hh24:mi')
+    </update>
+
+    <insert id="insertWorksheet" parameterType="com.yedam.tfprj.admin.worksheet.service.WorkerArrVO">
+        insert into worksheet(worksheet_no, work_dt, worker_id, position_cd, user_type, going_time, quitting_time)
+        values(SEQ_WORKSHEET.nextval, to_date(#{realDate}, 'yyyy-mm-dd'), #{workerId}, #{positionCd}, #{userType}, #{goingTime}, #{quittingTime})
+    </insert>
+
 </mapper>
 

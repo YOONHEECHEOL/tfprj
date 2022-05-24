@@ -26,4 +26,9 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     public WorkerAttendanceVO getNowWorker() {
         return mapper.getNowWorker();
     }
+
+    @Override
+    public int insertAttendance(String workerId) {
+        return mapper.insertAttendance(workerId);
+    }
 }

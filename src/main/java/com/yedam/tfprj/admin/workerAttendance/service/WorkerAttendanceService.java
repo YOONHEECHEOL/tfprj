@@ -10,4 +10,5 @@ import java.util.Map;
 
 public interface WorkerAttendanceService {
       public WorkerAttendanceVO getNowWorker();
+      public int insertAttendance(String workerId);
    }

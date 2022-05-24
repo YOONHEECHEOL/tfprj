@@ -24,45 +24,67 @@
                 <span><h1>현재 근무자 조회</h1></span>
                 <span>
             <table>
-                <tr>
-                    <th th:width="100">근무자명</th>
-                    <th th:width="100">출근시간</th>
-                    <th th:width="100">퇴근시간</th>
-                </tr>
-                <tr>
-                    <td th:width="100">홍길동</td>
-<!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
-<!--                값 조회가 안될때 청크에러 뜸.             -->
-                    <td th:width="100">13:00</td>
-                    <td th:width="100">18:00</td>
-                </tr>
-                <tr>
-                    <td th:width="100"></td>
-                    <td th:width="100">실제시간</td>
-                    <td th:width="100"></td>
-                </tr>
-                <tr>
-                    <th th:width="100">총 지각횟수</th>
-                    <th th:width="100">주간지각</th>
-                    <th th:width="100">월간 지각</th>
-                    <th th:width="100">결근</th>
-                </tr>
-                <tr>
-                    <td th:width="100">5회</td>
-                    <td th:width="100">2회</td>
-                    <td th:width="100">4회</td>
-                    <td th:width="100">0회</td>
-                </tr>
-                <tr>
-                    <th th:width="100">근무 시작일</th>
-                    <th th:width="100">직책</th>
-                    <th th:width="300">지금까지 지급한 금액</th>
-                </tr>
-                <tr>
-                    <td th:width="400">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
-                    <td th:width="100">월/목 알바</td>
-                    <td th:width="100">컴마 붙여서 숫자 표현</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th th:width="100">근무자명</th>
+                        <th th:width="100">출근시간</th>
+                        <th th:width="100">퇴근시간</th>
+                    </tr>
+                </thead>
+                <tbody th:each="l, status: ${nowWorker}">
+                    <tr>
+                        <td th:width="100" th:text="${nowWorker.workerName}">홍길동</td>
+    <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
+    <!--                값 조회가 안될때 청크에러 뜸.             -->
+                        <td th:width="100" id="goingTime">13:00</td>
+    <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
+                        <td th:width="100" id="quittingTime">18:00</td>
+    <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
+                    </tr>
+                    <tr>
+                        <td th:width="100"></td>
+                        <td th:width="100" th:text="${nowWorker.inTime}" style="color:red">실제출근시간</td>
+                        <td th:width="100"></td>
+                    </tr>
+                    <tr>
+                        <th th:width="100">총 지각횟수</th>
+                        <!--  총 지각횟수, 결근 횟수는 work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 지각횟수를 전부다 더한 값을 넣어줌. -->
+<!--                        select sum(is_late)-->
+<!--                        from staff_attendance-->
+<!--                        where worker_id = 'test3';-->
+                        <th th:width="100">주간지각</th>
+                        <!--  주간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 주의 지각횟수를 전부다 더한 값을 넣어줌. -->
+<!--                        select sum(is_late)-->
+<!--                        from staff_attendance-->
+<!--                        where worker_id = 'test3'-->
+<!--                        and att_dt IN(trunc(sysdate,'d'), trunc(sysdate,'d')+1, trunc(sysdate,'d')+2, trunc(sysdate,'d')+3, trunc(sysdate,'d')+4, trunc(sysdate,'d')+5, trunc(sysdate,'d')+6)-->
+                        <th th:width="100">월간 지각</th>
+                        <!--  월간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 달의 지각횟수를 전부다 더한 값을 넣어줌. -->
+<!--                        SELECT  -->
+<!--                        SUM(is_late)  -->
+<!--                        FROM staff_attendance-->
+<!--                        WHERE SUBSTR(att_dt,0,8) BETWEEN (TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') ) AND (LAST_DAY(SYSDATE))-->
+<!--                        AND worker_id = 'test3-->
+                        <th th:width="100">결근</th>
+                    </tr>
+                    <tr>
+                        <td th:width="100">5회</td>
+                        <td th:width="100">2회</td>
+                        <td th:width="100">4회</td>
+                        <td th:width="100">0회</td>
+                    </tr>
+                    <tr>
+                        <th th:width="100">근무 시작일</th>
+                        <th th:width="100">직책</th>
+                        <th th:width="300">지금까지 지급한 금액</th>
+                    </tr>
+                    <tr>
+                        <td th:width="400" id="startDay">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
+                        <td th:width="100" id="positionCd">월/목 알바</td>
+                        <!-- 스크립트에서 th:text="${nowWorker.positionCd}"의 값이 '0'일때, '1'일때의 값을 .html()로 넣어주기 (완)  -->
+                        <td th:width="100">컴마 붙여서 숫자 표현</td>
+                    </tr>
+                </tbody>
             </table>
             </span>
                 <br><br>
@@ -77,45 +99,158 @@
                     <button>근태관리</button>
                 </div>
                 <hr>
-                <div>
+                <div id="today">
                     주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
                 </div>
                 <div>
                     <table>
-                        <tr>
-                            <th th:width="400">오늘날짜</th>
-                            <th th:width="400">오늘날짜</th>
-                            <th th:width="400">오늘날짜</th>
-                            <th th:width="400">오늘날짜</th>
-                            <th th:width="400">오늘날짜</th>
-                            <th th:width="400">오늘날짜</th>
-                            <th th:width="400">오늘날짜</th>
-                        </tr>
-                        <tr>
-                            <th th:width="100">1부 13:00 ~ 19:00</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                        </tr>
-                        <tr>
-                            <th th:width="100">2부 19:00 ~ 24:00</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                            <th th:width="400">근무표 근무자 + 실제 근무자</th>
-                        </tr>
+                        <thead id="thead">
+
+                        </thead>
+                        <tbody id="tbody">
+
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            var goingTime = '[[${nowWorker.goingTime}]]'.substring(11, 16)
+            $('#goingTime').html(goingTime);
+
+            var quittingTime = '[[${nowWorker.quittingTime}]]'.substring(11, 16)
+            $('#quittingTime').html(quittingTime);
+
+            function dateChange(date){
+                console.log(date);
+                var day = date.substring(4,7)
+                switch (day) {
+                    case "Jan":
+                        day = '01';
+                        break;
+                    case "Feb":
+                        day = '02';
+                        break;
+                    case "Mar":
+                        day = '03';
+                        break;
+                    case "Apr":
+                        day = '04';
+                        break;
+                    case "May":
+                        day = '05';
+                        break;
+                    case "Jun":
+                        day = '06';
+                        break;
+                    case "Jul":
+                        day = '07';
+                        break;
+                    case "Aug":
+                        day = '08';
+                        break;
+                    case "Sep":
+                        day = '09';
+                        break;
+                    case "Oct":
+                        day = '10';
+                        break;
+                    case "Nov":
+                        day = '11';
+                        break;
+                    case "Dec":
+                        day = '12';
+                        break;
+                }
+                return day;
+            }
+            dateChange('[[${nowWorker.startDay}]]');
+            // KST 문자열 형식을 2022-05-20 으로 바꾸는방법
+            var startDay = '[[${nowWorker.startDay}]]'.substring('[[${nowWorker.startDay}]]'.length - 4) + "-" + dateChange('[[${nowWorker.startDay}]]') + "-" + '[[${nowWorker.startDay}]]'.substring(8,10)
+
+            $('#startDay').html(startDay);
+
+            if([[${nowWorker.positionCd}]] == 0){
+                $('#positionCd').html('월/목')
+            }else{
+                $('#positionCd').html('화/수/금')
+            }
+
+            //오늘날짜 구하기
+            var today = new Date();
+            var dateString = today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + today.getDate()).slice(-2);
+            $('#today').html(dateString);
+
+            //이번 주 7일 + 요일 구해서 tr태그 동적으로 만들어주기.
+            function weekFind(){
+                var currentDay = new Date();
+                var theYear = currentDay.getFullYear();
+                var theMonth = currentDay.getMonth();
+                var theDate  = currentDay.getDate();
+                var theDayOfWeek = currentDay.getDay();
+
+                var thisWeek = [];
+                var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+                for(var i=0; i<7; i++) {
+                    var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+                    var yyyy = resultDay.getFullYear();
+                    var mm = Number(resultDay.getMonth()) + 1;
+                    var dd = resultDay.getDate();
+                    var dayOfWeek = week[new Date(yyyy + '-' + mm + '-' + dd).getDay()];
+
+                    mm = String(mm).length === 1 ? '0' + mm : mm;
+                    dd = String(dd).length === 1 ? '0' + dd : dd;
+
+                    thisWeek[i] = yyyy + '-' + mm + '-' + dd + "(" + dayOfWeek + ")";
+                }
+                console.log(thisWeek);
+
+                // 이번주 날짜가 들어간 태그 만들기.
+                // 오늘은 빨간색으로 표시됨.
+                //<td>태그 안에 실제근무자가 한번 더 표시되게.
+                var tr =  "<tr>";
+                for (let i = 0; i < thisWeek.length; i++) {
+                    if(thisWeek[i].indexOf(dateString) == -1){
+                        tr += "<td>" + thisWeek[i] + "</td>";
+                    }else{
+                        tr += "<td style='color: #ca2819'>" + thisWeek[i] + "</td>";
+                    }
+                }
+                tr += "</tr>"
+                $('#thead').append(tr);
+
+                 $.ajax({
+                     url : "jsonSheetList"
+                 }).done(function(response){
+                    console.log(response);
+                    console.log("오늘날짜의 퇴근시간 " + response[i].quittingTime.substring(11,21).replace('24', ''));
+                    // 1부 근무자들을 대상으로 동적으로 tr태그를 만들어줌.
+                     tr = "<tr>";
+                     for (let i = 0; i < response.length; i++) {
+                         if(response[i].quittingTime.substring(11,21).replace('24', '') == "07:30:00"){
+                             tr += "<td>" + response[i].workerId + "</td>"
+                         }
+                     }
+                     tr += "</tr>";
+                     $('#tbody').append(tr);
+
+                     // 2부 근무자들
+                     var tr2 = "<tr>";
+                     for (let i = 0; i < response.length; i++) {
+                         if(response[i].quittingTime.substring(11,21).replace('24', '') == "11:59:00"){
+                             tr2 += "<td>" + response[i].workerId + "</td>"
+                         }
+                     }
+                     tr2 += "</tr>";
+                     $('#tbody').append(tr2);
+                 })
+            }
+            weekFind();
+        })
+    </script>
 </th:block>
 </body>
 

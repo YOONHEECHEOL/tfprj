@@ -25,10 +25,12 @@ public class WorksheetServiceImpl implements WorksheetService {
 
         for(int i=0; i<list.size(); i++){
             map = new HashMap<String, Object>();
-            map.put("title", list.get(i).getWorkSheetNo());
-            map.put("start", list.get(i).getWorkStartTime());
-            map.put("end", list.get(i).getWorkEndTime());
-
+            map.put("title", list.get(i).getWorkerId());
+            map.put("start", list.get(i).getGoingTime());
+            map.put("end", list.get(i).getQuittingTime());
+            map.put("color", list.get(i).getColor());
+            map.put("textColor", list.get(i).getTextColor());
+            map.put("backgroundColor", list.get(i).getBackgroundColor());
             jsonList.add(map);
         }
 
@@ -40,5 +42,25 @@ public class WorksheetServiceImpl implements WorksheetService {
             throw new RuntimeException(e);
         }
         return strJsonList;
+    }
+
+    @Override
+    public int insertWorksheet(WorkerArrVO vo ) {
+        return mapper.insertWorksheet( vo);
+    }
+
+    @Override
+    public List<WorksheetVO> worksheetList() {
+        return mapper.worksheetList();
+    }
+
+    @Override
+    public List<WorksheetVO> sheetValidation(String firstDate, String lastDate) {
+        return mapper.sheetValidation(firstDate, lastDate);
+    }
+
+    @Override
+    public int updateWorksheet(String workerId, String goingTime, String quittingTime, String color, String textColor, String backgroundColor) {
+        return mapper.updateWorksheet(workerId, goingTime, quittingTime, color, textColor, backgroundColor);
     }
 }

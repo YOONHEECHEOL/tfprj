@@ -4,11 +4,17 @@
 <mapper namespace="com.yedam.tfprj.admin.workerAttendance.mapper.WorkerAttendanceMapper">
 
     <select id="getNowWorker" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
-        select *
+        select a.worker_id, a.in_time, a.out_time, a.is_late, a.is_absence, i.worker_name, i.going_time, i.quitting_time, i.position_cd, i.usertype, i.startday
         from staff_attendance a, staff_information i
         where a.worker_id = i.worker_id
         and to_char(sysdate, 'hh24:mi') between a.in_time and a.out_time
+        and att_dt = to_char(sysdate, 'yy-MM-dd')
     </select>
+
+    <insert id="insertAttendance">
+        Insert into staff_attendance(att_id, worker_id, att_dt, in_time, is_late, is_absence)
+        VALUES(SEQ_ATTENDANCE.nextval, #{workerId}, to_char(sysdate, 'yy-MM-dd'), to_char(sysdate, 'hh24:mi'), 0, 0)
+    </insert>
 
 </mapper>
 

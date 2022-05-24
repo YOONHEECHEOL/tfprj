@@ -69,6 +69,7 @@ public class AdmWorkerController {
 //        System.out.println(vo);
 
         workerServiceImpl.admWorkerHrmWrite(vo, file, birth, response);
+        workerServiceImpl.signUpUpdate();
     }
 
     @PostMapping("/adm/worker_hrm_detail_update")

@@ -6,5 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface WorkerAttendanceMapper {
     public WorkerAttendanceVO getNowWorker();
+    public int insertAttendance(String workerId);
 
 }

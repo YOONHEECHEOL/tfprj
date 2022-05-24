@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+<th:block layout:fragment="content">
+  <style>
+    #myProgress {
+      position: relative;
+      width: 50%;
+      height: 30px;
+      background-color: #ddd;
+    }
+
+    #myBar {
+      position: absolute;
+      height: 100%;
+      background-color: #4CAF50;
+    }
+
+    #label {
+      text-align: center;
+      line-height: 30px;
+      color: white;
+    }
+  </style>
+<h1>JavaScript Progress Bar</h1>
+<h2 th:text="${session.workerId}"></h2>
+<div id="myProgress" style="display: none">
+  <div id="myBar">
+    <div id="label">0%</div>
+  </div>
+</div>
+<div id="div2">
+  <p id="dd"></p>
+</div>
+<br>
+<button id="btn" class="btn btn-primary" onclick="move()">출근하기</button>
+<script>
+  function move() {
+    document.getElementById('myProgress').style.display="block";
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 6000);
+    elem.style.width = '0%';
+
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        document.getElementById('myProgress').style.display="none";
+        document.getElementById('dd').innerHTML = '퇴근하세요!';
+        document.getElementById('btn').style.display="none";
+        var btn = document.createElement('button')
+        btn.innerHTML = '퇴근';
+        div2.append(btn);
+        //SELECT ROUND((TO_DATE('2022-05-09 16:00:00', 'YYYY-MM-DD HH24:MI:SS')
+        //- TO_DATE('2022-05-09 09:00:00', 'YYYY-MM-DD HH24:MI:SS')) * 24 * 60 * 60, 2) AS ss
+        //FROM DUAL;
+
+        // *** setInterval 타이머 ***
+      } else {
+        width++;
+        elem.style.width = width + '%';
+        document.getElementById("label").innerHTML = width * 1 + '%';
+      }
+    }
+  }
+
+  $('#btn').on('click', function(){
+    console.log('[[${session.workerId}]]');
+    var workerId = '[[${session.workerId}]]'
+    $.ajax({
+      url : "insertAttendance",
+      data : { workerId : workerId},
+      method : 'post'
+    }).done(function(response){
+      console.log(response)
+      document.getElementById('btn').style.display="none";
+    })
+  })
+</script>
+</th:block>
+</body>
+</html>
