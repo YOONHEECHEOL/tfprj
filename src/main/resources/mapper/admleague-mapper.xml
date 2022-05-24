@@ -6,7 +6,7 @@
     <insert id="insertLeague" parameterType="com.yedam.tfprj.client.league.service.LeagueVO">
 
         insert into league
-        values (SEQ_LEAGUE.nextval, #{}, sysdate, #{startDate}, #{endDate}, #{prizeMoney}, #{participationTeam}, #{participationMember}, #{prizeGood}, #{winningTeam}, #{leagueStatusCd}, #{tournamentId}, #{entryFee}, #{isApply})
+        values (SEQ_LEAGUE.nextval, #{leagueName}, sysdate, #{startDate}, #{endDate}, #{prizeMoney}, #{participationTeam}, #{participationMember}, #{prizeGood}, #{winningTeam}, #{leagueStatusCd}, #{tournamentId}, #{entryFee}, #{isApply})
 
     </insert>
 </mapper>
