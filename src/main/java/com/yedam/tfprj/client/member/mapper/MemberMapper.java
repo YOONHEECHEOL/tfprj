@@ -1,10 +1,10 @@
 package com.yedam.tfprj.client.member.mapper;
 
 
+
 import com.yedam.tfprj.client.member.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
-
 
 
 import java.util.List;
@@ -31,5 +31,11 @@ public interface MemberMapper {
     List<MemberVO> searchMember(MemberVO vo);
 
     //팀에 속해 있는 멤버 조회
-    MemberVO isTeam(MemberVO vo);
+    List<MemberVO> isTeam(MemberVO vo);
+
+    //관리자 - 회원등급수정
+    int gradeUpdate(MemberVO vo);
+
+
+
 }

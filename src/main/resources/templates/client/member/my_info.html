@@ -17,7 +17,7 @@
     <form th:id="myView" method="POST">
         <div th:class="row">
             <div th:class="col-auto">
-                <div th:each="member, i : ${member}">
+                <div>
                     <span th:text="${member.memberId}"></span><br>
                     <span th:text="${member.memberName}"></span><br>
                     <span th:text="${member.tel}"></span><br>

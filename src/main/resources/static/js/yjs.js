@@ -128,7 +128,14 @@ class tH2 extends HTMLElement {
 // 공통 코드 뽑기
 class convertCommonCode extends HTMLElement {
   connectedCallback() {
-    let out = this.shadowRoot.querySelector('.converted');
+    let out = this.shadowRoot;
+    let tagCheck = this.getAttribute('tagname')
+
+    if (tagCheck == undefined) {
+      tagCheck = 'span';
+    }
+
+    // console.log(tagCheck)
 
     function convertCode(data) {
       fetch('http://localhost:18000/convertCommonCode?code=' + data, {
@@ -137,11 +144,21 @@ class convertCommonCode extends HTMLElement {
         .then(res => res.json())
         .then(res => {
           // 출력
-          out.innerText = res.codeValue;
+          // out.innerText = res.codeValue;
+
+          let tag = document.createElement(tagCheck);
+          tag.setAttribute('class', 'converted');
+          if(tagCheck != 'option') {
+            tag.innerText = res.codeValue;
+          } else {
+            tag.setAttribute('value', res.codeValue);
+            tag.innerText = res.codeValue;
+          }
+
+          out.append(tag)
         })
     }
 
-    console.log(this.getAttribute('data'))
     convertCode(this.getAttribute('data').toString())
 
   }
@@ -151,10 +168,6 @@ class convertCommonCode extends HTMLElement {
 
     const shadow = this.attachShadow({mode:'open'});
 
-    let span = document.createElement('span');
-    span.setAttribute('class', 'converted');
-
-    shadow.append(span);
   }
 }
 

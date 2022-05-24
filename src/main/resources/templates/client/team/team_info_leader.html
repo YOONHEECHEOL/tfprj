@@ -5,6 +5,25 @@
 
 
 <th:block layout:fragment="content">
-
+<div>
+    <table>
+        <tbody>
+        <tr>
+            <th>팀명</th>
+            <td><span th:text="${team.teamName}"></span></td>
+        </tr>
+        <tr>
+            <th>팀장</th>
+            <td><span th:text="${team.leader}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <h1>팀원</h1>
+    <div th:each="list, i : ${list}">
+        <span th:text="${list.memberId}"></span><br>
+    </div>
+    </div>
+</div>
 </th:block>
 </html>

@@ -16,16 +16,36 @@
             </div>
             <div th:unless="${team eq null}">
                 <div th:each="team, i : ${team}">
-                    <span th:text="${team.teamId}"></span><br>
-                    <span th:text="${team.leader}"></span><br>
-                    <span th:text="${team.win}"></span><br>
-                    <span th:text="${team.totalGameCnt}"></span><br>
-                    <span th:text="${team.teamName}"></span><br>
+                    <form th:id="frm">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>팀명</th>
+                            <td><span th:text="${team.teamName}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>팀장</th>
+                            <td><span th:text="${team.leader}"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                        <input th:type="button" id="leaderBtn" th:if="${session.memberId eq team.leader}" th:value="${'팀 상세 조회'}">
+                        <input th:type="button" id="memberBtn" th:if="${session.memberId ne team.leader}" th:value="${'팀 상세 조회'}">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+<script>
+    $("#leaderBtn").on("click", function(){
+        frm.action="/cli/teamInfoLeader";
+        frm.submit();
+    });
+    $("#memberBtn").on("click", function(){
+        frm.action="/cli/teamInfoMember";
+        frm.submit();
+    });
+</script>
 </th:block>
-
 </html>
