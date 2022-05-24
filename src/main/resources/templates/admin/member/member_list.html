@@ -3,7 +3,55 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-dd
-</th:block>
 
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>연락처</th>
+            <th>회원등급</th>
+        </tr>
+        </thead>
+        <tbody th:id="memberBody">
+        <tr th:each="list, i : ${list}">
+            <td><span th:text="${list.ROWNUM}"></span></td>
+            <td><span th:id="memberId" th:name="memberId" th:text="${list.memberId}"></span></td>
+            <td><span th:text="${list.memberName}"></span></td>
+            <td><span th:text="${list.tel}"></span></td>
+            <td><select th:id="grade" th:name="grade" onchange="chargeSelect(this)">
+                <option th:if="${list.grade == 301}" th:text="일반" th:value=301 selected></option>
+                <option th:if="${list.grade == 302}" th:text="VIP" th:value=302 selected></option>
+                <option th:if="${list.grade == 303}" th:text="VVIP" th:value=303 selected></option>
+                <option th:if="${list.grade == 304}" th:text="SVIP" th:value=304 selected></option>
+                <option th:value=301>일반</option>
+                <option th:value=302>VIP</option>
+                <option th:value=303>VVIP</option>
+                <option th:value=304>SVIP</option>
+            </select></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    </div>
+    <script>
+        function chargeSelect(e) {
+            var gradeVal = e.options[e.selectedIndex].value;
+            var memId = e.parentElement.parentElement.children[1].children[0].innerHTML;
+            if (confirm("수정하시겠습니까?") == true) {
+                $.ajax({
+                    url: "/adm/gradeUpdate",
+                    method: "POST",
+                    data: {memberId: memId, grade: gradeVal}
+                })
+            } else {
+
+            }
+        }
+
+
+    </script>
+</th:block>
 </html>

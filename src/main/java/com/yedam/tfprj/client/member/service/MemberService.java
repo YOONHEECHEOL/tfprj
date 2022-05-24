@@ -1,11 +1,14 @@
 package com.yedam.tfprj.client.member.service;
 
 
+
+
+
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MemberService {
-    public List<MemberVO> findAll();
     //멤버 단건 조회
     public MemberVO findOne(HttpServletRequest request, MemberVO vo);
 
@@ -35,6 +38,14 @@ public interface MemberService {
 
     //팀에 속해 있는 멤버 조회
     List<MemberVO> isTeam(MemberVO vo, HttpServletRequest request);
+
+    //멤버 전체 조회
+    public List<MemberVO> selectAll();
+
+    //관리자 - 회원등급수정
+    int gradeUpdate(MemberVO vo);
+
+
 
 
 

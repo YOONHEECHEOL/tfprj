@@ -1,6 +1,7 @@
 package com.yedam.tfprj.client.member.service;
 
 
+
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,10 +56,6 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    @Override
-    public List<MemberVO> findAll() {
-        return null;
-    }
 
     @Override
     public MemberVO findOne(HttpServletRequest request, MemberVO vo) {
@@ -103,6 +100,19 @@ public class MemberServiceImpl implements MemberService {
         List<MemberVO> list = memberMapper.isTeam(vo);
         return list;
     }
+
+    @Override
+    public List<MemberVO> selectAll() {
+        List<MemberVO> list = memberMapper.selectAll();
+        return list;
+    }
+
+    @Override
+    public int gradeUpdate(MemberVO vo) {
+        return memberMapper.gradeUpdate(vo);
+    }
+
+
 
 
 }
