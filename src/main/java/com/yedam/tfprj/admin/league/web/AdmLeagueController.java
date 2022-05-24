@@ -22,8 +22,6 @@ public class AdmLeagueController {
     // insert league
     @RequestMapping("/adm/insertLeague")
     public String insertLeague(LeagueVO leagueVO) {
-
-        System.out.println("========================leagueVO = " + leagueVO);
         admLeagueService.insertLeague(leagueVO);
 
         return "redirect:/adm/league";

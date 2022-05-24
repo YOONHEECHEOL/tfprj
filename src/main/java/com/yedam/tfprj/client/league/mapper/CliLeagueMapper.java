@@ -20,4 +20,8 @@ public interface CliLeagueMapper {
 
     // league_apply table 에 등록되어있는지 조회
     public List<LeagueApplyVO> isLeagueApply(LeagueApplyVO leagueApplyVO);
+
+    // league is_approve 상태 확인
+    @Select("select distinct is_approve from league_apply where league_id = #{leagueId}")
+    public String isLeagueApplyStatus(int leagueId);
 }

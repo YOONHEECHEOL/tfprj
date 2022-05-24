@@ -47,7 +47,7 @@ public class CliLeagueServiceImpl implements LeagueService{
 
         // 분할
         leagueList.forEach(league -> {
-            if( now.isBefore( toLocalDateInstant( league.getStartDate() ) ) ) {
+            if( Integer.parseInt(league.getLeagueStatusCd()) != 502 && Integer.parseInt(league.getLeagueStatusCd()) != 503 ) {
                 // 현재 진행 중
                 LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
                 if(request.getSession().getAttribute("memberId") != null) {
@@ -65,9 +65,9 @@ public class CliLeagueServiceImpl implements LeagueService{
 
                     // 출력 리스트에 추가
 //                    currentLeagueList.add(league);
+                currentLeagueList.add(league);
                 }
 
-                currentLeagueList.add(league);
 
             } else {
                 passedLeagueList.add(league);
@@ -101,23 +101,31 @@ public class CliLeagueServiceImpl implements LeagueService{
         List<LeagueVO> notParticipatedLeague = new ArrayList<>();
 
         // 참가한 리그, 참가하지 않은 리그 분리
-        LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
         list.forEach(league -> {
+            LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
             // 리그에 참가했는지 검증
             leagueApplyVO.setLeagueId(league.getLeagueId());
             leagueApplyVO.setMemberId(request.getSession().getAttribute("memberId").toString());
 
-            if(cliLeagueMapper.isLeagueApply(leagueApplyVO).size() > 0) {
-                // 참가했음
-                league.setIsApply("y");
-                participatedLeague.add(league);
+
+            // 리그 참여 후 상태 체크
+            league.setIsApplyStatus(cliLeagueMapper.isLeagueApplyStatus(league.getLeagueId()));
+
+
+            // league 참가 여부 확인
+            if( cliLeagueMapper.isLeagueApply(leagueApplyVO).size() > 0 ) {
+
+                    league.setIsApply("y");
+                    participatedLeague.add(league);
+
             } else {
-                // 참가하지 않음
-                if( now.isBefore(toLocalDateInstant( league.getStartDate() )) ) {
+                // 참가하지 않은 리그
+
                     league.setIsApply("n");
-                }
-                notParticipatedLeague.add(league);
-            };
+                    notParticipatedLeague.add(league);
+
+            }
+
         });
 
         // retrun serviceVO 에 담음

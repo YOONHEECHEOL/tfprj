@@ -125,3 +125,9 @@ select * from tab;
 
 select * from common_code;
 select code_value_id from common_code;
+
+-- 리그 is_approve 체크
+select distinct is_approve from league_apply where league_id = 1;
+-- 리그 is_approve 업데이트
+update league_apply set is_approve = 1801 where league_id = 1;
+commit;

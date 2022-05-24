@@ -8,20 +8,19 @@
 <th:block layout:fragment="content">
 
   <a-h1 ko="리그관리" en="LEAGUE"></a-h1>
+  <div class="row justify-content-end">
+    <div class="col-2">
+      <button class="c-button" id="addLeague">리그생성</button>
+    </div>
+  </div>
   <div class="row" id="output">
 
     <div class="col">
 
-      <div class="row justify-content-end">
-        <div class="col-2">
-          <button class="c-button" id="addLeague">리그생성</button>
-        </div>
-      </div>
-
       <t-h2 ko="현재 진행 중 리그"></t-h2>
       <table class="table">
-        <tbody th:each="l, status: ${l.currentList}">
-        <tr>
+        <tbody>
+        <tr th:each="l, status: ${l.currentList}">
           <td><span th:text="${l.leagueId}">리그ID</span></td>
           <td>
             <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
@@ -41,8 +40,8 @@
 
       <t-h2 ko="지난 리그"></t-h2>
       <table class="table">
-        <tbody th:each="l, status: ${l.passedList}">
-        <tr>
+        <tbody>
+        <tr th:each="l, status: ${l.passedList}">
           <td><span th:text="${l.leagueId}">리그ID</span></td>
           <td>
             <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
@@ -65,7 +64,6 @@
 
   </div>
 
-
   <script>
 
     // 리그 생성 페이지 출력
@@ -76,70 +74,126 @@
         c.setAttribute('class', 'col-4')
 
         c.innerHTML = `
-                        <t-h2 ko="리그 생성하기"></t-h2>
-                        <form action="/adm/insertLeague" id="frm" class="" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="리그명" name="leagueName" value="tea league">
-                            </div>
-                            <div class="form-group">
-                                <label for="room">구장선택</label>
-                                <select name="room" id="room">
-                                    <option value="">선 택</option>
-                                    <option value="">1번 구장</option>
-                                    <option value="">2번 구장</option>
-                                    <option value="">3번 구장</option>
-                                    <option value="">4번 구장</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name="startDate">
-                                <span> - </span>
-                                <input type="date" name="endDate">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="리그상금" name="prizeMoney" value="1000">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="참가팀 수" name="participationTeam" value="8">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="1000" name="participationMember" value="3">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="우승 트로피" name="prizeGood" value="1000">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="우승 트로피" name="winningTeam" value="none">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="우승 트로피" name="leagueStatusCd" value="501">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="우승 트로피" name="tournamentId" value="1">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" value="1000" class="form-control" placeholder="1000" name="entryFee">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" value="n" class="form-control" placeholder="1000" name="isApply">
-                            </div>
-                            <div class="form-group">
-                                <input type="button" value="🔻">
-                                <input type="text" value="4" name="participationMember">
-                                <input type="button" value="🔺">
-                            </div>
+        <t-h2 ko="리그 생성하기"></t-h2>
+          <form action="/adm/insertLeague" id="frm" class="league-create-form" method="post">
+            <input type="hidden" placeholder="리그상태코드" name="leagueStatusCd" id="leagueStatusCd" value="501">
+            <input type="hidden" placeholder="토너먼트ID" name="tournamentId" id="tournamentId" value="0">
+            <input type="hidden" placeholder="우승팀" name="winningTeam" id="winningTeam" value="-">
+            <input type="hidden" value="n" placeholder="참여여부" name="isApply">
+            <input type="hidden" placeholder="우승 트로피" name="prizeGood" id="prizeGood" value="NFT-TROPHY">
 
-                        </form>
-                        <div class="button__box">
-                            <button class="c-button">취소하기</button>
-                            <button class="c-button" id="submitFrm">리그생성</button>
-                        </div>
+            <div class="row align-items-center">
+              <div class="col-3">
+                <label for="leagueName">리그명</label>
+              </div>
+              <div class="col-9">
+                <input type="text" class="form-control form-control-lg" placeholder="리그명" name="leagueName" id="leagueName">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3"><label for="room">구장선택</label></div>
+              <div class="col-9">
+                <select name="room" id="room" class="form-control">
+                  <option value="">선 택</option>
+                  <option value="">1번 구장</option>
+                  <option value="">2번 구장</option>
+                  <option value="">3번 구장</option>
+                  <option value="">4번 구장</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <span>리그 기간</span>
+              </div>
+              <div class="col-9">
+
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">리그 시작</div>
+                  </div>
+                  <input type="date" class="form-control form-control-lg" name="startDate" id="startDate">
+                </div>
+
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">리그 끝일</div>
+                  </div>
+                  <input type="date" class="form-control form-control-lg" name="endDate" id="endDate">
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <label for="prizeMoney">리그상금</label>
+              </div>
+              <div class="col-9">
+                <input type="text" class="form-control" placeholder="리그상금" name="prizeMoney" id="prizeMoney" value="1000">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <label for="participationTeam">참가팀 수</label>
+              </div>
+              <div class="col-9">
+                <input type="text" class="form-control" placeholder="리그에 참가할 팀 수를 입력..." name="participationTeam"
+                       id="participationTeam" value="8">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <label for="participationMember">경기 인원</label>
+              </div>
+              <div class="col-9">
+
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text" id="subMember"><i class="fas fa-fw fa-minus"></i></div>
+                  </div>
+                  <input type="text" value="4" name="participationMember" id="participationMember" class="text-center form-control form-control-lg">
+                  <div class="input-group-append">
+                    <div class="input-group-text" id="addMember"><i class="fas fa-fw fa-plus"></i></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3">
+                <label for="tournamentId">참가비</label>
+              </div>
+              <div class="col-9">
+                <input type="text" value="1000" class="form-control" placeholder="참가비" name="entryFee" id="entryFee">
+              </div>
+            </div>
+
+          </form>
+          <div class="button__box">
+            <button class="button button-primary" id="submitFrm">리그생성</button>
+          </div>
                     `
+        // form 태그 입력 끝
 
         output.append(c);
+
+        addLeague.innerText = '리그생성취소'
+
+        // 폼 제출 함수 호출
         submitFrm()
+
+        // 참가 인원 수정
+        setMembers()
+
       } else {
         output.children[1].remove()
+        addLeague.innerText = '리그생성'
       }
     })
 
@@ -149,9 +203,30 @@
       let frmBtn = document.querySelector('#submitFrm');
 
       frmBtn.addEventListener('click', () => {
-        document.querySelector('#frm').submit()
+        if(confirm('리그를 등록하시겠습니까?'))
+          document.querySelector('#frm').submit();
       })
     }
+
+    // 리그 생성 페이지 멤버 수 변경
+    const setMembers = () => {
+      document.querySelector('#subMember').addEventListener('click', () => {
+        console.log('리그 참가인원 빼기')
+        if(participationMember.value != 1) {
+          participationMember.value = participationMember.value - 1
+        } else
+          alert('최소 1명은 참가해야합니다.')
+      })
+      document.querySelector('#addMember').addEventListener('click', () => {
+        console.log('리그 참가인원 더하기')
+        if(participationMember.value != 8) {
+          participationMember.value = participationMember.value + 1
+        } else
+          alert('최대 8명까지 참가 가능합니다.')
+      })
+    }
+
+    //
 
 
   </script>

@@ -24,4 +24,5 @@
         where member_id = #{memberId}
         and league_id = #{leagueId}
     </select>
-</mapper>
+
+  </mapper>
