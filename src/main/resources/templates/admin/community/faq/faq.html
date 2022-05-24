@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>FAQ</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <style>
     input[id*="answer"]{
         display: none;
@@ -26,7 +29,7 @@
         height: 30px;
         margin-top: 15px;
         display: inline-block;
-        background: url("./img/arrow.png") 0 0 no-repeat;
+        background: url("./static/images/arrow.png") 0 0 no-repeat;
     }
     input[id*="answer"] + label + div {
         max-height: 0;
@@ -43,13 +46,16 @@
     }
     input[id*="answer"]:checked + label em {
         background-position: 0 30px; }
-    }
 </style>
 </head>
 <body>
 <h1>FAQ</h1>
-<input placeholder="대분류 이름을 입력하시오"><input type="button" value="대분류 생성">
-
+<div class="mb-3">
+    <label for="title">제목</label>
+    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+    <input type="button"  value="대분류 생성">
+</div>
+<h3>대분류</h3><input type="button" value="생성">
 <div class="accordion">
     <input type="radio" name="accordion" id="answer01">
     <label for="answer01">컨텐츠 제목 부분<em></em></label>
@@ -57,6 +63,8 @@
             내용내용내용내용내용내용내용내용내용내용내용내용
             내용내용내용내용내용내용내용내용내용내용내용내용
             내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+<h3>대분류</h3><input type="button" value="생성">
+
     <input type="radio" name="accordion" id="answer02">
     <label for="answer02">컨텐츠 제목 부분<em></em></label>
     <div><p>내용내용내용내용내용내용내용내용내용내용내용
@@ -64,29 +72,5 @@
         내용내용내용내용내용내용내용내용내용내용내용내용
         내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
     <input type="radio" name="accordion" id="answer03">
-    <label for="answer03">컨텐츠 제목 부분<em></em></label>
-    <div><p>내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-    <input type="radio" name="accordion" id="answer04">
-    <label for="answer04">컨텐츠 제목 부분<em></em></label>
-    <div><p>내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-    <input type="radio" name="accordion" id="answer05">
-    <label for="answer05">컨텐츠 제목 부분<em></em></label>
-    <div><p>내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-    <input type="radio" name="accordion" id="answer06">
-    <label for="answer06">컨텐츠 제목 부분<em></em></label>
-    <div><p>내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용
-        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-</div>
 </body>
 </html>
