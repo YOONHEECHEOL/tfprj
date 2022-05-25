@@ -16,8 +16,21 @@ public class AdmReservationRestController {
     }
 
     @PostMapping("/adm/reservation/update_payment_cd")
-    public int updatePaymentCd(@RequestParam String resId){
+    public int UpdatePaymentCd(@RequestParam String resId){
         reservationServiceImpl.updatePaymentCd(resId);
         return 1;
     }
+
+    @PostMapping("/adm/reservation/checkId")
+    public String checkIdAndUpdate(@RequestParam String memberId, @RequestParam String password,  @RequestParam String memberName, @RequestParam String gameId){
+        if(reservationServiceImpl.checkId(memberId,password,memberName).equals("0") ){
+            return "0";
+        }else{
+            reservationServiceImpl.updateId(memberId, memberName, gameId);
+            System.out.println("ID 업데이트 완료");
+            return "ID 업데이트 완료";
+        }
+    }
+
+
 }

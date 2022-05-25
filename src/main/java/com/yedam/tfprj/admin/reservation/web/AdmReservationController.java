@@ -25,5 +25,11 @@ public class AdmReservationController {
     }
 
     @RequestMapping("/adm/reservation/reservation_day_detail")
-    public String resDayDetail(){return "admin/reservation/reservation_day_detail";}
+    public String resDayDetail(@RequestParam String resId, Model model){
+        System.out.println("인포: " + reservationServiceImpl.gameInfo(resId));
+        System.out.println("리스트: " + reservationServiceImpl.gameInfoList(resId));
+       model.addAttribute("gameInfoList", reservationServiceImpl.gameInfoList(resId));
+       model.addAttribute("gameInfo", reservationServiceImpl.gameInfo(resId));
+       model.addAttribute("resInfo", reservationServiceImpl.resInfo(resId));
+        return "admin/reservation/reservation_day_detail";}
 }
