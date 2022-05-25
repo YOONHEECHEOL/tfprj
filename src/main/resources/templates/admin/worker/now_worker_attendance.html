@@ -90,7 +90,7 @@
                 <br><br>
                 <div>
                 <span>다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
-                    <div>기홍길</div>
+                    <div id="nextWorker">기홍길</div>
                 </span>
                     <br><br>
                     <button id="makeWorksheet">근무표 작성</button>
@@ -301,6 +301,8 @@
                     if(response[i].workDt.indexOf(dateString) == 0){
                         if(response[i].workerId != '[[${nowWorker.workerId}]]') {
                             console.log(response[i].workerId);
+                            $('#nextWorker').html(response[i].workerId);
+
 
                             //여기까지 0526 00:41
                         }
