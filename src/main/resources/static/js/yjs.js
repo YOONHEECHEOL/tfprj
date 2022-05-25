@@ -105,6 +105,7 @@ class tH2 extends HTMLElement {
           padding: 0.8rem 0 0;
           margin: 0;
           display: inline-block;
+          color: #222;
       }
       .h2__box {
           padding: 1.2rem 0 .8rem;
