@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.admin.community.mapper.AdmFmMapper">
+
+    <select id="AdmFmList" resultType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        SELECT *
+        FROM fm_board
+        ORDER BY f_no ASC
+    </select>
+
+    <select id="AdmReplyList" resultType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, F.F_NO , C.TEAM
+        FROM    FM_ANSWER C, FM_BOARD F
+        WHERE   F.F_NO = C.F_NO
+          AND     F.F_NO = #{fNo}
+        ORDER BY C_NO ASC
+    </select>
+
+    <select id="AdmFmSelect" resultType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO"
+            parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        select *
+        from fm_board
+        where f_no = #{fNo}
+    </select>
+
+    <delete id="AdmFmDelete"
+            parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        DELETE
+        FROM FM_BOARD
+        WHERE F_NO = #{fNo}
+    </delete>
+
+    <update id="AdmFmUpdate"  parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        update fm_board
+        set title   = #{title},
+            details = #{details}
+        where f_no = #{fNo}
+    </update>
+
+    <insert id="AdmFmInsert" parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        INSERT INTO FM_BOARD
+        VALUES(fno_seq.nextval, #{title}, 'admin', sysdate, 0, #{details}, 'admin')
+    </insert>
+
+    <insert id="AdmFmAnswerInsert" parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        INSERT INTO FM_ANSWER
+        VALUES(fcno_seq.nextval, sysdate, #{cdetails}, 'admin', #{fNo}, 'admin')
+    </insert>
+
+    <delete id="AdmFmAnswerDelete" parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        DELETE FROM FM_ANSWER
+        WHERE C_NO = #{cNo}
+    </delete>
+</mapper>

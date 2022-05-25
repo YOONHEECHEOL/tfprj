@@ -11,7 +11,7 @@
 
     <form id="frm" action="/cli/insertMember" method="post" onsubmit="return formCheck()">
 
-        <input type="text" name="memberId" id="member_id" required="required" placeholder="아이디 입력.."/>
+        <input type="text" name="memberId" id="memberId" required="required" placeholder="아이디 입력.."/>
         <button type="button" id="checkId"
                 class="c-button" value="No" onclick="isIdCheck()" >중복체크
         </button>
@@ -86,19 +86,24 @@
     </script>
     <script type="text/javascript">
         function isIdCheck() {
+            let id = $('#memberId').val()
+            if(id == ""){
+                alert("입력하세요")
+                return
+            }
             $.ajax({
-                url: "/cli/idCheck?memberId=" + $('#member_id').val(),
+                url: "/cli/idCheck?memberId=" + $('#memberId').val(),
                 type: "get",
                 success: function (result) {
                     if (result == 'n') {
                         alert("사용 가능한 아이디입니다.");
                         $("#checkId").attr("class", "c-button disabled");
                         $("#checkId").val('Yes');
-                        $("#memberPassword").focus();
+                        $("#password").focus();
                     } else {
                         alert("사용 불가능한 아이디입니다.");
-                        $("#member_id").val('');
-                        $("#member_id").focus();
+                        $("#memberId").val('');
+                        $("#memberId").focus();
                     }
                     ;
                 }

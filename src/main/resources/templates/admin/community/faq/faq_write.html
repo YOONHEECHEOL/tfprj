@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+<article>
+    <div class="container" role="main">
+
+        <h1>FAQ 작성</h1>
+
+        <form name="form" id="form" role="form" method="post" action="/adm/faqInsert">
+
+
+            <select name="title">
+                <th:block th:each="t:${title}">
+                    <option th:value="${t.title}" th:text="${t.title}">로그인</option>
+                </th:block>
+            </select>
+
+            <div class="mb-3">
+                <label for="subTitle">제목</label>
+                <input type="text" class="form-control" name="subTitle" id="subTitle" placeholder="제목을 입력해 주세요">
+            </div>
+
+            <div class="mb-3">
+                <label for="details">내용</label>
+                <textarea class="form-control" rows="5" name="details" id="details"
+                          placeholder="내용을 입력해 주세요"></textarea>
+            </div>
+
+            <div>
+                <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+
+                <button type="button" style="float: right" onclick="location.href = '/adm/faq'"
+                        class="btn btn-sm btn-primary">목록
+                </button>
+            </div>
+        </form>
+    </div>
+</article>
+</body>
+</html>

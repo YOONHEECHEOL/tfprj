@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.admin.community.mapper.AdmFaqMapper">
+
+    <select id="AdmFaqList" resultMap="AdmTitleListMap">
+        SELECT b.*
+        FROM faq_board b,
+             faq_title t
+        where b.title = t.title
+        ORDER BY a_no ASC
+    </select>
+
+    <resultMap id="AdmTitleListMap" type="com.yedam.tfprj.admin.community.service.faq.AdmTitleVO">
+        <id column="title" property="title"/>
+        <collection property="admFaqList" ofType="com.yedam.tfprj.admin.community.service.faq.AdmFaqVO">
+            <id column="a_no" property="aNo"/>
+            <result column="sub_title" property="subTitle"/>
+            <result column="details" property="details"/>
+            <result column="title"  property="title"/>
+        </collection>
+    </resultMap>
+
+    <select id="AdmFaqTitleList" resultType="com.yedam.tfprj.admin.community.service.faq.AdmFaqVO">
+        SElECT *
+        FROM    FAQ_TITLE
+    </select>
+
+    <insert id="AdmFaqInsert" parameterType="com.yedam.tfprj.admin.community.service.faq.AdmFaqVO">
+        INSERT INTO FAQ_BOARD
+        VALUES(ano_seq.nextval, #{subTitle}, #{details}, #{title})
+    </insert>
+
+    <insert id="AdmFaqTitleInsert" parameterType="com.yedam.tfprj.admin.community.service.faq.AdmFaqVO">
+        INSERT INTO FAQ_TITLE
+        VALUES(#{title})
+    </insert>
+</mapper>

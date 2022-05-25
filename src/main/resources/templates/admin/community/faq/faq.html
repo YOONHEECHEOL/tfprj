@@ -6,72 +6,85 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<style>
-    input[id*="answer"]{
-        display: none;
-    }
-    input[id*="answer"] + label{
-        display: block;
-        padding-top: 20px;
-        border: 1px solid #2d4373;
-        border-bottom: 0;
-        color: #ebebeb;
-        font-weight: 900;
-        background: #2d4373;
-        cursor: pointer;
-        position: relative;
-    }
-    input[id*="answer"] label em{
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        width: 30px;
-        height: 30px;
-        margin-top: 15px;
-        display: inline-block;
-        background: url("./static/images/arrow.png") 0 0 no-repeat;
-    }
-    input[id*="answer"] + label + div {
-        max-height: 0;
-        transition: all .35s;
-        overflow: hidden;
-        background: #ebebeb;
-        font-size: 11px;
-    }
-    input[id*="answer"] + label + div p {
-        display: inline-block;
-    }
-    input[id*="answer"]:checked + label + div {
-        max-height: 100px;
-    }
-    input[id*="answer"]:checked + label em {
-        background-position: 0 30px; }
-    body{
-        margin-left: 50px;
-        margin-right: 50px;
-        margin-top: 50px;
-    }
-</style>
+    <style>
+        input[id*="answer"] {
+            display: none;
+        }
+
+        input[id*="answer"] + label {
+            display: block;
+            padding-top: 20px;
+            border: 1px solid #2d4373;
+            border-bottom: 0;
+            color: #ebebeb;
+            font-weight: 900;
+            background: #2d4373;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[id*="answer"] label em {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            margin-top: 15px;
+            display: inline-block;
+            background: url("./static/images/arrow.png") 0 0 no-repeat;
+        }
+
+        input[id*="answer"] + label + div {
+            max-height: 0;
+            transition: all .35s;
+            overflow: hidden;
+            background: #ebebeb;
+            font-size: 11px;
+        }
+
+        input[id*="answer"] + label + div p {
+            display: inline-block;
+        }
+
+        input[id*="answer"]:checked + label + div {
+            max-height: 100px;
+        }
+
+        input[id*="answer"]:checked + label em {
+            background-position: 0 30px;
+        }
+
+        body {
+            margin-left: 50px;
+            margin-right: 50px;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
 
 <h1>FAQ</h1>
-<div class="mb-3" id="big">
-    <label for="title">제목</label>
-    <input type="text" class="form-control" name="title" id="title" placeholder="입력해 주세요">
-    <input type="button"  value="대분류 생성" id="create">
-</div>
+<form method="post" action="/adm/faqTitleInsert">
+    <div class="mb-3" id="big">
+        <label for="title">제목</label>
+        <input type="text" class="form-control" name="title" id="title" placeholder="입력해 주세요">
+        <input type="submit" value="대분류 생성" id="create">
+    </div>
+</form>
+<div th:each="f:${faq}">
+    <h3 th:text="${f.title}">대분류</h3>
 
-<h3>대분류</h3><input type="button" value="생성" id="subcreate">
-<div class="accordion">
-    <th:block th:each="f:${faq}">
-    <input type="radio" name="accordion" th:id="'answer' + ${fStat.count}">
-    <label th:for="'answer' + ${fStat.count}" th:text="${f.subTitle}">컨텐츠 제목 부분<em></em></label>
-    <div><p th:text="${f.details}">내용내용내용내용내용내용내용내용내용내용내용
-            내용내용내용내용내용내용내용내용내용내용내용내용
-            내용내용내용내용내용내용내용내용내용내용내용내용
-            내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-    </th:block>
+    <div class="accordion">
+        <th:block th:each="t:${f.admFaqList}">
+            <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
+            <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
+            <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
+                내용내용내용내용내용내용내용내용내용내용내용내용
+                내용내용내용내용내용내용내용내용내용내용내용내용
+                내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+        </th:block>
+    </div>
 </div>
+<button onclick="location.href = '/adm/faqWrite'" style="float: right">작성</button>
 </body>
 </html>
