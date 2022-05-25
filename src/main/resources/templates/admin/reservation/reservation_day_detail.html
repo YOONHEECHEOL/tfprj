@@ -1,10 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script th:defer th:src="@{/js/yjs.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div>
+    <div>
+        <h3 id="clock" style="color:black;">clock</h3>
+    </div>
+
+    <div th:class="gameInfoList" th:each="giList, index : ${gameInfoList}">
+        <span th:if="${giList.memberId == null}" th:text="비회원"> </span>
+        <span th:unless="${giList.memberId == null}" th:text="${giList.memberId}"></span>
+        <span th:class="memberName" th:text="${giList.memberName}"> </span>
+        <span th:text="${giList.groundCd}"> </span>
+        <span th:text="'안타 : '+${giList.hits}"> </span>
+        <span th:text="${giList.homeruns}"> </span>
+        <span th:text="'최고 비거리 : '+${giList.highestDistance}+'미터'"> </span>
+        <span th:text="'타석 : '+${giList.batCounts}"> </span>
+        <span th:text="${giList.batOrder}"> </span>
+        <span th:text="${giList.difficultyCd}"> </span>
+        <span th:text="${giList.gameId}"> </span>
+        <span th:text="'타율 : ' + ${giList.getBattingAverage()}"> </span>
+        <button th:if="${giList.memberId == null}" th:class="btn">ID입력</button>
+
+    </div>
+    <div>
+        <span th:id="gameId" th:text="${gameInfo.gameId}"> </span>
+        <span th:id="resId" th:text="${gameInfo.resId}"> </span>
+        <span th:text="${gameInfo.memberId}"> </span>
+        <span th:text="${gameInfo.memberName}"> </span>
+        <span th:text="${gameInfo.innings}"> </span>
+        <span th:text="${gameInfo.homeName}"> </span>
+        <span th:text="${gameInfo.awayName}"> </span>
+        <span th:text="${gameInfo.homeScore}"> </span>
+        <span th:text="${gameInfo.awayScore}"> </span>
+        <span th:text="${gameInfo.homeHits}"> </span>
+        <span th:text="${gameInfo.awayHits}"> </span>
+        <span th:text="${gameInfo.homeHomeruns}"> </span>
+        <span th:text="${gameInfo.awayHomeruns}"> </span>
+        <span th:text="${gameInfo.homePlayteamCd}"> </span>
+        <span th:text="${gameInfo.awayPlayteamCd}"> </span>
+        <span th:text="${gameInfo.winLose}"> </span>
+        <span th:text="${gameInfo.leagueId}"> </span>
+        <span th:text="${gameInfo.roundCd}"> </span>
+        <span th:text="${gameInfo.room}"> </span>
+        <span th:text="${#dates.format(resInfo.startTime, 'HH:mm')}"> </span>
+        <span th:text="${#dates.format(resInfo.endTime, 'HH:mm')}"> </span>
+        <span> <convert-c-code th:data="${resInfo.paymentStatusCd}"></convert-c-code> </span>
+    </div>
+
+    <div><button onclick="history.back()">뒤로가기</button></div>
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="memberId">ID</label>
+                            <input class="inputModal" name="memberId" id="memberId" required="required">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="password">비밀번호</label>
+                            <input class="inputModal" type="text" name="password" id="password"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer modalBtnContainer-addEvent">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="save-event">입력</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>
+
 
 </body>
+<script>
+    var Target = document.getElementById("clock");
+
+    function clock() {
+        var time = new Date();
+
+        var month = time.getMonth();
+        var date = time.getDate();
+        var day = time.getDay();
+        var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var seconds = time.getSeconds();
+
+        Target.innerText =
+            `${month + 1}월 ${date}일 ${week[day]}요일 ` +
+            `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+
+    }
+
+    clock();
+    setInterval(clock, 1000); // 1초마다 실행
+</script>
+<script>
+    $(".gameInfoList").on("click", ".btn", function () {
+        let memberName = $(this).prevAll(".memberName").text();
+        let gameId = $("#gameId").text();
+        console.log(gameId);
+        $("#eventModal").modal();
+        // $("#edit-start").val(dateCalBoot(info.event._instance.range.start));
+        // $("#edit-end").val(dateCalBoot(info.event._instance.range.end));
+        // $("#edit-title").val(info.event._def.title);
+
+        $('#save-event').off('click').on('click', function () {
+            let memberId = $('#memberId').val();
+            let password = $('#password').val();
+
+
+            $('#save-event').attr('data-dismiss', 'modal');
+
+            $.ajax({
+                url: "checkId",
+                type: "POST",
+                data: {
+                    memberId: memberId,
+                    password: password,
+                    memberName: memberName,
+                    gameId : gameId
+                },
+                success: function (response) {
+                    console.log("리턴 결과" + response);
+                    if (response == 0) {
+                        alert("아이디가 없거나 비밀번호가 틀립니다")
+                    } else {
+                        alert(response);
+                        location.reload();
+                        // $.ajax({
+                        //     url :
+                        // })
+                    }
+
+                },
+                fail: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+            //첫번째 아쟉스 끝
+        }) //버튼 클릭 이벤트 끝
+    })
+</script>
+
+
 </html>

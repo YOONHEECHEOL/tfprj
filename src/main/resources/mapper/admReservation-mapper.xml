@@ -23,5 +23,42 @@
         where res_id = #{resId}
 
     </update>
+    <update id="updateId">
+        update member_game
+        set member_id = #{memberId}
+        where member_name = #{memberName}
+        and game_id = #{gameId}
+
+    </update>
+
+    <select id="gameInfo" parameterType="string" resultType="com.yedam.tfprj.admin.reservation.service.AdmGameVO">
+        select *
+        from game
+        where game_id = (select r.game_id from reservation r where r.res_id = #{resId})
+    </select>
+
+
+    <select id="gameInfoList" resultType="com.yedam.tfprj.admin.reservation.service.MemberGameVO">
+        select *
+        from member_game
+        where game_id = (select r.game_id from reservation r where r.res_id = #{resId})
+        order by ground_cd asc,  bat_order asc
+
+    </select>
+    <select id="resInfo" resultType="com.yedam.tfprj.admin.reservation.service.ReservationVO">
+        select *
+        from reservation r, payment p
+        where r.payment_id = p.payment_id
+        and r.res_id = #{resId}
+
+    </select>
+    <select id="checkId" resultType="java.lang.String" parameterType="string">
+        SELECT CASE WHEN COUNT(MEMBER_ID) = 1 THEN 1 ELSE 0 END AS MEMBER_ID
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+        and password = #{password}
+        and member_name = #{memberName}
+    </select>
+
 
 </mapper>

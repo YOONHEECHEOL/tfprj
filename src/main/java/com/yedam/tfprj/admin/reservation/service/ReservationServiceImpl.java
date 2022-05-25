@@ -58,5 +58,42 @@ public class ReservationServiceImpl implements ReservationService {
         return 0;
     }
 
+    @Override
+    public AdmGameVO gameInfo(String resId) {
+
+
+        return mapper.gameInfo(resId);
+    }
+
+    @Override
+    public List<MemberGameVO> gameInfoList(String resId) {
+        List<MemberGameVO> giList = mapper.gameInfoList(resId);
+        for(int i=0; i<giList.size();i++){
+
+            double battingAverage = (double)giList.get(i).getHits()/giList.get(i).getBatCounts();
+            double ba = Math.round(battingAverage*1000)/1000.0;
+            giList.get(i).setBattingAverage(ba);
+        }
+
+
+        return giList;
+    }
+
+    @Override
+    public ReservationVO resInfo(String resId) {
+
+        return mapper.resInfo(resId);
+    }
+
+    @Override
+    public String checkId(String memberId, String password, String memberName) {
+        return mapper.checkId(memberId,password,memberName);
+    }
+
+    @Override
+    public int updateId(String memberId, String memberName, String gameId) {
+        return mapper.updateId(memberId,memberName,gameId);
+    }
+
 
 }
