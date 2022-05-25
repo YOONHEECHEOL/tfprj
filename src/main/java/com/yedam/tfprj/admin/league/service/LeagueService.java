@@ -13,4 +13,7 @@ public interface LeagueService {
     // league 생성
     public void insertLeague(LeagueVO leagueVO);
 
+    //getLeagueApply
+    public AdmLeagueServiceVO getLeagueApply();
+
 }

@@ -15,13 +15,13 @@
   </div>
   <div class="row" id="output">
 
-    <div class="col">
+    <div class="col" id="admLeagueList">
 
       <t-h2 ko="현재 진행 중 리그"></t-h2>
       <table class="table">
         <tbody>
         <tr th:each="l, status: ${l.currentList}">
-          <td><span th:text="${l.leagueId}">리그ID</span></td>
+          <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
           <td>
             <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
             <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
@@ -42,7 +42,7 @@
       <table class="table">
         <tbody>
         <tr th:each="l, status: ${l.passedList}">
-          <td><span th:text="${l.leagueId}">리그ID</span></td>
+          <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
           <td>
             <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
             <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
@@ -226,7 +226,16 @@
       })
     }
 
-    //
+    // admLeagueList 리그 상세조회 event
+    document.querySelector('#admLeagueList').addEventListener('click', () => {
+      if(event.target.tagName == 'TD') {
+        // console.log(event.target.parentNode)
+        let target = event.target.parentNode;
+        let league_no = target.querySelector('.ttt').innerText;
+        console.log(league_no);
+        location.href = '/adm/leagueDetail?lno=' + league_no;
+      }
+    })
 
 
   </script>

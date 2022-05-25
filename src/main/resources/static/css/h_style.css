@@ -329,3 +329,10 @@ main.contents {
     font-size: 1.6rem;
     color: #222;
 }
+
+#admLeagueList tr {
+    cursor: pointer;
+}
+#admLeagueList td * {
+    pointer-events: none;
+}

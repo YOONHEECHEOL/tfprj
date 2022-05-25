@@ -108,7 +108,7 @@ public class CliLeagueServiceImpl implements LeagueService{
             leagueApplyVO.setMemberId(request.getSession().getAttribute("memberId").toString());
 
 
-            // 리그 참여 후 상태 체크
+            // league apply table 에서 멤버가 참여 신청한 상태 체크
             league.setIsApplyStatus(cliLeagueMapper.isLeagueApplyStatus(league.getLeagueId()));
 
 

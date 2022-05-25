@@ -41,7 +41,12 @@ public class AdmLeagueServiceImpl implements LeagueService{
 
     @Override
     public AdmLeagueServiceVO getLeagueDetail(int lno) {
-        return null;
+
+        AdmLeagueServiceVO admLeagueServiceVO = new AdmLeagueServiceVO();
+
+        admLeagueServiceVO.leagueVO = admLeagueMapper.getLeagueDetail(lno);
+
+        return admLeagueServiceVO;
     }
 
     @Override
@@ -62,5 +67,12 @@ public class AdmLeagueServiceImpl implements LeagueService{
                 .toLocalDate().format(formatter);
 
         return LocalDate.parse(returnDate);
+    }
+
+    @Override
+    public AdmLeagueServiceVO getLeagueApply() {
+
+
+        return null;
     }
 }

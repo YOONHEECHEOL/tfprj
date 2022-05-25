@@ -47,7 +47,7 @@
 
   <h3 class="h3">참가하지 않은 리그</h3>
   <table class="table">
-    <tbody th:each="l, status: ${ml.getNotParticipatedLeague()}0">
+    <tbody th:each="l, status: ${ml.getNotParticipatedLeague()}">
     <tr>
       <td><span th:text="${l.leagueId}">리그ID</span></td>
       <td>
