@@ -1,7 +1,6 @@
 package com.yedam.tfprj.client.member.service;
 
 
-
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,6 +119,17 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<MemberVO> findBlack() {
         return memberMapper.findBlack();
+    }
+
+    @Override
+    public int blackUpdate(MemberVO vo) {
+        return memberMapper.blackUpdate(vo);
+    }
+
+    @Override
+    public List<MemberVO> teamMember(MemberVO vo) {
+        List<MemberVO> list = memberMapper.teamMember(vo);
+        return list;
     }
 
 

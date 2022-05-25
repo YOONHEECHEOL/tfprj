@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Mapper
@@ -38,8 +39,12 @@ public interface MemberMapper {
 
     //관리자 - 회원등급수정
     int gradeUpdate(MemberVO vo);
-
+    //전체리스트
     List<MemberVO> findAll();
-
+    //블랙리스트 조회
     List<MemberVO> findBlack();
+    //블랙리스트 상태변경
+    int blackUpdate(MemberVO vo);
+    //팀원조회
+    List<MemberVO> teamMember(MemberVO vo);
 }

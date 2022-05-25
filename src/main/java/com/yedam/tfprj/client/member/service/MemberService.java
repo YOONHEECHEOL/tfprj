@@ -49,6 +49,9 @@ public interface MemberService {
 
     public List<MemberVO> findBlack();
 
+    public int blackUpdate(MemberVO vo);
+
+    public List<MemberVO> teamMember(MemberVO vo);
 
 
 }

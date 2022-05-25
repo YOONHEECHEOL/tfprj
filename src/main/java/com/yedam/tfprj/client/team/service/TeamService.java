@@ -15,4 +15,6 @@ public interface TeamService {
 
     // 팀 멤버 조회
     public List<MemberVO> selectTeamMembers(int teamId);
+
+    public List<TeamVO> teamAll();
 }

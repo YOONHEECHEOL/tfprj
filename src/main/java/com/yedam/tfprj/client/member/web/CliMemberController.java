@@ -2,6 +2,8 @@ package com.yedam.tfprj.client.member.web;
 
 import com.yedam.tfprj.client.member.service.MemberService;
 import com.yedam.tfprj.client.member.service.MemberVO;
+import com.yedam.tfprj.client.message.mapper.MsgMapper;
+import com.yedam.tfprj.client.message.service.MessageVO;
 import com.yedam.tfprj.client.reservation.service.CliReservationService;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import com.yedam.tfprj.client.team.service.TeamService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,6 +28,9 @@ public class CliMemberController {
     CliReservationService cliReservationServiceImpl;
     @Autowired
     TeamService teamServiceImpl;
+
+    @Autowired
+    MsgMapper msgMapper;
 
     @RequestMapping("/cli/myInfo")
     public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request) {
@@ -56,7 +62,14 @@ public class CliMemberController {
 //    }
 
     @RequestMapping("/cli/myMessage")
-    public String cliMyMessage() {
+    public String cliMyMessage(HttpServletRequest request, Model model) {
+
+        List<MessageVO> list = new ArrayList<>();
+
+        list = msgMapper.getMessage(request.getSession().getAttribute("memberId").toString());
+
+        model.addAttribute("msg", list);
+        System.out.println(list);
         return "client/member/my_message";
     }
 

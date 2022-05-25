@@ -24,7 +24,7 @@
                 <tbody th:id="memberBody">
                 <tr th:each="list:${pageInfo.list}">
                     <td><span th:text="${list.ROWNUM}"></span></td>
-                    <td><span th:id="memberId" th:name="memberId" th:text="${list.memberId}"></span></td>
+                    <td><span th:text="${list.memberId}"></span></td>
                     <td><span th:text="${list.memberName}"></span></td>
                     <td><span th:text="${list.tel}"></span></td>
                     <td><select th:id="grade" th:name="grade" onchange="chargeSelect(this)">
@@ -61,58 +61,7 @@
             </nav>
         </div>
     </div>
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>블랙리스트 조회</h3>
-        </div>
-    </div>
-    <div th:class="row">
-        <div th:class="col-auto">
-            <table>
-                <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>아이디</th>
-                    <th>이름</th>
-                    <th>연락처</th>
-                    <th>회원등급</th>
-                    <th>블랙리스트 상태</th>
-                    <th>블랙리스트 사유</th>
-                </tr>
-                </thead>
-                <tbody th:id="memberBody">
-                <tr th:each="list:${blackInfo.list}">
-                    <td><span th:text="${list.ROWNUM}"></span></td>
-                    <td><span th:id="memberId" th:name="memberId" th:text="${list.memberId}"></span></td>
-                    <td><span th:text="${list.memberName}"></span></td>
-                    <td><span th:text="${list.tel}"></span></td>
-                    <td><span th:text="${list.grade}"></span></td>
-                    <td><span th:text="${list.blacklistYn}"></span></td>
-                    <td><span th:text="${list.blacklistReason}"></span></td>
-                </tr>
-                </tbody>
-            </table>
-            <!--MemberList End-->
-            <!-- 페이징 -->
-            <nav>
-                <ul>
-                    <!-- getPrePage : 이전 페이지 -->
-                    <li th:classappend="${blackInfo.getPrePage() == 0} ? 'disabled'">
-                        <a th:href="@{memberList(pageNum=${blackInfo.getPrePage()})}">Previous</a>
-                    </li>
-                    <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                    <li th:each="page: ${#numbers.sequence(blackInfo.getNavigateFirstPage(), blackInfo.getNavigateLastPage())}"
-                        th:classappend="${page == blackInfo.getPageNum()} ? 'active'">
-                        <a th:text="${page}" th:href="@{memberList(pageNum=${page})}"></a>
-                    </li>
-                    <!-- getPrePage : 다음 페이지 -->
-                    <li th:classappend="${blackInfo.getNextPage() == 0} ? 'disabled'">
-                        <a th:href="@{memberList(pageNum=${blackInfo.getNextPage()})}">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+
     <script>
         function chargeSelect(e) {
             var gradeVal = e.options[e.selectedIndex].value;
@@ -124,7 +73,7 @@
                     data: {memberId: memId, grade: gradeVal}
                 })
             } else {
-
+                return;
             }
         }
 
