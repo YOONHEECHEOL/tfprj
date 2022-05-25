@@ -135,4 +135,28 @@ public class WorkerAttendanceController {
     public List<WorkerAttendanceVO> getWeekList(){
         return service.selectStaffInOutWeek();
     }
+
+    @ResponseBody
+    @PostMapping("/adm/allLate")
+    public WorkerAttendanceVO allLate(String workerId){
+        return service.allLate(workerId);
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/weekLate")
+    public WorkerAttendanceVO weekLate(String workerId){
+        return service.weekLate(workerId);
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/monthLate")
+    public WorkerAttendanceVO monthLate(String workerId){
+        return service.monthLate(workerId);
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/allAbsence")
+    public WorkerAttendanceVO allAbsence(String workerId){
+        return service.allAbsence(workerId);
+    }
 }

@@ -4,6 +4,7 @@ package com.yedam.tfprj.admin.worksheet.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.admin.reservation.service.ReservationVO;
+import com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO;
 import com.yedam.tfprj.admin.worksheet.service.WorkerArrVO;
 import com.yedam.tfprj.admin.worksheet.service.WorksheetService;
 import com.yedam.tfprj.admin.worksheet.service.WorksheetVO;
@@ -188,6 +189,11 @@ public class WorksheetRestController {
                                  @RequestParam String color,    @RequestParam String textColor, @RequestParam String backgroundColor) {
         service.updateWorksheet(workerId, goingTime, quittingTime, color, textColor, backgroundColor);
         return null;
+    }
+
+    @RequestMapping("/adm/selectNextWorker")
+    public List<NewWorkSheetVO> selectNextWorker(){
+        return service.selectNextWorker();
     }
 
 }

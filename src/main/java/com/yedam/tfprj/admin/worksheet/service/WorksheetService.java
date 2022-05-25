@@ -11,4 +11,5 @@ public interface WorksheetService {
       public int updateWorksheet(String workerId, String goingTime, String quittingTime, String color, String textColor, String backgroundColor);
 
       public WorksheetVO validateWorkTime(String workerId);
+      public List<NewWorkSheetVO> selectNextWorker();
    }

@@ -41,5 +41,11 @@
         and to_date(going_time, 'yy-MM-dd') = to_date(sysdate, 'yy-MM-dd')
     </select>
 
+    <select id="selectNextWorker" resultType="com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO">
+        SELECT *
+        FROM WORKSHEET
+        ORDER BY GOING_TIME
+    </select>
+
 </mapper>
 
