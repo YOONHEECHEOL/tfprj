@@ -28,6 +28,11 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     }
 
     @Override
+    public WorkerAttendanceVO getNowWorker2() {
+        return mapper.getNowWorker2();
+    }
+
+    @Override
     public int insertAttendance(String workerId) {
         return mapper.insertAttendance(workerId);
     }
@@ -65,5 +70,30 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     @Override
     public List<WorkerAttendanceVO> selectQuitTime(String workerId) {
         return mapper.selectQuitTime(workerId);
+    }
+
+    @Override
+    public List<WorkerAttendanceVO> selectStaffInOutWeek() {
+        return mapper.selectStaffInOutWeek();
+    }
+
+    @Override
+    public WorkerAttendanceVO allLate(String workerId) {
+        return mapper.allLate(workerId);
+    }
+
+    @Override
+    public WorkerAttendanceVO weekLate(String workerId) {
+        return mapper.weekLate(workerId);
+    }
+
+    @Override
+    public WorkerAttendanceVO monthLate(String workerId) {
+        return mapper.monthLate(workerId);
+    }
+
+    @Override
+    public WorkerAttendanceVO allAbsence(String workerId) {
+        return mapper.allAbsence(workerId);
     }
 }

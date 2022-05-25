@@ -249,6 +249,13 @@
                  })
             }
             weekFind();
+            console.log('[[${nowWorker.goingTime}]]');
+            $.ajax({
+                url : "allLate",
+                data : {
+                    workerId : '[[${nowWorker.goingTime}]]'
+                }
+            })
         })
     </script>
 </th:block>

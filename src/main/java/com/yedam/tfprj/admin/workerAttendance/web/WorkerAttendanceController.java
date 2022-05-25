@@ -1,5 +1,7 @@
 package com.yedam.tfprj.admin.workerAttendance.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceService;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO;
 import com.yedam.tfprj.admin.workerAttendance.service.ReturnVO;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class WorkerAttendanceController {
@@ -34,6 +38,7 @@ public class WorkerAttendanceController {
 
         return "admin/worker/now_worker_attendance";
     }
+
 
     @ResponseBody
     @RequestMapping("/adm/jsonSheetList")
@@ -121,7 +126,13 @@ public class WorkerAttendanceController {
     }
 
     @RequestMapping("/adm/work_record")
-    public String workRecord(){
+    public String workRecord()  {
         return "admin/worker/work_record";
+    }
+
+    @ResponseBody
+    @RequestMapping("/adm/getWeekList")
+    public List<WorkerAttendanceVO> getWeekList(){
+        return service.selectStaffInOutWeek();
     }
 }

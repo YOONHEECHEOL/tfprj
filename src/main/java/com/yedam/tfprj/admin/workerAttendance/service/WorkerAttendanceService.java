@@ -10,6 +10,7 @@ import java.util.Map;
 
 public interface WorkerAttendanceService {
       public WorkerAttendanceVO getNowWorker();
+      public WorkerAttendanceVO getNowWorker2();
       public int insertAttendance(String workerId);
 
       public WorkerAttendanceVO getWorkerInOutTime(String workerId);
@@ -19,4 +20,9 @@ public interface WorkerAttendanceService {
       public int updateQuit(String workerId);
       public WorkerAttendanceVO getPercent(String workerId);
       public List<WorkerAttendanceVO> selectQuitTime(String workerId);
+      public List<WorkerAttendanceVO> selectStaffInOutWeek();
+      public WorkerAttendanceVO allLate(String workerId);
+      public WorkerAttendanceVO weekLate(String workerId);
+      public WorkerAttendanceVO monthLate(String workerId);
+      public WorkerAttendanceVO allAbsence(String workerId);
    }

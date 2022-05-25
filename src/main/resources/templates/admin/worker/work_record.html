@@ -44,6 +44,8 @@
         <div id="out">
             <h1 id="demo"></h1>
         </div>
+        <hr>
+        <div id="getTable"></div>
         <br>
         <button type="button" id="btn" class="btn btn-primary">출근하기</button>
     </div>
@@ -192,18 +194,18 @@
 
             $.ajax({
                 url: "selectQuitTime",
-                data : { workerId : workerId },
-                method : "post"
-            }).done(function (response){
+                data: {workerId: workerId},
+                method: "post"
+            }).done(function (response) {
                 console.log(response);
-                if(response != ''){
-                    if(response[response.length - 1].outTime == null && response != ''){
+                if (response != '') {
+                    if (response[response.length - 1].outTime == null && response != '') {
                         alert('전 근무자가 퇴근체크를 하지 않았습니다.')
                         // 밥먹고 고치자
-                    }else{
+                    } else {
                         alert('오늘 이미 퇴근처리 하셨습니다.')
                     }
-                }else{
+                } else {
                     $.ajax({
                         url: "insertAttendance",
                         data: {
@@ -239,10 +241,93 @@
                     })
                 }
             })
-
-
-
         })
+
+        //오늘날짜 구하기
+        function getToday() {
+            var today = new Date();
+            var dateString = today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + today.getDate()).slice(-2);
+            return dateString;
+        }
+
+        //이번 주 7일 + 요일 구해서 tr태그 동적으로 만들어주기.
+        function weekFind() {
+            var currentDay = new Date();
+            var theYear = currentDay.getFullYear();
+            var theMonth = currentDay.getMonth();
+            var theDate = currentDay.getDate();
+            var theDayOfWeek = currentDay.getDay();
+
+            var thisWeek = [];
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+            for (var i = 0; i < 7; i++) {
+                var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+                var yyyy = resultDay.getFullYear();
+                var mm = Number(resultDay.getMonth()) + 1;
+                var dd = resultDay.getDate();
+                var dayOfWeek = week[new Date(yyyy + '-' + mm + '-' + dd).getDay()];
+
+                mm = String(mm).length === 1 ? '0' + mm : mm;
+                dd = String(dd).length === 1 ? '0' + dd : dd;
+
+                thisWeek[i] = yyyy + '-' + mm + '-' + dd + "(" + dayOfWeek + ")";
+            }
+            return thisWeek;
+        }
+
+
+        // 이번주 날짜가 들어간 태그 만들기.
+        // 오늘은 빨간색으로 표시됨.
+        //<td>태그 안에 실제근무자가 한번 더 표시되게.
+        function weekTrMaker() {
+            var tr = "<tr>";
+            for (let i = 0; i < weekFind().length; i++) {
+                if (weekFind()[i].indexOf(getToday()) == -1) {
+                    tr += "<td width='100'>" + weekFind()[i] + "</td>";
+                } else {
+                    tr += "<td width='100' style='color: #ca2819'>" + weekFind()[i] + "</td>";
+                }
+            }
+            tr += "</tr>"
+            $('#getTable').append(tr);
+
+            $.ajax({
+                url: "getWeekList"
+            }).done(function (response) {
+                    console.log(response);
+                    var tr2 = "<tr>";
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i].workerId == '[[${session.workerId}]]') {
+                            console.log('dd');
+                            if (response[i].inTime != null) {
+                                tr2 += "<td width='100'>" + response[i].inTime + "</td>"
+                            }else {
+                                tr2 += "<td width='100'>" + "출근 전" + "</td>"
+                            }
+                        }
+                    }
+                    tr2 += "</td>";
+                    $('#getTable').append(tr2);
+
+                    var tr3 = "<tr>";
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i].workerId == '[[${session.workerId}]]') {
+                            console.log('dd');
+                            if (response[i].outTime != null) {
+                                tr3 += "<td width='100'>" + response[i].outTime + "</td>"
+                            }else{
+                                tr3 += "<td width='100'>" + "퇴근 전" + "</td>"
+                            }
+                        }
+                    }
+                    tr3 += "</td>";
+                    $('#getTable').append(tr3);
+            })
+
+        }
+
+        weekTrMaker();
 
 
     </script>
