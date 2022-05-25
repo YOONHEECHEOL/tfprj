@@ -63,4 +63,9 @@ public class WorksheetServiceImpl implements WorksheetService {
     public int updateWorksheet(String workerId, String goingTime, String quittingTime, String color, String textColor, String backgroundColor) {
         return mapper.updateWorksheet(workerId, goingTime, quittingTime, color, textColor, backgroundColor);
     }
+
+    @Override
+    public WorksheetVO validateWorkTime(String workerId) {
+        return mapper.validateWorkTime(workerId);
+    }
 }

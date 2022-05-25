@@ -13,8 +13,80 @@
 
     <insert id="insertAttendance">
         Insert into staff_attendance(att_id, worker_id, att_dt, in_time, is_late, is_absence)
-        VALUES(SEQ_ATTENDANCE.nextval, #{workerId}, to_char(sysdate, 'yy-MM-dd'), to_char(sysdate, 'hh24:mi'), 0, 0)
+        VALUES(SEQ_ATTENDANCE.nextval, #{workerId}, to_char(sysdate, 'yy-MM-dd'), to_char(sysdate, 'yy-MM-dd hh24:mi'), 0, 0)
     </insert>
+
+    <select id="getWorkerInOutTime" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        select w.worker_id, s.att_dt, w.going_time, quitting_time, s.in_time, s.out_time
+        from worksheet w, staff_attendance s
+        where w.worker_id = s.worker_id
+          and s.att_Dt = to_char(sysdate, 'yy-MM-dd')
+          and to_char(w.going_time, 'yy-MM-dd') = s.att_dt
+          and w.worker_id = #{workerId}
+    </select>
+
+    <update id="updateIslate">
+        UPDATE STAFF_ATTENDANCE SET IS_LATE = 1
+        WHERE WORKER_ID = #{workerId}
+        AND ATT_DT = TO_CHAR(SYSDATE, 'yy-MM-dd')
+        AND ATT_DT = (SELECT TO_CHAR(GOING_TIME, 'yy-MM-dd')
+                        FROM WORKSHEET
+                        WHERE WORKER_ID = #{workerId}
+                        AND TO_CHAR(GOING_TIME, 'yy-MM-dd') = TO_CHAR(SYSDATE, 'yy-MM-dd'))
+    </update>
+
+    <update id="updateIsAbsence">
+        UPDATE STAFF_ATTENDANCE SET IS_ABSENCE = 1
+        WHERE WORKER_ID = #{workerId}
+        AND ATT_DT = TO_CHAR(SYSDATE, 'yy-MM-dd')
+        AND ATT_DT = (SELECT TO_CHAR(GOING_TIME, 'yy-MM-dd')
+                        FROM WORKSHEET
+                        WHERE WORKER_ID = #{workerId}
+                        AND TO_CHAR(GOING_TIME, 'yy-MM-dd') = TO_CHAR(SYSDATE, 'yy-MM-dd'))
+    </update>
+
+    <select id="getSecond" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        SELECT ROUND((TO_DATE(s.in_time, 'YY-MM-DD HH24:MI')
+            - w.quitting_time) * 24 * 60 * 60, 2) AS getTime
+        FROM staff_attendance s, worksheet w
+        where s.worker_id = w.worker_id
+          and s.worker_id = #{workerId}
+          and s.att_Dt = to_char(sysdate, 'yy-MM-dd')
+          and to_char(w.going_time, 'yy-MM-dd') = s.att_dt
+    </select>
+
+    <update id="updateQuit">
+        UPDATE staff_attendance SET out_time = to_char(sysdate, 'yy-MM-dd hh24:mi')
+        WHERE worker_id = #{workerId}
+          and att_Dt = to_char(sysdate, 'yy-MM-dd')
+          and att_dt = (select to_char(going_time, 'yy-MM-dd')
+                        from worksheet
+                        where worker_id = #{workerId}
+                        and to_char(going_time, 'yy-MM-dd') = to_char(sysdate, 'yy-MM-dd'))
+
+    </update>
+
+    <select id="getPercent" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        SELECT W.WORKER_ID,
+               S.ATT_DT,
+               W.GOING_TIME,
+               QUITTING_TIME,
+               TO_DATE(S.IN_TIME, 'YY-MM-DD HH24:MI') AS inMTime,
+               S.OUT_TIME,
+               ROUND(((SYSDATE - TO_DATE(S.IN_TIME, 'YY-MM-DD HH24:MI')) *24)/((QUITTING_TIME - GOING_TIME) *24),2) * 100  AS percent,
+               ROUND((W.QUITTING_TIME - SYSDATE) * 24 * 60 * 60, 2) AS getMTime
+        FROM WORKSHEET W, STAFF_ATTENDANCE S
+        WHERE W.WORKER_ID = S.WORKER_ID
+               AND S.ATT_DT = TO_CHAR(SYSDATE, 'YY-MM-DD')
+               AND TO_CHAR(W.GOING_TIME, 'YY-MM-DD') = S.ATT_DT
+               AND W.WORKER_ID = #{workerId}
+    </select>
+
+    <select id="selectQuitTime" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        select * from staff_attendance
+        where att_dt = to_char(sysdate, 'yy-MM-dd')
+        and worker_id = #{workerId}
+    </select>
 
 </mapper>
 

@@ -9,4 +9,6 @@ public interface WorksheetService {
       public List<WorksheetVO> worksheetList();
       public List<WorksheetVO> sheetValidation(String firstDate, String lastDate);
       public int updateWorksheet(String workerId, String goingTime, String quittingTime, String color, String textColor, String backgroundColor);
+
+      public WorksheetVO validateWorkTime(String workerId);
    }

@@ -31,4 +31,39 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     public int insertAttendance(String workerId) {
         return mapper.insertAttendance(workerId);
     }
+
+    @Override
+    public WorkerAttendanceVO getWorkerInOutTime(String workerId) {
+        return mapper.getWorkerInOutTime(workerId);
+    }
+
+    @Override
+    public int updateIslate(String workerId) {
+        return mapper.updateIslate(workerId);
+    }
+
+    @Override
+    public int updateIsAbsence(String workerId) {
+        return mapper.updateIsAbsence(workerId);
+    }
+
+    @Override
+    public WorkerAttendanceVO getSecond(String workerId) {
+        return mapper.getSecond(workerId);
+    }
+
+    @Override
+    public int updateQuit(String workerId) {
+        return mapper.updateQuit(workerId);
+    }
+
+    @Override
+    public WorkerAttendanceVO getPercent(String workerId) {
+        return mapper.getPercent(workerId);
+    }
+
+    @Override
+    public List<WorkerAttendanceVO> selectQuitTime(String workerId) {
+        return mapper.selectQuitTime(workerId);
+    }
 }

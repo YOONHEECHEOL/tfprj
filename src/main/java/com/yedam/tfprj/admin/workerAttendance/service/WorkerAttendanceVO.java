@@ -17,12 +17,12 @@ public class WorkerAttendanceVO {
     private int isAbsence;
     private String workerName;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh24:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd hh24:mm:ss", timezone = "Asia/Seoul")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date goingTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh24:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd hh24:mm:ss", timezone = "Asia/Seoul")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private Date quittingTime;
 
     private int positionCd;
@@ -31,4 +31,10 @@ public class WorkerAttendanceVO {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh24:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd hh24:mm:ss", timezone = "Asia/Seoul")
     private Date startDay;
+
+    private long getTime;
+
+    private String percent;
+    private String inMTime;
+    private String getMTime;
 }

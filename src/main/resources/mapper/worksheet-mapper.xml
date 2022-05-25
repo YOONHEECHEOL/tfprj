@@ -35,5 +35,11 @@
         values(SEQ_WORKSHEET.nextval, to_date(#{realDate}, 'yyyy-mm-dd'), #{workerId}, #{positionCd}, #{userType}, #{goingTime}, #{quittingTime})
     </insert>
 
+    <select id="validateWorkTime" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
+        select worker_id, work_dt ,going_time, quitting_time from worksheet
+        where worker_id = #{workerId}
+        and to_date(going_time, 'yy-MM-dd') = to_date(sysdate, 'yy-MM-dd')
+    </select>
+
 </mapper>
 
