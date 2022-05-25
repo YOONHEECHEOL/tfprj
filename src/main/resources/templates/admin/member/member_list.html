@@ -3,39 +3,65 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-
-    <table>
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>아이디</th>
-            <th>이름</th>
-            <th>연락처</th>
-            <th>회원등급</th>
-        </tr>
-        </thead>
-        <tbody th:id="memberBody">
-        <tr th:each="list, i : ${list}">
-            <td><span th:text="${list.ROWNUM}"></span></td>
-            <td><span th:id="memberId" th:name="memberId" th:text="${list.memberId}"></span></td>
-            <td><span th:text="${list.memberName}"></span></td>
-            <td><span th:text="${list.tel}"></span></td>
-            <td><select th:id="grade" th:name="grade" onchange="chargeSelect(this)">
-                <option th:if="${list.grade == 301}" th:text="일반" th:value=301 selected></option>
-                <option th:if="${list.grade == 302}" th:text="VIP" th:value=302 selected></option>
-                <option th:if="${list.grade == 303}" th:text="VVIP" th:value=303 selected></option>
-                <option th:if="${list.grade == 304}" th:text="SVIP" th:value=304 selected></option>
-                <option th:value=301>일반</option>
-                <option th:value=302>VIP</option>
-                <option th:value=303>VVIP</option>
-                <option th:value=304>SVIP</option>
-            </select></td>
-        </tr>
-        </tbody>
-    </table>
-
-
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h3>회원리스트 조회</h3>
+        </div>
     </div>
+    <!--MemberList Start-->
+    <div th:class="row">
+        <div th:class="col-auto">
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>연락처</th>
+                    <th>회원등급</th>
+                </tr>
+                </thead>
+                <tbody th:id="memberBody">
+                <tr th:each="list:${pageInfo.list}">
+                    <td><span th:text="${list.ROWNUM}"></span></td>
+                    <td><span th:text="${list.memberId}"></span></td>
+                    <td><span th:text="${list.memberName}"></span></td>
+                    <td><span th:text="${list.tel}"></span></td>
+                    <td><select th:id="grade" th:name="grade" onchange="chargeSelect(this)">
+                        <option th:if="${list.grade == 301}" th:text="일반" th:value=301 selected></option>
+                        <option th:if="${list.grade == 302}" th:text="VIP" th:value=302 selected></option>
+                        <option th:if="${list.grade == 303}" th:text="VVIP" th:value=303 selected></option>
+                        <option th:if="${list.grade == 304}" th:text="SVIP" th:value=304 selected></option>
+                        <option th:value=301>일반</option>
+                        <option th:value=302>VIP</option>
+                        <option th:value=303>VVIP</option>
+                        <option th:value=304>SVIP</option>
+                    </select></td>
+                </tr>
+                </tbody>
+            </table>
+            <!--MemberList End-->
+            <!-- 페이징 -->
+            <nav>
+                <ul>
+                    <!-- getPrePage : 이전 페이지 -->
+                    <li th:classappend="${pageInfo.getPrePage() == 0} ? 'disabled'">
+                        <a th:href="@{memberList(pageNum=${pageInfo.getPrePage()})}">Previous</a>
+                    </li>
+                    <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
+                    <li th:each="page: ${#numbers.sequence(pageInfo.getNavigateFirstPage(), pageInfo.getNavigateLastPage())}"
+                        th:classappend="${page == pageInfo.getPageNum()} ? 'active'">
+                        <a th:text="${page}" th:href="@{memberList(pageNum=${page})}"></a>
+                    </li>
+                    <!-- getPrePage : 다음 페이지 -->
+                    <li th:classappend="${pageInfo.getNextPage() == 0} ? 'disabled'">
+                        <a th:href="@{memberList(pageNum=${pageInfo.getNextPage()})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
     <script>
         function chargeSelect(e) {
             var gradeVal = e.options[e.selectedIndex].value;
@@ -47,10 +73,9 @@
                     data: {memberId: memId, grade: gradeVal}
                 })
             } else {
-
+                return;
             }
         }
-
 
     </script>
 </th:block>

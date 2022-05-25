@@ -30,8 +30,8 @@
     </select>
 
     <select id="selectAll" resultType="com.yedam.tfprj.client.member.service.MemberVO">
-        SELECT ROWNUM, A.*
-        FROM (SELECT*FROM MEMBER ORDER BY GRADE) A
+        SELECT *
+        FROM MEMBER
     </select>
 
     <update id="updateMember" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
@@ -73,5 +73,29 @@
         SET GRADE = #{grade}
         WHERE MEMBER_ID = #{memberId}
     </update>
+
+    <select id="findAll" resultType="com.yedam.tfprj.client.member.service.MemberVO">
+        SELECT ROWNUM, A.*
+        FROM (SELECT*FROM MEMBER ORDER BY GRADE) A
+    </select>
+
+    <select id="findBlack" resultType="com.yedam.tfprj.client.member.service.MemberVO">
+        SELECT ROWNUM, A.*
+        FROM (SELECT*FROM MEMBER ORDER BY GRADE) A
+        WHERE BLACKLIST_YN = 1
+    </select>
+
+    <update id="blackUpdate" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
+        UPDATE MEMBER
+        SET BLACKLIST_YN     = #{blacklistYn},
+            BLACKLIST_REASON = ''
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <select id="teamMember" resultType="com.yedam.tfprj.client.member.service.MemberVO">
+        SELECT *
+        FROM MEMBER
+        WHERE TEAM_ID = #{teamId}
+    </select>
 
 </mapper>

@@ -10,5 +10,6 @@ public class TeamVO {
     private int win;
     private int totalGameCnt;
     private String teamName;
+    private int ROWNUM;
 
 }
