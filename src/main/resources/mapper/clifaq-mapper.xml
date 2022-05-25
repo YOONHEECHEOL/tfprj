@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.client.community.mapper.CliFaqMapper">
+
+    <select id="CliFaqList" resultMap="CliTitleListMap">
+        SELECT b.*
+        FROM faq_board b,
+             faq_title t
+        where b.title = t.title
+        ORDER BY a_no ASC
+    </select>
+
+    <resultMap id="CliTitleListMap" type="com.yedam.tfprj.client.community.service.faq.CliTitleVO">
+        <id column="title" property="title"/>
+        <collection property="cliFaqList" ofType="com.yedam.tfprj.client.community.service.faq.CliFaqVO">
+            <id column="a_no" property="aNo"/>
+            <result column="sub_title" property="subTitle"/>
+            <result column="details" property="details"/>
+            <result column="title"  property="title"/>
+        </collection>
+    </resultMap>
+
+</mapper>

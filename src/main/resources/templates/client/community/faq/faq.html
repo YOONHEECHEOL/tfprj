@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/cli_layout}">
+
+
+
+<body>
+
+<th:block layout:fragment="content">
+
+    <style>
+        input[id*="answer"] {
+            display: none;
+        }
+
+        input[id*="answer"] + label {
+            display: block;
+            padding-top: 20px;
+            border: 1px solid #2d4373;
+            border-bottom: 0;
+            color: #ebebeb;
+            font-weight: 900;
+            background: #2d4373;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[id*="answer"] label em {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            margin-top: 15px;
+            display: inline-block;
+            background: url("./static/images/arrow.png") 0 0 no-repeat;
+        }
+
+        input[id*="answer"] + label + div {
+            max-height: 0;
+            transition: all .35s;
+            overflow: hidden;
+            background: #ebebeb;
+            font-size: 11px;
+        }
+
+        input[id*="answer"] + label + div p {
+            display: inline-block;
+        }
+
+        input[id*="answer"]:checked + label + div {
+            max-height: 100px;
+        }
+
+        input[id*="answer"]:checked + label em {
+            background-position: 0 30px;
+        }
+
+        body {
+            margin-left: 50px;
+            margin-right: 50px;
+            margin-top: 50px;
+        }
+    </style>
+
+    <h1>FAQ</h1>
+    <div th:each="f:${faq}">
+        <h3 th:text="${f.title}">대분류</h3>
+
+        <div class="accordion">
+            <th:block th:each="t:${f.cliFaqList}">
+                <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
+                <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
+                <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
+                    내용내용내용내용내용내용내용내용내용내용내용내용
+                    내용내용내용내용내용내용내용내용내용내용내용내용
+                    내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+            </th:block>
+        </div>
+    </div>
+
+</th:block>
+</body>
+</html>

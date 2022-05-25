@@ -6,9 +6,7 @@ import java.util.List;
 
 @Data
 public class AdmTitleVO {
-
     private  String title;
-
     List<AdmFaqVO> admFaqList;
 
 }

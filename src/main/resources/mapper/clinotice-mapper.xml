@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.client.community.mapper.CliNoticeMapper">
+
+    <select id="CliNoticeList" resultType="com.yedam.tfprj.client.community.service.notice.CliNoticeVO">
+        SELECT n_no, title, wdate, views
+        FROM notice_board
+        ORDER BY n_no ASC
+    </select>
+
+    <select id="CliNoticeSelect" resultType="com.yedam.tfprj.client.community.service.notice.CliNoticeVO"
+            parameterType="com.yedam.tfprj.client.community.service.notice.CliNoticeVO">
+        select n_no, wdate, title, details
+        from notice_board
+        where n_no = #{nNo}
+    </select>
+
+</mapper>
