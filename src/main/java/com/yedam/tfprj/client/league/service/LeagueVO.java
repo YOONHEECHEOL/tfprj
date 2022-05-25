@@ -27,9 +27,14 @@ public class LeagueVO {
     private Date endDate;
 
     private int prizeMoney;
+    private int participationTeam;
+    private int participationMember;
+    private String prizeGood;
     private String winningTeam;
     private String leagueStatusCd;
     private int tournamentId;
     private int entryFee;
+    private String isApply;
+    private String isApplyStatus;
 
 }

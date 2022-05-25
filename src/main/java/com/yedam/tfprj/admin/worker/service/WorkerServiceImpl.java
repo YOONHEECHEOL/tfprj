@@ -22,6 +22,11 @@ public class WorkerServiceImpl implements WorkerService {
     WorkerMapper mapper;
 
     @Override
+    public List<WorkerVO> allWorkerList() {
+        return mapper.allWorkerList();
+    }
+
+    @Override
     public List<Map<String, Object>> getExecl() {
         return mapper.getExecl();
     }
@@ -53,7 +58,7 @@ public class WorkerServiceImpl implements WorkerService {
 
             String fileName = uuid + "_" + file.getOriginalFilename();
 
-            java.io.File saveFile = new File(projectPath, fileName);
+            File saveFile = new File(projectPath, fileName);
 
             try {
                 file.transferTo(saveFile);
@@ -89,7 +94,7 @@ public class WorkerServiceImpl implements WorkerService {
 
         String fileName = uuid + "_" + file.getOriginalFilename();
 
-        java.io.File saveFile = new File(projectPath, fileName);
+        File saveFile = new File(projectPath, fileName);
 
         file.transferTo(saveFile);
 
@@ -109,5 +114,15 @@ public class WorkerServiceImpl implements WorkerService {
         // 컨트롤러에서 스크립트 코드 사용
 
         return mapper.workerDetailUpdate(vo);
+    }
+
+    @Override
+    public int signUpUpdate() {
+        return mapper.signUpUpdate();
+    }
+
+    @Override
+    public WorkerVO loginSelect(WorkerVO vo) {
+        return mapper.loginSelect(vo);
     }
 }

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+<th:block layout:fragment="content">
+    <style>
+        #myProgress {
+            position: relative;
+            width: 50%;
+            height: 30px;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            position: absolute;
+            height: 100%;
+            background-color: #4CAF50;
+        }
+
+        #label {
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+    </style>
+    <div id="newTag"></div>
+    <div id="allTag">
+        <h1>JavaScript Progress Bar</h1>
+        <h2 th:text="${session.workerId}"></h2>
+        <div id="myProgress" style="display: none">
+            <div id="myBar">
+                <div id="label">0%</div>
+            </div>
+        </div>
+        <div id="div2">
+            <p id="dd"></p>
+        </div>
+        <div id="out">
+            <h1 id="demo"></h1>
+        </div>
+        <br>
+        <button type="button" id="btn" class="btn btn-primary">출근하기</button>
+    </div>
+    <script>
+
+        function getNowTimeMilsec() {
+            let today = new Date();
+            let hours = today.getHours();
+            let minutes = today.getMinutes();
+            let millsec = today.getTime();
+
+            return millsec;
+        }
+
+        // 1. 현재 시간을 밀리세컨드로 얻는 function
+        function getNowTime() {
+            let today = new Date();
+            let hours = today.getHours();
+            let minutes = today.getMinutes();
+            let millsec = today.getTime();
+            console.log("실제 퇴근버튼 찍은 분 " + ((millsec / (1000 * 60))));
+            return ((millsec / (1000 * 60)));
+        }
+
+        // 2. 퇴근 버튼을 찍었을때의 시간을 밀리세컨드로 얻는 function
+        function getOuttime(time) {
+            let today = new Date(time)
+            console.log("퇴근시간 분" + ((today.getTime() / (1000 * 60))));
+
+            var getOutTime = ((today.getTime() / (1000 * 60)));
+            return getOutTime;
+        }
+
+
+        // 3. 출근 버튼을 찍었을 때, 근무종료까지의 시간을 계산하는 게이지 바가 나오는 function
+        function move(percent, leftTime) {
+            console.log(leftTime);
+            console.log(percent)
+            document.getElementById('myProgress').style.display = "block";
+            var elem = document.getElementById("myBar");
+            var width = percent;
+
+
+            var id = setInterval(frame, leftTime * 10);
+            elem.style.width = percent + '%';
+
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                    document.getElementById('myProgress').style.display = "none";
+                    document.getElementById('dd').innerHTML = '퇴근하세요!';
+                    document.getElementById('btn').style.display = "none";
+
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    document.getElementById("label").innerHTML = width * 1 + '%';
+                }
+            }
+        }
+
+        // 4. 퇴근버튼을 찍었을때 ajax로 전송하는 function
+        function quitAjax(workerId) {
+            $.ajax({
+                url: "updateQuit",
+                data: {
+                    workerId: workerId
+                }
+            }).done(function (response) {
+                console.log(response);
+                $('#allTag').remove();
+                var h1 = "<h1>" + '고생하셧습니다.' + "</h1>"
+                $('#newTag').append(h1);
+            })
+        }
+
+        // 5. 남은시간 타이머 계산.
+        function timer(time) {
+            var time = time;
+            var hour = "";
+            var min = "";
+            var sec = "";
+
+            var x = setInterval(function () {
+                hour = parseInt(time / 60 / 60);
+                min = parseInt(time / 60 % 60);
+                sec = time % 60;
+
+                $('#demo').html(hour + "시간" + min + "분" + sec + "초");
+                time--;
+
+                if (time < 0) {
+                    clearInterval(x);
+                    $('#demo').html("시간초과");
+                }
+            }, 1000);
+        }
+
+        // 6. 퇴근 버튼을 클릭했을때 function
+        function outButtonClick(quittingTime, workerId) {
+            $('#out').on('click', '#outBtn', function () {
+                if (getOuttime(quittingTime) - getNowTime() > 20) {
+                    if (!confirm("퇴근시간이 아닙니다. 퇴근하시겠습니까?")) {
+                        // 취소(아니오) 버튼 클릭 시 이벤트
+                        alert('취소되었습니다.');
+                    } else {
+                        // 확인(예) 버튼 클릭 시 ajax 이벤트
+                        quitAjax(workerId)
+                    }
+                } else {
+                    quitAjax(workerId)
+                }
+
+
+            })
+        }
+
+        // 7. 데이터베이스를 조회해서 출근한 데이터가 남아있으면 화면상태를 move 바, timer, 퇴근버튼이 있도록
+        function maintainFnc(workerId) {
+            $.ajax({
+                url: "selectInUser",
+                data: {workerId: workerId}
+            }).done(function (response) {
+                console.log(response);
+                $('#label').html(response.vo.percent + '%');
+                if (response.vo.inMTime != null && response.vo.outTime == null) {
+                    move(response.vo.percent, response.vo.getMTime);
+                    document.getElementById('btn').style.display = "none";
+                    timer(response.vo.getMTime);
+
+                    var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+                    $('#out').append(btn);
+
+                    outButtonClick(response.vo.quittingTime, workerId);
+                }
+            })
+        }
+
+        maintainFnc('[[${session.workerId}]]');
+
+        // 8. 출근버튼을 찍었을때, ajax로 세션에 담겨있는 유저아이디 전송,
+        // 출결 테이블에 등록
+        $('#btn').on('click', function () {
+            console.log('[[${session.workerId}]]');
+            var workerId = '[[${session.workerId}]]'
+
+            $.ajax({
+                url: "selectQuitTime",
+                data : { workerId : workerId },
+                method : "post"
+            }).done(function (response){
+                console.log(response);
+                if(response != ''){
+                    if(response[response.length - 1].outTime == null && response != ''){
+                        alert('전 근무자가 퇴근체크를 하지 않았습니다.')
+                        // 밥먹고 고치자
+                    }else{
+                        alert('오늘 이미 퇴근처리 하셨습니다.')
+                    }
+                }else{
+                    $.ajax({
+                        url: "insertAttendance",
+                        data: {
+                            workerId: workerId,
+                            getNowTime: getNowTimeMilsec()
+                        },
+                        method: 'POST'
+                    }).done(function (response) {
+                        if (response == '') {
+                            alert('출근시간이 아닙니다.')
+                        } else {
+                            console.log("출근 버튼 누른 후" + response);
+                            $('#label').html(response.vo.percent + '%');
+                            move(response.vo.percent, response.vo.getMTime);
+                            console.log(response);
+                            alert('출근 완료');
+                            if (response.absence == 1) {
+                                alert("결근처리 되었습니다.");
+                            } else {
+                                alert("지각입니다.");
+                            }
+                            document.getElementById('btn').style.display = "none";
+
+                            timer(response.vo.getMTime);
+
+                            var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+                            $('#out').append(btn);
+
+                            //퇴근버튼을 찍었을때 조기퇴근 등을 계산해주는 function
+
+                            outButtonClick(response.vo.quittingTime, workerId);
+                        }
+                    })
+                }
+            })
+
+
+
+        })
+
+
+    </script>
+</th:block>
+</body>
+</html>

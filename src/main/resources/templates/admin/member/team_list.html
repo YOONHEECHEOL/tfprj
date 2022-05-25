@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-zz
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h3>팀 리스트 조회</h3>
+        </div>
+    </div>
+    <!--TeamList Start-->
+    <div th:class="row">
+        <div th:class="col-auto">
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>팀명</th>
+                    <th>팀장</th>
+                </tr>
+                </thead>
+                <tbody th:id="teamBody">
+                <tr th:each="list:${teamInfo.list}">
+                    <td>[[${list.ROWNUM}]]</td>
+                    <td>[[${list.teamName}]]</td>
+                    <td>[[${list.leader}]]</td>
+                    <td>
+                        <button type="button" th:class="addTeamBtn">상세보기</button>
+                    </td>
+                    <input type="hidden" th:value="${list.teamId}">
+                </tr>
+                </tbody>
+            </table>
+            <!--TeamList End-->
+            <!-- 페이징 -->
+            <nav>
+                <ul>
+                    <!-- getPrePage : 이전 페이지 -->
+                    <li th:classappend="${teamInfo.getPrePage() == 0} ? 'disabled'">
+                        <a th:href="@{teamList(pageNum=${teamInfo.getPrePage()})}">Previous</a>
+                    </li>
+                    <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
+                    <li th:each="page: ${#numbers.sequence(teamInfo.getNavigateFirstPage(), teamInfo.getNavigateLastPage())}"
+                        th:classappend="${page == teamInfo.getPageNum()} ? 'active'">
+                        <a th:text="${page}" th:href="@{teamList(pageNum=${page})}"></a>
+                    </li>
+                    <!-- getPrePage : 다음 페이지 -->
+                    <li th:classappend="${teamInfo.getNextPage() == 0} ? 'disabled'">
+                        <a th:href="@{teamList(pageNum=${teamInfo.getNextPage()})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- modal -->
+    <div th:class="modal">
+        <t-h2 ko="팀 상세 조회"></t-h2>
+        <div th:class="modal-content">
+
+
+        </div>
+    </div>
+    <script>
+        //취소버튼 클릭 시 Modal 닫기
+        const f1 = () => {
+            $("#cancelBtn").on("click", function () {
+                console.log('click');
+                $(".modal").fadeOut();
+            })
+        }
+
+        $("#teamBody").on("click", ".addTeamBtn", function () {
+            $(".modal-content").html("");
+            var led = event.target.closest("tr").children[4].value;
+            var tName = event.target.closest("tr").children[1].innerHTML;
+            var tLead = event.target.closest("tr").children[2].innerHTML;
+            console.log(led);
+            $.ajax({
+                url: "/adm/teamInfo",
+                data: {teamId: led}
+            }).done(function (datas) {
+                $(".modal-content").append(`<tr><td>${tName}</td><br><td>${tLead}</td></tr>`)
+                for (data of datas) {
+                    $(".modal-content").append(makeTr(data));
+                }
+                $(".modal-content").append(`<div class="button__box">
+                <button id="cancelBtn">취소하기</button>
+                <button id="regMemberBtn">등록하기</button>
+            </div>`)
+                $(".modal").fadeIn();
+                f1();
+            })
+        })
+
+        function makeTr(data) {
+            var tr = $("<tr>");
+            tr.append(`
+					<td class="text-center">${data.memberId}</td>
+				`)
+            return tr;
+        }
+    </script>
+</th:block>
 </html>

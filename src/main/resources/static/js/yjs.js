@@ -105,6 +105,7 @@ class tH2 extends HTMLElement {
           padding: 0.8rem 0 0;
           margin: 0;
           display: inline-block;
+          color: #222;
       }
       .h2__box {
           padding: 1.2rem 0 .8rem;
@@ -128,7 +129,14 @@ class tH2 extends HTMLElement {
 // 공통 코드 뽑기
 class convertCommonCode extends HTMLElement {
   connectedCallback() {
-    let out = this.shadowRoot.querySelector('.converted');
+    let out = this.shadowRoot;
+    let tagCheck = this.getAttribute('tagname')
+
+    if (tagCheck == undefined) {
+      tagCheck = 'span';
+    }
+
+    // console.log(tagCheck)
 
     function convertCode(data) {
       fetch('http://localhost:18000/convertCommonCode?code=' + data, {
@@ -137,11 +145,21 @@ class convertCommonCode extends HTMLElement {
         .then(res => res.json())
         .then(res => {
           // 출력
-          out.innerText = res.codeValue;
+          // out.innerText = res.codeValue;
+
+          let tag = document.createElement(tagCheck);
+          tag.setAttribute('class', 'converted');
+          if(tagCheck != 'option') {
+            tag.innerText = res.codeValue;
+          } else {
+            tag.setAttribute('value', res.codeValue);
+            tag.innerText = res.codeValue;
+          }
+
+          out.append(tag)
         })
     }
 
-    console.log(this.getAttribute('data'))
     convertCode(this.getAttribute('data').toString())
 
   }
@@ -151,10 +169,6 @@ class convertCommonCode extends HTMLElement {
 
     const shadow = this.attachShadow({mode:'open'});
 
-    let span = document.createElement('span');
-    span.setAttribute('class', 'converted');
-
-    shadow.append(span);
   }
 }
 
@@ -163,11 +177,9 @@ class teamMembers extends HTMLElement {
   connectedCallback() {
     // attribute로 teamId 받기
     let teamId = this.getAttribute('teamId');
-    let doFnc = this.getAttribute('do');
-
     let root = this.shadowRoot;
 
-    function getMemberList(teamId, doFnc) {
+    function getMemberList(teamId) {
       // memberList 조회
       fetch('/cli/selectTeamMembers?teamId=' + teamId)
         .then(res => res.json())
@@ -198,7 +210,7 @@ class teamMembers extends HTMLElement {
         })
     }
 
-    getMemberList(teamId, doFnc);
+    getMemberList(teamId);
 
 
     // eventTarget.addEventListener('click', () => {
@@ -278,7 +290,7 @@ class aH1 extends HTMLElement {
           position: absolute;
           color: #3765C7;
           bottom: 0;
-          left: 2rem;
+          left: 0rem;
           padding: 2rem 0 0;
           margin: 0;
           display: inline-block;
@@ -286,17 +298,18 @@ class aH1 extends HTMLElement {
       .h1__box {
           position: relative;
           height: 12rem;
-          overflow: hidden;
       }
       .h1__box > div > span {
           font-family: "esB";
           position: absolute;
-          bottom: 4.2rem;
+          bottom: -2rem;
           left: 2rem;
           font-size: 4.4rem;
           color: #fff;
       }
       .h1__box > div {
+          width: calc(100% + 4rem);
+          transform: translate(-2rem, 0);
           height: 6rem;
           background: #3765C7;
       }

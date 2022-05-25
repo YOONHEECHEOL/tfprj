@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface WorkerService {
+    public List<WorkerVO> allWorkerList();
     public List<Map<String, Object>> getExecl();
     public List<WorkerVO> getWorkerList();
     public List<WorkerVO> getWorkerListStaffCd1();
@@ -16,4 +17,6 @@ public interface WorkerService {
     public void admWorkerHrmWrite(WorkerVO vo, MultipartFile file, String birth, HttpServletResponse response) throws IOException, ParseException;
     public int staffStatusCdUpdate(WorkerVO vo);
     public int workerDetailUpdate(String staffStatusCd, String birth, HttpServletResponse response, MultipartFile file, WorkerVO vo) throws IOException, ParseException;
+    public int signUpUpdate();
+    public WorkerVO loginSelect(WorkerVO vo);
 }

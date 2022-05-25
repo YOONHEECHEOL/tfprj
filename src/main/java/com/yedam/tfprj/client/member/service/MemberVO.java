@@ -14,4 +14,5 @@ public class MemberVO {
     private String trophy;
     private String preferred;
     private int    teamId;
+    private int ROWNUM;
 }

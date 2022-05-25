@@ -37,38 +37,12 @@
                     <button th:type="submit" th:id="createBtn">저장하기</button>
                 </div>
                 <hr>
-                <!--팀원 추가-->
-                <div th:id="addMem">
-                    <input th:type="button" th:class="addMemBtn" th:value="팀원추가">
-                </div>
+
 
             </form>
         </div>
     </div>
-    <!-- modal -->
-    <div th:class="modal">
-        <div th:class="modal-content">
-            <t-h2 ko="팀원"></t-h2>
-            <input type="text" class="form-control" id="searchVal"
-                   name="searchVal" placeholder="Search"
-                   aria-label="Search">
-            <div>
-                <table>
-                    <tbody th:id="memberList">
 
-                    </tbody>
-                </table>
-            </div>
-            <button class="btn btn-outline-secondary" id="searchBtn"
-                    type="button">Search
-            </button>
-            <!-- 여기서 -->
-            <div class="button__box">
-                <button class="button button-common" id="cancelBtn">취소하기</button>
-                <button class="button button-primary" id="addMemberBtn">등록하기</button>
-            </div>
-        </div>
-    </div>
     <script>
         //팀 추가 버튼 클릭시 멤버 검색 Modal
         let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
@@ -84,16 +58,39 @@
             cliSliderNavBg.classList.remove('active');
         })
 
+        //등록버튼 클릭시 체크된 memberId값을 넘겨 ajax호출
+        $("#regMemberBtn").on("click", function () {
+            var checkbox = $('input[id=checkbox]:checked');
+            var tr = checkbox.parent().parent();
+            var td = tr.children();
+            var code = td.eq(1).text();
+
+            var tdArray = new Array();
+            checkbox.each(function(i){
+                tr = checkbox.parent().parent().eq(i);
+                td = tr.children();
+                code = td.eq(1).text();
+
+                //teamName
+
+                tdArray.push({memberId: code, teamName: '', teamLeader: '',});
+            });
+            console.log(tdArray);
+            for(list of tdArray){
+                makeAdd(list);
+            }
+            $(".modal").fadeOut();
+            cliSliderNavBg.classList.remove('active');
+        });
+
         //search 버튼 클릭시 멤버 검색 ajax호출
         $("#searchBtn").on("click", function () {
             $.ajax({
                 url: "/cli/searchMember",
                 data: {memberId: $("#searchVal").val()}
             }).done(function (data) {
-                console.log(data);
                 $("#memberList").html('');
                 for (list of data) {
-                    console.log(list.memberId);
                     $("#memberList").append(makeTr(list));
                 }
             })
@@ -101,11 +98,39 @@
 
         //검색 결과 출력
         function makeTr(list) {
-            console.log(list);
             var tr = $("<tr>");
-            tr.append(`<td class="text-center">\ ${list.memberId} </td>`)
+            tr.append(`<td class="text-center"><input type="checkbox" id="checkbox"></td>
+            <td class="text-center">${list.memberId}</td>`)
             return tr;
         }
+        //팀원추가 결과 draw
+        function makeAdd(list){
+            $("#addMem").prepend(`<span>${list.memberId}</span><br>`)
+
+            insertTeamMember(teamName, teamLeader, list.memberId);
+        }
+
+
+        // 메세지 테이블에 팀 메세지를 입력하는 함수
+        // 각각의 메세지가 입력되야하는 시점에서 실행해주세요
+        function insertTeamMember(teamName, teamLeader, memberId) {
+            // let teamName = document.querySelector('#teamName').innerText
+            // let teamLeader = document.querySelector('#teamLeader').innerText
+
+            fetch('/msg/insertTeamMsg', {
+                method: 'post',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify({
+                    teamName: teamName,
+                    leader: teamLeader,
+                    memberId: memberId
+                })
+            })
+                .then(res => res.text())
+                .then(res => console.log(res) )
+        }
+
+
     </script>
 </th:block>
 </html>

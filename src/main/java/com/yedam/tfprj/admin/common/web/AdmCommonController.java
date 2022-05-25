@@ -1,12 +1,20 @@
 package com.yedam.tfprj.admin.common.web;
 
+import com.yedam.tfprj.admin.worker.service.WorkerService;
 import com.yedam.tfprj.admin.worker.service.WorkerVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class AdmCommonController {
+    @Autowired
+    WorkerService service;
 
     @RequestMapping("/adm/index")
     public String admIndex() {
@@ -14,13 +22,20 @@ public class AdmCommonController {
     }
 
     @RequestMapping("/adm/login")
-    public String admLogin(){
+    public String admLogin() {
         return "admin/common/login";
     }
 
     @RequestMapping("/adm/loginSuccess")
-    public String admLoginSuccess(WorkerVO vo, Model model){
-        model.addAttribute(vo.getWorkerName());
-        return "admin/common/home";
+    public String admLoginSuccess(WorkerVO vo, HttpServletRequest req, HttpServletResponse res) {
+        HttpSession session = req.getSession();
+        System.out.println("asdfasdf" + vo);
+        if (service.loginSelect(vo) != null) {
+            session.setAttribute("workerId", vo.getWorkerId());
+            //session.setAttribute("");
+            return "admin/common/home";
+        }else{
+            return null;
+        }
     }
 }

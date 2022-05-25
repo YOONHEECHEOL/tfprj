@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
         HttpSession httpSession = request.getSession();
 
         vo = memberMapper.selectMember(vo);
-        if(vo != null) {
+        if (vo != null) {
             httpSession.setAttribute("member", vo);
             httpSession.setAttribute("memberId", vo.getMemberId());
             httpSession.setAttribute("log", "y");
@@ -55,14 +55,13 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    @Override
-    public List<MemberVO> findAll() {
-        return null;
-    }
 
     @Override
-    public MemberVO findOne(MemberVO vo) {
-        return null;
+    public MemberVO findOne(HttpServletRequest request, MemberVO vo) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) (session.getAttribute("memberId")));
+        vo = memberMapper.selectMember(vo);
+        return vo;
     }
 
     @Override //회원가입
@@ -82,13 +81,55 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public GameVO selectGame(MemberVO vo) {
-        return null;
+    public GameVO selectGame(MemberVO vo, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) session.getAttribute("memberId"));
+        return memberMapper.selectGame(vo);
     }
 
     @Override
     public List<MemberVO> searchMember(MemberVO vo) {
         return memberMapper.searchMember(vo);
+    }
+
+    @Override
+    public List<MemberVO> isTeam(MemberVO vo, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        vo.setMemberId((String) session.getAttribute("memberId"));
+        List<MemberVO> list = memberMapper.isTeam(vo);
+        return list;
+    }
+
+    @Override
+    public List<MemberVO> selectAll() {
+        List<MemberVO> list = memberMapper.selectAll();
+        return list;
+    }
+
+    @Override
+    public int gradeUpdate(MemberVO vo) {
+        return memberMapper.gradeUpdate(vo);
+    }
+
+    @Override
+    public List<MemberVO> findAll() {
+        return memberMapper.findAll();
+    }
+
+    @Override
+    public List<MemberVO> findBlack() {
+        return memberMapper.findBlack();
+    }
+
+    @Override
+    public int blackUpdate(MemberVO vo) {
+        return memberMapper.blackUpdate(vo);
+    }
+
+    @Override
+    public List<MemberVO> teamMember(MemberVO vo) {
+        List<MemberVO> list = memberMapper.teamMember(vo);
+        return list;
     }
 
 

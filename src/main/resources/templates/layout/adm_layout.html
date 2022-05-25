@@ -12,10 +12,11 @@
     <th:block th:replace="/layout/adm_fragments/sidebar :: sidebarFragment"></th:block>
 
     <div id="content-wrapper" class="d-flex flex-column">
-        <div id="content">
+
             <!-- 상단바-->
             <th:block th:replace="/layout/adm_fragments/top :: topbarFragment"></th:block>
 
+        <div id="adm-content">
             <div class="container-fluid px-0">
                 <!-- 본문-->
                 <th:block layout:fragment="content"></th:block>

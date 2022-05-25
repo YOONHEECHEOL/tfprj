@@ -20,5 +20,7 @@ public interface TeamMapper {
 
     @Select("select * from member where team_id = #{teamId}")
     public List<MemberVO> selectTeamMembers(int teamId);
-
+    
+    //전체조회
+    public List<TeamVO> teamAll();
 }

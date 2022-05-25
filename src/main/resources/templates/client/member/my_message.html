@@ -5,5 +5,55 @@
 
 <th:block layout:fragment="content">
 
+
+    <div th:each="m:${msg}">
+
+        <!-- 출력할때 메세지 코드에 맞는 문자를 출력하는 태그 -->
+
+        <span th:if="${m.getIsMessageCd() == 1001}">출결 msg</span>
+        <!-- /adm/ -->
+
+        <span th:if="${m.getIsMessageCd() == 1002}">재고 msg</span>
+        <!-- -->
+
+        <span th:if="${m.getIsMessageCd() == 1003}">체크리스트 msg</span>
+        <!-- -->
+
+        <span th:if="${m.getIsMessageCd() == 1004}">예약 msg</span>
+        <!-- -->
+
+        <span th:if="${m.getIsMessageCd() == 1005}">결제 msg</span>
+        <!-- -->
+
+        <span th:if="${m.getIsMessageCd() == 1006}">팀 msg</span>
+        <!-- -->
+
+<!--        <msg th:msg-type="${m.codeName}" ></msg>-->
+        <span  th:text="${m.getMessageContents()}"></span>
+        <span th:text="${m.getTemp()}"></span>
+
+
+        <!-- isChk 가 0 이면  -->
+        <div class="button__box" th:if="${m.getIsChk() == 0}">
+            <button class="c-button">거절</button>
+            <button class="c-button">수락</button>
+        </div>
+        <!-- isChk 가 1(읽음)이면  -->
+
+    </div>
+
+    <script>
+
+        fetch('/msg/team', {
+            method: 'post'
+        })
+            .then(res => res.json())
+            .then(res => console.log(res))
+
+
+
+    </script>
+
+
 </th:block>>
 </html>

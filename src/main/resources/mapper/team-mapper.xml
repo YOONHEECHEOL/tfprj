@@ -20,5 +20,10 @@
         SELECT * FROM TEAM WHERE LEADER=#{leader}
     </select>
 
+    <select id="teamAll" resultType="com.yedam.tfprj.client.team.service.TeamVO">
+        SELECT ROWNUM, A.*
+        FROM (SELECT*FROM TEAM ORDER BY TEAM_ID) A
+    </select>
+
 
 </mapper>

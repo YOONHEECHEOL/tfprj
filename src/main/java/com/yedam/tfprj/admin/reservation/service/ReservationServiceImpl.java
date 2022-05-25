@@ -26,7 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         for(int i=0; i<list.size();i++){
             map = new HashMap<String, Object>();
-            map.put("title", list.get(i).getGameId());
+            map.put("title", list.get(i).getGameId() + "번 게임");
             map.put("start", list.get(i).getStartTime());
             map.put("end", list.get(i).getEndTime());
 
@@ -34,10 +34,10 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         String StrJsonList = "";
         try {
-            StrJsonList = mapper.writeValueAsString(jsonList);
+            StrJsonList = objectMapper.writeValueAsString(jsonList);
             System.out.println(StrJsonList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,8 +47,52 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationVO> dayResList(String startStr) {
+        List<ReservationVO> list = mapper.dayResList(startStr);
+        System.out.println(list);
+        return list;
+    }
 
-        return mapper.dayResList(startStr);
+    @Override
+    public int updatePaymentCd(String resId) {
+        mapper.updatePaymentCd(resId);
+        return 0;
+    }
+
+    @Override
+    public AdmGameVO gameInfo(String resId) {
+
+
+        return mapper.gameInfo(resId);
+    }
+
+    @Override
+    public List<MemberGameVO> gameInfoList(String resId) {
+        List<MemberGameVO> giList = mapper.gameInfoList(resId);
+        for(int i=0; i<giList.size();i++){
+
+            double battingAverage = (double)giList.get(i).getHits()/giList.get(i).getBatCounts();
+            double ba = Math.round(battingAverage*1000)/1000.0;
+            giList.get(i).setBattingAverage(ba);
+        }
+
+
+        return giList;
+    }
+
+    @Override
+    public ReservationVO resInfo(String resId) {
+
+        return mapper.resInfo(resId);
+    }
+
+    @Override
+    public String checkId(String memberId, String password, String memberName) {
+        return mapper.checkId(memberId,password,memberName);
+    }
+
+    @Override
+    public int updateId(String memberId, String memberName, String gameId) {
+        return mapper.updateId(memberId,memberName,gameId);
     }
 
 

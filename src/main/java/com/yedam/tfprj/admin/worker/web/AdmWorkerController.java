@@ -69,6 +69,7 @@ public class AdmWorkerController {
 //        System.out.println(vo);
 
         workerServiceImpl.admWorkerHrmWrite(vo, file, birth, response);
+        workerServiceImpl.signUpUpdate();
     }
 
     @PostMapping("/adm/worker_hrm_detail_update")
@@ -83,11 +84,11 @@ public class AdmWorkerController {
     }
 
     @RequestMapping("/adm/worker_excel")
-    public String excel(Model model){
+    public CommonExcelView excel(Model model){
         String[] header = {"workerId", "staffStatusCd", "workerName"};
         model.addAttribute("headers", header);
         model.addAttribute("filename", "workerList");
         model.addAttribute("datas", workerServiceImpl.getExecl());
-        return "commonExcelView";
+        return new CommonExcelView();
     }
 }

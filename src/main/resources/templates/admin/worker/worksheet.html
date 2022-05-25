@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--    full calrendar js, css    -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+
+    <style>
+        /* body 스타일 */
+        html, body {
+            overflow: hidden;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
+        .fc-header-toolbar {
+            padding-top: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    </style>
+
+    <!-- calendar 태그 -->
+    <div id='calendar-container' th:width="1800px">
+        <div id='calendar' style="width: 70%; float: left;"></div>
+        <div id="div" style="float: left; width: 25%">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>직책</th>
+                        <th>시간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><select class="workerId">
+                            <option th:each="l, status: ${allWorker}" th:text="${l.workerName}" th:value="${l.workerId}"></option>
+                        </select></td>
+                    <td><select class="positionCd">
+                            <option value="0">월/목 알바중</option>
+                            <option value="1">화/수/금 알바중</option>
+                        </select></td>
+                    <td><select class="userType">
+                        <option value="0">1부</option>
+                    </select></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><select class="workerId2">
+                        <option th:each="l, status: ${allWorker}" th:text="${l.workerName}" th:value="${l.workerId}"></option>
+                    </select></td>
+                    <td><select class="positionCd2">
+                        <option value="0">월/목 알바중</option>
+                        <option value="1">화/수/금 알바중</option>
+                    </select></td>
+                    <td><select class="userType2">
+                        <option value="1">2부</option>
+                    </select></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <button id="createBtn">근무표 생성</button>
+            <button>취소</button>
+            <hr>
+        </div>
+    </div>
+
+    <!-- 일정 추가 MODAL -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="edit-title">직원명</label>
+                            <select class="inputModal" name="edit-title" id="edit-title"  required="required">
+                                <option th:each="l, status: ${allWorker}" th:text="${l.workerId}" th:value="${l.workerId}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="edit-start">시작</label>
+                            <input class="inputModal" type="text" name="edit-start" id="edit-start" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="edit-end">끝</label>
+                            <input class="inputModal" type="text" name="edit-end" id="edit-end" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="edit-desc">설명</label>
+                            <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+                                      id="edit-desc"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer modalBtnContainer-addEvent">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="save-event">저장</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script>
+
+        function dateCal(date){
+
+            var today = new Date(date);
+
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            var hours = ('0' + today.getHours()).slice(-2);
+            var minutes = ('0' + today.getMinutes()).slice(-2);
+            var dateString = year + '-' + month  + '-' + day + " ";
+            var timeString = hours + ':' + minutes;
+            var fullDateString = dateString + timeString;
+
+            return fullDateString;
+        }
+
+        function dateCalBoot(date){
+            var date = new Date(date);
+
+            var getTime = date.getTime() - 9 * 60 * 60 * 1000;
+            var today = new Date(getTime);
+
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            var hours = ('0' + today.getHours()).slice(-2);
+            var minutes = ('0' + today.getMinutes()).slice(-2);
+            var dateString = year + '-' + month  + '-' + day + " ";
+            var timeString = hours + ':' + minutes;
+            var fullDateString = dateString + timeString;
+
+            return fullDateString;
+
+            return getTime;
+        }
+
+
+
+
+
+        $(document).ready(function () {
+            let request = $.ajax({
+                url: "worksheet_list", // 변경하기
+                method: "GET",
+                dataType: "json"
+            });
+
+            request.done(function (data) {
+
+
+
+// calendar element 취득
+                var calendarEl = $('#calendar')[0];
+// full-calendar 생성하기
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    height: '800px', // calendar 높이 설정
+                    expandRows: true, // 화면에 맞게 높이 재설정
+                    slotMinTime: '08:00', // Day 캘린더에서 시작 시간
+                    slotMaxTime: '23:59', // Day 캘린더에서 종료 시간
+// 해더에 표시할 툴바
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    },
+                    initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+                    navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+                    editable: true, // 수정 가능?
+                    selectable: true, // 달력 일자 드래그 설정가능
+                    nowIndicator: true, // 현재 시간 마크
+                    dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+                    locale: 'ko', // 한국어 설정
+                    //timeZone : "Asia/Seoul",
+                    eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
+                        console.log(obj);
+                        console.log(obj.event._def.title);
+                        console.log(obj.event)
+
+                    },
+                    eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트
+                        console.log(obj);
+                    },
+                    eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
+                        console.log(obj);
+                    },
+                    eventClick: function (info) {
+                        //시간 포맷
+                        console.log(info.event)
+
+                        $("#eventModal").modal();
+                        $("#edit-start").val(dateCalBoot(info.event._instance.range.start));
+                        $("#edit-end").val(dateCalBoot(info.event._instance.range.end));
+                        $("#edit-title").val(info.event._def.title);
+
+                        $('#save-event').off('click').on('click', function () {
+                            $('#save-event').attr('data-dismiss', 'modal');
+                           $.ajax({
+                               url : "calendarUpdate",
+                               method : "POST",
+                               data : {
+                                   workerId : $('#edit-title').val(),
+                                   goingTime : dateCalBoot(info.event._instance.range.start),
+                                   quittingTime : dateCalBoot(info.event._instance.range.end),
+                                   color : "#FF0000",
+                                   textColor : "#FFFF00",
+                                   backgroundColor : "#008000"
+                               },
+                           }).done(function (response){
+                               console.log("asdf" + response);
+                           })
+                        })
+                    },
+                    select: function (arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+                        console.log(arg)
+                        calendar.unselect()
+                    },
+
+
+
+
+// 이벤트 : *******조회하려면 VO 만들고, JSON을 ajax로 받으면 되는지?*******
+                    events: data
+                });
+
+
+
+// 캘린더 랜더링
+                calendar.render();
+
+                $('.fc-prev-button fc-button fc-button-primary').on('click', function(){
+                    console.log($('#fc-dom-1').html());
+                });
+
+                console.log($('#fc-dom-1').html());
+
+                console.log($(".workerId option:selected").val());
+                console.log($(".positionCd option:selected").val());
+
+                $('#div').on('click', '#createBtn', function(){
+
+
+                    let date = $('#fc-dom-1').html().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ).replace(' ', '-');
+
+                    console.log(date);
+                    var workerArr = [];
+
+                    var b = {
+                        'workerId' :   $('.workerId option:selected').val(),
+                        'positionCd' : $(".positionCd option:selected").val(),
+                        'userType' : $(".userType option:selected").val(),
+                        'realDate' : date
+                    };
+
+                    var c = {
+                        'workerId' :   $('.workerId2 option:selected').val(),
+                        'positionCd' : $(".positionCd2 option:selected").val(),
+                        'userType' : $(".userType2 option:selected").val(),
+                        'realDate' : date
+                    }
+
+
+                    workerArr.push(b);
+                    workerArr.push(c);
+
+                    console.log(workerArr);
+
+                    if(b.workerId != c.workerId) {
+                        $.ajax({
+                            url: "worksheetInsert",
+                            method: 'POST',
+                            data: {
+                                workerArr: JSON.stringify(workerArr),
+                                date: date
+                            },
+                        }).done(function (response) {
+
+                            console.log(response);
+                            if (response == 0) {
+                                alert('해당 월에 이미 값이 존재합니다.')
+                            } else {
+                                alert('근무표가 생성되었습니다.')
+                            }
+                            window.location.reload();
+                        })
+                    }else{
+                        alert('1부, 혹은 2부 근무자를 변경해주세요.')
+                    }
+                })
+            })
+        });
+    </script>
+
+</body>
+</html>

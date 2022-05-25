@@ -11,9 +11,13 @@ public class CliLeagueServiceVO {
 
     private List<LeagueVO> currentList;
     private List<LeagueVO> passedList;
+    protected List<MemberVO> teamMembers;
     protected MemberVO loginedMember;
     protected LeagueVO leagueVO;
     protected TeamVO teamVO;
+    private LeagueApplyVO leagueApplyVO;
+    private List<LeagueVO> participatedLeague;
+    private List<LeagueVO> notParticipatedLeague;
 
     public CliLeagueServiceVO() {
         this.loginedMember = new MemberVO();
