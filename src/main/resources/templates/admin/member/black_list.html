@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
+    <div th:class="row">
+        <div th:class="col-auto">
+            <h3>블랙리스트 조회</h3>
+        </div>
+    </div>
+    <!--BlackList Start-->
+    <div th:class="row">
+        <div th:class="col-auto">
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>연락처</th>
+                    <th>회원등급</th>
+                    <th>블랙리스트 상태</th>
+                    <th>블랙리스트 사유</th>
+                </tr>
+                </thead>
+                <tbody th:id="blackBody">
+                <tr th:each="list:${blackInfo.list}">
+                    <td><span th:text="${list.ROWNUM}"></span></td>
+                    <td><span th:text="${list.memberId}"></span></td>
+                    <td><span th:text="${list.memberName}"></span></td>
+                    <td><span th:text="${list.tel}"></span></td>
+                    <td><convert-c-code th:data="${list.grade}"></convert-c-code></td>
+                    <td><select th:id="blacklistYn" th:name="blacklistYn" onchange="chargeSelect(this)">
+                        <option th:if="${list.blacklistYn == 1}" th:text="블랙리스트" th:value=1 selected></option>
+                        <option th:value=0>해제</option>
+                    </select></td>
+                    <td><span th:text="${list.blacklistReason}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <!--BlackList End-->
+            <!-- 페이징 -->
+            <nav>
+                <ul>
+                    <!-- getPrePage : 이전 페이지 -->
+                    <li th:classappend="${blackInfo.getPrePage() == 0} ? 'disabled'">
+                        <a th:href="@{blackList(pageNum=${blackInfo.getPrePage()})}">Previous</a>
+                    </li>
+                    <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
+                    <li th:each="page: ${#numbers.sequence(blackInfo.getNavigateFirstPage(), blackInfo.getNavigateLastPage())}"
+                        th:classappend="${page == blackInfo.getPageNum()} ? 'active'">
+                        <a th:text="${page}" th:href="@{blackList(pageNum=${page})}"></a>
+                    </li>
+                    <!-- getPrePage : 다음 페이지 -->
+                    <li th:classappend="${blackInfo.getNextPage() == 0} ? 'disabled'">
+                        <a th:href="@{blackList(pageNum=${blackInfo.getNextPage()})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <script>
+        function chargeSelect(e) {
+            var blackVal = e.options[e.selectedIndex].value;
+            var memId = e.parentElement.parentElement.children[1].children[0].innerHTML;
+            if (confirm("블랙리스트를 해제하시겠습니까?") == true) {
+                $.ajax({
+                    url: "/adm/blackUpdate",
+                    method: "POST",
+                    data: {memberId: memId, blacklistYn: blackVal}
+                })
+            } else {
+                return;
+            }
+        }
+    </script>
+</th:block>
+</html>

@@ -28,7 +28,9 @@
     </tr>
     </thead>
     <tbody>
+
     <tr th:each="l, index : ${dayResList}">
+        <input type="hidden" id="resId" name="resId" th:value="${l.getResId()}">
         <td th:class="hidden" th:text="${l.getStatusCd}"></td>
         <td th:class="resId" th:align="center" th:text="${l.getResId()}">no</td>
         <td th:align="center" th:text="${l.getRoom()}">룸</td>
@@ -46,8 +48,9 @@
         </td>
         <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "><button th:class="cancel">취소</button></td>
         <td th:align="center" th:unless="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "></td>
-        <td th:align="center" th:width="150"><button th:class="details">상세히 보기</button></td>
+        <td th:align="center" th:width="150"><a th:class="details" th:href="${'reservation_day_detail?resId=' + l.getResId()}">상세히 보기</a></td>
     </tr>
+
 
     </tbody>
 
@@ -103,9 +106,7 @@
         }
     })
 
-    $("tbody").on("click",".details",function(){
 
-    })
 </script>
 <script>
 $(".hidden").attr('style',"display:none;");

@@ -38,4 +38,11 @@ public class TeamServiceImpl implements TeamService {
     public List<MemberVO> selectTeamMembers(int teamId) {
         return teamMapper.selectTeamMembers(teamId);
     }
+
+    @Override
+    public List<TeamVO> teamAll() {
+        return teamMapper.teamAll();
+    }
+
+
 }
