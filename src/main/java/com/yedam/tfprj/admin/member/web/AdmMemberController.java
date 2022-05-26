@@ -1,7 +1,6 @@
 package com.yedam.tfprj.admin.member.web;
 
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yedam.tfprj.client.member.service.MemberService;
@@ -9,17 +8,12 @@ import com.yedam.tfprj.client.member.service.MemberVO;
 import com.yedam.tfprj.client.team.service.TeamService;
 import com.yedam.tfprj.client.team.service.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 

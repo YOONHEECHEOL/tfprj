@@ -1,5 +1,7 @@
 package com.yedam.tfprj.admin.community.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yedam.tfprj.admin.community.service.notice.AdmNoticeService;
 import com.yedam.tfprj.admin.community.service.notice.AdmNoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdmNoticeController {
@@ -15,9 +18,10 @@ public class AdmNoticeController {
     AdmNoticeService service;
 
     @RequestMapping("/adm/notice") //리스트
-    public String AdmNoticeList(Model model, AdmNoticeVO vo) {
-
-        model.addAttribute("admNotice", service.AdmNoticeList(vo));
+    public String AdmNoticeList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Model model, AdmNoticeVO vo) {
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<AdmNoticeVO> pageInfo = new PageInfo<AdmNoticeVO>(service.AdmNoticeList(vo));
+        model.addAttribute("pageInfo", pageInfo);
         return "admin/community/notice/notice";
     }
 

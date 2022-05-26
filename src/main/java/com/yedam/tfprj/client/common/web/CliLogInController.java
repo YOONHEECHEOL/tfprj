@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class CliLogInController {
@@ -22,11 +24,17 @@ public class CliLogInController {
 
     // login
     @RequestMapping("/cli/login")
-    public String login(HttpServletRequest request, MemberVO vo) {
+    public String login(HttpServletRequest request, MemberVO vo, HttpServletResponse response) throws IOException {
+        vo = memberServiceImpl.selectMember(request, vo);
+        if(vo == null){
+            response.setContentType("text/html; charset=utf-8");
+            response.getWriter().println("<script>alert('로그인 실패'); location.href='/cli/loginview'</script>");
+            return null;
 
-        memberServiceImpl.selectMember(request, vo);
+        } else {
+            return "redirect:/cli/home";
+        }
 
-        return "redirect:/cli/home";
     }
 
     // logout
@@ -43,10 +51,7 @@ public class CliLogInController {
     // id 중복체크
     @GetMapping("/cli/idCheck")
     @ResponseBody
-    public String idCheck(HttpServletRequest request, String memberId) {
-
-        MemberVO memberVO = new MemberVO();
-        memberVO.setMemberId(memberId);
+    public String idCheck(HttpServletRequest request, MemberVO memberVO) {
 
         memberVO = memberServiceImpl.selectMember(request, memberVO);
         if(memberVO != null) {

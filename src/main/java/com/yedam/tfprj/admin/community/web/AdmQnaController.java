@@ -1,6 +1,8 @@
 package com.yedam.tfprj.admin.community.web;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yedam.tfprj.admin.community.service.qna.AdmQnaService;
 import com.yedam.tfprj.admin.community.service.qna.AdmQnaVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdmQnaController {
@@ -16,9 +19,10 @@ public class AdmQnaController {
     AdmQnaService service;
 
     @RequestMapping("/adm/qna")
-    public String AdmQnaList(Model model, AdmQnaVO vo){
-
-        model.addAttribute("admQna", service.AdmQnaList(vo));
+    public String AdmQnaList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Model model, AdmQnaVO vo){
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<AdmQnaVO> pageInfo = new PageInfo<AdmQnaVO>(service.AdmQnaList(vo));
+        model.addAttribute("pageInfo", pageInfo);
         return "admin/community/qna/qna";
     }
 
@@ -70,12 +74,10 @@ public class AdmQnaController {
         service.AdmQnaInsert(vo);
         return "redirect:/adm/qna";
     }
-
-    //수정 필요
+    
     @RequestMapping("adm/qnaAnswerDelete")
     public String AdmQnaDelete(Model model, AdmQnaVO vo){
         service.AdmQnaAnswerDelete(vo);
-        vo.setCNo(vo.getCNo());
 
         return "redirect:/adm/qna";
     }

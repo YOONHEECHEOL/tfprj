@@ -4,7 +4,60 @@
       layout:decorate="~{layout/cli_layout}">
 
 <th:block layout:fragment="content">
+<style>
+    .contain{
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    #capt {
+        width: 170px;
+        height: 72px;
+        font-size: 37px;
+        background-color: #dddde2;
+        padding: 5px;
+        border: none;
+        letter-spacing: 1px;
+        float: left;
+        color: #2d2e33;
+        border-radius: 5px 0 0 5px;
+    }
 
+    #refresh{
+        float: left;
+        background-color: #dddde2;
+        height: 82px;
+        border-radius: 0 5px 5px 0;
+    }
+    #refresh img{
+        margin-top: 20px;
+        cursor: pointer;
+    }
+    #textinput{
+        width: 170px;
+        height: 70px;
+        font-size: 37px;
+        background-color: #dddde2;
+        border: none;
+        margin-left: 10px;
+        border-radius: 5px;
+        padding: 5px    ;
+        color: #2d2e33;
+    }
+    .contain button{
+        padding: 8px 20px;
+        height: 35px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        margin-left: 10px;
+        margin-top: 25px;
+        background-color: #dddde2;
+        color: #2d2e33;
+        transition: .5s;
+    }
+
+</style>
 
     <t-h1 ko="회원가입" en="SIGN-UP"></t-h1>
     <t-h2 ko="정보입력"></t-h2>
@@ -47,7 +100,7 @@
 
     <t-h2 ko="매크로 방지"></t-h2>
     <input type="text" id="capt" readonly="readonly">
-    <div id="refresh"><img src="refresh.png" width="50px" onclick="cap()"></div>
+    <div id="refresh"><img src="/images/refresh.png" width="50px" onclick="cap()"></div>
 
     <input type="text" id="textinput">
     <button onclick="validcap()">check</button>
@@ -69,16 +122,16 @@
 
             document.getElementById("capt").value = sum;
         }
-
+        var capresult = false;
         function validcap() {
             var string1 = document.getElementById('capt').value;
             var string2 = document.getElementById('textinput').value;
             if (string1 == string2) {
                 alert("두 문자가 일치합니다");
-                return true;
+                capresult = true;
             } else {
                 alert("똑바로 보고 해라");
-                return false;
+                capresult = false;
 
             }
         }
@@ -123,7 +176,10 @@
                 $("#password").focus();
                 return false;
             }
-
+            if(capresult == false){
+                alert("다시 확인해 주세요")
+                return false;
+            }
             return true;
         }
     </script>

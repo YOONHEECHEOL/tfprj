@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yedam.tfprj.client.community.mapper.CliFmMapper">
+
+    <select id="CliFmList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        SELECT *
+        FROM fm_board
+        ORDER BY f_no ASC
+    </select>
+
+    <select id="CliReplyList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, F.F_NO , C.TEAM
+        FROM    FM_ANSWER C, FM_BOARD F
+        WHERE   F.F_NO = C.F_NO
+          AND     F.F_NO = #{fNo}
+        ORDER BY C_NO ASC
+    </select>
+
+    <select id="CliFmSelect" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO"
+            parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        select *
+        from fm_board
+        where f_no = #{fNo}
+    </select>
+
+    <delete id="CliFmDelete"
+            parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        DELETE
+        FROM FM_BOARD
+        WHERE F_NO = #{fNo}
+    </delete>
+
+    <update id="CliFmUpdate"  parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        update fm_board
+        set title   = #{title},
+            details = #{details}
+        where f_no = #{fNo}
+    </update>
+
+    <insert id="CliFmInsert" parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        INSERT INTO FM_BOARD
+        VALUES(fno_seq.nextval, #{title}, #{writer}, sysdate, 0, #{details}, #{team})
+    </insert>
+
+    <insert id="CliFmAnswerInsert" parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        INSERT INTO FM_ANSWER
+        VALUES(fcno_seq.nextval, sysdate, #{cdetails}, #{writer}, #{fNo}, #{team})
+    </insert>
+
+    <delete id="CliFmAnswerDelete" parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
+        DELETE FROM FM_ANSWER
+        WHERE C_NO = #{cNo}
+    </delete>
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.yedam.tfprj.admin.community.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yedam.tfprj.admin.community.service.fm.AdmFmService;
 import com.yedam.tfprj.admin.community.service.fm.AdmFmVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdmFmController {
@@ -14,9 +17,10 @@ public class AdmFmController {
     AdmFmService service;
 
     @RequestMapping("/adm/fm")
-    public String AdmFmList(Model model, AdmFmVO vo){
-
-        model.addAttribute("admFm", service.AdmFmList(vo));
+    public String AdmFmList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Model model, AdmFmVO vo){
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<AdmFmVO> pageInfo = new PageInfo<AdmFmVO>(service.AdmFmList(vo));
+        model.addAttribute("pageInfo", pageInfo);
         return "admin/community/fm/fm";
     }
 

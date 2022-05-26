@@ -1,11 +1,14 @@
 package com.yedam.tfprj.client.community.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yedam.tfprj.client.community.service.notice.CliNoticeService;
 import com.yedam.tfprj.client.community.service.notice.CliNoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CliNoticeController {
@@ -13,9 +16,10 @@ public class CliNoticeController {
     CliNoticeService service;
 
     @RequestMapping("/cli/notice") //리스트
-    public String CliNoticeList(Model model, CliNoticeVO vo) {
-
-        model.addAttribute("cliNotice", service.CliNoticeList(vo));
+    public String CliNoticeList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Model model, CliNoticeVO vo) {
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<CliNoticeVO> pageInfo = new PageInfo<CliNoticeVO>(service.CliNoticeList(vo));
+        model.addAttribute("pageInfo", pageInfo);
         return "client/community/notice/notice";
     }
 
