@@ -25,5 +25,11 @@
         FROM (SELECT*FROM TEAM ORDER BY TEAM_ID) A
     </select>
 
+    <select id="admSearchTeam" parameterType="com.yedam.tfprj.client.team.service.TeamVO"
+            resultType="com.yedam.tfprj.client.team.service.TeamVO">
+        SELECT ROWNUM, A.*
+        FROM (SELECT*FROM TEAM ORDER BY TEAM_ID) A
+        WHERE TEAM_NAME LIKE '%' || #{teamName} || '%'
+    </select>
 
 </mapper>

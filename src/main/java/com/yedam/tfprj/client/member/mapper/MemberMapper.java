@@ -47,4 +47,8 @@ public interface MemberMapper {
     int blackUpdate(MemberVO vo);
     //팀원조회
     List<MemberVO> teamMember(MemberVO vo);
+
+    void reasonUpdate(MemberVO vo);
+
+    List<MemberVO> admSearchMember(MemberVO vo);
 }

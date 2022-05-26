@@ -132,5 +132,21 @@ public class MemberServiceImpl implements MemberService {
         return list;
     }
 
+    @Override
+    public void reasonUpdate(MemberVO vo) {
+        if(vo.getBlacklistYn() == 1){
+            vo.setBlacklistReason("기물파손");
+        }else{
+            vo.setBlacklistReason("불량한 게임 태도");
+        }
+        memberMapper.reasonUpdate(vo);
+    }
+
+    @Override
+    public List<MemberVO> admSearchMember(MemberVO vo) {
+        System.out.println(vo);
+        return memberMapper.admSearchMember(vo);
+    }
+
 
 }

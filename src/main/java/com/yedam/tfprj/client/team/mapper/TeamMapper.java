@@ -23,4 +23,6 @@ public interface TeamMapper {
     
     //전체조회
     public List<TeamVO> teamAll();
+
+    public List<TeamVO> admSearchTeam(TeamVO vo);
 }
