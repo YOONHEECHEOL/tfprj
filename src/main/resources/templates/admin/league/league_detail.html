@@ -52,7 +52,17 @@
             <!-- league 신청한 팀 목록 -->
             <t-h2 ko="신청목록"></t-h2>
             <div id="tournament-table">
-
+                <ul class="a-list">
+                    <li th:each="m:${l.getLeagueApplyTeam()}">
+                        <span th:text="${m.getTeamName()}"></span>
+                        <span th:text="${m.getTeamId()}"></span>
+                        <span th:text="${m.getWin()}"></span>
+                        <span th:text="${m.getTotalGameCnt()}"></span>
+                        <span th:text="${m.getLeader()}"></span>
+                        <span th:text="${'isapprove : ' + m.getIsApprove()}"></span>
+                        <button class="c-button">리그 참가승인</button>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- league 대진표 -->
@@ -63,7 +73,14 @@
             <!-- 참가 승인된 팀 목록 -->
             <t-h2 ko="리그 참가 팀 목록"></t-h2>
             <ul id="league_team" class="a-list">
-
+                <li th:each="m:${l.getLeagueApplyApproveTeam()}">
+                    <span th:text="${m.getTeamName()}"></span>
+                    <span th:text="${m.getTeamId()}"></span>
+                    <span th:text="${m.getWin()}"></span>
+                    <span th:text="${m.getTotalGameCnt()}"></span>
+                    <span th:text="${m.getLeader()}"></span>
+                    <span th:text="${'isapprove : ' + m.getIsApprove()}"></span>
+                </li>
             </ul>
 
         </div>
@@ -74,8 +91,8 @@
 
         const loadTeam = () => {
             document.addEventListener('DOMContentLoaded', () => {
-                printApplyTeam();
-                printApplyApproveTeam();
+                // printApplyTeam();
+                // printApplyApproveTeam();
             })
         }
         loadTeam()

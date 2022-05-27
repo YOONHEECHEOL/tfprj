@@ -20,8 +20,8 @@ public interface AdmLeagueMapper {
     public void insertLeague(LeagueVO leagueVO);
 
     // get league detail
-    @Select("select * from league where league_id = #{lno}")
-    public LeagueVO getLeagueDetail(int lno);
+    @Select("select * from league where league_id = #{leagueId}")
+    public LeagueVO getLeagueDetail(int leagueId);
 
     // getLeagueApply
     @Select("select distinct team_id from league_apply where league_id = #{leagueId}")

@@ -49,15 +49,26 @@ public class AdmLeagueServiceImpl implements LeagueService{
         List<TeamVO> approveTeam = new ArrayList<>();
         List<TeamVO> applyTeam = new ArrayList<>();
 
-        admLeagueServiceVO.leagueVO = admLeagueMapper.getLeagueDetail(leagueId);
-
+        try {
+            admLeagueServiceVO.leagueVO = admLeagueMapper.getLeagueDetail(leagueId);                    }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // admLeagueMapper.getLeagueApply(leagueId) 리그 지원한 팀 전체 조회
         List<TeamVO> list = admLeagueMapper.getLeagueApplyTeam(leagueId);
 
         list.forEach(team -> {
             // team is_approve set
-            team.setIsApprove(Integer.parseInt(admLeagueMapper.getIsApprove(team.getTeamId(), leagueId)));
+
+            int isApprove = 1801;
+            try {
+                isApprove = Integer.parseInt(admLeagueMapper.getIsApprove(team.getTeamId(), leagueId));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            team.setIsApprove(isApprove);
 
             // team is_approve 가 1805 인지 체크
             if(admLeagueMapper.getLeagueApplyTeamIsApprove(team.getTeamId(), leagueId) > 0) {
