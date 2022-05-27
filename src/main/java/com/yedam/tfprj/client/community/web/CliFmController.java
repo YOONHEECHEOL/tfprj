@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class CliFmController {
     @Autowired
@@ -33,7 +35,10 @@ public class CliFmController {
     }
 
     @RequestMapping("/cli/fmAnswerInsert")
-    public String fmAnswerInsert(Model model, CliFmVO vo) {
+    public String fmAnswerInsert(Model model, CliFmVO vo, HttpSession session) {
+
+        String writer = (String) session.getAttribute("memberId");
+        vo.setWriter(writer);
         service.CliFmAnswerInsert(vo); // 코멘트 인서트
 
         return "redirect:/cli/fmDetail?fNo=" + vo.getFNo();
@@ -63,23 +68,27 @@ public class CliFmController {
     @RequestMapping("/cli/fmWrite")
     public String CliFmWrite(Model model, CliFmVO vo) {
         model.addAttribute("fm", vo);
+
         return "/client/community/fm/fmWrite";
     }
 
     @RequestMapping("/cli/fmInsert")
-    public String CliQnaInsert(Model model, CliFmVO vo) {
+    public String CliQnaInsert(Model model, CliFmVO vo, HttpSession session) {
+        String writer = (String) session.getAttribute("memberId");
+        vo.setWriter(writer);
+
         service.CliFmInsert(vo);
         return "redirect:/cli/fm";
     }
 
     //수정 필요
     @RequestMapping("cli/fmAnswerDelete")
-    public String AdmFmDelete(Model model, CliFmVO vo) {
+    public String CliFmDelete(Model model, CliFmVO vo) {
         vo.setCNo(vo.getCNo());
         service.CliFmAnswerDelete(vo);
 
 
-        return "redirect:/adm/fm";
+        return "redirect:/cli/fm";
     }
 
 
