@@ -52,17 +52,30 @@
             <!-- league 신청한 팀 목록 -->
             <t-h2 ko="신청목록"></t-h2>
             <div id="tournament-table">
-                <ul class="a-list">
-                    <li th:each="m:${l.getLeagueApplyTeam()}">
-                        <span th:text="${m.getTeamName()}"></span>
-                        <span th:text="${m.getTeamId()}"></span>
-                        <span th:text="${m.getWin()}"></span>
-                        <span th:text="${m.getTotalGameCnt()}"></span>
-                        <span th:text="${m.getLeader()}"></span>
-                        <span th:text="${'isapprove : ' + m.getIsApprove()}"></span>
-                        <button class="c-button">리그 참가승인</button>
-                    </li>
-                </ul>
+                <table class="table text-center a-table">
+                    <thead>
+                        <tr>
+                            <th>팀이름</th>
+                            <th>팀장</th>
+                            <th>게임 수</th>
+                            <th>승수</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m:${l.getLeagueApplyTeam()}">
+                            <td th:text="${m.getTeamName()}"></td>
+                            <td th:text="${m.getLeader()}"></td>
+                            <td th:text="${m.getTotalGameCnt()}"></td>
+                            <td th:text="${m.getWin()}"></td>
+                            <td>
+                                <input type="hidden" th:value="${m.getIsApprove()}">
+                                <input type="hidden" th:value="${m.getTeamId()}">
+                                <button class="c-button">리그 참가승인</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <!-- league 대진표 -->
@@ -72,16 +85,24 @@
 
             <!-- 참가 승인된 팀 목록 -->
             <t-h2 ko="리그 참가 팀 목록"></t-h2>
-            <ul id="league_team" class="a-list">
-                <li th:each="m:${l.getLeagueApplyApproveTeam()}">
-                    <span th:text="${m.getTeamName()}"></span>
-                    <span th:text="${m.getTeamId()}"></span>
-                    <span th:text="${m.getWin()}"></span>
-                    <span th:text="${m.getTotalGameCnt()}"></span>
-                    <span th:text="${m.getLeader()}"></span>
-                    <span th:text="${'isapprove : ' + m.getIsApprove()}"></span>
-                </li>
-            </ul>
+            <table class="table text-center a-table">
+                <thead>
+                <tr>
+                    <th>팀이름</th>
+                    <th>팀장</th>
+                    <th>게임 수</th>
+                    <th>승수</th>
+                </tr>
+                </thead>
+                <tbody  id="league_team">
+                <tr th:each="m:${l.getLeagueApplyApproveTeam()}">
+                    <td th:text="${m.getTeamName()}"></td>
+                    <td th:text="${m.getLeader()}"></td>
+                    <td th:text="${m.getTotalGameCnt()}"></td>
+                    <td th:text="${m.getWin()}"></td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
     </div>
@@ -92,43 +113,44 @@
         const loadTeam = () => {
             document.addEventListener('DOMContentLoaded', () => {
                 // printApplyTeam();
-                // printApplyApproveTeam();
+
+                submitLeagueTeam()
             })
         }
         loadTeam()
 
-        // 리그 신청받은 팀을 출력
-        const printApplyTeam = () => {
-            let ld = document.querySelector('#leagueId').value;
-            // league apply table 에서 데이터 뽑기
-            fetch('/adm/getLeagueApply?leagueId=' + ld)
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res)
-                        let result = res.leagueApplyVOList;
-                        let tg = document.querySelector('#tournament-table')
-                        // league_id 값 불러오기
-                        let leagueId = document.querySelector('#leagueId').value;
-
-                        let ul = document.createElement('ul')
-                        ul.setAttribute('class', 'a-list')
-                        // 신청한 team 수 많큼 출력
-                        result.forEach(l => {
-                            let rr = document.createElement('li')
-                            rr.innerHTML =  `
-                              <div class="row">
-                                <div class="col-9">
-                                  <team-info teamId="${l.teamId}" leagueId="${leagueId}"></team-info>
-                                  <team-info-approve teamId="${l.teamId}" leagueId="${leagueId}"></team-info-approve>
-                                </div>
-                                <button class="c-button col-3">리그 참가승인</button>
-                              </div>
-                            `;
-                            ul.append(rr)
-                        })
-                        tg.append(ul)
-                    })
-        }
+        // // 리그 신청받은 팀을 출력
+        // const printApplyTeam = () => {
+        //     let ld = document.querySelector('#leagueId').value;
+        //     // league apply table 에서 데이터 뽑기
+        //     fetch('/adm/getLeagueApply?leagueId=' + ld)
+        //             .then(res => res.json())
+        //             .then(res => {
+        //                 console.log(res)
+        //                 let result = res.leagueApplyVOList;
+        //                 let tg = document.querySelector('#tournament-table')
+        //                 // league_id 값 불러오기
+        //                 let leagueId = document.querySelector('#leagueId').value;
+        //
+        //                 let ul = document.createElement('ul')
+        //                 ul.setAttribute('class', 'a-list')
+        //                 // 신청한 team 수 많큼 출력
+        //                 result.forEach(l => {
+        //                     let rr = document.createElement('li')
+        //                     rr.innerHTML =  `
+        //                       <div class="row">
+        //                         <div class="col-9">
+        //                           <team-info teamId="${l.teamId}" leagueId="${leagueId}"></team-info>
+        //                           <team-info-approve teamId="${l.teamId}" leagueId="${leagueId}"></team-info-approve>
+        //                         </div>
+        //                         <button class="c-button col-3">리그 참가승인</button>
+        //                       </div>
+        //                     `;
+        //                     ul.append(rr)
+        //                 })
+        //                 tg.append(ul)
+        //             })
+        // }
 
 
         // 리그 참가 팀 확정
@@ -140,15 +162,22 @@
                 if(tg.tagName == 'BUTTON'){
 
                     let targetNode = tg.parentNode.parentNode;
-                    let teamId = targetNode.querySelector('team-info').shadowRoot.querySelector('.info').children[0].value;
+                    let teamId = tg.parentNode.children[1].value;
+                    let teamName = targetNode.children[0].innerText;
                     let leagueId =  document.querySelector('#leagueId').value;
 
-                    let isAppr = targetNode.querySelector('team-info').shadowRoot.querySelector('.info').children[1].value;
-                    let teamName = targetNode.querySelector('team-info').shadowRoot.querySelector('.info').children[3].innerText;
+                    let isAppr = tg.parentNode.children[0].value;
+
+                    console.log(targetNode)
+                    console.log(teamId)
+                    console.log(leagueId)
+                    console.log(isAppr)
+
+                    // let teamName = targetNode.querySelector('team-info').shadowRoot.querySelector('.info').children[3].innerText;
 
 
                     if(isAppr == 1804) {
-                        if(confirm(`${teamName} 리그 참가를 승인하시겠습니까?`)) {
+                        if(confirm(`[${teamName}] 리그 참가를 승인하시겠습니까?`)) {
 
                             let cn = targetNode.cloneNode(true);
 
@@ -157,23 +186,17 @@
                                 method: 'post',
                                 headers: {'Content-type': 'application/json'},
                                 body: JSON.stringify({
-                                    teamId: 1,
-                                    leagueId: 1
+                                    teamId: teamId,
+                                    leagueId: leagueId
                                 })
                             })
                             .then(res => res.text())
                             .then(res => console.log(res))
 
                             // 참가팀 넣기
-                            let rr = document.createElement('li')
-                            rr.innerHTML =  `
-                              <div class="row">
-                                <div class="col-12">
-                                  <team-info-approve teamId="${teamId}" leagueId="${leagueId}"></team-info-approve>
-                                </div>
-                              </div>
-                            `;
-                            league_team.append(rr);
+                            cn.children[4].remove()
+                            console.log(cn)
+                            league_team.append(cn);
 
                             targetNode.remove();
                         }
@@ -184,7 +207,7 @@
                 }
             })
         }
-        submitLeagueTeam()
+
 
         // 참가 팀을 랜덤하게 사다리 그리기
 

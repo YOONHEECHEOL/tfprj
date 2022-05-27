@@ -97,8 +97,17 @@ h4.h4 {
     background-color: rgba(0, 0, 0, .3);
     z-index: 3;
 }
+.currentRes {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    color: #fff;
+    z-index: 999;
+}
 
-/* header */
+
+    /* header */
 .logo > img {
     width: 24vw;
 }
@@ -228,7 +237,6 @@ main.contents {
 
 
 .button {
-    border: 0;
     background: #fff;
     font-family: esM;
     font-size: 1.8rem;
@@ -241,6 +249,9 @@ main.contents {
     border: .5rem solid #222;
     box-sizing: content-box;
     transform: skewX(-15deg);
+}
+.button-nude {
+    border: 0 !important;
 }
 .button.button-primary {
     box-shadow: 8px 8px 0px #6193FF;
@@ -349,11 +360,29 @@ main.contents {
 }
 
 /* adm leauge detail list */
-.a-list > li {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: .4rem 0;
+.a-table td {
+    font-family: esL;
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: #666;
 }
+.a-table th {
+    font-family: esL;
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: #3765C7;
+}
+/*.a-list > li {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    border-top: 1px solid #ddd;*/
+/*    border-bottom: 1px solid #ddd;*/
+/*    padding: .4rem 0;*/
+/*}*/
+/*.a-list > li span {*/
+/*    font-family: esL;*/
+/*    font-size: 1.6rem;*/
+/*}*/
 /*.a-list > li div,  team-info  {*/
 /*    pointer-events: none;*/
 /*}*/

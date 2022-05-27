@@ -5,9 +5,57 @@
 
 <th:block layout:fragment="content">
 
+  <div id="hmodal" class="hmodal" >
+    <span th:if="${#session.getAttribute('message') != 'n'}" th:text="${#session.getAttribute('message')}">message</span>
+    <!--    <span>asdf</span>-->
+  </div>
+
   <div class="cover--black vh100">
     <img th:src="@{/images/cli/main_bg.jpg}" class="vh100" alt="">
+
+    <div class="currentRes">
+      <!-- 예약정보 출력 -->
+      <div class="row">
+        <div class="col-12">
+          <h2 class="h2">예약현황</h2>
+        </div>
+      </div>
+
+      <!-- 버튼 위치 -->
+      <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+          <div class="button__box">
+            <button class="button button-nude button-primary">예약하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
+  <script>
+
+    // hmodal
+    const hmodal = () => {
+      let h = document.querySelector('#hmodal')
+      let t = document.querySelector('#hmodal > span')
+      if(t.innerHTML != '') {
+        h.classList.add('active')
+        setTimeout(() => {
+          h.classList.remove('active')
+          fetch('http://localhost:18000/cli/resetMessage')
+            .then(res => res.text())
+            .then(res => console.log(res))
+          // h.remove();
+        }, 1500)
+        // session message 삭제
+      }
+    }
+    hmodal();
+
+  </script>
 
 </th:block>
 

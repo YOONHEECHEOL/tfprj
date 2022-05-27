@@ -39,35 +39,50 @@ public class CliLeagueServiceImpl implements LeagueService{
         LocalDate now = LocalDate.now();
         List<LeagueVO> leagueList = cliLeagueMapper.getLeagueList();
         CliLeagueServiceVO cliLeagueServiceVO = new CliLeagueServiceVO();
+        String memberId = request.getSession().getAttribute("memberId").toString();
 
         // 현재 진행 중인 리스트 목록
         List<LeagueVO> currentLeagueList = new ArrayList<>();
         // 지난 리그 리스트 목록
         List<LeagueVO> passedLeagueList = new ArrayList<>();
 
-        // 분할
+        // 501 -> 참여가능
+        // 502, 503 -> 참여불가능
         leagueList.forEach(league -> {
+
+            String chk = "0";
+            // set is_approve
+            String teamId = cliLeagueMapper.selectTeamId(memberId);
+            System.out.println("teamId = " + teamId);
+
+            try {
+                chk = cliLeagueMapper.isLeagueApplyStatus( league.getLeagueId(), teamId);
+                System.out.println("chk = " + chk);
+                if(chk == null) {
+                    chk = "0";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            league.setIsApplyStatus( chk );
+
             if( Integer.parseInt(league.getLeagueStatusCd()) != 502 && Integer.parseInt(league.getLeagueStatusCd()) != 503 ) {
                 // 현재 진행 중
                 LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
-                if(request.getSession().getAttribute("memberId") != null) {
-                    leagueApplyVO.setLeagueId(league.getLeagueId());
-                    leagueApplyVO.setMemberId(request.getSession().getAttribute("memberId").toString());
 
-                    // 리그에 참가했는지 검증
-                    if(cliLeagueMapper.isLeagueApply(leagueApplyVO).size() > 0) {
-                        // 참가했음
-                        league.setIsApply("y");
-                    } else {
-                        // 참가하지 않음
-                        league.setIsApply("n");
-                    };
+                leagueApplyVO.setLeagueId(league.getLeagueId());
+                leagueApplyVO.setMemberId(memberId);
 
-                    // 출력 리스트에 추가
-//                    currentLeagueList.add(league);
+                // 리그에 참가했는지 검증
+                if( cliLeagueMapper.isLeagueApply(leagueApplyVO).size() > 0 && Integer.parseInt( league.getIsApplyStatus() ) > 0 && !league.getIsApplyStatus().equals("1802") ) {
+                    // 참가했음
+                    league.setIsApply("y");
+                } else {
+                    // 참가하지 않음
+                    league.setIsApply("n");
+                };
+
                 currentLeagueList.add(league);
-                }
-
 
             } else {
                 passedLeagueList.add(league);
@@ -90,6 +105,7 @@ public class CliLeagueServiceImpl implements LeagueService{
     public CliLeagueServiceVO getMyLeague(HttpServletRequest request) {
         LocalDate now = LocalDate.now();
         CliLeagueServiceVO cliLeagueServiceVO = new CliLeagueServiceVO();
+        String memberId = request.getSession().getAttribute("memberId").toString();
 
         // memberId 값 불러오기
         cliLeagueServiceVO.getLoginedMember().setMemberId("memberId");
@@ -105,23 +121,43 @@ public class CliLeagueServiceImpl implements LeagueService{
             LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
             // 리그에 참가했는지 검증
             leagueApplyVO.setLeagueId(league.getLeagueId());
-            leagueApplyVO.setMemberId(request.getSession().getAttribute("memberId").toString());
+            leagueApplyVO.setMemberId(memberId);
 
 
             // league apply table 에서 멤버가 참여 신청한 상태 체크
-            league.setIsApplyStatus(cliLeagueMapper.isLeagueApplyStatus(league.getLeagueId()));
+            // 0 -> 신청 안함
+            // 1801 -> 리그 신청
+            // 1802 -> 리그 신청 취소
+            // 1803 -> 리그 결제 대기
+            // 1804 -> 리그 결제 완료
+            // 1805 -> 리그 참가 승인됨
+            String chk = "0";
 
+            String teamId = cliLeagueMapper.selectTeamId(memberId);
+            System.out.println("teamId = " + teamId);
+
+            try {
+                chk = cliLeagueMapper.isLeagueApplyStatus( league.getLeagueId(), teamId);
+                System.out.println("chk = " + chk);
+                if(chk == null) {
+                    chk = "0";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            league.setIsApplyStatus( chk );
 
             // league 참가 여부 확인
-            if( cliLeagueMapper.isLeagueApply(leagueApplyVO).size() > 0 ) {
+            if( Integer.parseInt( league.getIsApplyStatus() ) > 0 && !league.getIsApplyStatus().equals("1802")) {
 
-                    league.setIsApply("y");
-                    participatedLeague.add(league);
+                league.setIsApply("y");
+
+                participatedLeague.add(league);
 
             } else {
                 // 참가하지 않은 리그
 
-                    league.setIsApply("n");
+                league.setIsApply("n");
                     notParticipatedLeague.add(league);
 
             }
@@ -203,6 +239,19 @@ public class CliLeagueServiceImpl implements LeagueService{
 
         return cliLeagueMapper.isLeagueApply(leagueApplyVO);
     }
+
+    // cancel league apply
+    @Override
+    public void cancelLeagueApply(HttpServletRequest request, int leagueId) {
+        int teamId = 0;
+        String memberId = request.getSession().getAttribute("memberId").toString();
+
+        // teamId 찾기
+        teamId = cliLeagueMapper.getTeamId(memberId);
+
+        cliLeagueMapper.cancelLeagueApply(teamId, leagueId);
+    }
+
 
     // league 선발된 멤버 반환
     public List<Map<String, Object>> getLeagueParticipatedMember(String formVal) {
