@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,9 +22,18 @@ public class CliReservationController {
     @RequestMapping("/cli/reservation/info")
     public String resInfo(){return "client/reservation/info";}
 
-    @RequestMapping("/reservationList")
+    @RequestMapping("/cli/reservationList")
     public String findReservationList(Model model){
         model.addAttribute("rList",reservationMapper.findReservation());
         return "client/reservation/reservationList";
     }
+
+    @GetMapping("/cli/reservation/reservationCheck")
+    @ResponseBody
+    public List<Reservation> reservationCheckList(@RequestParam String date, @RequestParam String room){
+
+        return reservationMapper.reservationCheck(date, room);
+    }
+
+
 }

@@ -11,4 +11,8 @@ public interface ReservationMapper {
     public int insertReservation(Reservation rsv);
     public int updateReservation(Reservation rsv);
     public int deleteReservation(Reservation rsv);
+
+    public List<Reservation>  reservationCheck(String date,String room);
+
+
 }

@@ -41,4 +41,9 @@ public class CliReservationServiceImpl implements CliReservationService {
     public int deleteReservation(Reservation rsv) {
         return 0;
     }
+
+    @Override
+    public List<Reservation> reservationCheck(String date,String room) {
+        return reservationMapper.reservationCheck(date, room);
+    }
 }
