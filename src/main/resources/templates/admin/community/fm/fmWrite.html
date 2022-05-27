@@ -9,7 +9,7 @@
             crossorigin="anonymous"></script>
 
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -54,5 +54,10 @@
 
     </div>
 </article>
+<script>
+    CKEDITOR.replace("details",{
+        filebrowserUploadUrl : "/cli/imageUpload"
+    });
+</script>
 </body>
 </html>
