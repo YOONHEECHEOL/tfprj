@@ -10,16 +10,16 @@
     </div>
     <div th:unless="${score eq null}">
         <div th:each="scr, i : ${score}">
+            <span th:text="${scr.memberId}"></span>
+            <span th:text="${scr.memberName}"></span>
             <span th:text="${scr.groundCd}"></span>
-            <span th:text="${scr.score}"></span>
-            <span th:text="${scr.distance}"></span>
             <span th:text="${scr.hits}"></span>
-            <span th:text="${scr.homerun}"></span>
-            <span th:text="${scr.winLose}"></span>
+            <span th:text="${scr.homeruns}"></span>
+            <span th:text="${scr.highestDistance}"></span>
             <span th:text="${scr.batCounts}"></span>
-            <span th:text="${scr.innings}"></span>
+            <span th:text="${scr.batOrder}"></span>
             <span th:text="${scr.difficultyCd}"></span>
-            <convert-c-code th:data="${scr.difficultyCd}"></convert-c-code><br>
+            <span th:text="${scr.gameId}"></span>
         </div>
     </div>
     <div id="piechart" style="width: 900px; height: 500px;">
@@ -30,27 +30,28 @@
     </div>
 
     <script>
+        let res;
+
+
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var jsonData =
+                    $.ajax({
+                        url: "/cli/myScoreJson",
+                        async: false
+                    }).done(function (data) {
+                        res = data;
+                    }).responseText;
 
-        function drawChart() {
+                console.log(res);
+                var data = new google.visualization.DataTable(res);
 
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['ss', 12512551],
-                ['dd', 12512535],
-                ['ff', 23434232]
-            ]);
-
-            var options = {
-                title: '내 기록'
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-            chart.draw(data, options);
-        }
-
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, {
+                    title: '내 기록'
+                });
+            }
         google.charts.load('current', {packages: ['corechart', 'bar']});
         google.charts.setOnLoadCallback(drawBasic);
 

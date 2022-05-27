@@ -5,7 +5,9 @@ package com.yedam.tfprj.client.member.service;
 
 
 
+import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
 import com.yedam.tfprj.client.game.service.GameVO;
+import com.yedam.tfprj.client.message.service.MessageVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,7 +35,7 @@ public interface MemberService {
     int updateMember2(MemberVO vo);
     
     //기록 조회
-    GameVO selectGame(MemberVO vo, HttpServletRequest request);
+    List<MemberGameVO> selectGame(MemberVO vo, HttpServletRequest request);
     
     //멤버 검색
     List<MemberVO> searchMember(MemberVO vo);
@@ -58,4 +60,6 @@ public interface MemberService {
     public void reasonUpdate(MemberVO vo);
 
     public List<MemberVO> admSearchMember(MemberVO vo);
+
+
 }

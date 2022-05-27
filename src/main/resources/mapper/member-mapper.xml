@@ -48,9 +48,9 @@
     </update>
 
     <select id="selectGame" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
-            resultType="com.yedam.tfprj.client.game.service.GameVO">
+            resultType="com.yedam.tfprj.admin.reservation.service.MemberGameVO">
         SELECT*
-        FROM GAME
+        FROM MEMBER_GAME
         WHERE MEMBER_ID = #{memberId}
     </select>
 

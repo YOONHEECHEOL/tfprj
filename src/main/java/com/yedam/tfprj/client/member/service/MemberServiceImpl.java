@@ -1,6 +1,7 @@
 package com.yedam.tfprj.client.member.service;
 
 
+import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
 import com.yedam.tfprj.client.game.service.GameVO;
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,10 +83,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public GameVO selectGame(MemberVO vo, HttpServletRequest request) {
+    public List<MemberGameVO> selectGame(MemberVO vo, HttpServletRequest request) {
         HttpSession session = request.getSession();
         vo.setMemberId((String) session.getAttribute("memberId"));
-        return memberMapper.selectGame(vo);
+        List<MemberGameVO> list = memberMapper.selectGame(vo);
+        return list;
     }
 
     @Override

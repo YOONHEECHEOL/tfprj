@@ -2,6 +2,7 @@ package com.yedam.tfprj.client.member.mapper;
 
 
 
+import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
 import com.yedam.tfprj.client.game.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,7 +26,7 @@ public interface MemberMapper {
 
     int updateMember2(MemberVO vo);
     //멤버 스코어 조회
-    GameVO selectGame(MemberVO vo);
+    List<MemberGameVO> selectGame(MemberVO vo);
     
     //멤버명 검색
     List<MemberVO> searchMember(MemberVO vo);

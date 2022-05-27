@@ -34,7 +34,7 @@
         <input type="hidden" th:id="memberId" th:value="${session.memberId}">
 
         <!-- isChk 가 0 이면  -->
-        <div class="button__box" th:if="${m.getIsChk() == 0}">
+        <div class="button__box" th:if="${m.getIsChk() != 2}">
             <button id="noBtn">거절</button>
             <button id="okBtn">수락</button>
         </div>

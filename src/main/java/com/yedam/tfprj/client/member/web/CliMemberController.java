@@ -1,9 +1,11 @@
 package com.yedam.tfprj.client.member.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
 import com.yedam.tfprj.client.member.service.MemberService;
 import com.yedam.tfprj.client.member.service.MemberVO;
-import com.yedam.tfprj.client.message.mapper.MsgMapper;
 import com.yedam.tfprj.client.message.service.MessageVO;
+import com.yedam.tfprj.client.message.service.MsgService;
 import com.yedam.tfprj.client.reservation.service.CliReservationService;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import com.yedam.tfprj.client.team.service.TeamService;
@@ -16,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -30,7 +31,7 @@ public class CliMemberController {
     TeamService teamServiceImpl;
 
     @Autowired
-    MsgMapper msgMapper;
+    MsgService msgServiceImpl;
 
     @RequestMapping("/cli/myInfo")
     public String cliMyInfo(MemberVO vo, Model model, HttpServletRequest request) {
@@ -53,7 +54,14 @@ public class CliMemberController {
     @RequestMapping("/cli/myScore")
     public String cliMyScore(Model model, MemberVO vo, HttpServletRequest request) {
         model.addAttribute("score", memberServiceImpl.selectGame(vo, request));
+        System.out.println(model);
         return "client/member/my_score";
+    }
+
+    @RequestMapping("/cli/myScoreJson")
+    @ResponseBody
+    public List<MemberGameVO> cliMyScore(MemberVO vo, HttpServletRequest request) {
+        return memberServiceImpl.selectGame(vo, request);
     }
 
 //    @RequestMapping("/cli/myLeague")
@@ -62,18 +70,16 @@ public class CliMemberController {
 //    }
 
     @RequestMapping("/cli/myMessage")
-    public String cliMyMessage(HttpServletRequest request, Model model) {
-
-        List<MessageVO> list = msgMapper.getMessage(request.getSession().getAttribute("memberId").toString());
-
-        model.addAttribute("msg", list);
-        System.out.println(list);
+    public String cliMyMessage(MessageVO messageVO,HttpServletRequest request, Model model) {
+        msgServiceImpl.isChkUpdate(messageVO, request);
+        model.addAttribute("msg", msgServiceImpl.getMessage(request));
         return "client/member/my_message";
     }
 
     @RequestMapping("/cli/intoTeam")
     @ResponseBody
-    public void cliIntoTeam(MemberVO vo){
+    public void cliIntoTeam(MessageVO messageVO,MemberVO vo, HttpServletRequest request){
+        msgServiceImpl.invResUpdate(messageVO, request);
         memberServiceImpl.updateMember2(vo);
     }
 
