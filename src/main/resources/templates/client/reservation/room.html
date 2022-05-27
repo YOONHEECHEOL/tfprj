@@ -11,7 +11,7 @@
     </div>
     <div th:class="row" style="float: none; margin:0 auto;">
         <div th:class="col-8">
-            <input type="text" id="dateVal">
+            <input type="text" id="dateVal" onchange="reservedTimeCheck()">
         </div>
         <div th:class="col-4">
             <input th:type="button" id="rsvBtn" th:value="날짜변경">
@@ -19,9 +19,9 @@
     </div>
     <div th:class="row" style="float: none; margin:0 auto;">
         <div th:class="col-auto">
-            <button>이전</button>
-            <span>1구장</span>
-            <button>다음</button>
+            <button onclick="prev()">이전</button>
+            <span id = "room">1</span><span>구장</span>
+            <button onclick="next()">다음</button>
         </div>
     </div>
     <div th:class="row" style="float: none; margin:0 auto;">
@@ -30,51 +30,54 @@
                 <tbody>
                 <tr>
                     <td>
-                        <button>13:00</button>
+                        <button id="13" onclick="clickTimetable(13)">13:00</button>
                     </td>
                     <td>
-                        <button>14:00</button>
+                        <button id="14" onclick="clickTimetable(14)">14:00</button>
                     </td>
                     <td>
-                        <button>15:00</button>
+                        <button id="15" onclick="clickTimetable(15)">15:00</button>
                     </td>
                     <td>
-                        <button>16:00</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button>17:00</button>
-                    </td>
-                    <td>
-                        <button>18:00</button>
-                    </td>
-                    <td>
-                        <button>19:00</button>
-                    </td>
-                    <td>
-                        <button>20:00</button>
+                        <button id="16" onclick="clickTimetable(16)">16:00</button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button>21:00</button>
+                        <button id="17" onclick="clickTimetable(17)">17:00</button>
                     </td>
                     <td>
-                        <button>22:00</button>
+                        <button id="18" onclick="clickTimetable(18)">18:00</button>
                     </td>
                     <td>
-                        <button>23:00</button>
+                        <button id="19" onclick="clickTimetable(19)">19:00</button>
                     </td>
                     <td>
-                        <button>24:00</button>
+                        <button id="20" onclick="clickTimetable(20)">20:00</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="21" onclick="clickTimetable(21)">21:00</button>
+                    </td>
+                    <td>
+                        <button id="22" onclick="clickTimetable(22)">22:00</button>
+                    </td>
+                    <td>
+                        <button id="23" onclick="clickTimetable(23)">23:00</button>
+                    </td>
+                    <td>
+                        <button id="24" onclick="clickTimetable(24)">24:00</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
+    <input th:type="text" id="startTime">
+    <input th:type="text" id="endTime">
+    <!--class="btn btn-success"-->
 </th:block>
+
 
 </html>
