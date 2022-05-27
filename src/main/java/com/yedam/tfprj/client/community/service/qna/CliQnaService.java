@@ -18,4 +18,6 @@ public interface CliQnaService {
     public void CliQnaAnswerInsert(CliQnaVO vo);
 
     public void CliQnaAnswerDelete(CliQnaVO vo);
+    public void CliQnaViewCount(int qNo);
+
 }

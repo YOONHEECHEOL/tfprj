@@ -5,10 +5,16 @@
 <mapper namespace="com.yedam.tfprj.client.community.mapper.CliFmMapper">
 
     <select id="CliFmList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
-        SELECT *
+        SELECT f_no, title, writer, wdate, views, details, team
         FROM fm_board
         ORDER BY f_no ASC
     </select>
+
+    <update id="CliFmViewCount">
+        UPDATE FM_BOARD
+        SET VIEWS = VIEWS + 1
+        WHERE F_NO = #{fNo}
+    </update>
 
     <select id="CliReplyList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
         SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, F.F_NO , C.TEAM

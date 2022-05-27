@@ -71,8 +71,8 @@
 </div>
 
 <button onclick="location.href = '/cli/qna'">뒤로가기</button>
-<button th:onclick="|location.href = '@{/cli/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right">삭제</button>
-<button id="submitFrm" style="float: right">수정</button>
+<button th:onclick="|location.href = '@{/cli/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right" th:if="${session.memberId == qna.writer}">삭제</button>
+<button id="submitFrm" style="float: right" th:if="${session.memberId == qna.writer}">수정</button>
 
 <h1>답글</h1>
 

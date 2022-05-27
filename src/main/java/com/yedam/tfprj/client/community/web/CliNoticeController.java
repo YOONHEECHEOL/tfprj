@@ -25,6 +25,7 @@ public class CliNoticeController {
 
     @RequestMapping("/cli/noticeDetail")
     public String NoticeDetail(Model model, CliNoticeVO vo) {
+        service.CliNoticeViewCount(vo.getNNo());
         vo.setNNo(vo.getNNo());
         System.out.println(vo.getNNo());
         model.addAttribute("notice", service.CliNoticeSelect(vo));

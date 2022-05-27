@@ -5,10 +5,16 @@
 <mapper namespace="com.yedam.tfprj.admin.community.mapper.AdmFmMapper">
 
     <select id="AdmFmList" resultType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
-        SELECT *
+        SELECT f_no, title, writer, wdate, views, details, team
         FROM fm_board
         ORDER BY f_no ASC
     </select>
+    
+    <update id="AdmFmViewCount">
+        UPDATE FM_BOARD
+        SET VIEWS = VIEWS + 1
+        WHERE F_NO = #{fNo}
+    </update>
 
     <select id="AdmReplyList" resultType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
         SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, F.F_NO , C.TEAM
@@ -53,4 +59,11 @@
         DELETE FROM FM_ANSWER
         WHERE C_NO = #{cNo}
     </delete>
+
+    <select id="AdmFmSearch" parameterType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO"
+            resultType="com.yedam.tfprj.admin.community.service.fm.AdmFmVO">
+        SELECT *
+        FROM FM_BOARD
+        WHERE TITLE LIKE '%' || #{title} || '%'
+    </select>
 </mapper>

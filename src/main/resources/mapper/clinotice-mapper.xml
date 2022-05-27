@@ -10,6 +10,12 @@
         ORDER BY n_no ASC
     </select>
 
+    <update id="CliNoticeViewCount">
+        UPDATE notice_board
+        SET VIEWS = VIEWS + 1
+        WHERE N_NO = #{nNo}
+    </update>
+
     <select id="CliNoticeSelect" resultType="com.yedam.tfprj.client.community.service.notice.CliNoticeVO"
             parameterType="com.yedam.tfprj.client.community.service.notice.CliNoticeVO">
         select n_no, wdate, title, details

@@ -20,5 +20,9 @@ public class CliNoticeServiceImpl implements CliNoticeService{
     public CliNoticeVO CliNoticeSelect(CliNoticeVO vo) {
         return map.CliNoticeSelect(vo);
     }
+    @Override
+    public void CliNoticeViewCount(int nNo){
+        map.CliNoticeViewCount(nNo);
+    }
 
 }

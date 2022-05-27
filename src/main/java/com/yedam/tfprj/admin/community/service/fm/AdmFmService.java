@@ -18,4 +18,8 @@ public interface AdmFmService {
     public void AdmFmAnswerInsert(AdmFmVO vo);
 
     public void AdmFmAnswerDelete(AdmFmVO vo);
+    public void AdmFmViewCount(int fNo);
+    List<AdmFmVO> AdmFmSearch(AdmFmVO vo);
+
+
 }

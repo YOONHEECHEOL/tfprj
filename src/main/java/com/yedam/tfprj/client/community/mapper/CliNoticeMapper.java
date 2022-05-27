@@ -9,4 +9,6 @@ import java.util.List;
 public interface CliNoticeMapper {
     public List<CliNoticeVO> CliNoticeList(CliNoticeVO vo);
     CliNoticeVO CliNoticeSelect(CliNoticeVO vo);
+    public void CliNoticeViewCount(int nNo);
+
 }

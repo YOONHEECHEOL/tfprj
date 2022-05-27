@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>마 이게 공지사항 아이가</title>
@@ -16,6 +16,20 @@
         }
     </style>
     <h1>친선경기 게시판</h1>
+    <div>
+        <input type="text" id="searchVal"
+               name="searchVal" placeholder="제목을 입력하세요"/>
+        <button type="button" id="searchBtn">검색</button>
+    </div>
+
+    <div>
+        <table>
+            <tbody th:id="fmList">
+
+            </tbody>
+        </table>
+    </div>
+
 </head>
 <body>
 <form th:id="details" method="post">
@@ -27,6 +41,7 @@
             <th>작성자</th>
             <th>작성일</th>
             <th>팀명</th>
+            <th>조회수</th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +54,7 @@
                 <td th:text="${fm.writer}"></td>
                 <td th:text="${fm.wdate}"></td>
                 <td th:text="${fm.team}"></td>
+                <td th:text="${fm.views}"></td>
             </tr>
         </div>
         </tbody>
@@ -65,12 +81,42 @@
         </li>
     </ul>
 </nav>
+
 <script>
     function callDetails(n) {
         details.fNo.value = n;
         details.action = "/adm/fmDetail";
         details.submit();
     }
+
+    $("#searchBtn").on("click", function () {
+        $.ajax({
+            url: "/adm/fmSearch",
+            data: {title: $("#searchVal").val()}
+        }).done(function (data) {
+            $("#fm").html('');
+            for (list of data) {
+                $("#fm").append(makeTr(list));
+            }
+        })
+    })
+
+    //검색 결과 출력
+    function makeTr(list) {
+        var tr = $("<tr th:attr=\"onclick=|callDetails('${list.fNo}')|\" " +
+            " onmouseover='this.style.background=\"#fcecae\";'" +
+            "onmouseleave='this.style.background=\"#FFFFFF\";'>");
+        tr.append(`
+                <td th:text="${list.fNo}"></td>
+                <td th:text="${list.title}"></td>
+                <td th:text="${list.writer}"></td>
+                <td th:text="${list.wdate}"></td>
+                <td th:text="${list.team}"></td>
+                <td th:text="${list.views}"></td>
+            </tr>`)
+        return tr;
+    }
+
 </script>
 
 </body>

@@ -35,4 +35,9 @@ public class AdmNoticeServiceImpl implements AdmNoticeService {
         map.AdmNoticeInsert(vo);
     }
 
+    @Override
+    public void AdmNoticeViewCount(int nNo){
+        map.AdmNoticeViewCount(nNo);
+    }
+
 }

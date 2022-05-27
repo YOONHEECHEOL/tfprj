@@ -1,7 +1,6 @@
 package com.yedam.tfprj.admin.community.service.fm;
 
 import com.yedam.tfprj.admin.community.mapper.AdmFmMapper;
-import com.yedam.tfprj.admin.community.service.qna.AdmQnaVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,4 +50,15 @@ public class AdmFmServiceImpl implements AdmFmService {
     public void AdmFmAnswerDelete(AdmFmVO vo){
         map.AdmFmAnswerDelete(vo);
     }
+
+    @Override
+    public void AdmFmViewCount(int fNo){
+        map.AdmFmViewCount(fNo);
+    }
+
+    @Override
+    public List<AdmFmVO> AdmFmSearch(AdmFmVO vo) {
+        return map.AdmFmSearch(vo);
+    }
+
 }

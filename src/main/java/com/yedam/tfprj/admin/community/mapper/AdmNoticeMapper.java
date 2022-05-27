@@ -13,4 +13,6 @@ public interface AdmNoticeMapper {
 
     public void AdmNoticeUpdate(AdmNoticeVO vo);
     public void AdmNoticeInsert(AdmNoticeVO vo);
+    public void AdmNoticeViewCount(int nNo);
+
 }

@@ -50,5 +50,9 @@ public class CliQnaServiceImpl implements CliQnaService{
     public void CliQnaAnswerDelete(CliQnaVO vo){
         map.CliQnaAnswerDelete(vo);
     }
+    @Override
+    public void CliQnaViewCount(int qNo){
+        map.CliQnaViewCount(qNo);
+    }
 
 }

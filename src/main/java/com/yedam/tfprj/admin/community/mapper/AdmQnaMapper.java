@@ -23,4 +23,6 @@ public interface AdmQnaMapper {
     public void AdmQnaAnswerInsert(AdmQnaVO vo);
     
     public void AdmQnaAnswerDelete(AdmQnaVO vo);
+    public void AdmQnaViewCount(int qNo);
+
 }

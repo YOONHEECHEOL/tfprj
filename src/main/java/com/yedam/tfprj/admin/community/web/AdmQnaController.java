@@ -28,6 +28,7 @@ public class AdmQnaController {
 
     @RequestMapping("/adm/qnaDetail")
     public String qnaDetail(Model model, AdmQnaVO vo){
+        service.AdmQnaViewCount(vo.getQNo());
         vo.setQNo(vo.getQNo());
         model.addAttribute("qna",service.AdmQnaSelect(vo)); //디테일 출력
         model.addAttribute("reply", service.AdmReplyList(vo)); // 코맨트 리스트

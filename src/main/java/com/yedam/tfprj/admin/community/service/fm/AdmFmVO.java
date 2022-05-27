@@ -15,4 +15,7 @@ public class AdmFmVO {
     private String  cdate;
     private String  cdetails;
     private String  cwriter;
+    private Integer viewCount;
+    private String  type;
+    private String  keyword;
 }

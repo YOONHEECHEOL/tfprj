@@ -22,4 +22,6 @@ public interface CliQnaMapper {
     public void CliQnaAnswerInsert(CliQnaVO vo);
 
     public void CliQnaAnswerDelete(CliQnaVO vo);
+    public void CliQnaViewCount(int qNo);
+
 }
