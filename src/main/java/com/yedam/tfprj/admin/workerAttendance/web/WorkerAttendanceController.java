@@ -88,8 +88,13 @@ public class WorkerAttendanceController {
         System.out.println("실제출근시간 : " + date);
         System.out.println("원래출근시간 - 실제출근시간 :" + minute + "분");
         rVo.setMinute(minute);
+
+        // 정상출근
+        if(minute > -10 && minute < 10) {
+            rVo.setLate("0");
+            return rVo;
         // 만약 실제 출근시간이 10분 이상, 120분 이하 늦게될때 지각처리
-        if(minute <= -10 && minute >= -120){
+        }else if(minute <= -10 && minute >= -120){
             service.updateIslate(workerId);
             rVo.setLate("1");
             return rVo;

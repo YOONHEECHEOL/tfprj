@@ -48,6 +48,7 @@ public class WorksheetRestController {
             //dateListArr[1] = 5
             //monthLength = 해당 년, 월의 배열을 가져와서 해당 월의 일수를 계산함.
 
+
             if (dateListArr[1].length() == 1) {
                 // 해당 월이 1~9월, 즉 숫자가 1일때
                 for (int j = 0; j < list.size(); j++) {
@@ -172,7 +173,6 @@ public class WorksheetRestController {
             jsonList.add(map);
         }
 
-        objectMapper = new ObjectMapper();
         String strJsonList = "";
         try {
             strJsonList = objectMapper.writeValueAsString(jsonList);

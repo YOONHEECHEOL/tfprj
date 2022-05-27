@@ -117,7 +117,7 @@
     </select>
 
     <select id="allLate" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
-        SELECT NVL(SUM(IS_LATE), 0) AS IS_LATE
+        SELECT NVL(SUM(IS_LATE), 0) AS IS_LATE, NVL(SUM(IS_ABSENCE), 0) AS IS_ABSENCE
         FROM STAFF_ATTENDANCE
         WHERE WORKER_ID = #{workerId}
     </select>

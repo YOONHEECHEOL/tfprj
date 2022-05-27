@@ -31,7 +31,7 @@
                         <th th:width="100">퇴근시간</th>
                     </tr>
                 </thead>
-                <tbody th:each="l, status: ${nowWorker}">
+                <tbody th:each="l, status: ${nowWorker}" th:if="${nowWorker.attId != 0}">
                     <tr>
                         <td th:width="100" th:text="${nowWorker.workerName}">홍길동</td>
     <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
@@ -260,7 +260,8 @@
                 method : 'post'
             }).done(function(response){
                 console.log(response)
-                $('#allLate').html(response.isLate + "회")
+                $('#allLate').html(response.isLate + "회");
+                $('#allAbsence').html(response.isAbsence + "회");
             })
 
             $.ajax({
@@ -284,16 +285,6 @@
             })
 
             $.ajax({
-                url : "allAbsence",
-                data : {
-                    workerId : '[[${nowWorker.workerId}]]'
-                },
-                method : 'post'
-            }).done(function(response){
-                $('#allAbsence').html(response.isAbsence + "회")
-            })
-
-            $.ajax({
                 url : "selectNextWorker"
             }).done(function(response){
                 console.log(response);
@@ -302,9 +293,8 @@
                         if(response[i].workerId != '[[${nowWorker.workerId}]]') {
                             console.log(response[i].workerId);
                             $('#nextWorker').html(response[i].workerId);
-
-
                             //여기까지 0526 00:41
+                            break;
                         }
                     }
                 }

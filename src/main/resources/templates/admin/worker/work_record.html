@@ -216,7 +216,7 @@
                     }).done(function (response) {
                         if (response == '') {
                             alert('출근시간이 아닙니다.')
-                        } else {
+                        } else if(response.late == 0){
                             console.log("출근 버튼 누른 후" + response);
                             $('#label').html(response.vo.percent + '%');
                             move(response.vo.percent, response.vo.getMTime);
@@ -224,7 +224,7 @@
                             alert('출근 완료');
                             if (response.absence == 1) {
                                 alert("결근처리 되었습니다.");
-                            } else {
+                            } else if(response.late == 1){
                                 alert("지각입니다.");
                             }
                             document.getElementById('btn').style.display = "none";
