@@ -35,8 +35,8 @@
     </update>
 
     <insert id="createTodo">
-        insert into todoList(chk_no, chk_make_date, chk_contents, is_chk)
-        values(seq_todo.nextval, sysdate, #{chkContents}, 0)
+        insert into todoList(chk_no, chk_make_date, chk_contents, is_chk, process_complete)
+        values(seq_todo.nextval, sysdate, #{chkContents}, 0, 0)
     </insert>
 
 </mapper>

@@ -30,5 +30,6 @@ public class TodoVO {
     private String commentContent;
 
     private List<CheckVO> vo;
+    private int processComplete;
 
 }
