@@ -10,7 +10,7 @@
     </div>
     <div th:unless="${score eq null}">
         <div th:each="scr, i : ${score}">
-            <span th:text="${scr.ground}"></span>
+            <span th:text="${scr.groundCd}"></span>
             <span th:text="${scr.score}"></span>
             <span th:text="${scr.distance}"></span>
             <span th:text="${scr.hits}"></span>
@@ -19,6 +19,7 @@
             <span th:text="${scr.batCounts}"></span>
             <span th:text="${scr.innings}"></span>
             <span th:text="${scr.difficultyCd}"></span>
+            <convert-c-code th:data="${scr.difficultyCd}"></convert-c-code><br>
         </div>
     </div>
     <div id="piechart" style="width: 900px; height: 500px;">

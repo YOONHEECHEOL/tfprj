@@ -2,15 +2,11 @@ package com.yedam.tfprj.client.member.mapper;
 
 
 
-import com.github.pagehelper.PageHelper;
-import com.yedam.tfprj.client.member.service.GameVO;
+import com.yedam.tfprj.client.game.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
-import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Mapper
