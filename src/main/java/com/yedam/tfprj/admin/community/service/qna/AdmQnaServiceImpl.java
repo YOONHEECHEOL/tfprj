@@ -51,4 +51,9 @@ public class AdmQnaServiceImpl implements AdmQnaService {
     public void AdmQnaAnswerDelete(AdmQnaVO vo){
         map.AdmQnaAnswerDelete(vo);
     }
+
+    @Override
+    public void AdmQnaViewCount(int qNo){
+        map.AdmQnaViewCount(qNo);
+    }
 }

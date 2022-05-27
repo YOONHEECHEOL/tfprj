@@ -20,4 +20,5 @@ public interface AdmQnaService {
     public void AdmQnaAnswerInsert(AdmQnaVO vo);
 
     public void AdmQnaAnswerDelete(AdmQnaVO vo);
+    public void AdmQnaViewCount(int qNo);
 }

@@ -27,6 +27,7 @@ public class AdmNoticeController {
 
     @RequestMapping("/adm/noticeDetail")
     public String NoticeDetail(Model model, AdmNoticeVO vo) {
+        service.AdmNoticeViewCount(vo.getNNo());
         vo.setNNo(vo.getNNo());
         System.out.println(vo.getNNo());
         model.addAttribute("notice", service.AdmNoticeSelect(vo));

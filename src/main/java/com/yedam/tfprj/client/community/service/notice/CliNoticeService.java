@@ -6,4 +6,6 @@ public interface CliNoticeService {
     public List<CliNoticeVO> CliNoticeList(CliNoticeVO vo);
 
     CliNoticeVO CliNoticeSelect(CliNoticeVO vo);
+    public void CliNoticeViewCount(int qNo);
+
 }

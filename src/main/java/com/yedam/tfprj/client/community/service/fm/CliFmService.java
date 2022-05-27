@@ -18,4 +18,6 @@ public interface CliFmService {
     public void CliFmAnswerInsert(CliFmVO vo);
 
     public void CliFmAnswerDelete(CliFmVO vo);
+    public void CliFmViewCount(int fNo);
+
 }

@@ -5,10 +5,16 @@
 <mapper namespace="com.yedam.tfprj.admin.community.mapper.AdmQnaMapper">
 
     <select id="AdmQnaList" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
-        SELECT *
+        SELECT q_no, title, writer, wdate, views, details
         FROM qna_board
         ORDER BY q_no ASC
     </select>
+
+    <update id="AdmQnaViewCount">
+        UPDATE qna_board
+        SET VIEWS = VIEWS + 1
+        WHERE Q_NO = #{qNo}
+    </update>
 
     <select id="AdmReplyList" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
         SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, Q.Q_NO

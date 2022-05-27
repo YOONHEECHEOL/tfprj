@@ -12,8 +12,9 @@
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
 
+    <script src="/ckeditor/ckeditor.js"></script>
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -42,7 +43,7 @@
 
                 <div class="mb-3">
                     <label for="details">내용</label>
-                    <textarea class="form-control" rows="5" name="details" id="details"
+                    <textarea class="form-control" rows="20" name="details" id="details"
                               placeholder="내용을 입력해 주세요"></textarea>
                 </div>
 
@@ -58,6 +59,11 @@
 
         </div>
     </article>
+    <script>
+        CKEDITOR.replace("details",{
+            filebrowserUploadUrl : "/cli/imageUpload"
+        });
+    </script>
 </th:block>
 </body>
 </html>

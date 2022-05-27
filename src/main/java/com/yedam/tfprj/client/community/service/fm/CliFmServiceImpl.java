@@ -50,4 +50,8 @@ public class CliFmServiceImpl implements CliFmService{
     public void CliFmAnswerDelete(CliFmVO vo){
         map.CliFmAnswerDelete(vo);
     }
+    @Override
+    public void CliFmViewCount(int fNo){
+        map.CliFmViewCount(fNo);
+    }
 }
