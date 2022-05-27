@@ -10,4 +10,6 @@ public interface TodoService {
 
     public TodoVO selectCheckListInfo(int chkNo);
     public int todoFileUpload(TodoVO vo);
+    public int chkAddComment(TodoVO vo);
+    public int createTodo(TodoVO vo);
 }

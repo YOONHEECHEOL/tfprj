@@ -6,6 +6,7 @@
     <select id="bringTodayList" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
         SELECT * FROM TODOLIST
         WHERE TO_CHAR(CHK_MAKE_DATE, 'YY-MM-DD') = TO_CHAR(SYSDATE, 'YY-MM-DD')
+        ORDER BY CHK_NO
     </select>
 
     <update id="chkNumUpdate">
@@ -26,6 +27,17 @@
         Chk_Pic_FilePath = #{chkPicFilePath}
         where chk_no = #{chkNo}
     </update>
+
+    <update id="chkAddComment">
+        update todoList
+        SET comment_content = #{commentContent}
+        where chk_no = #{chkNo}
+    </update>
+
+    <insert id="createTodo">
+        insert into todoList(chk_no, chk_make_date, chk_contents, is_chk)
+        values(seq_todo.nextval, sysdate, #{chkContents}, 0)
+    </insert>
 
 </mapper>
 

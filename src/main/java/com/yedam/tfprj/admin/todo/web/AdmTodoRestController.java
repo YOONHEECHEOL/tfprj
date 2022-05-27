@@ -40,4 +40,16 @@ public class AdmTodoRestController {
         return service.selectCheckListInfo(chkNo);
     }
 
+    @RequestMapping("/adm/chkAddComment")
+    public TodoVO chkAddComment(TodoVO vo){
+        service.chkAddComment(vo);
+        return vo;
+    }
+
+    @RequestMapping("/adm/createTodo")
+    public List<TodoVO> createTodo(TodoVO vo){
+        service.createTodo(vo);
+        return service.bringTodayList();
+    }
+
 }

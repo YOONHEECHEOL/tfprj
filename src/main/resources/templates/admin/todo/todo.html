@@ -24,6 +24,7 @@
                     <tbody>
                     </tbody>
                 </table>
+                <div id="toDoListCreate"></div>
             </div>
         </div>
     </div>
@@ -31,6 +32,36 @@
     <script>
             let chkCnt = 0;
             let chkChk = 0;
+            let count = 0;
+
+            function makeCheckListNum(){
+                count++
+                return count;
+            }
+
+            function makeTr(response){
+                let checked = '';
+                let textDeco = '';
+                if (response.isChk == 1) {
+                    checked = 'checked';
+                    textDeco = 'text-decoration:' + 'line-through';
+                }
+                content = "<tr>";
+                content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList">` + "</td>"
+                content += "<td>" + makeCheckListNum() + "</td>"
+                content += `<td style=${textDeco}; class="${response.chkPicFileName}">` + response.chkContents + "</td>"
+                content += "<td><button type='submit' class='processComplete'>해결</button></td>"
+                content += `<td><button type='submit' onclick='openPannel()' chk-no='${response.chkNo}'>상세정보</button></td>`
+                content += "</tr>"
+                $('tbody').append(content)
+            }
+
+            function processComplete(){
+                $('tbody').on('click', '.processComplete', function(){
+                    let chkNo = $(this).parents('td').parents('tr').find("input").attr('id');
+                    alert(chkNo);
+                })
+            }
 
             function makeContent() {
                 $.ajax({
@@ -39,22 +70,25 @@
                     console.log(response);
                     var content = "";
                     for (let i = 0; i < response.length; i++) {
-                        let checked = '';
-                        let textDeco = '';
-                        if (response[i].isChk == 1) {
-                            checked = 'checked';
-                            textDeco = 'text-decoration:' + 'line-through';
-                        }
-                        content = "<tr>";
-                        content += `<td><input type='checkbox' value="${response[i].isChk}" id="${response[i].chkNo}" ${checked} class="checkList">` + "</td>"
-                        content += "<td>" + response[i].chkNo + "</td>"
-                        content += `<td style=${textDeco} class="${response[i].chkPicFileName}">` + response[i].chkContents + "</td>"
-                        content += "<td><button type='submit'>해결여부</button></td>"
-                        content += `<td><button type='submit' onclick='openPannel()' chk-no='${response[i].chkNo}'>상세정보</button></td>`
-                        content += "</tr>"
-                        $('tbody').append(content)
-
+                        makeTr(response[i])
                     }
+                })
+                let todoMake = "";
+                todoMake = "<div>"
+                todoMake += "<input id='toDoInput' type='text' width='1000px'>"
+                todoMake += "<button onclick='createToDo()'>TODO 추가</button>"
+                todoMake += "</div>"
+                $('#toDoListCreate').prepend(todoMake);
+            }
+
+            function createToDo(){
+                console.log($('#toDoInput').val());
+                $.ajax({
+                    url : "createTodo",
+                    data : {chkContents : $('#toDoInput').val()}
+                }).done(function(response){
+                    console.log(response);
+                    makeTr(response[response.length-1])
                 })
             }
 
@@ -95,19 +129,139 @@
 
                     pannel.innerHTML = `
                     <form method="post" action="/adm/todoFileUpload" enctype="multipart/form-data">
-                        <h4>${response.chkNo}</h4>
                         <h3>title</h3>
                         <h1>${response.chkContents}</h1>
                         <input type="hidden" value="${response.chkNo}" name="chkNo">
                         <input type="file" name="file" onchange="setThumbnail(event);"><br><br>
                         <div id="image_container"></div>
-                        <div id="image"><img id="realImage"  th:src="@{'/images/adm/'  + ${response.chkPicFileName}}" style="width:250px; height:300px;"/></div>
+                        <div id="image"><img id="realImage"  src="/images/adm/${response.chkPicFileName}" style="width:250px; height:300px;"/></div>
                         <button type="submit" class="btn button-primary" style="float: right;">업로드</button>
                     </form>
+                    <br><br><br>
+
+                    <h2><b>Comment</b></h2>
+                    <div id="allComment">
+                        <div>
+                            댓글 <input type="text" id="comment">
+                        </div>
+                        <button type="submit" id="commentBtn" onclick="ajaxComment(${response.chkNo})">댓글달기</button>
+                    </div>
+
+                    <!--  댓글 보이는 영역 -->
+                    <div id="commentArea" style="display: none">
+                        <h3 id="commentPlace"></h3>
+                        <button onclick="ajaxCommentFix(${response.chkNo}); ">수정</button>
+                        <button onclick="ajaxCommentDelete(${response.chkNo})">삭제</button>
+                    </div>
+
+                    <!--  댓글 수정 영역 -->
+                    <div id="commentUpdateArea" style="display: none">
+                        <input id="updateComment" type="text">
+                        <button id="updateCommentBtn">입력</button>
+                    </div>
                 `
+                    ThumbnailNull();
+                    readComment(response.commentContent);
                 })
 
+
                 tg.append(pannel)
+            }
+
+            //썸네일이 설정되있지 않으면 태그를 숨겨서 엑박사진이 안보임.
+            function ThumbnailNull(){
+                if($('#realImage').attr('src').includes('null') == true){
+                    $('#image').hide();
+                }
+            }
+
+            //체크했을 때 ajax로 세션아이디, 체크리스트 번호, 체크박스 상태를 ajax로 전송
+            function ajaxUpdate(chkNo, isChk){
+                $.ajax({
+                    url: "chkNumUpdate",
+                    data: {
+                        chkNo: chkNo,
+                        isChk: isChk,
+                        workerId: '[[${session.workerId}]]'
+                    }
+                    // isChk가 0일때는 workerId도 null로 바꾸기
+                }).done(function (response) {
+                    console.log(response);
+                })
+            }
+
+            //체크리스트 상세정보에서 댓글달수있게.
+            function ajaxComment(chkNo){
+                $.ajax({
+                    url : "chkAddComment",
+                    data : {
+                        chkNo : chkNo,
+                        commentContent : $('#comment').val()
+                    }
+                }).done(function(response){
+                    $('#comment').val("");
+                    //div에 return받은 댓글 넣어주기.
+                    console.log(response);
+                    $('#commentPlace').html(response.commentContent);
+                    $('#allComment').hide();
+                    $('#commentArea').css('display', 'block');
+                })
+            }
+
+            //상세조회 페이지에서 댓글을 달았으면, 댓글 창은 사라지고 댓글만 보이기.
+            function readComment(comment){
+                if(comment != null){
+                    $('#commentArea').css('display', 'block');
+                    $('#commentPlace').html(comment);
+                    $('#allComment').hide();
+                }
+            }
+
+            //수정 버튼을 눌렀을때 입력창이 표시되고, 입력한 값을 전달해 기존의 댓글내용을 바꿔줌.
+            //댓글 추가와 쿼리가 같기때문에 똑같은 url을 사용
+            function ajaxCommentFix(chkNo){
+                //수정 버튼 눌렀을때 인풋박스 열고닫기
+                $('#comment').val("");
+                if($('#commentUpdateArea').css("display") == "none"){
+                    $('#commentUpdateArea').css('display', 'block');
+                }else{
+                    $('#commentUpdateArea').css('display', 'none');
+                }
+
+                $('#updateCommentBtn').on('click', function(){
+                    $.ajax({
+                        url : "chkAddComment",
+                        data : {chkNo : chkNo,
+                                commentContent : $('#updateComment').val()}
+                    }).done(function(response){
+                        $('#updateComment').val("");
+                        console.log(response);
+                        $('#commentArea').css('display', 'block');
+                        $('#commentPlace').html(response.commentContent);
+                    })
+                })
+            }
+
+            function ajaxCommentDelete(chkNo){
+                $('#updateContent').val("");
+                if (!confirm("삭제하시겠습니까?")) {
+                    // 취소(아니오) 버튼 클릭 시 이벤트
+                } else {
+                    $.ajax({
+                        url : "chkAddComment",
+                        data : {
+                            chkNo : chkNo,
+                            commentContent : null
+                        }
+                    }).done(function(response){
+                        console.log(response);
+                        $('#commentArea').hide();
+                        //$('#commentUpdateArea').hide();
+                        $('#allComment').css('display', 'block');
+                        $('#commentUpdateArea').hide();
+                    })
+                    // 확인(예) 버튼 클릭 시 이벤트
+                }
             }
 
             // 파일 업로드 후 썸네일보기
@@ -127,31 +281,26 @@
             function checkContent() {
                 let chkNo = '';
                 let isChk = '';
-                let textDeco = '';
+                let textContents = '';
                 $('tbody').on('click', '.checkList', function () {
-                    textDeco = $(this);
                     if ($(this).is(":checked") == true) {
-                        console.log($(this).parents("td").parents("tr").find("td:eq(3)").attr('class'));
-                        //5월 26일 내일
-                        chkNo = $(this).attr('id');
-                        isChk = "1" // 체크됐을때
-                        $(this).parents("td").parents("tr").find("td:eq(2)").css('text-decoration', 'line-through');
+                        textContents = $(this).parents("td").parents("tr").find("td:eq(2)").attr('class')
+                        console.log(textContents);
+                        if(textContents.indexOf('null') == 0){
+                            alert('먼저 사진을 등록해주세요.')
+                            $($(this)).prop("checked", false);
+                        }else{
+                            chkNo = $(this).attr('id');
+                            isChk = "1" // 체크됐을때
+                            $(this).parents("td").parents("tr").find("td:eq(2)").css('text-decoration', 'line-through');
+                        }
                     } else {
                         chkNo = $(this).attr('id');
                         isChk = "0" // 체크 해제됐을때
                         $(this).parents("td").parents("tr").find("td:eq(2)").css('text-decoration', '');
                     }
-                    $.ajax({
-                        url: "chkNumUpdate",
-                        data: {
-                            chkNo: chkNo,
-                            isChk: isChk,
-                            workerId: '[[${session.workerId}]]'
-                        }
-                        // isChk가 0일때는 workerId도 null로 바꾸기
-                    }).done(function (response) {
-                        console.log(response);
-                    })
+                    ajaxUpdate(chkNo, isChk);
+
                 })
 
 
@@ -160,6 +309,7 @@
 
             makeContent();
             checkContent();
+            processComplete();
     </script>
 </th:block>
 </body>

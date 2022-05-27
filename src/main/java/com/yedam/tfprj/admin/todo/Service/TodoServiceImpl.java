@@ -31,4 +31,14 @@ public class TodoServiceImpl implements TodoService{
         return mapper.todoFileUpload(vo);
     }
 
+    @Override
+    public int chkAddComment(TodoVO vo) {
+        return mapper.chkAddComment(vo);
+    }
+
+    @Override
+    public int createTodo(TodoVO vo) {
+        return mapper.createTodo(vo);
+    }
+
 }

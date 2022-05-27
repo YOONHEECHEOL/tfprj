@@ -11,4 +11,7 @@ public interface TodoMapper {
     public int chkNumUpdate(int chkNo, int isChk, String workerId);
     public TodoVO selectCheckListInfo(int chkNo);
     public int todoFileUpload(TodoVO vo);
+
+    public int chkAddComment(TodoVO vo);
+    public int createTodo(TodoVO vo);
 }
