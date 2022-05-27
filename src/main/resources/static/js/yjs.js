@@ -84,7 +84,7 @@ class tH2 extends HTMLElement {
   constructor() {
     super();
 
-    const shadow = this.attachShadow({mode:"open"})
+    const shadow = this.attachShadow({mode: "open"})
 
     const box = document.createElement('div')
     box.setAttribute('class', 'h2__box')
@@ -140,7 +140,7 @@ class convertCommonCode extends HTMLElement {
 
     function convertCode(data) {
       fetch('http://localhost:18000/convertCommonCode?code=' + data, {
-          method: 'get'
+        method: 'get'
       })
         .then(res => res.json())
         .then(res => {
@@ -149,7 +149,7 @@ class convertCommonCode extends HTMLElement {
 
           let tag = document.createElement(tagCheck);
           tag.setAttribute('class', 'converted');
-          if(tagCheck != 'option') {
+          if (tagCheck != 'option') {
             tag.innerText = res.codeValue;
           } else {
             tag.setAttribute('value', res.codeValue);
@@ -167,7 +167,7 @@ class convertCommonCode extends HTMLElement {
   constructor() {
     super();
 
-    const shadow = this.attachShadow({mode:'open'});
+    const shadow = this.attachShadow({mode: 'open'});
 
   }
 }
@@ -186,27 +186,19 @@ class teamMembers extends HTMLElement {
         .then(res => {
           let ul = document.createElement('ul')
           ul.setAttribute('id', 'et')
-
+          console.log(res)
           res.forEach(res => {
-
             let output = document.createElement('li');
-            let inner = document.createElement('div')
-            inner.innerText = res.memberId;
-            output.append(inner);
+            let memberId = document.createElement('div')
+            memberId.innerText = res.memberId;
+
+            output.append(memberId);
             ul.append(output);
 
           })
 
           root.append(ul);
 
-
-
-          let eventTarget = root.getElementById('et');
-          eventTarget.addEventListener('click', (r) => {
-            console.log(r.composedPath()[0].innerText)
-            // doFnc(r.composedPath()[0].innerText)
-            // return r.composedPath()[0].innerText;
-          })
         })
     }
 
@@ -241,12 +233,223 @@ class teamMembers extends HTMLElement {
   }
 }
 
+// 팀원 수 불러오는 태그
+class teamMembersCnt extends HTMLElement {
+  connectedCallback() {
+    // attribute로 teamId 받기
+    let teamId = this.getAttribute('teamId');
+    let root = this.shadowRoot;
 
-customElements.define('t-h1',tH1)
-customElements.define('t-h2',tH2)
-customElements.define('convert-c-code',convertCommonCode)
+    function getMemberList(teamId) {
+      // memberList 조회
+      fetch('/cli/selectTeamMembers?teamId=' + teamId)
+        .then(res => res.json())
+        .then(res => {
+          let cnt = document.createElement('span');
+          let memberCount = 0;
+          res.forEach(res => {
+            memberCount += 1;
+          })
+
+          cnt.innerText = memberCount;
+          root.append(cnt);
+        })
+    }
+
+    getMemberList(teamId);
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({mode: 'open'});
+
+    let style = document.createElement('style')
+    style.innerText = `
+      ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+      li * {
+        font-family: "esM";
+        font-size: 1.8rem;
+      }
+    `
+
+    shadow.append(style)
+
+  }
+}
+
+// team info 불러오는 tag
+class teamInfo extends HTMLElement {
+
+  connectedCallback() {
+
+    // attribute로 teamId 받기
+    let teamId = this.getAttribute('teamId');
+    let leagueId = this.getAttribute('leagueId');
+    let root = this.shadowRoot;
+
+    const getLeagueApplyTeam = (teamId) => {
+      fetch('/adm/getLeagueApplyTeam', {
+        method: 'post',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          teamId: teamId,
+          leagueId: leagueId
+        })
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          let cnt = 1;
+          res.leagueApplyTeam.forEach(t => {
+            let div = document.createElement('div')
+            div.innerHTML = `
+              <div class="info">
+                <input type="hidden" value="${t.teamId}">                              
+                <input type="hidden" value="${t.isApprove}">
+                <span>${cnt}</span>
+                <span>[${t.teamName}]</span>
+                <span>팀장 : ${t.leader}</span>
+                <span>팀원 수 : <team-members-cnt teamId="${t.teamId}"></team-members-cnt></span>                           
+                <convert-c-code data="${t.isApprove}"></convert-c-code>                       
+              </div>
+            `
+            cnt++;
+            root.append(div)
+          })
+        })
+    }
+    getLeagueApplyTeam(teamId);
+
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({mode: 'open'});
+
+    let style = document.createElement('style');
+    style.innerHTML = `
+      span {
+        font-family: "esL";
+        font-size: 1.8rem;
+        color: #222;
+        line-height: 3.2rem; 
+      }
+      team-members-cnt {
+        font-family: "esM";
+        font-size: 1.8rem;
+        color: #222;
+      }
+      .info {
+        display: flex;
+        justify-content: space-around;
+        pointer-events: none;
+      }
+      convert-c-code {
+        font-family: "esM";
+        font-size: 1.8rem;
+        color: #222;
+      }
+    `
+
+    shadow.append(style)
+  }
+
+}
+
+// team info 불러오는 tag
+class teamApproveInfo extends HTMLElement {
+
+  connectedCallback() {
+
+    // attribute로 teamId 받기
+    let teamId = this.getAttribute('teamId');
+    let leagueId = this.getAttribute('leagueId');
+    let root = this.shadowRoot;
+
+    const getLeagueApplyTeam = (teamId) => {
+      fetch('/adm/getLeagueApplyTeam', {
+        method: 'post',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          teamId: teamId,
+          leagueId: leagueId
+        })
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          let cnt = 1;
+          res.leagueApplyApproveTeam.forEach(t => {
+            let div = document.createElement('div')
+            div.innerHTML = `
+              <div class="info">
+                <input type="hidden" value="${t.teamId}">                              
+                <input type="hidden" value="${t.isApprove}">
+                <span>${cnt}</span>
+                <span>[${t.teamName}]</span>
+                <span>팀장 : ${t.leader}</span>
+                <span>팀원 수 : <team-members-cnt teamId="${t.teamId}"></team-members-cnt></span>                           
+                <convert-c-code data="${t.isApprove}"></convert-c-code>                       
+              </div>
+            `
+            cnt++;
+            root.append(div)
+          })
+        })
+    }
+    getLeagueApplyTeam(teamId);
+
+  }
+
+  constructor() {
+    super();
+
+    const shadow = this.attachShadow({mode: 'open'});
+
+    let style = document.createElement('style');
+    style.innerHTML = `
+      span {
+        font-family: "esL";
+        font-size: 1.8rem;
+        color: #222;
+        line-height: 3.2rem; 
+      }
+      team-members-cnt {
+        font-family: "esM";
+        font-size: 1.8rem;
+        color: #222;
+      }
+      .info {
+        display: flex;
+        justify-content: space-around;
+        pointer-events: none;
+      }
+      convert-c-code {
+        font-family: "esM";
+        font-size: 1.8rem;
+        color: #222;
+      }
+    `
+
+    shadow.append(style)
+  }
+
+}
+
+
+customElements.define('t-h1', tH1)
+customElements.define('t-h2', tH2)
+customElements.define('convert-c-code', convertCommonCode)
 customElements.define('team-members', teamMembers)
-
+customElements.define('team-members-cnt', teamMembersCnt)
+customElements.define('team-info', teamInfo)
+customElements.define('team-info-approve', teamApproveInfo)
 
 
 // Admin 관리자
@@ -326,5 +529,5 @@ class aH1 extends HTMLElement {
   }
 }
 
-customElements.define('a-h1',aH1)
+customElements.define('a-h1', aH1)
 

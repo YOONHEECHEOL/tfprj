@@ -14,6 +14,12 @@ public interface LeagueService {
     public void insertLeague(LeagueVO leagueVO);
 
     //getLeagueApply
-    public AdmLeagueServiceVO getLeagueApply();
+    public AdmLeagueServiceVO getLeagueApply(int leagueId);
+
+    // getLeagueApplyTeam
+    public AdmLeagueServiceVO getLeagueApplyTeam(int teamId, int leagueId);
+
+    // setLeagueApplyTeamStatus
+    public void setLeagueApplyTeamStatus(int teamId, int leagueId);
 
 }

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 @Controller
 public class AdmLeagueController {
@@ -44,10 +47,25 @@ public class AdmLeagueController {
     // league apply table 에서 데이터 뽑기
     @RequestMapping("/adm/getLeagueApply")
     @ResponseBody
-    public AdmLeagueServiceVO getLeagueApply() {
+    public AdmLeagueServiceVO getLeagueApply(int leagueId) {
 
-        return null;
+        return admLeagueService.getLeagueApply(leagueId);
     }
 
+    // league 신청한 team list 받기
+    @RequestMapping(value = "/adm/getLeagueApplyTeam", method = RequestMethod.POST)
+    @ResponseBody
+    public AdmLeagueServiceVO getLeagueApplyTeam(@RequestBody Map<String, String> param) {
+
+        return admLeagueService.getLeagueApplyTeam(Integer.parseInt(param.get("teamId")), Integer.parseInt(param.get("leagueId")));
+    }
+
+    // league apply status 변경
+    @RequestMapping(value = "/adm/setLeagueApplyTeamStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public  void setLeagueApplyTeamStatus(@RequestBody Map<String, String> param) {
+
+        admLeagueService.setLeagueApplyTeamStatus(Integer.parseInt(param.get("teamId")), Integer.parseInt(param.get("leagueId")));
+    }
 
 }

@@ -1,7 +1,9 @@
 package com.yedam.tfprj.admin.league.service;
 
 import com.yedam.tfprj.admin.league.mapper.AdmLeagueMapper;
+import com.yedam.tfprj.client.league.service.LeagueApplyVO;
 import com.yedam.tfprj.client.league.service.LeagueVO;
+import com.yedam.tfprj.client.team.service.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,11 +42,45 @@ public class AdmLeagueServiceImpl implements LeagueService{
     }
 
     @Override
-    public AdmLeagueServiceVO getLeagueDetail(int lno) {
+    public AdmLeagueServiceVO getLeagueDetail(int leagueId) {
 
         AdmLeagueServiceVO admLeagueServiceVO = new AdmLeagueServiceVO();
 
-        admLeagueServiceVO.leagueVO = admLeagueMapper.getLeagueDetail(lno);
+        List<TeamVO> approveTeam = new ArrayList<>();
+        List<TeamVO> applyTeam = new ArrayList<>();
+
+        try {
+            admLeagueServiceVO.leagueVO = admLeagueMapper.getLeagueDetail(leagueId);                    }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // admLeagueMapper.getLeagueApply(leagueId) 리그 지원한 팀 전체 조회
+        List<TeamVO> list = admLeagueMapper.getLeagueApplyTeam(leagueId);
+
+        list.forEach(team -> {
+            // team is_approve set
+
+            int isApprove = 1801;
+            try {
+                isApprove = Integer.parseInt(admLeagueMapper.getIsApprove(team.getTeamId(), leagueId));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            team.setIsApprove(isApprove);
+
+            // team is_approve 가 1805 인지 체크
+            if(admLeagueMapper.getLeagueApplyTeamIsApprove(team.getTeamId(), leagueId) > 0) {
+                // 리그 참가 승인된 팀
+                approveTeam.add(team);
+            } else {
+                applyTeam.add(team);
+            }
+
+            admLeagueServiceVO.setLeagueApplyApproveTeam(approveTeam);
+            admLeagueServiceVO.setLeagueApplyTeam(applyTeam);
+        });
 
         return admLeagueServiceVO;
     }
@@ -70,9 +106,48 @@ public class AdmLeagueServiceImpl implements LeagueService{
     }
 
     @Override
-    public AdmLeagueServiceVO getLeagueApply() {
+    public AdmLeagueServiceVO getLeagueApply(int leagueId) {
 
+        AdmLeagueServiceVO admLeagueServiceVO = new AdmLeagueServiceVO();
+        admLeagueServiceVO.setLeagueApplyVOList(admLeagueMapper.getLeagueApply(leagueId));
 
-        return null;
+        return admLeagueServiceVO;
+    }
+
+    @Override
+    public AdmLeagueServiceVO getLeagueApplyTeam(int teamId, int leagueId) {
+
+        AdmLeagueServiceVO admLeagueServiceVO = new AdmLeagueServiceVO();
+
+        // league apply is_approve 가 1801 인 팀과 1803 인 팀 분리
+        List<TeamVO> list = admLeagueMapper.getLeagueApplyTeam(leagueId);
+
+        List<TeamVO> approveTeam = new ArrayList<>();
+        List<TeamVO> applyTeam = new ArrayList<>();
+
+        list.forEach(team -> {
+            // teamVO 에 is_approve 상태를 league_apply 테이블에서 조회해서 넣음
+            team.setIsApprove(Integer.parseInt(admLeagueMapper.getIsApprove(team.getTeamId(), leagueId)));
+            if(admLeagueMapper.getLeagueApplyTeamIsApprove(team.getTeamId(), leagueId) > 0) {
+                // 해당 team은 승인된 팀입니다.
+//              league apply is_approve = 1805
+                approveTeam.add(team);
+            } else {
+                // 해당 team은 미승인 팀입니다.
+//             league apply is_approve = 1801
+                applyTeam.add(team);
+            }
+
+        });
+
+        admLeagueServiceVO.setLeagueApplyApproveTeam(approveTeam);
+        admLeagueServiceVO.setLeagueApplyTeam(applyTeam);
+
+        return admLeagueServiceVO;
+    }
+
+    @Override
+    public void setLeagueApplyTeamStatus(int teamId, int leagueId) {
+        admLeagueMapper.setLeagueApplyTeamStatus(teamId, leagueId);
     }
 }

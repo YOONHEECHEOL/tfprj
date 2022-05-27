@@ -11,5 +11,6 @@ public class TeamVO {
     private int totalGameCnt;
     private String teamName;
     private int ROWNUM;
+    private int isApprove;
 
 }

@@ -281,6 +281,7 @@ main.contents {
     background: #fff;
     border: .1rem solid #bbb;
     border-radius: 1.6rem;
+    cursor: pointer;
 }
 .c-button.active {
     background: #3765C7;
@@ -336,3 +337,23 @@ main.contents {
 #admLeagueList td * {
     pointer-events: none;
 }
+
+/* admin background color 삭제 */
+#wrapper #content-wrapper {
+    background: #fff !important;
+}
+
+/* admin font size 설정 */
+.navbar-nav * {
+    font-size: 1.4rem !important;
+}
+
+/* adm leauge detail list */
+.a-list > li {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: .4rem 0;
+}
+/*.a-list > li div,  team-info  {*/
+/*    pointer-events: none;*/
+/*}*/

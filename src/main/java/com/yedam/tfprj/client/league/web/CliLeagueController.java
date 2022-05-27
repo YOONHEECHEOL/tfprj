@@ -44,21 +44,25 @@ public class CliLeagueController {
         return "client/league/league_apply";
     }
 
+    // 미사용
     @RequestMapping("/cli/leagueApplyDone")
     public String leagueApplyDone() {
         return "client/league/league_apply_done";
     }
 
+    // 미사용
     @RequestMapping("/cli/leaguePay")
     public String leaguePay() {
         return "client/league/league_pay";
     }
 
+    // 미사용
     @RequestMapping("/cli/leaguePayDone")
     public String leaguePayDone() {
         return "client/league/league_pay_done";
     }
 
+    // 미사용
     @RequestMapping("/cli/leaguePlan")
     public String leaguePlan() {
         return "client/league/league_plan";
