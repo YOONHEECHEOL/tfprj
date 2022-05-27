@@ -44,7 +44,7 @@
         <input th:type="hidden" th:id="fNo" th:name="fNo">
     </form>
 
-    <button onclick="location.href = '/cli/fmWrite'" style="float: right">작성</button>
+    <button onclick="location.href = '/cli/fmWrite'" style="float: right" th:if="${session.memberId ne null}">작성</button>
     <button onclick="location.href = '/'" style="float: right">홈</button>
     <!-- 페이징 -->
     <nav>

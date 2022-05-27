@@ -76,7 +76,7 @@
 
     <h1>답글</h1>
 
-    <form method="post" action="/cli/fmAnswerInsert">
+    <form method="post" action="/cli/fmAnswerInsert" th:if="${session.memberId ne null}">
         <div class="mb-3">
             <label for="cdetails">내용</label>
             <textarea class="form-control" rows="5" name="cdetails" id="cdetails"

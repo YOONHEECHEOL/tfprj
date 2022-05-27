@@ -76,7 +76,7 @@
 
 <h1>답글</h1>
 
-<form method="post" action="/cli/qnaAnswerInsert">
+<form method="post" action="/cli/qnaAnswerInsert" th:if="${session.memberId ne null}">
     <div class="mb-3">
         <label for="cdetails">내용</label>
         <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
@@ -110,7 +110,7 @@
                     <td th:text="${re.cdate}"></td>
                 </tr>
                 <tr>
-                    <td><button type="button" style="float: right" th:onclick="|location.href = '@{/cli/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제</button></td>
+                    <td><button type="button" th:if="${session.memberId == re.cwriter}" style="float: right" th:onclick="|location.href = '@{/cli/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제</button></td>
                 </tr>
             </div>
             </tbody>

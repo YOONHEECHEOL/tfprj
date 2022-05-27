@@ -43,7 +43,7 @@
     </table>
     <input th:type="hidden" th:id="qNo" th:name="qNo">
 </form>
-<button onclick="location.href = '/cli/qnaWrite'" style="float: right">작성</button>
+<button onclick="location.href = '/cli/qnaWrite'" style="float: right" th:if="${session.memberId ne null}">작성</button>
 <button onclick="location.href = '/'" style="float: right">홈</button>
     <!-- 페이징 -->
     <nav>
