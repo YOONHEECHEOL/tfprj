@@ -94,6 +94,7 @@
 
         //취소버튼 클릭 시 Modal 닫기
         $("#cancelBtn").on("click", function () {
+
             $(".modal").fadeOut();
             cliSliderNavBg.classList.remove('active');
         })
@@ -124,7 +125,7 @@
             });
             console.log(tdArray);
             for(list of tdArray){
-                makeAdd(list);
+               makeAdd(list);
             }
             $(".modal").fadeOut();
             cliSliderNavBg.classList.remove('active');
@@ -151,8 +152,8 @@
             return tr;
         }
         //팀원추가 결과 draw
-        function makeAdd(list){
-            $("#addMem").prepend(`<span>${list.memberId}</span><br>`)
+         function makeAdd(list){
+            // $("#addMem").prepend(`<span>${list.memberId}</span><br>`)
 
             insertTeamMember(list.teamName, list.teamLeader, list.memberId, list.teamId);
         }
@@ -161,11 +162,7 @@
         // 메세지 테이블에 팀 메세지를 입력하는 함수
         // 각각의 메세지가 입력되야하는 시점에서 실행해주세요
         function insertTeamMember(teamName, teamLeader, memberId, teamId) {
-            // let teamName = document.querySelector('#teamName').innerText
-            // let teamLeader = document.querySelector('#teamLeader').innerText
-
             console.log(teamName + ' ' + teamLeader + ' ' + memberId + ' ' + teamId)
-
             fetch('/msg/insertTeamMsg', {
                 method: 'post',
                 headers: {'Content-type': 'application/json'},

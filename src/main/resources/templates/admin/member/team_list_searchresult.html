@@ -29,7 +29,7 @@
                     </tr>
                     </thead>
                     <tbody th:id="teamBody">
-                    <tr th:each="list:${teamInfo.list}">
+                    <tr th:each="list:${teamSearchInfo.list}">
                         <td>[[${list.ROWNUM}]]</td>
                         <td>[[${list.teamName}]]</td>
                         <td>[[${list.leader}]]</td>
@@ -45,17 +45,18 @@
                 <nav>
                     <ul>
                         <!-- getPrePage : 이전 페이지 -->
-                        <li th:classappend="${teamInfo.getPrePage() == 0} ? 'disabled'">
-                            <a th:href="@{teamList(pageNum=${teamInfo.getPrePage()})}">Previous</a>
+                        <li th:classappend="${teamSearchInfo.getPrePage() == 0} ? 'disabled'">
+                            <a th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${teamSearchInfo.getPrePage()})}">Previous</a>
                         </li>
                         <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                        <li th:each="page: ${#numbers.sequence(teamInfo.getNavigateFirstPage(), teamInfo.getNavigateLastPage())}"
-                            th:classappend="${page == teamInfo.getPageNum()} ? 'active'">
-                            <a th:text="${page}" th:href="@{teamList(pageNum=${page})}"></a>
+                        <li th:each="page: ${#numbers.sequence(teamSearchInfo.getNavigateFirstPage(), teamSearchInfo.getNavigateLastPage())}"
+                            th:classappend="${page == teamSearchInfo.getPageNum()} ? 'active'">
+                            <a th:text="${page}"
+                               th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${page})}"></a>
                         </li>
                         <!-- getPrePage : 다음 페이지 -->
-                        <li th:classappend="${teamInfo.getNextPage() == 0} ? 'disabled'">
-                            <a th:href="@{teamList(pageNum=${teamInfo.getNextPage()})}">Next</a>
+                        <li th:classappend="${teamSearchInfo.getNextPage() == 0} ? 'disabled'">
+                            <a th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${teamSearchInfo.getNextPage()})}">Next</a>
                         </li>
                     </ul>
                 </nav>

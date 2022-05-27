@@ -1,6 +1,7 @@
 package com.yedam.tfprj.client.member.service;
 
 
+import com.yedam.tfprj.client.game.service.GameVO;
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,6 +131,22 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberVO> teamMember(MemberVO vo) {
         List<MemberVO> list = memberMapper.teamMember(vo);
         return list;
+    }
+
+    @Override
+    public void reasonUpdate(MemberVO vo) {
+        if(vo.getBlacklistYn() == 1){
+            vo.setBlacklistReason("기물파손");
+        }else{
+            vo.setBlacklistReason("불량한 게임 태도");
+        }
+        memberMapper.reasonUpdate(vo);
+    }
+
+    @Override
+    public List<MemberVO> admSearchMember(MemberVO vo) {
+        System.out.println(vo);
+        return memberMapper.admSearchMember(vo);
     }
 
 

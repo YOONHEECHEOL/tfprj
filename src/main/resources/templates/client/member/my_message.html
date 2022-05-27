@@ -28,21 +28,32 @@
         <span th:if="${m.getIsMessageCd() == 1006}">팀 msg</span>
         <!-- -->
 
-<!--        <msg th:msg-type="${m.codeName}" ></msg>-->
-        <span  th:text="${m.getMessageContents()}"></span>
-        <span th:text="${m.getTemp()}"></span>
-
+        <!--        <msg th:msg-type="${m.codeName}" ></msg>-->
+        <span th:text="${m.getMessageContents()}"></span>
+        <input type="hidden" th:id="teamId" th:value="${m.getTemp()}">
+        <input type="hidden" th:id="memberId" th:value="${session.memberId}">
 
         <!-- isChk 가 0 이면  -->
         <div class="button__box" th:if="${m.getIsChk() == 0}">
-            <button class="c-button">거절</button>
-            <button class="c-button">수락</button>
+            <button id="noBtn">거절</button>
+            <button id="okBtn">수락</button>
         </div>
         <!-- isChk 가 1(읽음)이면  -->
 
     </div>
 
     <script>
+        $("#okBtn").on("click", function () {
+            var ti = $("#teamId").val();
+            var mi = $("#memberId").val();
+            $.ajax({
+                url: "/cli/intoTeam",
+                data: {teamId: ti, memberId: mi}
+            }).done(function () {
+                console.log("클릭");
+                location.href = "/cli/myTeam";
+            })
+        })
 
         fetch('/msg/team', {
             method: 'post'
@@ -51,9 +62,9 @@
             .then(res => console.log(res))
 
 
-
     </script>
 
 
-</th:block>>
+</th:block>
+>
 </html>

@@ -64,13 +64,17 @@ public class CliMemberController {
     @RequestMapping("/cli/myMessage")
     public String cliMyMessage(HttpServletRequest request, Model model) {
 
-        List<MessageVO> list = new ArrayList<>();
-
-        list = msgMapper.getMessage(request.getSession().getAttribute("memberId").toString());
+        List<MessageVO> list = msgMapper.getMessage(request.getSession().getAttribute("memberId").toString());
 
         model.addAttribute("msg", list);
         System.out.println(list);
         return "client/member/my_message";
+    }
+
+    @RequestMapping("/cli/intoTeam")
+    @ResponseBody
+    public void cliIntoTeam(MemberVO vo){
+        memberServiceImpl.updateMember2(vo);
     }
 
     @RequestMapping("/cli/myReservation")
@@ -116,5 +120,4 @@ public class CliMemberController {
     public List<MemberVO> cliSearchMember(MemberVO vo) {
         return memberServiceImpl.searchMember(vo);
     }
-
 }

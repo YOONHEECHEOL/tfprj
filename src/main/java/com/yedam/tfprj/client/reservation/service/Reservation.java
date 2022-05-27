@@ -11,7 +11,7 @@ public class Reservation {
     private Date startTime;
     private Date endTime;
     private int room;
-    private String status;
+    private String statusCd;
     private int gameId;
     private Date resDate;
     private String tel;

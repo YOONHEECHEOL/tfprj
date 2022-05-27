@@ -5,6 +5,8 @@ package com.yedam.tfprj.client.member.service;
 
 
 
+import com.yedam.tfprj.client.game.service.GameVO;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -53,5 +55,7 @@ public interface MemberService {
 
     public List<MemberVO> teamMember(MemberVO vo);
 
+    public void reasonUpdate(MemberVO vo);
 
+    public List<MemberVO> admSearchMember(MemberVO vo);
 }

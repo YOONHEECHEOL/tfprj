@@ -31,7 +31,7 @@
                     <td><span th:text="${list.tel}"></span></td>
                     <td><convert-c-code th:data="${list.grade}"></convert-c-code></td>
                     <td><select th:id="blacklistYn" th:name="blacklistYn" onchange="chargeSelect(this)">
-                        <option th:if="${list.blacklistYn == 1}" th:text="블랙리스트" th:value=1 selected></option>
+                        <option th:if="${list.blacklistYn == 1 or list.blacklistYn ==2}" th:text="블랙리스트" th:value=1 selected></option>
                         <option th:value=0>해제</option>
                     </select></td>
                     <td><span th:text="${list.blacklistReason}"></span></td>
@@ -68,6 +68,8 @@
                     url: "/adm/blackUpdate",
                     method: "POST",
                     data: {memberId: memId, blacklistYn: blackVal}
+                }).done(function(){
+                    location.href="/adm/blackList";
                 })
             } else {
                 return;

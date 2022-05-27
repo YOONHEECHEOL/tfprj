@@ -31,6 +31,16 @@ public class AdmMemberController {
         model.addAttribute("pageInfo", pageInfo);
         return "admin/member/member_list";
     }
+
+    @RequestMapping("/adm/searchMember")
+    public String admSearchMember(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,MemberVO vo,Model model) {
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<MemberVO> searchInfo = new PageInfo<MemberVO>(memberServiceImpl.admSearchMember(vo));
+        model.addAttribute("searchInfo", searchInfo);
+
+        return "admin/member/member_list_searchresult";
+    }
+
     @RequestMapping("/adm/gradeUpdate")
     public String admGradeUpdate(MemberVO vo) {
         memberServiceImpl.gradeUpdate(vo);
@@ -64,7 +74,19 @@ public class AdmMemberController {
         return memberServiceImpl.teamMember(vo);
     }
 
+    @RequestMapping("/adm/reasonUpdate")
+    @ResponseBody
+    public void admReasonUpdate(MemberVO vo){
+        memberServiceImpl.reasonUpdate(vo);
+    }
 
+    @RequestMapping("/adm/searchTeam")
+    public String admSearchTeam(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,TeamVO vo,Model model){
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<TeamVO> teamSearchInfo = new PageInfo<TeamVO>(teamServiceImpl.admSearchTeam(vo));
+        model.addAttribute("teamSearchInfo", teamSearchInfo);
+        return "admin/member/team_list_searchresult";
+    }
 }
 
 

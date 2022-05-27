@@ -48,7 +48,7 @@
     </update>
 
     <select id="selectGame" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
-            resultType="com.yedam.tfprj.client.member.service.GameVO">
+            resultType="com.yedam.tfprj.client.game.service.GameVO">
         SELECT*
         FROM GAME
         WHERE MEMBER_ID = #{memberId}
@@ -82,7 +82,7 @@
     <select id="findBlack" resultType="com.yedam.tfprj.client.member.service.MemberVO">
         SELECT ROWNUM, A.*
         FROM (SELECT*FROM MEMBER ORDER BY GRADE) A
-        WHERE BLACKLIST_YN = 1
+        WHERE BLACKLIST_YN != 0
     </select>
 
     <update id="blackUpdate" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
@@ -98,4 +98,17 @@
         WHERE TEAM_ID = #{teamId}
     </select>
 
+    <update id="reasonUpdate" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
+        UPDATE MEMBER
+        SET BLACKLIST_YN     = #{blacklistYn},
+            BLACKLIST_REASON = #{blacklistReason}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <select id="admSearchMember" parameterType="com.yedam.tfprj.client.member.service.MemberVO"
+            resultType="com.yedam.tfprj.client.member.service.MemberVO">
+        SELECT ROWNUM, A.*
+        FROM (SELECT*FROM MEMBER ORDER BY GRADE) A
+        WHERE MEMBER_ID LIKE '%' || #{memberId} || '%'
+    </select>
 </mapper>

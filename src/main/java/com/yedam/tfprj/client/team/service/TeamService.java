@@ -17,4 +17,6 @@ public interface TeamService {
     public List<MemberVO> selectTeamMembers(int teamId);
 
     public List<TeamVO> teamAll();
+
+    public List<TeamVO> admSearchTeam(TeamVO vo);
 }

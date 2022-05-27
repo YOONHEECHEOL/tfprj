@@ -44,5 +44,10 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.teamAll();
     }
 
+    @Override
+    public List<TeamVO> admSearchTeam(TeamVO vo) {
+        return teamMapper.admSearchTeam(vo);
+    }
+
 
 }

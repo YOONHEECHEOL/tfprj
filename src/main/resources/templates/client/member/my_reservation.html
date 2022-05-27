@@ -21,10 +21,10 @@
                 <span th:text="${mresv.startTime}"></span><br>
                 <span th:text="${mresv.endTime}"></span><br>
                 <span th:text="${mresv.room}"></span><br>
-                <span th:text="${mresv.status}"></span><br>
+                <convert-c-code th:data="${mresv.statusCd}"></convert-c-code><br>
                 <span th:text="${mresv.resDate}"></span><br>
-                <span th:if="${mresv.status eq '경기종료'}"><button type="text" th:class="finGameDetail">경기 결과 조회</button></span>
-                <span th:if="${mresv.status eq '경기전'}"><button type="text" th:class="rsvDetail">예약 조회</button></span>
+                <span th:if="${mresv.statusCd eq 703}"><button type="text" th:class="finGameDetail">경기 결과 조회</button></span>
+                <span th:if="${mresv.statusCd eq 701}"><button type="text" th:class="rsvDetail">예약 조회</button></span>
             </div>
         </div>
     </div>
