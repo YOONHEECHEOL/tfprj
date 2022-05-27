@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.admin.todo.Mapper.TodoMapper">
+
+    <select id="bringTodayList" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
+        SELECT * FROM TODOLIST
+        WHERE TO_CHAR(CHK_MAKE_DATE, 'YY-MM-DD') = TO_CHAR(SYSDATE, 'YY-MM-DD')
+    </select>
+
+    <update id="chkNumUpdate">
+        update todoList
+        SET is_chk = #{isChk},
+            worker_id = #{workerId}
+        where chk_no = #{chkNo}
+    </update>
+
+    <select id="selectCheckListInfo" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
+        select * from todoList
+        where chk_no = #{chkNo}
+    </select>
+
+    <update id="todoFileUpload">
+        UPDATE todolist
+        SET Chk_Pic_FileName = #{chkPicFileName},
+        Chk_Pic_FilePath = #{chkPicFilePath}
+        where chk_no = #{chkNo}
+    </update>
+
+</mapper>
+

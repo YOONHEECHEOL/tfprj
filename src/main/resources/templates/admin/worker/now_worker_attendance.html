@@ -31,7 +31,7 @@
                         <th th:width="100">퇴근시간</th>
                     </tr>
                 </thead>
-                <tbody th:each="l, status: ${nowWorker}">
+                <tbody th:each="l, status: ${nowWorker}" th:if="${nowWorker.attId != 0}">
                     <tr>
                         <td th:width="100" th:text="${nowWorker.workerName}">홍길동</td>
     <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
@@ -44,7 +44,7 @@
                     <tr>
                         <td th:width="100"></td>
                         <td th:width="100" th:text="${nowWorker.inTime}" style="color:red">실제출근시간</td>
-                        <td th:width="100"></td>
+                        <td th:width="100" th:text="${nowWorker.outTime}" style="color:red"></td>
                     </tr>
                     <tr>
                         <th th:width="100">총 지각횟수</th>
@@ -68,10 +68,10 @@
                         <th th:width="100">결근</th>
                     </tr>
                     <tr>
-                        <td th:width="100">5회</td>
-                        <td th:width="100">2회</td>
-                        <td th:width="100">4회</td>
-                        <td th:width="100">0회</td>
+                        <td th:width="100" id="allLate">5회</td>
+                        <td th:width="100" id="weekLate">2회</td>
+                        <td th:width="100" id="monthLate">4회</td>
+                        <td th:width="100" id="allAbsence">0회</td>
                     </tr>
                     <tr>
                         <th th:width="100">근무 시작일</th>
@@ -90,7 +90,7 @@
                 <br><br>
                 <div>
                 <span>다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
-                    <div>기홍길</div>
+                    <div id="nextWorker">기홍길</div>
                 </span>
                     <br><br>
                     <button id="makeWorksheet">근무표 작성</button>
@@ -249,6 +249,56 @@
                  })
             }
             weekFind();
+            console.log('[[${nowWorker}]]');
+
+
+            $.ajax({
+                url : "allLate",
+                data : {
+                    workerId : '[[${nowWorker.workerId}]]'
+                },
+                method : 'post'
+            }).done(function(response){
+                console.log(response)
+                $('#allLate').html(response.isLate + "회");
+                $('#allAbsence').html(response.isAbsence + "회");
+            })
+
+            $.ajax({
+                url : "weekLate",
+                data : {
+                    workerId : '[[${nowWorker.workerId}]]'
+                },
+                method : 'post'
+            }).done(function(response){
+                $('#weekLate').html(response.isLate + "회")
+            })
+
+            $.ajax({
+                url : "monthLate",
+                data : {
+                    workerId : '[[${nowWorker.workerId}]]'
+                },
+                method : 'post'
+            }).done(function(response){
+                $('#monthLate').html(response.isLate + "회")
+            })
+
+            $.ajax({
+                url : "selectNextWorker"
+            }).done(function(response){
+                console.log(response);
+                for(let i=0; i<response.length; i++){
+                    if(response[i].workDt.indexOf(dateString) == 0){
+                        if(response[i].workerId != '[[${nowWorker.workerId}]]') {
+                            console.log(response[i].workerId);
+                            $('#nextWorker').html(response[i].workerId);
+                            //여기까지 0526 00:41
+                            break;
+                        }
+                    }
+                }
+            })
         })
     </script>
 </th:block>

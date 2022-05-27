@@ -68,4 +68,9 @@ public class WorksheetServiceImpl implements WorksheetService {
     public WorksheetVO validateWorkTime(String workerId) {
         return mapper.validateWorkTime(workerId);
     }
+
+    @Override
+    public List<NewWorkSheetVO> selectNextWorker() {
+        return mapper.selectNextWorker();
+    }
 }

@@ -1,5 +1,7 @@
 package com.yedam.tfprj.admin.workerAttendance.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceService;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO;
 import com.yedam.tfprj.admin.workerAttendance.service.ReturnVO;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class WorkerAttendanceController {
@@ -34,6 +38,7 @@ public class WorkerAttendanceController {
 
         return "admin/worker/now_worker_attendance";
     }
+
 
     @ResponseBody
     @RequestMapping("/adm/jsonSheetList")
@@ -83,8 +88,13 @@ public class WorkerAttendanceController {
         System.out.println("실제출근시간 : " + date);
         System.out.println("원래출근시간 - 실제출근시간 :" + minute + "분");
         rVo.setMinute(minute);
+
+        // 정상출근
+        if(minute > -10 && minute < 10) {
+            rVo.setLate("0");
+            return rVo;
         // 만약 실제 출근시간이 10분 이상, 120분 이하 늦게될때 지각처리
-        if(minute <= -10 && minute >= -120){
+        }else if(minute <= -10 && minute >= -120){
             service.updateIslate(workerId);
             rVo.setLate("1");
             return rVo;
@@ -121,7 +131,37 @@ public class WorkerAttendanceController {
     }
 
     @RequestMapping("/adm/work_record")
-    public String workRecord(){
+    public String workRecord()  {
         return "admin/worker/work_record";
+    }
+
+    @ResponseBody
+    @RequestMapping("/adm/getWeekList")
+    public List<WorkerAttendanceVO> getWeekList(){
+        return service.selectStaffInOutWeek();
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/allLate")
+    public WorkerAttendanceVO allLate(String workerId){
+        return service.allLate(workerId);
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/weekLate")
+    public WorkerAttendanceVO weekLate(String workerId){
+        return service.weekLate(workerId);
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/monthLate")
+    public WorkerAttendanceVO monthLate(String workerId){
+        return service.monthLate(workerId);
+    }
+
+    @ResponseBody
+    @PostMapping("/adm/allAbsence")
+    public WorkerAttendanceVO allAbsence(String workerId){
+        return service.allAbsence(workerId);
     }
 }

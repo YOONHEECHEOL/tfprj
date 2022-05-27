@@ -4,6 +4,7 @@ package com.yedam.tfprj.admin.worksheet.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.admin.reservation.service.ReservationVO;
+import com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO;
 import com.yedam.tfprj.admin.worksheet.service.WorkerArrVO;
 import com.yedam.tfprj.admin.worksheet.service.WorksheetService;
 import com.yedam.tfprj.admin.worksheet.service.WorksheetVO;
@@ -46,6 +47,7 @@ public class WorksheetRestController {
             //dateListArr[0] = 2022
             //dateListArr[1] = 5
             //monthLength = 해당 년, 월의 배열을 가져와서 해당 월의 일수를 계산함.
+
 
             if (dateListArr[1].length() == 1) {
                 // 해당 월이 1~9월, 즉 숫자가 1일때
@@ -171,7 +173,6 @@ public class WorksheetRestController {
             jsonList.add(map);
         }
 
-        objectMapper = new ObjectMapper();
         String strJsonList = "";
         try {
             strJsonList = objectMapper.writeValueAsString(jsonList);
@@ -188,6 +189,11 @@ public class WorksheetRestController {
                                  @RequestParam String color,    @RequestParam String textColor, @RequestParam String backgroundColor) {
         service.updateWorksheet(workerId, goingTime, quittingTime, color, textColor, backgroundColor);
         return null;
+    }
+
+    @RequestMapping("/adm/selectNextWorker")
+    public List<NewWorkSheetVO> selectNextWorker(){
+        return service.selectNextWorker();
     }
 
 }
