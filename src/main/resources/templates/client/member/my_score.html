@@ -31,57 +31,28 @@
 
     <script>
         let res;
-
-
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
                 var jsonData =
                     $.ajax({
                         url: "/cli/myScoreJson",
+                        dataType: "json",
                         async: false
-                    }).done(function (data) {
+                    }).done(function(data){
                         res = data;
-                    }).responseText;
+                        console.log(res)
+                    }).responseText
 
                 console.log(res);
-                var data = new google.visualization.DataTable(res);
-
+                var data = new google.visualization.DataTable(jsonData);
+                console.log(data);
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, {
                     title: '내 기록'
                 });
             }
-        google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawBasic);
 
-        function drawBasic() {
-
-            var data = google.visualization.arrayToDataTable([
-                ['City', '2010 Population',],
-                ['1월', 54343545434],
-                ['2월', 4534545345],
-                ['3월', 45345],
-                ['4월', 4534534353],
-                ['5월', 4537373753]
-            ]);
-
-            var options = {
-                title: 'Population of Largest U.S. Cities',
-                chartArea: {width: '50%'},
-                hAxis: {
-                    title: 'Total Population',
-                    minValue: 0
-                },
-                vAxis: {
-                    title: 'City'
-                }
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-
-            chart.draw(data, options);
-        }
     </script>
 </th:block>
 
