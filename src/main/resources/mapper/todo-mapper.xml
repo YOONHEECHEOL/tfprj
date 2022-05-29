@@ -39,5 +39,37 @@
         values(seq_todo.nextval, sysdate, #{chkContents}, 0, 0)
     </insert>
 
+    <update id="ajaxProcessCompleteUpdate">
+        update todoList
+        set process_complete = #{processComplete}
+        where chk_no = #{chkNo}
+    </update>
+
+    <update id="checkBoxAllUpdate">
+        UPDATE TODOLIST
+        SET IS_CHK = #{isChk}
+    </update>
+
+    <update id="completeAllUpdate">
+        UPDATE TODOLIST
+        SET PROCESS_COMPLETE = #{processComplete}
+    </update>
+
+    <delete id="deleteAll">
+        DELETE
+        FROM TODOLIST
+    </delete>
+
+    <select id="selectAllCheckList" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
+        SELECT * FROM
+        TODOLIST
+    </select>
+
+    <update id="updateMessageYn">
+        UPDATE TODOLIST
+        SET messagetransyn = 1
+        where chk_no = #{chkNo}
+    </update>
+
 </mapper>
 

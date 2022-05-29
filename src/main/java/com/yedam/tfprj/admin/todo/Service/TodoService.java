@@ -12,4 +12,10 @@ public interface TodoService {
     public int todoFileUpload(TodoVO vo);
     public int chkAddComment(TodoVO vo);
     public int createTodo(TodoVO vo);
+    public int ajaxProcessCompleteUpdate(TodoVO vo);
+    public int checkBoxAllUpdate(int isChk);
+    public int completeAllUpdate(TodoVO vo);
+    public int deleteAll();
+    public List<TodoVO> selectAllCheckList();
+    public int updateMessageYn(String chkNo);
 }

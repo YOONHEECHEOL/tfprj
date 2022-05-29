@@ -41,4 +41,35 @@ public class TodoServiceImpl implements TodoService{
         return mapper.createTodo(vo);
     }
 
+    @Override
+    public int ajaxProcessCompleteUpdate(TodoVO vo) {
+        return mapper.ajaxProcessCompleteUpdate(vo);
+    }
+
+    @Override
+    public int checkBoxAllUpdate(int isChk) {
+        return mapper.checkBoxAllUpdate(isChk);
+    }
+
+    @Override
+    public int completeAllUpdate(TodoVO vo) {
+        return mapper.completeAllUpdate(vo);
+    }
+
+    @Override
+    public int deleteAll() {
+        return mapper.deleteAll();
+    }
+
+    @Override
+    public List<TodoVO> selectAllCheckList() {
+        return mapper.selectAllCheckList();
+    }
+
+    @Override
+    public int updateMessageYn(String chkNo) {
+        return mapper.updateMessageYn(chkNo);
+    }
+
+
 }

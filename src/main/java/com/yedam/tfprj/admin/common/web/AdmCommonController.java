@@ -29,10 +29,11 @@ public class AdmCommonController {
     @RequestMapping("/adm/loginSuccess")
     public String admLoginSuccess(WorkerVO vo, HttpServletRequest req, HttpServletResponse res) {
         HttpSession session = req.getSession();
-        System.out.println("asdfasdf" + vo);
         if (service.loginSelect(vo) != null) {
+            vo = service.loginSelect(vo);
+            System.out.println("asdfasdf" + vo);
             session.setAttribute("workerId", vo.getWorkerId());
-            //session.setAttribute("");
+            session.setAttribute("positionCd", vo.getPositionCd());
             return "admin/common/home";
         }else{
             return null;

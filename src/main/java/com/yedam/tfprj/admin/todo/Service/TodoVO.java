@@ -31,5 +31,5 @@ public class TodoVO {
 
     private List<CheckVO> vo;
     private int processComplete;
-
+    private int messageTransYn;
 }
