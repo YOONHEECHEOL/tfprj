@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.util.List;
 
 @Controller
@@ -19,8 +22,17 @@ public class CliReservationController {
         return "client/reservation/room";
     }
 
-    @RequestMapping("/cli/reservation/info")
-    public String resInfo(){return "client/reservation/info";}
+    @RequestMapping(value = "/cli/reservation/info", method = RequestMethod.POST)
+    public String resInfo(Reservation reservation, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(session.getAttribute("memberId") != null){
+            reservation.setMemberId((String)(session.getAttribute("memberId")));
+        }else{
+            reservation.setMemberId("비회원");
+        }
+
+        model.addAttribute("reservation", reservation);
+        return "client/reservation/info";}
 
     @RequestMapping("/cli/reservationList")
     public String findReservationList(Model model){
@@ -34,6 +46,15 @@ public class CliReservationController {
 
         return reservationMapper.reservationCheck(date, room);
     }
+
+    @GetMapping("/cli/reservation/teamList")
+    @ResponseBody
+    public List<String> teamList(){
+
+        return reservationMapper.teamList();
+    }
+
+
 
 
 }

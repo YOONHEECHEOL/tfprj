@@ -29,6 +29,7 @@ public class CliReservationServiceImpl implements CliReservationService {
 
     @Override
     public int insertReservation(Reservation rsv) {
+
         return 0;
     }
 
@@ -46,4 +47,11 @@ public class CliReservationServiceImpl implements CliReservationService {
     public List<Reservation> reservationCheck(String date,String room) {
         return reservationMapper.reservationCheck(date, room);
     }
+
+    @Override
+    public List<String> teamList() {
+        return reservationMapper.teamList();
+    }
+
+
 }

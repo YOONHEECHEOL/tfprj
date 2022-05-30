@@ -11,7 +11,7 @@
     </div>
     <div th:class="row" style="float: none; margin:0 auto;">
         <div th:class="col-8">
-            <input type="text" id="dateVal" onchange="reservedTimeCheck()">
+            <span id="dateVal" onchange="reservedTimeCheck()" readonly><span>
         </div>
         <div th:class="col-4">
             <input th:type="button" id="rsvBtn" th:value="날짜변경">
@@ -76,9 +76,9 @@
     </div>
     <form name="myForm" method="post" action="info">
         <input type="hidden" id="date" name="date" required>
-        <input type="hidden" id="roomNo" name="roomNo" required>
-        <input th:type="text" id="startTime" name="startTime" readonly required>
-        <input th:type="text" id="endTime" name="endTime" readonly required>
+        <input type="hidden" id="roomNo" name="room" required>
+        <input th:type="hidden" id="startTime" name="startTime" readonly required>
+        <input th:type="hidden" id="endTime" name="endTime" readonly required>
         <div>
             <button type="button" onclick="check(myForm)">다음</button>
         </div>
@@ -88,7 +88,7 @@
     <script>
         let roomNo = $('#room').text()
         $('#roomNo').val(roomNo);
-        let date = $('#dateVal').val()
+        let date = $('#dateVal').text()
         $('#date').val(date);
     </script>
     <script>
@@ -101,6 +101,7 @@
             }else if(f.startTime.value === ""||f.startTime.value.length===0){
                 alert("시간을 선택해 주십시오")
             }else{
+
                 f.submit();
             }
 

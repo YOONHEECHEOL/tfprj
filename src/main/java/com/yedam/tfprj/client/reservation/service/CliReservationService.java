@@ -12,4 +12,6 @@ public interface CliReservationService {
 
     //예약된 날짜 시간 조회
     public List<Reservation>  reservationCheck(String date, String room);
+
+    public List<String> teamList();
 }

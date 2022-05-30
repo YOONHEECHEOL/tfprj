@@ -14,5 +14,7 @@ public interface ReservationMapper {
 
     public List<Reservation>  reservationCheck(String date,String room);
 
+    public List<String> teamList();
+
 
 }

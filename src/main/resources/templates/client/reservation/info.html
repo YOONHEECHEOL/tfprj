@@ -3,6 +3,123 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/cli_layout">
 <th:block layout:fragment="content">
+
     <h3>예약시스템 - 예약현황조회</h3>
+    <div>
+
+    </div>
+    <div th:class="row" style="float: none; margin:0 auto;">
+        <div th:class="col-8">
+            <span th:text="${#dates.format(reservation.startTime, 'yyyy-MM-dd')}"></span>
+        </div>
+        <div th:class="col-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div th:id="1" class="col-4 border" style="background-color: #4CAF50">step 1 - 팀선택</div>
+        <div th:id="2" class="col-4 border">step 2 - 멤버입력</div>
+        <div th:id="3" class="col-4 border">step 3 - 이닝</div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h3>시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        <h3 th:text="|${#dates.format(reservation.startTime, 'HH:mm')} - ${#dates.format(reservation.endTime, 'HH:mm')}|"></h3>
+        <br>
+    </div>
+    <div>
+        <h3>구장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        <h3 th:text="|${reservation.room} 구장|"></h3>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h3>팀</h3>
+        <div id="selectedHome" >
+            <span style="display: none">홈팀</span><span id="homeTeam"></span><br><br>
+        </div>
+        <div id="selectedAway" style="display: none">
+            <span>원정팀</span><span id="awayTeam"></span>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div th:class="row">
+        <div class="col-8 ">
+            <span>홈팀</span><span></span>
+        </div>
+        <div class="col-2 ">
+            <span>원정팀</span>
+        </div>
+    </div>
+    <div th:class="row">
+        <div class="col-8 ">
+            <select id="home" onchange="selectTeam()">
+                <option value="none">=== 팀선택 ===</option>
+
+            </select>
+        </div>
+        <div class="col-2 ">
+            <select id="away" onchange="selectTeam()">
+                <option value="none">=== 팀선택 ===</option>
+
+            </select>
+        </div>
+    </div>
+    <div>
+        <form name="frm">
+
+
+        </form>
+    </div>
+    <br>
+    <div>
+        <button>다음</button>
+    </div>
+
+
+<!--    <span th:text="${reservation.memberId}"></span>-->
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "teamList"
+            }).done(function (response) {
+                console.log(response);
+                console.log(response.length)
+                console.log(response[1]);
+                let home = document.querySelector("#home");
+                let away = document.querySelector("#away");
+
+                for (let i = 0; i < response.length; i++) {
+                    console.log(response[i]);
+                    let number = 100 + i;
+                    console.log(number);
+                    $(home).append("<option value='" + number + "'>" + response[i] + "</option>")
+                    $(away).append("<option value='" + number + "'>" + response[i] + "</option>")
+                }
+
+            })
+        });
+
+    </script>
+
+    <script>
+        function selectTeam(event) {
+            let home = document.getElementById("home")
+            let away = document.getElementById("away")
+
+            let homeId = home.options[home.selectedIndex].value;
+            let homeName = home.options[home.selectedIndex].text;
+            let awayId = away.options[away.selectedIndex].value;
+            let awayName = away.options[away.selectedIndex].text;
+
+
+
+        }
+    </script>
+
+
 </th:block>
 </html>
