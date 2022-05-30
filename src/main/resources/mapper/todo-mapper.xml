@@ -6,6 +6,7 @@
     <select id="bringTodayList" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
         SELECT * FROM TODOLIST
         WHERE TO_CHAR(CHK_MAKE_DATE, 'YY-MM-DD') = TO_CHAR(SYSDATE, 'YY-MM-DD')
+        ORDER BY CHK_NO
     </select>
 
     <update id="chkNumUpdate">
@@ -24,6 +25,49 @@
         UPDATE todolist
         SET Chk_Pic_FileName = #{chkPicFileName},
         Chk_Pic_FilePath = #{chkPicFilePath}
+        where chk_no = #{chkNo}
+    </update>
+
+    <update id="chkAddComment">
+        update todoList
+        SET comment_content = #{commentContent}
+        where chk_no = #{chkNo}
+    </update>
+
+    <insert id="createTodo">
+        insert into todoList(chk_no, chk_make_date, chk_contents, is_chk, process_complete)
+        values(seq_todo.nextval, sysdate, #{chkContents}, 0, 0)
+    </insert>
+
+    <update id="ajaxProcessCompleteUpdate">
+        update todoList
+        set process_complete = #{processComplete}
+        where chk_no = #{chkNo}
+    </update>
+
+    <update id="checkBoxAllUpdate">
+        UPDATE TODOLIST
+        SET IS_CHK = #{isChk}
+    </update>
+
+    <update id="completeAllUpdate">
+        UPDATE TODOLIST
+        SET PROCESS_COMPLETE = #{processComplete}
+    </update>
+
+    <delete id="deleteAll">
+        DELETE
+        FROM TODOLIST
+    </delete>
+
+    <select id="selectAllCheckList" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
+        SELECT * FROM
+        TODOLIST
+    </select>
+
+    <update id="updateMessageYn">
+        UPDATE TODOLIST
+        SET messagetransyn = 1
         where chk_no = #{chkNo}
     </update>
 

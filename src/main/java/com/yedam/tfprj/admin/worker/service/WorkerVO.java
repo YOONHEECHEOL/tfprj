@@ -25,7 +25,7 @@ public class WorkerVO {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private Date startDay;
 
-    private String positionCd;
+    private int positionCd;
     private int late;
     private int absence;
     private int userType;
