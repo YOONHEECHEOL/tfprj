@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.admin.sales.Mapper.PaymentMapper">
+
+    <select id="paymentList" resultType="com.yedam.tfprj.admin.sales.Service.PaymentVO">
+        SELECT SUM(PAYMENT_AMOUNT) AS SUM, COUNT(PAYMENT_AMOUNT) AS COUNT, PROD_INFO_CD, PAYMENT_METHOD_CD
+        FROM PAYMENT
+        WHERE TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+        AND PAYMENT_STATUS_CD NOT IN (801, 803)
+        GROUP BY PROD_INFO_CD, PAYMENT_METHOD_CD
+    </select>
+
+    <select id="findMemNonMem" resultType="map">
+        SELECT CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END AS "member", SUM(PAYMENT_AMOUNT) AS "paymentAmount"
+        FROM PAYMENT
+        GROUP BY  CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END
+    </select>
+
+
+</mapper>
+
