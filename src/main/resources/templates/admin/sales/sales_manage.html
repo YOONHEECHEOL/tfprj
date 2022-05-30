@@ -52,6 +52,7 @@
                     <div id="searchResult">
 
                     </div>
+                <br><br><br><br><br>
                 <div id="chart_div2"></div>
             </div>
         </div>
@@ -96,8 +97,8 @@
 
         function drawChart2(){
             var options = {'title':'기간 총 매출',
-                'width':600,
-                'height':400};
+                'width':400,
+                'height':300};
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -108,6 +109,9 @@
             let jsonData;
             $.ajax({
                 url : "findMemNonMem",
+                data : {firstDate : $('#pickLogic').children('input:eq(0)').val(),
+                        lastDate : $('#pickLogic').children('input:eq(1)').val()
+                }
             }).done(function(datas){
                 console.log(datas);
                 jsonData = [];
