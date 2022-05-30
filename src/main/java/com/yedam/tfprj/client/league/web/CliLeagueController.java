@@ -76,4 +76,14 @@ public class CliLeagueController {
         return "client/member/my_league";
     }
 
+    // 신청취소하기
+    @RequestMapping("/cli/leagueCancel")
+    public String leagueCancel(HttpServletRequest request, int leagueId) {
+
+        // service league apply cancel 처리
+        leagueServiceImpl.cancelLeagueApply(request, leagueId);
+
+        return "redirect:/cli/myLeague";
+    }
+
 }

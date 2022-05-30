@@ -65,6 +65,8 @@ public class AdmLeagueController {
     @ResponseBody
     public  void setLeagueApplyTeamStatus(@RequestBody Map<String, String> param) {
 
+        System.out.println("param = " + param);
+
         admLeagueService.setLeagueApplyTeamStatus(Integer.parseInt(param.get("teamId")), Integer.parseInt(param.get("leagueId")));
     }
 

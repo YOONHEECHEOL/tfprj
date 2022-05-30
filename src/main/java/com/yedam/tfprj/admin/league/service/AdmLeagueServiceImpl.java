@@ -61,9 +61,11 @@ public class AdmLeagueServiceImpl implements LeagueService{
         list.forEach(team -> {
             // team is_approve set
 
-            int isApprove = 1801;
+            int isApprove = 1800;
+            System.out.println("team = " + team.getTeamId());
+            System.out.println("leagueId = " + leagueId);
             try {
-                isApprove = Integer.parseInt(admLeagueMapper.getIsApprove(team.getTeamId(), leagueId));
+                isApprove = Integer.parseInt(admLeagueMapper.getIsApprove(leagueId, team.getTeamId()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

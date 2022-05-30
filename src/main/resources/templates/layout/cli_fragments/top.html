@@ -20,11 +20,6 @@
 
   </header>
 
-  <div id="hmodal" class="hmodal" >
-    <span th:if="${#session.getAttribute('message') != 'n'}" th:text="${#session.getAttribute('message')}">message</span>
-<!--    <span>asdf</span>-->
-  </div>
-
   <!-- slider menu -->
   <nav class="nav" id="cli-slider-nav">
     <ul>
@@ -64,6 +59,8 @@
         <a href="/cli/home" class="btn btn-dark">home</a>
         <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
            href="/cli/loginview" class="btn btn-primary">login</a>
+        <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
+           href="/cli/signUp" class="btn btn-success">signUp</a>
         <a th:if="${#session.getAttribute('log') == 'y'}"
            th:href="${'/cli/logout?memberId=' + #session.getAttribute('memberId')}" class="btn btn-danger">logout</a>
       </li>
@@ -85,23 +82,6 @@
     }
     slider();
 
-    // hmodal
-    const hmodal = () => {
-      let h = document.querySelector('#hmodal')
-      let t = document.querySelector('#hmodal > span')
-      if(t.innerHTML != '') {
-        h.classList.add('active')
-        setTimeout(() => {
-          h.classList.remove('active')
-          fetch('http://localhost:18000/cli/resetMessage')
-            .then(res => res.text())
-            .then(res => console.log(res))
-          // h.remove();
-        }, 1500)
-        // session message 삭제
-      }
-    }
-    hmodal();
   </script>
 
 </th:block>

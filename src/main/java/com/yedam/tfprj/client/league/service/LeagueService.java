@@ -25,4 +25,7 @@ public interface LeagueService {
     // My page league 조회
     public CliLeagueServiceVO getMyLeague(HttpServletRequest request);
 
+    // league cancel 처리
+    public void cancelLeagueApply(HttpServletRequest request, int leagueId);
+
 }

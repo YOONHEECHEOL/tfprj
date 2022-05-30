@@ -28,10 +28,14 @@
         <div class="button__box">
           <!-- 리그 정보 조회 -->
           <!-- 리그 신청 완료 -->
-          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1801'}" th:href="${'#'}" class="c-button"><convert-c-code th:data="${l.getIsApplyStatus()}"></convert-c-code></a>
-<!--          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1802'}" th:href="${'/leauge'}" class="c-button">신청취소</a>-->
-          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1803'}" th:href="${'/leauge'}" class="c-button"><convert-c-code th:data="${'1803'}"></convert-c-code></a>
-          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1804'}" th:href="${'/leauge'}" class="c-button"><convert-c-code th:data="${'1804'}"></convert-c-code></a>
+          <button th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1801'}" th:data-lno="${l.getLeagueId()}" onclick="cancelLeague()" class="button button-danger">신청취소</button>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1801'}" th:href="${'#'}" class="button button-primary">결제하기</a>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1803'}" th:href="${'#'}" class="button button-success">결제대기 중</a>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1804'}" th:href="${'#'}" class="c-button">승인대기 중</a>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1805'}" th:href="${'#'}" class="c-button">일정확인 하기</a>
+
+          <!-- 신청 취소 처리 후 -->
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1802'}" href="/cli/league" class="c-button">리그 신청 취소함</a>
 
           <!-- 리그 진행 중인 경우 -->
           <a th:if="${l.getLeagueStatusCd() == '502' && l.getIsApplyStatus() == '1801'}" th:href="${'#'}" class="c-button disabled">미결제 리그참가 취소 됨</a>
@@ -61,14 +65,25 @@
         <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
         <span th:text="${l.winningTeam}">승리팀</span>
         <div class="button__box" th:if="${#session.getAttribute('memberId') != null}">
-          <a th:if="${l.getIsApply() == 'y' && l.getLeagueStatusCd() == '501'}" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}" class="c-button">참가하기</a>
-          <a th:if="${l.getIsApply() == 'y' && l.getLeagueStatusCd() == '502'}" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}" class="c-button disabled">리그 진행 중</a>
-          <a th:if="${l.getIsApply() == 'y' && l.getLeagueStatusCd() == '503'}" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}" class="c-button disabled">리그 종료</a>
+          <a th:if="${l.getIsApply() == 'n' && l.getLeagueStatusCd() == '501'}" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}" class="c-button">참가하기</a>
+          <a th:if="${l.getIsApply() == 'n' && l.getLeagueStatusCd() == '502'}" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}" class="c-button disabled">리그 진행 중</a>
+          <a th:if="${l.getIsApply() == 'n' && l.getLeagueStatusCd() == '503'}" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}" class="c-button disabled">리그 종료</a>
         </div>
       </td>
     </tr>
     </tbody>
   </table>
+
+  <script>
+
+    // 리그 신청 취소
+    function cancelLeague() {
+      let leagueId = event.target.getAttribute('data-lno');
+
+      location.href = '/cli/leagueCancel?leagueId=' + leagueId;
+    }
+
+  </script>
 
 </th:block>>
 </html>
