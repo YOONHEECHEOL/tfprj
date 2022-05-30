@@ -1,4 +1,3 @@
-
 //데이트피커 설정
 $.datepicker.setDefaults({
     dateFormat: 'yy-mm-dd',
@@ -13,72 +12,97 @@ $.datepicker.setDefaults({
     yearSuffix: '년'
 });
 //데이트피커 버튼 클릭 이벤트
-$(function() {
+$(function () {
     $("#rsvBtn").datepicker({
-        onSelect: function(){
+        //minDate: 0, //오늘날짜 이후로만 예약 가능하게
+        onSelect: function () {
             var date = $("#rsvBtn").datepicker("getDate");
             date = $("#rsvBtn").val();
             $("#dateVal").val(date);
             date = $("#dateVal").val();
+            $('#date').val(date);
             console.log(date);
             $("#rsvBtn").val("날짜변경");
             let room = $("#room").text();
             removeClass();
-            reservedTimeCheck(date,room)
+            reservedTimeCheck(date, room)
         }
     });
 });
-//client 예약 목록 전체 조회
- function reservationList(){
-     $.ajax({
-         url : '/reservationList'
-     }).done(function (data){
-                 console.log(data);
-     })
- }
 
- //예약시간 데이트 체크
-function reservedTimeCheck(date, room){
+//client 예약 목록 전체 조회
+function reservationList() {
     $.ajax({
-        url : "reservationCheck",
-        data : {
-            date : date,
-            room : room
+        url: '/reservationList'
+    }).done(function (data) {
+        console.log(data);
+    })
+}
+
+//예약시간 데이트 체크
+function reservedTimeCheck(date, room) {
+    $.ajax({
+        url: "reservationCheck",
+        data: {
+            date: date,
+            room: room
         }
-    }).done(function(response){
+    }).done(function (response) {
         console.log($("#21").text());
         console.log(response)
-        for(let i = 0; i < response.length;i++){
-
-
-
+        for (let i = 0; i < response.length; i++) {
             let startTime = response[i].startTime;
             let endTime = response[i].endTime;
-            let st = startTime.substring(11,13);
-            let et = endTime.substring(11,13);
-            let gameTime = et-st;
-            console.log(st, et);
-            console.log(gameTime);
-            for(let j =10; j<=24; j++){
-                if(st == j){
-                    if(gameTime>1){
-                        for(let k=0; k<=gameTime-1;k++){
-                            console.log("야야")
-                            console.log(j+k);
+            let st = startTime.substring(11, 13);
+            let et = endTime.substring(11, 13);
+            let gameTime = et - st;
+            let fullEndTime = endTime.substring(11, 16);
 
-                            console.log($('#'+(j+k)).text());
-                            $('#'+(j+k)).attr('class',"btn btn-danger")
+            console.log(fullEndTime);
+            if (fullEndTime == '23:59') {
+                console.log("막타임데스요")
+                for (let j = 10; j <= 24; j++) {
+                    if (st == j) {
+                        if (gameTime > 1) {
+                            for (let k = 0; k <= gameTime+1; k++) {
+                                console.log("야야")
+                                console.log(j + k);
+
+                                console.log($('#' + (j + k)).text());
+                                $('#' + (j + k)).attr('class', "btn btn-danger")
+                            }
+
+                        } else {
+                            console.log("야야야")
+                            $('#' + (j)).attr('class', "btn btn-danger")
                         }
 
-                    }else{
-                        console.log("야야야")
-                        $('#'+(j)).attr('class',"btn btn-danger")
+
                     }
-
-
                 }
-            }
 
+            } else {
+                for (let j = 10; j <= 24; j++) {
+                    if (st == j) {
+                        if (gameTime > 1) {
+                            for (let k = 0; k <= gameTime - 1; k++) {
+                                console.log("야야")
+                                console.log(j + k);
+
+                                console.log($('#' + (j + k)).text());
+                                $('#' + (j + k)).attr('class', "btn btn-danger")
+                            }
+
+                        } else {
+                            console.log("야야야")
+                            $('#' + (j)).attr('class', "btn btn-danger")
+                        }
+
+
+                    }
+                }
+
+            }
 
 
         }
@@ -87,27 +111,31 @@ function reservedTimeCheck(date, room){
     })
 
 }
-function next(){
+
+function next() {
     var date = $("#dateVal").val()
 
 
     var roomNo = parseInt($('#room').text());
-    if(roomNo <4){
+    if (roomNo < 4) {
         $('#room').text(roomNo + 1);
+        $('#roomNo').val(roomNo + 1);
         var room = parseInt($('#room').text());
+
         removeClass();
         reservedTimeCheck(date, room)
     }
 
 }
 
-function prev(){
+function prev() {
     var date = $("#dateVal").val()
 
 
     let roomNo = parseInt($('#room').text());
-    if(roomNo >1){
+    if (roomNo > 1) {
         $('#room').text(roomNo - 1);
+        $('#roomNo').val(roomNo - 1);
         var room = parseInt($('#room').text());
         removeClass();
         reservedTimeCheck(date, room)
@@ -115,56 +143,101 @@ function prev(){
 
 }
 
-function removeClass(){
-    for(let j =10; j<=24; j++){
-        $('#'+(j)).removeClass();
+function removeClass() {
+    for (let j = 10; j <= 24; j++) {
+        $('#' + (j)).removeClass();
     }
 }
+// 클릭된 시간 배열
+const f1 = () =>{
+    let clickedClassList = document.getElementsByClassName("btn btn-success");
 
-function clickTimetable(startTime){
-    var buttonList = $("button");
-    let successClassList = document.getElementsByClassName("btn btn-success");
-    let reservedClassList = document.getElementsByClassName("btn btn-danger");
-    let reservedTimeList=[];
     let clickedTimeList = [];
-
-    for(let i=0; i<successClassList.length;i++){
-        var id = successClassList[i].getAttribute('id');
+    for (let i = 0; i < clickedClassList.length; i++) {
+        var id = clickedClassList[i].getAttribute('id');
         clickedTimeList.push(id);
     }
 
-    for(let i = 0; i<reservedClassList.length;i++){
+    return clickedTimeList;
+}
+
+
+// 예약된 시간 배열(startTime 기준)
+const f2 = () => {
+    let reservedClassList = document.getElementsByClassName("btn btn-danger");
+    let reservedTimeList = [];
+    for (let i = 0; i < reservedClassList.length; i++) {
         var id = reservedClassList[i].getAttribute('id');
         reservedTimeList.push(id);
 
     }
-    console.log("예약된 시간임 : " + reservedTimeList);
-    console.log("클릭된 시간임 : " + clickedTimeList);
 
-     console.log(successClassList)
-     if(successClassList.length >0){
-         alert("한개 이상 있다" + successClassList.length + "개")
-         
-     }else if(successClassList.length === 0){
-         alert("한개도 없었다" + successClassList.length + "개")
-     }
-    var timeClass = $('#'+(startTime)).attr('class');
+    return reservedTimeList;
+}
+
+function clickTimetable(startTime) {
+    let clickedTimeList = f1();
+    let unreservedTimeList = f3();
+
+    console.log(clickedTimeList)
+
+    var timeClass = $('#' + (startTime)).attr('class');
     console.log(timeClass);
 
 
-    if(timeClass == 'btn btn-danger') {
+    if (timeClass == 'btn btn-danger') {
         alert("이미 예약된 시간입니다")
-    }else if(timeClass == 'btn btn-success') {
+    } else if (timeClass == 'btn btn-success') {
         $('#' + (startTime)).removeClass();
-    }
-    else{
-        $('#'+(startTime)).attr('class','btn btn-success')
+    } else {
+        $('#' + (startTime)).attr('class', 'btn btn-success')
+        let clickedTimeArray = f1().sort();
+        for(let i = 0; i<clickedTimeArray.length;i++){
+            if((clickedTimeArray[i+1] - clickedTimeArray[i])>1){
+                alert("연속된 시간만 예약 가능합니다.")
+                $('#' + (startTime)).removeClass();
+            }
+        }
 
     }
+    let st = f1().sort()[0] + ":00";
+    let et = parseInt(f1().sort()[(f1().length-1)]) +1
+    et+= ":00";
+    // if(et === 24){
+    //     et = et-1 + ":59";
+    //     console.log(et);
+    // }else{
+    //     et+= ":00";
+    // }
+    $('#startTime').val(st)
+    $('#endTime').val(et)
+    if(f1().length === 0){
+        $('#startTime').val('');
+        $('#endTime').val('');
+    }
+}
+
+//예약가능한 시간대 array
+const f3 = () => {
+    let timeArray = ['13','14','15','16','17','18','19','20','21','22','23','24'];
+    console.log(timeArray);
+    let reservedTimeList = [];
+    reservedTimeList = f2();
+    console.log(reservedTimeList)
+
+    for(let i = 0 ; i<timeArray.length; i++){
+        for(let j = 0; j<reservedTimeList.length; j++){
+            if(timeArray[i] === reservedTimeList[j]){
+                timeArray.splice(i,1);
+            }
+        }
+    }
+    return timeArray;
 
 }
 
-function check
+
+
 
 
 

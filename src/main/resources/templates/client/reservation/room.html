@@ -20,7 +20,7 @@
     <div th:class="row" style="float: none; margin:0 auto;">
         <div th:class="col-auto">
             <button onclick="prev()">이전</button>
-            <span id = "room">1</span><span>구장</span>
+            <span id="room">1</span><span>구장</span>
             <button onclick="next()">다음</button>
         </div>
     </div>
@@ -30,6 +30,9 @@
                 <tbody>
                 <tr>
                     <td>
+                        <button id="12" onclick="clickTimetable(12)">12:00</button>
+                    </td>
+                    <td>
                         <button id="13" onclick="clickTimetable(13)">13:00</button>
                     </td>
                     <td>
@@ -38,11 +41,11 @@
                     <td>
                         <button id="15" onclick="clickTimetable(15)">15:00</button>
                     </td>
+                </tr>
+                <tr>
                     <td>
                         <button id="16" onclick="clickTimetable(16)">16:00</button>
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <button id="17" onclick="clickTimetable(17)">17:00</button>
                     </td>
@@ -52,11 +55,11 @@
                     <td>
                         <button id="19" onclick="clickTimetable(19)">19:00</button>
                     </td>
+                </tr>
+                <tr>
                     <td>
                         <button id="20" onclick="clickTimetable(20)">20:00</button>
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <button id="21" onclick="clickTimetable(21)">21:00</button>
                     </td>
@@ -66,17 +69,43 @@
                     <td>
                         <button id="23" onclick="clickTimetable(23)">23:00</button>
                     </td>
-                    <td>
-                        <button id="24" onclick="clickTimetable(24)">24:00</button>
-                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <input th:type="text" id="startTime">
-    <input th:type="text" id="endTime">
+    <form name="myForm" method="post" action="info">
+        <input type="hidden" id="date" name="date" required>
+        <input type="hidden" id="roomNo" name="roomNo" required>
+        <input th:type="text" id="startTime" name="startTime" readonly required>
+        <input th:type="text" id="endTime" name="endTime" readonly required>
+        <div>
+            <button type="button" onclick="check(myForm)">다음</button>
+        </div>
+    </form>
+
     <!--class="btn btn-success"-->
+    <script>
+        let roomNo = $('#room').text()
+        $('#roomNo').val(roomNo);
+        let date = $('#dateVal').val()
+        $('#date').val(date);
+    </script>
+    <script>
+        function check(f){
+            //this.form ==> document.myForm --> f
+            if(f.date.value === ""||f.date.value.length===0){
+                alert("일자를 선택해 주십시오")
+            }else if(f.roomNo.value === ""||f.roomNo.value.length===0){
+                alert("방을 선택해 주십시오")
+            }else if(f.startTime.value === ""||f.startTime.value.length===0){
+                alert("시간을 선택해 주십시오")
+            }else{
+                f.submit();
+            }
+
+        }
+    </script>
 </th:block>
 
 
