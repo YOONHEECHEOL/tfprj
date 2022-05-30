@@ -52,5 +52,4 @@ public interface AdmLeagueMapper {
     public String getIsApprove(int leagueId, int teamId);
 
 
-
 }

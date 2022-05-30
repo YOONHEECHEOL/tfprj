@@ -52,13 +52,27 @@ public class CliLeagueController {
 
     // 미사용
     @RequestMapping("/cli/leaguePay")
-    public String leaguePay() {
+    public String leaguePay(Model model, String leagueId, HttpServletRequest request) {
+
+        int lId = Integer.parseInt(leagueId);
+        String memberId = request.getSession().getAttribute("memberId").toString();
+
+        // 리그 정보 league
+        model.addAttribute("l", leagueServiceImpl.getLeagueDetail(lId, memberId));
+
+        // 내가 지원한 정보 league_apply
+        model.addAttribute("ml", leagueServiceImpl.getLeagueApplyMember(lId, memberId));
+
+
         return "client/league/league_pay";
     }
 
     // 미사용
     @RequestMapping("/cli/leaguePayDone")
-    public String leaguePayDone() {
+    public String leaguePayDone(String leagueId, HttpServletRequest request) {
+
+        leagueServiceImpl.payLeague(leagueId, request);
+
         return "client/league/league_pay_done";
     }
 

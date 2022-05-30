@@ -7,9 +7,7 @@ import com.yedam.tfprj.client.league.mapper.CliLeagueMapper;
 import org.apache.commons.compress.archivers.sevenz.CLI;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +56,7 @@ class CliLeagueServiceImplTest {
       String formVal = "[{\"name\":\"lno\",\"value\":\"1\"},{\"name\":\"formVal\",\"value\":\"\"},{\"name\":\"fs0\",\"value\":\"lee\"},{\"name\":\"fs1\",\"value\":\"lee\"},{\"name\":\"fs2\",\"value\":\"lee\"},{\"name\":\"fs3\",\"value\":\"lee\"}]";
 
       List<Map<String, Object>> returnVal = null;
+
       try {
         returnVal = obejectMapper.readValue(formVal, new TypeReference<List<Map<String, Object>>>() {});
       } catch (JsonProcessingException e) {
@@ -65,17 +64,23 @@ class CliLeagueServiceImplTest {
       }
 
 
-      List<String> ddd = new ArrayList<>();
+//      List<String> ddd = new ArrayList<>();
+      Set<String> ddd = new HashSet<>();
 
       if (returnVal != null) {
         for(int i=2; i<returnVal.size(); i++) {
 //          dd[0] += returnVal.get(i).get("value");
-            ddd.add(returnVal.get(i).get("value").toString());
+            try {
+                ddd.add(returnVal.get(i).get("value").toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
       }
+        System.out.println("ddd = " + ddd);
 
       if (returnVal != null) {
-        for(int i=2; i<returnVal.size(); i++) {
+        for(int i=0; i<ddd.size(); i++) {
           LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
 
 //        leagueApplyVO.setLeagueId(cliLeagueServiceVO.getLeagueVO().getLeagueId());
@@ -102,5 +107,15 @@ class CliLeagueServiceImplTest {
 //      });
     }
 
+
+    @Test
+    public void tdfsdfa() {
+        List<String> members = new ArrayList<>();
+
+        String membersStr = "abc def lee";
+
+        members = Arrays.asList(membersStr.split(" "));
+        System.out.println("members = " + members);
+    }
 
 }

@@ -28,4 +28,10 @@ public interface LeagueService {
     // league cancel 처리
     public void cancelLeagueApply(HttpServletRequest request, int leagueId);
 
+    // league 결제 처리
+    public void payLeague(String leagueId, HttpServletRequest request);
+
+    // league apply team member list 반환
+    public List<Map<String, String>> getLeagueApplyMember(int leagueId, String memberId);
+
 }

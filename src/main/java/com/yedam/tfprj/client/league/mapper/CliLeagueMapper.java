@@ -26,8 +26,9 @@ public interface CliLeagueMapper {
     @Select("select distinct is_approve\n" +
             "from league_apply\n" +
             "where league_id = #{leagueId}\n" +
-            "and team_id = #{teamId}")
-    public String isLeagueApplyStatus(int leagueId, String teamId);
+            "and team_id = #{teamId}\n" +
+            "and member_id = #{memberId}")
+    public String isLeagueApplyStatus(int leagueId, String teamId, String memberId);
 
     @Select("select team_id from member where member_id = #{memberId}")
     public String selectTeamId(String memberId);
@@ -43,5 +44,29 @@ public interface CliLeagueMapper {
     // teamId 얻기
     @Select("select team_id from member where member_id = #{memberId}")
     public int getTeamId(String memberId);
+
+    // league apply 건에 pay 처리
+    @Update("update league_apply set is_approve = 1803 where league_id = #{leagueId} and team_id = #{teamId}")
+    public void payLeague(int leagueId, int teamId);
+
+    // league_apply 정보 가져오기
+    @Select("select distinct team_member\n" +
+            "from league_apply\n" +
+            "where   league_id = #{leagueId}\n" +
+            "and     team_id = #{teamId}")
+    public String getLeagueApplyTeamMember(int leagueId, String teamId);
+
+
+    // payement 테이블에 결제정보 입력
+    @Select("insert into payment values (\n" +
+            "                            SEQ_PAYMENT.nextval,\n" +
+            "                            sysdate,\n" +
+            "                            #{payAmount},\n" +
+            "                            '1506',\n" +
+            "                            #{memberId},\n" +
+            "                            '1701',\n" +
+            "                            '802'\n" +
+            "                            )")
+    public void insertLeaguePayment(int payAmount, String memberId);
 
 }

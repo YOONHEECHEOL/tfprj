@@ -153,6 +153,18 @@ h4.h4 {
     left: 0;
 }
 
+/* mouseover modal */
+.mo-rm {
+    position: relative;
+}
+.mo-modal {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    border: 1px solid #ddd;
+    padding: 1.2rem;
+}
+
 /* contents */
 .main-margin {
     margin-top: 8vh;

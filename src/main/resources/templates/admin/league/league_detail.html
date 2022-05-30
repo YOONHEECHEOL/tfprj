@@ -59,7 +59,7 @@
                             <th>팀장</th>
                             <th>게임 수</th>
                             <th>승수</th>
-                            <th> </th>
+                            <th colspan="2"> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,8 +71,17 @@
                             <td>
                                 <input type="hidden" th:value="${m.getIsApprove()}">
                                 <input type="hidden" th:value="${m.getTeamId()}">
-                                <button class="c-button">리그 참가승인</button>
+                                <button class="c-button" th:if="${m.getIsApprove() == 1801}">
+                                    미결제
+                                </button>
+                                <button class="c-button" th:if="${m.getIsApprove() == 1803}">
+                                    결제확인
+                                </button>
+                                <button class="c-button" th:if="${m.getIsApprove() == 1804}">
+                                    리그 참가승인
+                                </button>
                             </td>
+                            <td><i class="fas fa-search mt-3"></i></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,6 +124,7 @@
                 // printApplyTeam();
 
                 submitLeagueTeam()
+                viewInfo()
             })
         }
         loadTeam()
@@ -152,6 +162,38 @@
         //             })
         // }
 
+
+        const viewInfo = () => {
+            document.querySelector('#tournament-table').addEventListener('mouseover', () => {
+                const tg = event.target;
+
+                if(tg.tagName == 'I'){
+
+                    tg.parentNode.setAttribute('class', 'mo-rm')
+
+                    // 결제 테이블에서 결제정보 조회
+                    let div = document.createElement('div')
+                    div.innerText = 'hi!!'
+                    div.setAttribute('class', 'mo-modal')
+
+                    tg.parentNode.append(div)
+
+                }
+            })
+            document.querySelector('#tournament-table').addEventListener('mouseout', () => {
+                const tg = event.target;
+
+                if(tg.tagName == 'I'){
+
+                    tg.parentNode.removeAttribute('class')
+
+                    // 결제 테이블에서 결제정보 조회
+                    let div = tg.parentNode.children[1]
+                    div.remove()
+
+                }
+            })
+        }
 
         // 리그 참가 팀 확정
         const submitLeagueTeam = () => {
@@ -195,6 +237,7 @@
 
                             // 참가팀 넣기
                             cn.children[4].remove()
+                            cn.children[4].remove()
                             console.log(cn)
                             league_team.append(cn);
 
@@ -202,7 +245,10 @@
                         }
                     }
                     else {
-                        alert('참가비 미결제!')
+                        // 1801, 1803
+                        if(confirm('참가비 결제가 확인되었습니다.')) {
+
+                        }
                     }
                 }
             })
