@@ -12,4 +12,5 @@ public interface WorksheetService {
 
       public WorksheetVO validateWorkTime(String workerId);
       public List<NewWorkSheetVO> selectNextWorker();
+      public List<NewWorkSheetVO> yesterDayWorker();
    }

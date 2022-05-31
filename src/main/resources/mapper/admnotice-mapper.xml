@@ -33,7 +33,7 @@
 
     <insert id="AdmNoticeInsert" parameterType="com.yedam.tfprj.admin.community.service.notice.AdmNoticeVO">
         INSERT INTO NOTICE_BOARD
-        VALUES(no_seq.nextval, #{title}, sysdate, 0, #{details})
+        VALUES(no_seq.nextval, #{title}, current_date, 0, #{details})
     </insert>
 
 </mapper>

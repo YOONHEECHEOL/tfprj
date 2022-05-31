@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceService;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO;
 import com.yedam.tfprj.admin.workerAttendance.service.ReturnVO;
+import com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO;
 import com.yedam.tfprj.admin.worksheet.service.WorksheetService;
 import com.yedam.tfprj.admin.worksheet.service.WorksheetVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class WorkerAttendanceController {
         rVo.setMinute(minute);
 
         // 정상출근
-        if(minute > -10 && minute < 10) {
+        if(minute > -10 && difference < 59) {
             rVo.setLate("0");
             return rVo;
         // 만약 실제 출근시간이 10분 이상, 120분 이하 늦게될때 지각처리
@@ -163,5 +164,19 @@ public class WorkerAttendanceController {
     @PostMapping("/adm/allAbsence")
     public WorkerAttendanceVO allAbsence(String workerId){
         return service.allAbsence(workerId);
+    }
+
+    @ResponseBody
+    @RequestMapping("/adm/notInValidation")
+    public void notInValidation(){
+        List<NewWorkSheetVO> list = worksheetService.yesterDayWorker();
+        for(int i=0; i<list.size(); i++){
+            String workerId = list.get(i).getWorkerId();
+            String dated = list.get(i).getDated();
+
+            if(service.selectNotInWorker(workerId, dated).size() == 0){
+                service.insertNotInWorker(workerId, dated);
+            }
+        }
     }
 }

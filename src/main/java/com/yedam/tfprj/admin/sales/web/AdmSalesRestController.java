@@ -18,23 +18,23 @@ public class AdmSalesRestController {
     PaymentServiceImpl service;
 
     @RequestMapping("/adm/searchSales")
-    public List<PaymentVO> searchSales(@RequestParam String firstDate, @RequestParam String lastDate) {
-        PaymentVO vo = new PaymentVO();
-
-        vo.setFirstDate(firstDate);
-        vo.setLastDate(lastDate);
-
-        System.out.println("날짜" + service.paymentList(vo));
+    public List<PaymentVO> searchSales(PaymentVO vo) {
+        System.out.println("요일확인" + vo);
         return service.paymentList(vo);
     }
 
     @RequestMapping("/adm/findMemNonMem")
-    public List<Map<String, Object>> findMemNonMem(@RequestParam String firstDate, @RequestParam String lastDate){
-        PaymentVO vo = new PaymentVO();
+    public List<Map<String, Object>> findMemNonMem(PaymentVO vo){
+        return service.findMemNonMem(vo);
+    }
 
-        vo.setFirstDate(firstDate);
-        vo.setLastDate(lastDate);
+    @RequestMapping("/adm/findPayType")
+    public List<Map<String, Object>> findPayType(PaymentVO vo){
+        return service.findPayType(vo);
+    }
 
-        return service.findMemNonMem();
+    @RequestMapping("/adm/avgSalesByDay")
+    public List<Map<String, Object>> avgSalesByDay(PaymentVO vo){
+        return service.avgSalesByDay(vo);
     }
 }

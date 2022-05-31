@@ -16,13 +16,13 @@
                     <h1 id="today"></h1>
                     <h2>요일선택</h2>
                     <div>
-                        <input type="radio" name="day" value="0">일
-                        <input type="radio" name="day" value="1">월
-                        <input type="radio" name="day" value="2">화
-                        <input type="radio" name="day" value="3">수
-                        <input type="radio" name="day" value="4">목
-                        <input type="radio" name="day" value="5">금
-                        <input type="radio" name="day" value="6">토
+                        <input type="radio" name="day" value="1">일
+                        <input type="radio" name="day" value="2">월
+                        <input type="radio" name="day" value="3">화
+                        <input type="radio" name="day" value="4">수
+                        <input type="radio" name="day" value="5">목
+                        <input type="radio" name="day" value="6">금
+                        <input type="radio" name="day" value="7">토
                     </div>
                     <div>
                         <select id="selectMonth">
@@ -54,6 +54,8 @@
                     </div>
                 <br><br><br><br><br>
                 <div id="chart_div2"></div>
+                <div id="chart_div3"></div>
+                <div id="chart_div4"></div>
             </div>
         </div>
     </div>
@@ -94,9 +96,8 @@
         });
 
 
-
-        function drawChart2(){
-            var options = {'title':'기간 총 매출',
+        function drawMemNonMemChart(){
+            var options = {'title':'회원 비회원 구분',
                 'width':400,
                 'height':300};
 
@@ -105,12 +106,22 @@
             data.addColumn('string', '부서');
             data.addColumn('number', '매출');
 
-            //ajax 호출
             let jsonData;
+            let day = $('input[name="day"]:checked').val();
+            let firstDate = $('#pickLogic').children('input:eq(0)').val();
+            let lastDate = $('#pickLogic').children('input:eq(1)').val();
+
+            //요일 선택하지 않았을때
+            if(day == undefined){
+                day = 0;
+            }
+
+            //ajax 호출
             $.ajax({
                 url : "findMemNonMem",
-                data : {firstDate : $('#pickLogic').children('input:eq(0)').val(),
-                        lastDate : $('#pickLogic').children('input:eq(1)').val()
+                data : {firstDate : firstDate,
+                        lastDate : lastDate,
+                        day : day
                 }
             }).done(function(datas){
                 console.log(datas);
@@ -120,7 +131,86 @@
                 }
                 console.log(jsonData);
                 data.addRows(jsonData);
-                var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div2'))
+                chart.draw(data, options);
+            })
+        }
+
+        function drawPayTypeChart(){
+            var options = {'title':'온라인 오프라인 구분',
+                'width':400,
+                'height':300};
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '매출');
+
+            let jsonData;
+            let day = $('input[name="day"]:checked').val();
+            let firstDate = $('#pickLogic').children('input:eq(0)').val();
+            let lastDate = $('#pickLogic').children('input:eq(1)').val();
+
+            //요일 선택하지 않았을때
+            if(day == undefined){
+                day = 0;
+            }
+
+            //ajax 호출
+            $.ajax({
+                url : "findPayType",
+                data : {firstDate : firstDate,
+                        lastDate : lastDate,
+                        day : day
+                }
+            }).done(function(datas){
+                console.log(datas);
+                jsonData = [];
+                for(let data of datas){
+                    jsonData.push([data.pay, data.paymentAmount])
+                }
+                console.log(jsonData);
+                data.addRows(jsonData);
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+                chart.draw(data, options);
+            })
+        }
+
+        function avgSalesByDay(){
+            var options = {'title':'요일별 평균 매출량',
+                'width':400,
+                'height':300};
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '매출');
+
+            let jsonData;
+            let day = $('input[name="day"]:checked').val();
+            let firstDate = $('#pickLogic').children('input:eq(0)').val();
+            let lastDate = $('#pickLogic').children('input:eq(1)').val();
+
+            //요일 선택하지 않았을때
+            if(day == undefined){
+                day = 0;
+            }
+
+            //ajax 호출
+            $.ajax({
+                url : "avgSalesByDay",
+                data : {firstDate : firstDate,
+                        lastDate : lastDate,
+                }
+            }).done(function(datas){
+                console.log(datas);
+                jsonData = [];
+                for(let data of datas){
+                    jsonData.push([data.day, data.paymentAmount])
+                }
+                console.log(jsonData);
+                data.addRows(jsonData);
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
                 chart.draw(data, options);
             })
         }
@@ -169,16 +259,22 @@
 
         function search(){
             $('#searchBtn').on('click', function() {
+                $('#searchResult').empty();
                 if ($('#pickLogic').children('input:eq(0)').val() == "" || $('#pickLogic').children('input:eq(1)').val() == "") {
                     alert('날짜를 선택해주세요.')
                 } else {
                     let firstDate = $('#pickLogic').children('input:eq(0)').val();
                     let lastDate = $('#pickLogic').children('input:eq(1)').val();
-
+                    let day = $('input[name="day"]:checked').val()
+                    if(day == undefined){
+                        day = 0;
+                    }
+                    console.log(day);
                     $.ajax({
                         url: "searchSales",
                         data : { firstDate : firstDate,
-                                 lastDate : lastDate
+                                 lastDate : lastDate,
+                                 day : day
                         }
                     }).done(function(response){
                         console.log(response);
@@ -191,7 +287,7 @@
                             count += response[i].count;
                         }
 
-                        let div = `<div>기간 총 매출</div> <br>`
+                        let div = `<div id="allSell"></div> <br>`
                             div += `<div> ${firstDate} - ${lastDate}  </div>`
 
                         for(let i=0; i<response.length; i++){
@@ -202,14 +298,16 @@
                         }
                             div += `<div> 총 ${count}회 </div>
                                     <div>${sum}원</div>`
-                        $('#pickLogic').append(div);
+                        $('#searchResult').append(div);
                     })
 
                     google.charts.load('current', {'packages':['corechart']});
                     google.charts.setOnLoadCallback(drawChart);
 
                     function drawChart(){
-                        drawChart2();
+                        drawMemNonMemChart();
+                        drawPayTypeChart();
+                        avgSalesByDay();
                     }
                 }
             })

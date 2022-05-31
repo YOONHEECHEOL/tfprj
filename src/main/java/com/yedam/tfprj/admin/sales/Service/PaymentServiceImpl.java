@@ -18,7 +18,17 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Map<String, Object>> findMemNonMem() {
-        return mapper.findMemNonMem();
+    public List<Map<String, Object>> findMemNonMem(PaymentVO vo) {
+        return mapper.findMemNonMem(vo);
+    }
+
+    @Override
+    public List<Map<String, Object>> findPayType(PaymentVO vo) {
+        return mapper.findPayType(vo);
+    }
+
+    @Override
+    public List<Map<String, Object>> avgSalesByDay(PaymentVO vo) {
+        return mapper.avgSalesByDay(vo);
     }
 }

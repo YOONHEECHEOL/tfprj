@@ -96,7 +96,7 @@ commit;
 
 select * from notice_board;
 insert into notice_board
-values (2, 'test',sysdate, 1, 'hello world!');
+values (2, 'test',current_date, 1, 'hello world!');
 
 desc notice_board;
 
@@ -110,7 +110,7 @@ drop table notice_board;
 create sequence n_seq
     start with 1
     increment by 1;
-insert into notice_board values (n_seq.nextVal, 'test', sysdate, 1, 'test test');
+insert into notice_board values (n_seq.nextVal, 'test', current_date, 1, 'test test');
 commit;
 create table notice_board
 (

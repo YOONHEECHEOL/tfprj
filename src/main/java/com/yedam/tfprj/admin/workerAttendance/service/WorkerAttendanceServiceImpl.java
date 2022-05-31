@@ -96,4 +96,14 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     public WorkerAttendanceVO allAbsence(String workerId) {
         return mapper.allAbsence(workerId);
     }
+
+    @Override
+    public List<WorkerAttendanceVO> selectNotInWorker(String dd, String ff) {
+        return mapper.selectNotInWorker(dd, ff);
+    }
+
+    @Override
+    public int insertNotInWorker(String workerId, String dated) {
+        return mapper.insertNotInWorker(workerId, dated);
+    }
 }

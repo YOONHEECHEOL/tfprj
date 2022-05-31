@@ -16,5 +16,6 @@ public interface WorksheetMapper {
     public int updateWorksheet(String workerId, String goingTime, String quittingTime, String color, String textColor, String backgroundColor);
     public WorksheetVO validateWorkTime(String workerId);
     public List<NewWorkSheetVO> selectNextWorker();
+    public List<NewWorkSheetVO> yesterDayWorker();
 
 }

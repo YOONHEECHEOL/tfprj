@@ -276,6 +276,13 @@
             return thisWeek;
         }
 
+        //근무자가 출근하지 않은 날이 있을수도 있기때문에, work_record tr에 값을 넣어주기
+        function notInValidation(){
+            $.ajax({
+                url : "notInValidation"
+            })
+        }
+        notInValidation()
 
         // 이번주 날짜가 들어간 태그 만들기.
         // 오늘은 빨간색으로 표시됨.

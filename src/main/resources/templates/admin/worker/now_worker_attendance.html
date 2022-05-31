@@ -31,7 +31,7 @@
                         <th th:width="100">퇴근시간</th>
                     </tr>
                 </thead>
-                <tbody th:each="l, status: ${nowWorker}" th:if="${nowWorker.attId != 0}">
+                <tbody th:each="l, status: ${nowWorker}" >
                     <tr>
                         <td th:width="100" th:text="${nowWorker.workerName}">홍길동</td>
     <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
@@ -57,13 +57,13 @@
 <!--                        select sum(is_late)-->
 <!--                        from staff_attendance-->
 <!--                        where worker_id = 'test3'-->
-<!--                        and att_dt IN(trunc(sysdate,'d'), trunc(sysdate,'d')+1, trunc(sysdate,'d')+2, trunc(sysdate,'d')+3, trunc(sysdate,'d')+4, trunc(sysdate,'d')+5, trunc(sysdate,'d')+6)-->
+<!--                        and att_dt IN(trunc(current_date,'d'), trunc(current_date,'d')+1, trunc(current_date,'d')+2, trunc(current_date,'d')+3, trunc(current_date,'d')+4, trunc(current_date,'d')+5, trunc(current_date,'d')+6)-->
                         <th th:width="100">월간 지각</th>
                         <!--  월간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 달의 지각횟수를 전부다 더한 값을 넣어줌. -->
 <!--                        SELECT  -->
 <!--                        SUM(is_late)  -->
 <!--                        FROM staff_attendance-->
-<!--                        WHERE SUBSTR(att_dt,0,8) BETWEEN (TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') ) AND (LAST_DAY(SYSDATE))-->
+<!--                        WHERE SUBSTR(att_dt,0,8) BETWEEN (TO_CHAR(TRUNC(current_date,'MM'),'YYYYMMDD') ) AND (LAST_DAY(current_date))-->
 <!--                        AND worker_id = 'test3-->
                         <th th:width="100">결근</th>
                     </tr>
@@ -226,7 +226,6 @@
                      url : "jsonSheetList"
                  }).done(function(response){
                     console.log(response);
-                    console.log("오늘날짜의 퇴근시간 " + response[i].quittingTime.substring(11,21).replace('24', ''));
                     // 1부 근무자들을 대상으로 동적으로 tr태그를 만들어줌.
                      tr = "<tr>";
                      for (let i = 0; i < response.length; i++) {

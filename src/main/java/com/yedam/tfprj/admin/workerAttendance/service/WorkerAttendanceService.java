@@ -25,4 +25,6 @@ public interface WorkerAttendanceService {
       public WorkerAttendanceVO weekLate(String workerId);
       public WorkerAttendanceVO monthLate(String workerId);
       public WorkerAttendanceVO allAbsence(String workerId);
+      public List<WorkerAttendanceVO> selectNotInWorker(String dd, String ff);
+      public int insertNotInWorker(String workerId, String dated);
    }

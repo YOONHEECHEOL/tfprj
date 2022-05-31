@@ -41,12 +41,12 @@
 
     <insert id="CliQnaInsert" parameterType="com.yedam.tfprj.client.community.service.qna.CliQnaVO">
         INSERT INTO QNA_BOARD
-        VALUES(qno_seq.nextval, #{title}, #{writer}, sysdate, 0, #{details})
+        VALUES(qno_seq.nextval, #{title}, #{writer}, current_date, 0, #{details})
     </insert>
 
     <insert id="CliQnaAnswerInsert" parameterType="com.yedam.tfprj.client.community.service.qna.CliQnaVO">
         INSERT INTO QNA_ANSWER
-        VALUES(qcno_seq.nextval, sysdate, #{cdetails}, #{writer}, #{qNo})
+        VALUES(qcno_seq.nextval, current_date, #{cdetails}, #{writer}, #{qNo})
     </insert>
 
     <delete id="CliQnaAnswerDelete" parameterType="com.yedam.tfprj.client.community.service.qna.CliQnaVO">

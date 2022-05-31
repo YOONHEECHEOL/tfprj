@@ -5,7 +5,7 @@
 
     <select id="bringTodayList" resultType="com.yedam.tfprj.admin.todo.Service.TodoVO">
         SELECT * FROM TODOLIST
-        WHERE TO_CHAR(CHK_MAKE_DATE, 'YY-MM-DD') = TO_CHAR(SYSDATE, 'YY-MM-DD')
+        WHERE TO_CHAR(CHK_MAKE_DATE, 'YY-MM-DD') = TO_CHAR(current_date, 'YY-MM-DD')
         ORDER BY CHK_NO
     </select>
 
@@ -36,7 +36,7 @@
 
     <insert id="createTodo">
         insert into todoList(chk_no, chk_make_date, chk_contents, is_chk, process_complete)
-        values(seq_todo.nextval, sysdate, #{chkContents}, 0, 0)
+        values(seq_todo.nextval, current_date, #{chkContents}, 0, 0)
     </insert>
 
     <update id="ajaxProcessCompleteUpdate">

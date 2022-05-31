@@ -14,8 +14,11 @@ public class PaymentVO {
 
     private String firstDate;
     private String lastDate;
+    private String day;
+    private String pay;
 
     private int sum;
     private int count;
     private String member;
+
 }

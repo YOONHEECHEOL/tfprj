@@ -73,4 +73,9 @@ public class WorksheetServiceImpl implements WorksheetService {
     public List<NewWorkSheetVO> selectNextWorker() {
         return mapper.selectNextWorker();
     }
+
+    @Override
+    public List<NewWorkSheetVO> yesterDayWorker() {
+        return mapper.yesterDayWorker();
+    }
 }
