@@ -1,4 +1,4 @@
-package com.yedam.tfprj.client.game.service;
+package com.yedam.tfprj.client.reservation.service;
 
 import lombok.Data;
 
@@ -9,8 +9,6 @@ public class GameVO {
     private String memberId;
     private String memberName;
     private int innings;
-    private String homeName;
-    private String awayName;
     private int homeScore;
     private int awayScore;
     private int homeHits;

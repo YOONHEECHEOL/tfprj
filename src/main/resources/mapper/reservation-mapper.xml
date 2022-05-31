@@ -22,10 +22,40 @@
     </select>
 
     <insert id="insertReservation">
+        INSERT INTO reservation
+        (
+            res_id,
+            member_id,
+            start_time,
+            end_time,
+            room,
+            status_cd,
+            GAME_ID,
+            res_date,
+            TEL,
+            MEMBER_NAME
 
+        )
+        VALUES
+            (
+                SEQ_RESERVATION.NEXTVAL,
+                #{memberId},
+                #{startTime},
+                #{endTime},
+                #{room},
+                700,
+                (select nvl(max(game_Id),0)+1 from game),
+                current_date,
+                #{tel},
+                #{memberName}
+            )
     </insert>
 
 
+    <insert id="insertGame">
+
+
+    </insert>
 
 
 </mapper>

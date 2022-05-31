@@ -1,5 +1,6 @@
 package com.yedam.tfprj.client.reservation.mapper;
 
+import com.yedam.tfprj.client.reservation.service.GameVO;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
@@ -15,6 +16,8 @@ public interface ReservationMapper {
     public List<Reservation>  reservationCheck(String date,String room);
 
     public List<String> teamList();
+
+    public int insertGame(GameVO gv);
 
 
 }

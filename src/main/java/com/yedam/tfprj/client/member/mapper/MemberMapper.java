@@ -3,7 +3,6 @@ package com.yedam.tfprj.client.member.mapper;
 
 
 import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
-import com.yedam.tfprj.client.game.service.GameVO;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 

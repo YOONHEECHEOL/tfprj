@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.http.HttpRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,10 +30,11 @@ public class CliReservationController {
     public String resInfo(Reservation reservation, Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
         if(session.getAttribute("memberId") != null){
-            reservation.setMemberId((String)(session.getAttribute("memberId")));
+            reservation.setMemberId((String)session.getAttribute("memberId"));
         }else{
             reservation.setMemberId("비회원");
         }
+        reservationMapper.insertReservation(reservation);
 
         model.addAttribute("reservation", reservation);
         return "client/reservation/info";}

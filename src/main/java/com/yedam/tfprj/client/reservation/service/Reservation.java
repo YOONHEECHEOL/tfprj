@@ -24,5 +24,5 @@ public class Reservation {
 
     private Date resDate;
     private String tel;
-    private String name;
+    private String memberName;
 }

@@ -2,7 +2,6 @@ package com.yedam.tfprj.client.member.service;
 
 
 import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
-import com.yedam.tfprj.client.game.service.GameVO;
 import com.yedam.tfprj.client.member.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
