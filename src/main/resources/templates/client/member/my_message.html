@@ -55,6 +55,16 @@
             })
         })
 
+        $("#noBtn").on("click", function(){
+            var mi = $("#memberId").val();
+            $.ajax({
+                url: "/cli/notIntoTeam",
+                data: {memberId: mi}
+            }).done(function () {
+                location.href = "/cli/myMessage";
+            })
+        })
+
         fetch('/msg/team', {
             method: 'post'
         })

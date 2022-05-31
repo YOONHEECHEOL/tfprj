@@ -44,6 +44,26 @@ public class MsgServiceImpl implements MsgService{
     }
 
     @Override
+    public MsgServiceVO getAttendMsg(HttpServletRequest request) {
+        MsgServiceVO msgServiceVO = new MsgServiceVO();
+
+        msgServiceVO.setAttendMsgVO(msgMapper.getAttendMsg(request.getSession().getAttribute("workerId").toString(), 1001));
+
+        return msgServiceVO;
+    }
+
+    @Override
+    public void insertAttendMsg(AttendMsgVO attendMsgVO) {
+        MessageVO messageVO = new MessageVO();
+
+        // 값을 messageVO에 저장
+        messageVO.setMessageContents(attendMsgVO.toString());
+
+        msgMapper.insertAttendMsg(messageVO);
+    }
+
+
+    @Override
     public void isChkUpdate(MessageVO messageVO, HttpServletRequest request) {
         HttpSession session = request.getSession();
         messageVO.setMemberId(session.getAttribute("memberId").toString());

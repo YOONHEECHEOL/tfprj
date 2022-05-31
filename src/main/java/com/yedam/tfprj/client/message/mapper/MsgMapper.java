@@ -1,5 +1,6 @@
 package com.yedam.tfprj.client.message.mapper;
 
+import com.yedam.tfprj.client.message.service.AttendMsgVO;
 import com.yedam.tfprj.client.message.service.MessageVO;
 import com.yedam.tfprj.client.message.service.TeamMsgVO;
 import org.apache.ibatis.annotations.Insert;
@@ -19,6 +20,12 @@ public interface MsgMapper {
 
     //팀초대 메시지 전송
     public void insertTeamMsg(MessageVO messageVO);
+
+    //출결 메시지 조회
+    public List<AttendMsgVO> getAttendMsg(String workerId, int MessageCd);
+
+    //출결 메시지 전송
+    public void insertAttendMsg(MessageVO messageVO);
 
     //내메세지 조회 시 메시지 일괄 읽음처리
     public void isChkUpdate(MessageVO messageVO);

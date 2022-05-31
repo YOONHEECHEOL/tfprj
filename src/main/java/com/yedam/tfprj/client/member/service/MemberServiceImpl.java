@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
 
         return result;
     }
-
+    // 로그아웃 메세지
     @Override
     public void logoutMessage(HttpServletRequest request, String message) {
 
@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-
+    // 단건조회
     @Override
     public MemberVO findOne(HttpServletRequest request, MemberVO vo) {
         HttpSession session = request.getSession();
@@ -71,17 +71,17 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.insertMember(vo);
         return '1';
     }
-
+    //회원정보 수정
     @Override
     public int updateMember(MemberVO vo) {
         return memberMapper.updateMember(vo);
     }
-
+    //회원팀ID 수정
     @Override
     public int updateMember2(MemberVO vo) {
         return memberMapper.updateMember2(vo);
     }
-
+    //게임정보 조회
     @Override
     public List<MemberGameVO> selectGame(MemberVO vo, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -89,12 +89,12 @@ public class MemberServiceImpl implements MemberService {
         List<MemberGameVO> list = memberMapper.selectGame(vo);
         return list;
     }
-
+    // 멤버 검색기능
     @Override
     public List<MemberVO> searchMember(MemberVO vo) {
         return memberMapper.searchMember(vo);
     }
-
+    //팀 정보 조회
     @Override
     public List<MemberVO> isTeam(MemberVO vo, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -102,39 +102,39 @@ public class MemberServiceImpl implements MemberService {
         List<MemberVO> list = memberMapper.isTeam(vo);
         return list;
     }
-
+    // 전체조회
     @Override
     public List<MemberVO> selectAll() {
         List<MemberVO> list = memberMapper.selectAll();
         return list;
     }
-
+    //회원등급수정
     @Override
     public int gradeUpdate(MemberVO vo) {
         return memberMapper.gradeUpdate(vo);
     }
-
+    //전체조회
     @Override
     public List<MemberVO> findAll() {
         return memberMapper.findAll();
     }
-
+    //블랙리스트 조회
     @Override
     public List<MemberVO> findBlack() {
         return memberMapper.findBlack();
     }
-
+    //블랙리스트 등록,해제
     @Override
     public int blackUpdate(MemberVO vo) {
         return memberMapper.blackUpdate(vo);
     }
-
+    //팀원 조회
     @Override
     public List<MemberVO> teamMember(MemberVO vo) {
         List<MemberVO> list = memberMapper.teamMember(vo);
         return list;
     }
-
+    //블랙리스트 사유 변경
     @Override
     public void reasonUpdate(MemberVO vo) {
         if(vo.getBlacklistYn() == 1){
@@ -144,7 +144,7 @@ public class MemberServiceImpl implements MemberService {
         }
         memberMapper.reasonUpdate(vo);
     }
-
+    //관리자 회원 검색 기능
     @Override
     public List<MemberVO> admSearchMember(MemberVO vo) {
         System.out.println(vo);

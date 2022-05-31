@@ -1,10 +1,7 @@
 package com.yedam.tfprj.client.message.web;
 
 import com.yedam.tfprj.client.message.mapper.MsgMapper;
-import com.yedam.tfprj.client.message.service.MessageVO;
-import com.yedam.tfprj.client.message.service.MsgService;
-import com.yedam.tfprj.client.message.service.MsgServiceVO;
-import com.yedam.tfprj.client.message.service.TeamMsgVO;
+import com.yedam.tfprj.client.message.service.*;
 import oracle.ucp.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -19,7 +16,7 @@ public class MsgController {
 
     @Autowired
     MsgService msgServiceImpl;
-
+    // 메세지 조회
     @RequestMapping("/msg/msg")
     public List<MessageVO> getMessage(HttpServletRequest request) {
         return msgServiceImpl.getMessage(request);
@@ -36,6 +33,19 @@ public class MsgController {
     @PostMapping("/msg/insertTeamMsg")
     public void insertTeamMsg(@RequestBody TeamMsgVO teamMsgVO) {
         msgServiceImpl.insertTeamMsg(teamMsgVO);
+    }
+
+
+    // AttendMsg
+    @PostMapping("/msg/attend")
+    public MsgServiceVO getAttendMsg(HttpServletRequest request) {
+        return msgServiceImpl.getAttendMsg(request);
+    }
+
+    // insert AttendMsg -> Message table
+    @PostMapping("/msg/insertAttendMsg")
+    public void insertAttendMsg(@RequestBody AttendMsgVO attendMsgVO) {
+        msgServiceImpl.insertAttendMsg(attendMsgVO);
     }
 
 }

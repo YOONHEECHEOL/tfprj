@@ -8,6 +8,7 @@ import java.util.List;
 public class MsgServiceVO {
 
     List<TeamMsgVO> teamMsgVO; // team 초대메세지
-    ResMsgVO resMsgVO;
+    List<ResMsgVO> resMsgVO;
+    List<AttendMsgVO> attendMsgVO;
 
 }

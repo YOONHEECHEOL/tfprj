@@ -6,7 +6,7 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <div th:if="${score eq null}">
-        <span>zzz</span>
+        <span>기록이 없습니다.</span>
     </div>
     <div th:unless="${score eq null}">
         <div th:each="scr, i : ${score}">
@@ -22,36 +22,91 @@
             <span th:text="${scr.gameId}"></span>
         </div>
     </div>
-    <div id="piechart" style="width: 900px; height: 500px;">
-
+    <div>
+        <ul class="row nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="myHighestDistance" data-toggle="pill" onclick="drawChart1()" role="tab"
+                   aria-controls="pills-profile" aria-selected="true">최고비거리</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="myBattingAverage" data-toggle="pill" onclick="drawChart2()" role="tab"
+                   aria-controls="pills-contact" aria-selected="true">타율</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="myHomeRun" data-toggle="pill" onclick="drawChart3()" role="tab"
+                   aria-controls="pills-contact" aria-selected="true">홈런</a>
+            </li>
+        </ul>
     </div>
     <div id="chart_div">
 
     </div>
 
     <script>
-        let res;
         google.charts.load('current', {'packages': ['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var jsonData =
-                    $.ajax({
-                        url: "/cli/myScoreJson",
-                        dataType: "json",
-                        async: false
-                    }).done(function(data){
-                        res = data;
-                        console.log(res)
-                    }).responseText
+        google.charts.setOnLoadCallback(drawChart1);
 
-                console.log(res);
-                var data = new google.visualization.DataTable(jsonData);
-                console.log(data);
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                chart.draw(data, {
-                    title: '내 기록'
-                });
-            }
+        function drawChart1() {
+            var options = {title: '내 기록'};
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '최고비거리');
+            let jsonData;
+            $.ajax({
+                url: "/cli/myScoreJson"
+            }).done(function (datas) {
+                jsonData = [];
+                for (dt of datas) {
+                    jsonData.push([dt.resDate, dt.highestDistance])
+                }
+                data.addRows(jsonData);
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            })
+        }
+
+        function drawChart2() {
+            var options = {title: '내 기록'};
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '타율');
+            let jsonData;
+            $.ajax({
+                url: "/cli/myScoreJson"
+            }).done(function (datas) {
+                jsonData = [];
+                for (dt of datas) {
+                    var avg = dt.hits/dt.batCounts;
+                    jsonData.push([dt.resDate, avg])
+                }
+                data.addRows(jsonData);
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            })
+        }
+
+        function drawChart3() {
+            var options = {title: '내 기록'};
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '홈런');
+            let jsonData;
+            $.ajax({
+                url: "/cli/myScoreJson"
+            }).done(function (datas) {
+                jsonData = [];
+                for (dt of datas) {
+                    jsonData.push([dt.resDate, dt.homeruns])
+                }
+                data.addRows(jsonData);
+
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            })
+        }
+
 
     </script>
 </th:block>
