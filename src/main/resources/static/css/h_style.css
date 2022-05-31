@@ -398,3 +398,12 @@ main.contents {
 /*.a-list > li div,  team-info  {*/
 /*    pointer-events: none;*/
 /*}*/
+.tm-r {
+    display: flex;
+}
+
+.tm-table > li {
+    padding: .6rem 1.2rem;
+    border: 1px solid #bbb;
+    display: block;
+}

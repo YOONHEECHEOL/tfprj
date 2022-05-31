@@ -19,5 +19,6 @@ public class AdmLeagueServiceVO {
     private List<LeagueApplyVO> leagueApplyVOList;
     private List<TeamVO> leagueApplyTeam;
     private List<TeamVO> leagueApplyApproveTeam;
+    private List<LeagueStatusVO> leagueStatusTeamList;
 
 }

@@ -1,6 +1,7 @@
 package com.yedam.tfprj.admin.league.service;
 
 import com.yedam.tfprj.admin.league.mapper.AdmLeagueMapper;
+import com.yedam.tfprj.client.league.mapper.CliLeagueMapper;
 import com.yedam.tfprj.client.league.service.LeagueApplyVO;
 import com.yedam.tfprj.client.league.service.LeagueVO;
 import com.yedam.tfprj.client.team.service.TeamVO;
@@ -13,12 +14,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdmLeagueServiceImpl implements LeagueService{
 
     @Autowired
     AdmLeagueMapper admLeagueMapper;
+    CliLeagueMapper cliLeagueMapper;
 
     @Override
     public AdmLeagueServiceVO getLeagueList() {
@@ -150,6 +153,46 @@ public class AdmLeagueServiceImpl implements LeagueService{
 
     @Override
     public void setLeagueApplyTeamStatus(int teamId, int leagueId) {
-        admLeagueMapper.setLeagueApplyTeamStatus(teamId, leagueId);
+        String isApprove = admLeagueMapper.getIsApprove(leagueId, teamId);
+
+        if(isApprove.equals("1804")) {
+            admLeagueMapper.setLeagueApplyTeamStatus(teamId, leagueId, 1805);
+        } else {
+            admLeagueMapper.setLeagueApplyTeamStatus(teamId, leagueId, 1804);
+        }
+    }
+
+    // league_status 해당 league 경기 중인 팀들 모두 불러오기
+    @Override
+    public AdmLeagueServiceVO getLeagueStatusTable(int leagueId) {
+
+        AdmLeagueServiceVO admLeagueServiceVO = new AdmLeagueServiceVO();
+
+        // 반환값
+        List<LeagueStatusVO> returnVal = new ArrayList<>();
+        returnVal = admLeagueMapper.getLeagueStatus(leagueId);
+
+        // return 담기
+        admLeagueServiceVO.setLeagueStatusTeamList(returnVal);
+
+        return admLeagueServiceVO;
+    }
+
+
+    @Override
+    public void insertLeagueStatus(List<Map<String, String>> param) {
+
+        int leagueId = Integer.parseInt(param.get(0).get("leagueId"));
+        int status = Integer.parseInt(param.get(1).get("status"));
+
+        // insert into league_status table
+        param.forEach(l -> {
+            if(l.containsKey("teamId")) {
+                admLeagueMapper.insertLeagueStatus(status, leagueId, l.get("teamId"));
+            }
+        });
+
+
     }
 }
+

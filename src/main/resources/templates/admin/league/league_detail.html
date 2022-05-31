@@ -28,7 +28,7 @@
                 </li>
                 <li>
                     <span></span>
-                    <span th:text="${l.getLeagueVO().getParticipationTeam()}"></span>
+                    <span id="participationTeam" th:text="${l.getLeagueVO().getParticipationTeam()}"></span>
                 </li>
                 <li>
                     <span></span>
@@ -89,8 +89,18 @@
         </div>
         <!-- league 대진표 -->
         <div class="col-6" >
-            <!-- 대진표 -->
-            <t-h2 ko="대진표"></t-h2>
+            <div id="tm-root">
+                <!-- 대진표 -->
+                <t-h2 ko="대진표"></t-h2>
+                <div class="tm-r">
+                    <ul class="tm-table" id="tm-table1">
+                        <li th:each="i: ${statusTeam}">
+                            <span th:text="${i.getTeamId()}">맛없는사슴</span>
+                            <input type="hidden" th:value="${i.getLeagueStatus()}" id="">
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
             <!-- 참가 승인된 팀 목록 -->
             <t-h2 ko="리그 참가 팀 목록"></t-h2>
@@ -112,57 +122,52 @@
                 </tr>
                 </tbody>
             </table>
-
+            <div class="button__box">
+                <button class="c-button" onclick="makeLeagueStatusTable()">대진표 만들기</button>
+            </div>
         </div>
     </div>
 
     <script>
+        // tournament 대진표 그리기
+        const drawTable = () => {
+
+            // league participation size 불러오기
+
+            let r = document.querySelector('#tm-root');
+            let rr = document.querySelector('.tm-r');
+
+            // team 수
+            let ss = document.querySelectorAll('#tm-table1 > li').length;
+
+            let ul = document.createElement('ul');
+            ul.setAttribute('class', 'tm-table');
+            for(let i =0; i < Math.floor(ss / 2 + ss % 2); i++) {
+                let li = document.createElement('li')
+                li.innerText = 'a'
+                ul.append(li)
+            }
+
+            rr.append(ul)
+            console.log(Math.floor(ss / 2));
+        }
+
+
         let tg = document.querySelector('#tournament-table');
 
+        // 실행
         const loadTeam = () => {
             document.addEventListener('DOMContentLoaded', () => {
                 // printApplyTeam();
 
-                submitLeagueTeam()
-                viewInfo()
+                submitLeagueTeam();
+                viewInfo();
+                drawTable();
             })
         }
         loadTeam()
 
-        // // 리그 신청받은 팀을 출력
-        // const printApplyTeam = () => {
-        //     let ld = document.querySelector('#leagueId').value;
-        //     // league apply table 에서 데이터 뽑기
-        //     fetch('/adm/getLeagueApply?leagueId=' + ld)
-        //             .then(res => res.json())
-        //             .then(res => {
-        //                 console.log(res)
-        //                 let result = res.leagueApplyVOList;
-        //                 let tg = document.querySelector('#tournament-table')
-        //                 // league_id 값 불러오기
-        //                 let leagueId = document.querySelector('#leagueId').value;
         //
-        //                 let ul = document.createElement('ul')
-        //                 ul.setAttribute('class', 'a-list')
-        //                 // 신청한 team 수 많큼 출력
-        //                 result.forEach(l => {
-        //                     let rr = document.createElement('li')
-        //                     rr.innerHTML =  `
-        //                       <div class="row">
-        //                         <div class="col-9">
-        //                           <team-info teamId="${l.teamId}" leagueId="${leagueId}"></team-info>
-        //                           <team-info-approve teamId="${l.teamId}" leagueId="${leagueId}"></team-info-approve>
-        //                         </div>
-        //                         <button class="c-button col-3">리그 참가승인</button>
-        //                       </div>
-        //                     `;
-        //                     ul.append(rr)
-        //                 })
-        //                 tg.append(ul)
-        //             })
-        // }
-
-
         const viewInfo = () => {
             document.querySelector('#tournament-table').addEventListener('mouseover', () => {
                 const tg = event.target;
@@ -218,7 +223,7 @@
                     // let teamName = targetNode.querySelector('team-info').shadowRoot.querySelector('.info').children[3].innerText;
 
 
-                    if(isAppr == 1804) {
+                    if(isAppr === '1804') {
                         if(confirm(`[${teamName}] 리그 참가를 승인하시겠습니까?`)) {
 
                             let cn = targetNode.cloneNode(true);
@@ -246,8 +251,24 @@
                     }
                     else {
                         // 1801, 1803
-                        if(confirm('참가비 결제가 확인되었습니다.')) {
-
+                        console.log(isAppr)
+                        if(isAppr === '1803') {
+                            if(confirm('결제를 확인했습니다.')) {
+                            // 1803 -> 1804 로 상태 변환
+                                fetch('/adm/setLeagueApplyTeamStatus', {
+                                    method: 'post',
+                                    headers: {'Content-type': 'application/json'},
+                                    body: JSON.stringify({
+                                        teamId: teamId,
+                                        leagueId: leagueId
+                                    })
+                                })
+                                .then(res => res.text())
+                                .then(res => console.log(res))
+                                location.reload();
+                            }
+                        } else {
+                            alert('미결제!')
                         }
                     }
                 }
@@ -255,9 +276,40 @@
         }
 
 
-        // 참가 팀을 랜덤하게 사다리 그리기
+        // 대진표 생성 버튼 클릭 시
+        const makeLeagueStatusTable = () => {
 
-        // 대진표 그리기
+            let leagueId = document.querySelector('#leagueId').value;
+            let participationTeam = document.querySelector('#participationTeam').innerText;
+
+            // teamId 리스트 생성 후
+            let teamIdList = [];
+
+            // leagueId, participateTeam 정보 입력
+            teamIdList.push({'leagueId': leagueId});
+            teamIdList.push({'status': participationTeam});
+
+            let tg = document.querySelectorAll('#league_team > tr > td:nth-child(1)');
+            // console.log(tg)
+            tg.forEach(i => {
+                teamIdList.push({'teamId': i.innerText});
+            })
+            console.log(teamIdList)
+
+            // 승인된 팀값 전달하기
+            fetch('/adm/getLeagueStatusTableTeam', {
+                method: 'post',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify(teamIdList)
+            })
+            .then(res => res.text())
+            .then(res => console.log(res))
+
+            // 새로고침
+            location.reload();
+        }
+
+
 
 
     </script>

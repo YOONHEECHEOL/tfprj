@@ -60,7 +60,7 @@ public interface CliLeagueMapper {
     // payement 테이블에 결제정보 입력
     @Select("insert into payment values (\n" +
             "                            SEQ_PAYMENT.nextval,\n" +
-            "                            sysdate,\n" +
+            "                            current_date,\n" +
             "                            #{payAmount},\n" +
             "                            '1506',\n" +
             "                            #{memberId},\n" +
