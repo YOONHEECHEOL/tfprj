@@ -10,13 +10,8 @@
 
         <!-- 출력할때 메세지 코드에 맞는 문자를 출력하는 태그 -->
 
-        <span th:if="${m.getIsMessageCd() == 1001}">출결 msg</span>
-        <!-- /adm/ -->
 
         <span th:if="${m.getIsMessageCd() == 1002}">재고 msg</span>
-        <!-- -->
-
-        <span th:if="${m.getIsMessageCd() == 1003}">체크리스트 msg</span>
         <!-- -->
 
         <span th:if="${m.getIsMessageCd() == 1004}">예약 msg</span>
@@ -25,14 +20,15 @@
         <span th:if="${m.getIsMessageCd() == 1005}">결제 msg</span>
         <!-- -->
 
-        <span th:if="${m.getIsMessageCd() == 1006}">팀 msg</span>
+        <span th:if="${m.getIsMessageCd() == 1006}">팀초대 msg</span>
         <!-- -->
 
         <!--        <msg th:msg-type="${m.codeName}" ></msg>-->
         <span th:text="${m.getMessageContents()}"></span>
         <input type="hidden" th:id="teamId" th:value="${m.getTemp()}">
         <input type="hidden" th:id="memberId" th:value="${session.memberId}">
-
+        [[${session.memberId}]]
+        [[${session.workerId}]]
         <!-- isChk 가 0 이면  -->
         <div class="button__box" th:if="${m.getIsChk() != 2}">
             <button id="noBtn">거절</button>
@@ -55,7 +51,7 @@
             })
         })
 
-        $("#noBtn").on("click", function(){
+        $("#noBtn").on("click", function () {
             var mi = $("#memberId").val();
             $.ajax({
                 url: "/cli/notIntoTeam",

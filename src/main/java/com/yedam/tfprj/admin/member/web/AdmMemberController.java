@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yedam.tfprj.client.member.service.MemberService;
 import com.yedam.tfprj.client.member.service.MemberVO;
+import com.yedam.tfprj.client.message.service.MsgService;
 import com.yedam.tfprj.client.team.service.TeamService;
 import com.yedam.tfprj.client.team.service.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -24,6 +26,9 @@ public class AdmMemberController {
     MemberService memberServiceImpl;
     @Autowired
     TeamService teamServiceImpl;
+
+    @Autowired
+    MsgService msgServiceImpl;
     @RequestMapping("/adm/memberList")
     public String admMemberList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Model model){
         PageHelper.startPage(pageNum, pageSize);
@@ -86,6 +91,12 @@ public class AdmMemberController {
         PageInfo<TeamVO> teamSearchInfo = new PageInfo<TeamVO>(teamServiceImpl.admSearchTeam(vo));
         model.addAttribute("teamSearchInfo", teamSearchInfo);
         return "admin/member/team_list_searchresult";
+    }
+
+    @RequestMapping("/adm/getMessage")
+    public String admGetMessage(HttpServletRequest request, Model model){
+        model.addAttribute("msg",msgServiceImpl.getMessage(request));
+        return "admin/member/message";
     }
 }
 

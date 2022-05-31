@@ -48,4 +48,5 @@ public class MsgController {
         msgServiceImpl.insertAttendMsg(attendMsgVO);
     }
 
+    
 }

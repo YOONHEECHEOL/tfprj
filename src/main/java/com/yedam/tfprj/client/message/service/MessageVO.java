@@ -6,7 +6,7 @@ import lombok.Data;
 public class MessageVO {
 
     private int messageId;
-    private String date;
+    private String msgTime;
     private int isChk;
     private String messageContents;
     private int isMessageCd;

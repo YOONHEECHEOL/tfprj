@@ -15,7 +15,7 @@ public interface MsgMapper {
     //메시지 조회
     public List<MessageVO> getMessage(String memberId);
 
-    //팀초대 메시지 조회
+    //cli 팀초대 메시지 조회
     public List<TeamMsgVO> getTeamMsg(String memberId, int isMessageCd);
 
     //팀초대 메시지 전송
@@ -32,4 +32,9 @@ public interface MsgMapper {
 
     //초대메시지 응답 완료 시 메시지 상태 '응답완료' 처리
     public void invResUpdate(MessageVO messageVO);
+
+    // 관리자Todo 메세지 전송
+    public void insertTodoMsg(MessageVO messageVO);
+
+
 }

@@ -24,4 +24,7 @@ public interface MsgService {
 
     //초대메시지 응답 완료 시 메시지 상태 '응답완료' 처리
     public void invResUpdate(MessageVO messageVO, HttpServletRequest request);
+
+    // 관리자Todo 메세지 전송
+    public void insertTodoMsg();
 }

@@ -20,7 +20,7 @@
 
     <insert id="insertTeamMsg" parameterType="com.yedam.tfprj.client.message.service.MessageVO">
         INSERT INTO MESSAGE
-        VALUES (MESSAGE_SEQ.nextval, sysdate, 0, #{messageContents}, 1006, #{memberId}, #{temp})
+        VALUES (MESSAGE_SEQ.nextval, current_date, 0, #{messageContents}, 1006, #{memberId}, #{temp})
     </insert>
 
     <select id="getAttendMsg" parameterType="com.yedam.tfprj.client.message.service.MessageVO"
@@ -33,7 +33,7 @@
 
     <insert id="insertAttendMsg" parameterType="com.yedam.tfprj.client.message.service.MessageVO">
         INSERT INTO MESSAGE
-        VALUES (MESSAGE_SEQ.nextval, sysdate, 0, #{messageContents}, 1001, 'admin', #{temp})
+        VALUES (MESSAGE_SEQ.nextval, current_date, 0, #{messageContents}, 1001, 'admin', #{temp})
     </insert>
 
     <update id="isChkUpdate" parameterType="com.yedam.tfprj.client.message.service.MessageVO">
@@ -48,4 +48,9 @@
         SET IS_CHK = 2
         WHERE MEMBER_ID = #{memberId}
     </update>
+
+    <insert id="insertTodoMsg">
+        INSERT INTO MESSAGE
+        VALUES (MESSAGE_SEQ.nextval, current_date, 0, #{messageContents}, 1003, #{memberId}, #{temp})
+    </insert>
 </mapper>
