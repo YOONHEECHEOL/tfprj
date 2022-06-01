@@ -47,7 +47,7 @@ public interface AdmLeagueMapper {
             "and     l.league_id = #{leagueId}\n" +
             "and     t.team_id = #{teamId}\n" +
             "and     l.is_approve = 1805")
-    public int getLeagueApplyTeamIsApprove(int teamId, int leagueId);
+    public int getLeagueApplyTeamIsApprove(int leagueId, int teamId);
 
     @Select("select distinct is_approve from league_apply where league_id = #{leagueId} and team_id = #{teamId}")
     public String getIsApprove(int leagueId, int teamId);
@@ -59,13 +59,14 @@ public interface AdmLeagueMapper {
             "    seq_league_status.nextVal,\n" +
             "    #{status},\n" +
             "    #{leagueId},\n" +
-            "    #{teamId}\n" +
+            "    #{teamId},\n" +
+            "    #{gameCnt}\n" +
             ")")
-    public void insertLeagueStatus(int status, int leagueId, String teamId);
+    public void insertLeagueStatus(int status, int leagueId, String teamId, int gameCnt);
 
 
     // league_status table 에서 해당 league 참가하는 팀 불러오기
-    @Select("select * from league_status where league_id = #{leagueId}")
+    @Select("select * from league_status where league_id = #{leagueId} order by game_cnt")
     public List<LeagueStatusVO> getLeagueStatus(int leagueId);
 
 }

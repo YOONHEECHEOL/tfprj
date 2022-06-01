@@ -400,10 +400,54 @@ main.contents {
 /*}*/
 .tm-r {
     display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
 }
-
+.tm-table {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0 1.2rem;
+}
 .tm-table > li {
+    width: 12rem;
+    margin: 1.2rem 0;
     padding: .6rem 1.2rem;
     border: 1px solid #bbb;
     display: block;
+    text-align: center;
+    position: relative;
+}
+.tm-table > li::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 24px;
+    background: #222;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+}
+.tm-table > li::before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 22px;
+    background: #222;
+    position: absolute;
+    bottom: -23px;
+    left: 50%;
+}
+.tm-table.nbl > li::before {
+    display: none !important;
+}
+.tm-table.lastbl > li::after {
+    display: none !important;
+}
+
+.line-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
