@@ -2,7 +2,375 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/cli_layout">
+
 <th:block layout:fragment="content">
-    <h3>예약시스템 - 예약현황조회</h3>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <h1>예약시스템 - 예약현황조회</h1>
+    <div>
+
+    </div>
+    <div th:class="row" style="float: none; margin:0 auto;">
+        <div th:class="col-8">
+            <h2 th:text="${#dates.format(reservation.startTime, 'yyyy-MM-dd')}"></h2>
+        </div>
+        <div th:class="col-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div th:id="1" class="col-4 border" style="background-color: #4CAF50">step 1 - 팀선택</div>
+        <div th:id="2" class="col-4 border">step 2 - 멤버입력</div>
+        <div th:id="3" class="col-4 border">step 3 - 이닝</div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h2>시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+        <h2 th:text="|${#dates.format(reservation.startTime, 'HH:mm')} - ${#dates.format(reservation.endTime, 'HH:mm')}|"></h2>
+        <br>
+    </div>
+    <div>
+        <h2>구장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+        <h3 th:text="|${reservation.room} 구장|"></h3>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h2>팀</h2>
+        <div id="selectedHome" style="display: none">
+            <span>홈팀</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="homeTeam"></span><br><br>
+        </div>
+        <div id="selectedAway" style="display: none">
+            <span>원정팀</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="awayTeam"></span>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div id="selectTeam">
+        <div th:class="row">
+            <div class="col-8 ">
+                <span>홈팀</span>
+            </div>
+            <div class="col-2 ">
+                <span>원정팀</span>
+            </div>
+        </div>
+        <div th:class="row" >
+            <div class="col-8 ">
+                <select id="home" onchange="selectTeam()">
+                    <option value="none">=== 팀선택 ===</option>
+
+                </select>
+            </div>
+            <div class="col-2 ">
+                <select id="away" onchange="selectTeam()">
+                    <option value="none">=== 팀선택 ===</option>
+
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 30px">
+
+    </div>
+
+
+    <div th:class="row" id="memberSelect" style="display: none">
+        <div class="col-5 ">
+            <div><h2>멤버수</h2></div>
+            <div><h3>홈팀</h3></div>
+            <div>
+                <select id="homeNum" style="width: auto; height: 30px" onchange="homeMemberNum()">
+                    <option>멤버수</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div id="homeDiv">
+
+            </div>
+        </div>
+        <div class="col-5 ">
+            <div style="height: 20px"><h2></h2></div>
+            <div><h3>원정팀</h3></div>
+            <div>
+                <select id="awayNum" style="width: auto; height: 30px" onchange="awayMemberNum()">
+                    <option>멤버수</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div id="awayDiv">
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <form name="frm">
+
+
+        </form>
+    </div>
+    <br>
+    <div>
+        <button id="prev">이전</button>
+        <button id="next1" onclick="next1()">다음</button>
+        <button id="next2" onclick="next2()">다음</button>
+        <button id="cancel">취소</button>
+        <button id="pay">결제하기</button>
+    </div>
+
+    <div th:class="modal">
+        <div th:class="modal-content">
+            <t-h2 ko="회원검색"></t-h2>
+            <input type="text" class="form-control" id="searchVal"
+                   name="searchVal" placeholder="Search"
+                   aria-label="Search">
+            <div>
+                <table>
+                    <tbody th:id="memberList">
+
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-outline-secondary" id="searchBtn"
+                    type="button">Search
+            </button>
+            <input type="hidden" id="btnId">
+            <!-- 여기서 -->
+            <div class="button__box">
+                <button class="button button-common" id="cancelBtn">취소하기</button>
+                <button class="button button-primary" id="regMemberBtn">입력하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            buttonCss()
+            $.ajax({
+                url: "teamList"
+            }).done(function (response) {
+                console.log(response);
+                console.log(response.length)
+                console.log(response[1]);
+                let home = document.querySelector("#home");
+                let away = document.querySelector("#away");
+
+                for (let i = 0; i < response.length; i++) {
+                    console.log(response[i]);
+                    let number = 100 + i;
+                    console.log(number);
+                    $(home).append("<option value='" + number + "'>" + response[i] + "</option>")
+                    $(away).append("<option value='" + number + "'>" + response[i] + "</option>")
+                }
+
+            })
+        });
+
+    </script>
+
+    <script>
+
+
+        function selectTeam() {
+            let home = document.getElementById("home")
+            let away = document.getElementById("away")
+
+            let homeId = home.options[home.selectedIndex].value;
+            let homeName = home.options[home.selectedIndex].text;
+            let awayId = away.options[away.selectedIndex].value;
+            let awayName = away.options[away.selectedIndex].text;
+
+            if (homeId.trim() !== 'none') {
+                $("#selectedHome").css('display', '');
+                $("#homeTeam").text(homeName);
+            } else {
+                $("#selectedHome").css('display', 'none');
+            }
+            if (awayId.trim() !== 'none') {
+                $("#selectedAway").css('display', '');
+                $("#awayTeam").text(awayName);
+            } else {
+                $("#selectedAway").css('display', 'none');
+            }
+
+
+        }
+
+        //다음버튼
+        function next1() {
+            if ($("#selectedAway").css('display') === 'none' || $("#selectedHome").css('display') === 'none') {
+                alert("팀을 먼저 선택해주세요")
+            } else {
+                $("#memberSelect").css('display', '');
+                $("#selectTeam").css('display', 'none');
+                $("#1").css('background-color','')
+                $("#2").css('background-color','#4CAF50');
+                buttonCss()
+
+            }
+        }
+    </script>
+    <script>
+        function buttonCss() {
+            if (($("#1").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
+                $("#prev").css('display', 'none')
+                $("#next1").css('display', '')
+                $("#next2").css('display', 'none')
+                $("#cancel").css('display', '')
+                $("#pay").css('display', 'none')
+            } else if (($("#2").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
+                $("#prev").css('display', '')
+                $("#next1").css('display', 'none')
+                $("#next2").css('display', '')
+                $("#cancel").css('display', 'none')
+                $("#pay").css('display', 'none')
+
+            } else if (($("#3").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
+                $("#prev").css('display', '')
+                $("#next1").css('display', 'none')
+                $("#next2").css('display', 'none')
+                $("#cancel").css('display', 'none')
+                $("#pay").css('display', '')
+            }
+        }
+    </script>
+    <script>
+        function homeMemberNum() {
+            $("#homeMembers").remove();
+
+
+            let homeNum = document.getElementById("homeNum")
+
+            let homeNumId = homeNum.options[homeNum.selectedIndex].value;
+
+
+            if (homeNumId.trim()) {
+                console.log(homeNumId)
+                let $div = $("<div>");
+
+                $div.attr('id', 'homeMembers');
+                $("#homeDiv").append($div);
+
+                for (let i = 0; i < homeNumId; i++) {
+                    let html = "";
+                    html += `<div><button id=h` + (i + 1) + ` onclick="memberInsert(this)" style="width: 70px; height: 30px">`
+                    html += (i + 1) + `번 입력</button>`
+                    html += `&nbsp;&nbsp;`
+                    html += `<button style="width: 70px; height: 30px">난이도 입력</button></div>`
+                    $("#homeMembers").append(html);
+
+                }
+            }
+
+
+        }
+
+        function awayMemberNum() {
+            $("#awayMembers").remove();
+
+            let awayNum = document.getElementById("awayNum")
+            let awayNumId = awayNum.options[awayNum.selectedIndex].value;
+
+            if (awayNumId.trim()) {
+                console.log(awayNumId)
+                let $div = $("<div>");
+
+                $div.attr('id', 'awayMembers');
+                $("#awayDiv").append($div);
+                for (let i = 0; i < awayNumId; i++) {
+                    let html = "";
+                    html += `<div><button  id=a` + (i + 1) + ` onclick="memberInsert(this)" style="width: 70px; height: 30px">`
+                    html += (i + 1) + `번 입력</button>`
+                    html += `&nbsp;&nbsp;`
+                    html += `<button style="width: 70px; height: 30px">난이도 입력</button></div>`
+                    $("#awayMembers").append(html);
+
+                }
+
+            }
+
+
+        }
+    </script>
+    <script>
+        function memberInsert(e) {
+            let btnId = e.getAttribute("id");
+            $(".modal").fadeIn();
+            $("#btnId").val(btnId);
+        }
+
+        //취소 버튼
+        $("#cancelBtn").on("click", function () {
+
+            $(".modal").fadeOut();
+
+        })
+
+        //search 버튼 클릭시 멤버 검색 ajax호출
+        $("#searchBtn").on("click", function () {
+            $.ajax({
+                url: "/cli/searchMember",
+                data: {memberId: $("#searchVal").val()}
+            }).done(function (data) {
+                $("#memberList").html('');
+                for (list of data) {
+                    $("#memberList").append(makeTr(list));
+                }
+            })
+        })
+
+        //검색 결과 출력
+        function makeTr(list) {
+            var tr = $("<tr>");
+            tr.append(`<td class="text-center"><input type="radio" name="radio"></td>
+            <td class="text-center">${list.memberId}</td>`)
+            return tr;
+        }
+
+        //등록버튼 클릭시 체크된 memberId값을 넘겨 ajax호출
+        $("#regMemberBtn").on("click", function () {
+
+            var radio = $('input[name=radio]:checked');
+            var tr = radio.parent().parent();
+            var td = tr.children();
+            var code = td.eq(1).text();
+            console.log(code);
+            let insertedList = $(".inserted")
+            insertedList.each(function (index, item) {
+                if ($(this).text() === code) {
+                    alert("이미 입력된 id입니다")
+                    code = null;
+                }
+            });
+            if (!code) {
+                alert("ID를 선택해주세요")
+            } else {
+
+                let btnId = $("#btnId").val();
+                $("#" + btnId).text(code);
+                $("#" + btnId).attr('class', 'inserted');
+                $(".modal").fadeOut();
+            }
+
+        });
+    </script>
+    <script>
+
+    </script>
+
+
 </th:block>
 </html>

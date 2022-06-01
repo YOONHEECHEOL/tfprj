@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,7 +33,8 @@ public class CliReservationServiceImpl implements CliReservationService {
 
     @Override
     public int insertReservation(Reservation rsv) {
-        return 0;
+
+        return reservationMapper.insertReservation(rsv);
     }
 
     @Override
@@ -46,4 +51,11 @@ public class CliReservationServiceImpl implements CliReservationService {
     public List<Reservation> reservationCheck(String date,String room) {
         return reservationMapper.reservationCheck(date, room);
     }
+
+    @Override
+    public List<String> teamList() {
+        return reservationMapper.teamList();
+    }
+
+
 }
