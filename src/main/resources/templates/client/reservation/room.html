@@ -4,29 +4,31 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-    <div th:class="row" style="float: none; margin:0 auto;">
-        <div th:class="col-auto">
-            <h3>예약시스템 - 예약현황조회</h3>
-        </div>
-    </div>
-    <div th:class="row" style="float: none; margin:0 auto;">
-        <div th:class="col-8">
-            <span id="dateVal" onchange="reservedTimeCheck()" readonly><span>
+
+    <t-h1 ko="예약" en="RES"></t-h1>
+
+    <div class="row align-items-center">
+        <div class="col-8">
+            <span id="dateVal" class="bf-4" onchange="reservedTimeCheck()" readonly></span>
         </div>
         <div th:class="col-4">
-            <input th:type="button" id="rsvBtn" th:value="날짜변경">
+            <input th:type="button" class="c-button" id="rsvBtn" th:value="날짜변경">
         </div>
     </div>
-    <div th:class="row" style="float: none; margin:0 auto;">
-        <div th:class="col-auto">
-            <button onclick="prev()">이전</button>
-            <span id="room">1</span><span>구장</span>
-            <button onclick="next()">다음</button>
+
+    <hr>
+
+    <div class="row justify-content-around mt20">
+        <button onclick="prev()" class="c-button col-3">이전</button>
+        <div>
+            <span class="bf-4" id="room">1</span><span class="bf-4"> 구장</span>
         </div>
+        <button onclick="next()" class="c-button col-3">다음</button>
     </div>
-    <div th:class="row" style="float: none; margin:0 auto;">
-        <div th:class="col-auto">
-            <table>
+
+    <div class="mt20">
+        <div>
+            <table class="res-time">
                 <tbody>
                 <tr>
                     <td>
@@ -74,16 +76,20 @@
             </table>
         </div>
     </div>
+
+    <hr class="mt20">
+
     <form name="myForm" method="post" action="info">
         <input type="hidden" id="date" name="date" required>
         <input type="hidden" id="roomNo" name="room" required>
         <input th:type="hidden" id="startTime" name="startTime" readonly required>
         <input th:type="hidden" id="endTime" name="endTime" readonly required>
-        <div>
-            <button type="button" onclick="check(myForm)">다음</button>
+        <div class="button__box mt20">
+            <button class="button button-primary" type="button" onclick="check(myForm)">다음</button>
         </div>
     </form>
 
+    <script th:defer th:src="@{/js/ssgjs.js}" ></script>
     <!--class="btn btn-success"-->
     <script>
         let roomNo = $('#room').text()
@@ -92,21 +98,46 @@
         $('#date').val(date);
     </script>
     <script>
-        function check(f){
+        function check(f) {
             //this.form ==> document.myForm --> f
-            if(f.date.value === ""||f.date.value.length===0){
+            if (f.date.value === "" || f.date.value.length === 0) {
                 alert("일자를 선택해 주십시오")
-            }else if(f.roomNo.value === ""||f.roomNo.value.length===0){
+            } else if (f.roomNo.value === "" || f.roomNo.value.length === 0) {
                 alert("방을 선택해 주십시오")
-            }else if(f.startTime.value === ""||f.startTime.value.length===0){
+            } else if (f.startTime.value === "" || f.startTime.value.length === 0) {
                 alert("시간을 선택해 주십시오")
-            }else{
+            } else {
 
                 f.submit();
             }
 
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let date = new Date();
+
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()).slice(-2);
+
+            let dateString = year + '-' + month  + '-' + day;
+
+            document.querySelector('#dateVal').innerText = dateString;
+
+            let dt = document.querySelector('#date');
+            dt.value = dateString;
+            let room = document.querySelector('#room');
+            room.value = '1';
+
+            removeClass();
+            reservedTimeCheck(dt.value, room.value);
+
+            console.log(date)
+            // document.querySelector('#dateVal').innerText = dateString;
+        })
+    </script>
+
 </th:block>
 
 

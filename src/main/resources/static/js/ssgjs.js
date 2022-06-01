@@ -30,6 +30,7 @@ $(function () {
     });
 });
 
+
 //client 예약 목록 전체 조회
 function reservationList() {
     $.ajax({

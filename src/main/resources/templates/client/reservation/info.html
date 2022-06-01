@@ -4,81 +4,130 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
-    <h1>예약시스템 - 예약현황조회</h1>
-    <div>
+    <t-h1 ko="예약" en="RES"></t-h1>
 
-    </div>
-    <div th:class="row" style="float: none; margin:0 auto;">
-        <div th:class="col-8">
-            <h2 th:text="${#dates.format(reservation.startTime, 'yyyy-MM-dd')}"></h2>
+    <div class="row align-items-center">
+        <div class="col-8">
+            <span id="dateVal" class="bf-4" th:text="${#dates.format(reservation.startTime, 'yyyy-MM-dd')}" onchange="reservedTimeCheck()" readonly></span>
         </div>
         <div th:class="col-4">
-
-        </div>
-    </div>
-    <div class="row">
-        <div th:id="1" class="col-4 border" style="background-color: #4CAF50">step 1 - 팀선택</div>
-        <div th:id="2" class="col-4 border">step 2 - 멤버입력</div>
-        <div th:id="3" class="col-4 border">step 3 - 이닝</div>
-    </div>
-    <br>
-    <br>
-    <div>
-        <h2>시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-        <h2 th:text="|${#dates.format(reservation.startTime, 'HH:mm')} - ${#dates.format(reservation.endTime, 'HH:mm')}|"></h2>
-        <br>
-    </div>
-    <div>
-        <h2>구장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-        <h3 th:text="|${reservation.room} 구장|"></h3>
-    </div>
-    <br>
-    <br>
-    <div>
-        <h2>팀</h2>
-        <div id="selectedHome" style="display: none">
-            <span>홈팀</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="homeTeam"></span><br><br>
-        </div>
-        <div id="selectedAway" style="display: none">
-            <span>원정팀</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="awayTeam"></span>
-        </div>
-    </div>
-    <br>
-    <br>
-    <div id="selectTeam">
-        <div th:class="row">
-            <div class="col-8 ">
-                <span>홈팀</span>
-            </div>
-            <div class="col-2 ">
-                <span>원정팀</span>
-            </div>
-        </div>
-        <div th:class="row" >
-            <div class="col-8 ">
-                <select id="home" onchange="selectTeam()">
-                    <option value="none">=== 팀선택 ===</option>
-
-                </select>
-            </div>
-            <div class="col-2 ">
-                <select id="away" onchange="selectTeam()">
-                    <option value="none">=== 팀선택 ===</option>
-
-                </select>
-            </div>
+<!--            <input th:type="button" class="c-button" id="rsvBtn" th:value="날짜변경">-->
         </div>
     </div>
 
-    <div style="height: 30px">
-
+    <div class="row steps">
+        <div th:id="1" class="col-4 active"><span>step01</span><br>팀선택</div>
+        <div th:id="2" class="col-4"><span>step02</span><br>멤버입력</div>
+        <div th:id="3" class="col-4"><span>step03</span><br>이닝</div>
     </div>
 
+    <hr>
 
-    <div th:class="row" id="memberSelect" style="display: none">
+    <div class="row align-items-center mt20">
+        <div class="col">
+            <span class="bf-3">시간</span>
+        </div>
+        <div class="col">
+            <span class="bf-4" th:text="|${#dates.format(reservation.startTime, 'HH:mm')} - ${#dates.format(reservation.endTime, 'HH:mm')}|"></span>
+        </div>
+    </div>
+
+    <div class="row align-items-center mt20">
+        <div class="col">
+            <span class="bf-3">구장</span>
+        </div>
+        <div class="col">
+            <span class="bf-4" th:text="|${reservation.room} 구장|"></span>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row" id="selectTeam">
+        <div class="col-12">
+            <span class="bf-4">팀</span>
+        </div>
+
+        <div class="col-6">
+            <span class="bf-2">홈팀</span>
+            <button class="c-button" id="homeTeam" onclick="openTeamModal()">팀 선택</button>
+        </div>
+        <div class="col-6">
+            <span class="bf-2">원정팀</span>
+            <button class="c-button" id="awayTeam" onclick="openTeamModal()">팀 선택</button>
+        </div>
+    </div>
+
+    <div id="team-modal" class="modal">
+        <ul id="team-list">
+            <li data-code="101">삼성라이온즈</li>
+            <li data-code="102">KIA타이거즈</li>
+            <li data-code="103">한화이글스</li>
+            <li data-code="104">두산베어스</li>
+            <li data-code="105">SSG랜더스</li>
+            <li data-code="106">키움히어로즈</li>
+            <li data-code="107">LG트윈스</li>
+            <li data-code="108">NC다이노스</li>
+            <li data-code="109">KTWIZ</li>
+        </ul>
+        <div class="button__box">
+            <button class="button button-common" id="cancel-team-modal" onclick="cancelBtnFnc()">취소하기</button>
+            <button class="button button-primary" id="select-team" onclick="cancelBtnFnc()">선택하기</button>
+        </div>
+    </div>
+
+    <script>
+
+        const openTeamModal = () => {
+            let tgName = event.target.getAttribute('id');
+
+            $('#team-modal').fadeIn();
+
+            selectTeamValue(tgName);
+
+        }
+
+        const selectTeamValue = (tgName) => {
+            // team-list add eventListener
+            document.querySelector('#team-list').addEventListener('click', () => {
+                let selectTeam = document.querySelector('#select-team');
+                selectTeam.setAttribute('data-code', event.target.getAttribute('data-code'));
+                selectTeam.setAttribute('team', event.target.innerText);
+                event.target.classList.add('selected');
+                insertValue(tgName);
+
+            })
+        }
+
+        const insertValue = (tgName) => {
+            const rr = document.querySelector('#' + tgName);
+            let selectTeam = document.querySelector('#select-team');
+
+            console.log(rr)
+            rr.innerText = selectTeam.getAttribute('team');
+            rr.setAttribute('data-code', selectTeam.getAttribute('data-code'));
+        }
+        // 취소버튼
+        const cancelBtnFnc = () => {
+            let ii = '#team-modal';
+            cancelTeamModal(ii);
+        }
+        // 닫기
+        const cancelTeamModal = (target) => {
+            document.querySelectorAll('#team-list > li').forEach(l => {
+                l.removeAttribute('class');
+            })
+
+            $(target).fadeOut();
+        }
+    </script>
+
+    <hr>
+
+    <div th:class="row" id="memberSelect">
         <div class="col-5 ">
             <div><h2>멤버수</h2></div>
             <div><h3>홈팀</h3></div>
@@ -131,7 +180,8 @@
         <button id="pay">결제하기</button>
     </div>
 
-    <div th:class="modal">
+    <!-- 검색용 모달 -->
+    <div th:class="modal" id="search-modal">
         <div th:class="modal-content">
             <t-h2 ko="회원검색"></t-h2>
             <input type="text" class="form-control" id="searchVal"
@@ -156,166 +206,167 @@
         </div>
     </div>
 
+    <script th:defer th:src="@{/js/ssgjs.js}" ></script>
+
     <script>
-        $(document).ready(function () {
-            buttonCss()
-            $.ajax({
-                url: "teamList"
-            }).done(function (response) {
-                console.log(response);
-                console.log(response.length)
-                console.log(response[1]);
-                let home = document.querySelector("#home");
-                let away = document.querySelector("#away");
 
-                for (let i = 0; i < response.length; i++) {
-                    console.log(response[i]);
-                    let number = 100 + i;
-                    console.log(number);
-                    $(home).append("<option value='" + number + "'>" + response[i] + "</option>")
-                    $(away).append("<option value='" + number + "'>" + response[i] + "</option>")
-                }
 
-            })
-        });
 
     </script>
 
     <script>
+        // option 추가
+        // $(document).ready(function () {
+        //     buttonCss()
+        //     $.ajax({
+        //         url: "teamList"
+        //     }).done(function (response) {
+        //         console.log(response);
+        //         console.log(response.length)
+        //         console.log(response[1]);
+        //         let home = document.querySelector("#home");
+        //         let away = document.querySelector("#away");
+        //
+        //         for (let i = 0; i < response.length; i++) {
+        //             console.log(response[i]);
+        //             let number = 100 + i;
+        //             console.log(number);
+        //             $(home).append("<option value='" + number + "'>" + response[i] + "</option>")
+        //             $(away).append("<option value='" + number + "'>" + response[i] + "</option>")
+        //         }
+        //
+        //     })
+        // });
+    </script>
 
-
-        function selectTeam() {
-            let home = document.getElementById("home")
-            let away = document.getElementById("away")
-
-            let homeId = home.options[home.selectedIndex].value;
-            let homeName = home.options[home.selectedIndex].text;
-            let awayId = away.options[away.selectedIndex].value;
-            let awayName = away.options[away.selectedIndex].text;
-
-            if (homeId.trim() !== 'none') {
-                $("#selectedHome").css('display', '');
-                $("#homeTeam").text(homeName);
-            } else {
-                $("#selectedHome").css('display', 'none');
-            }
-            if (awayId.trim() !== 'none') {
-                $("#selectedAway").css('display', '');
-                $("#awayTeam").text(awayName);
-            } else {
-                $("#selectedAway").css('display', 'none');
-            }
-
-
-        }
+    <script>
+        // function selectTeam() {
+        //     let home = document.getElementById("home")
+        //     let away = document.getElementById("away")
+        //
+        //     let homeId = home.options[home.selectedIndex].value;
+        //     let homeName = home.options[home.selectedIndex].text;
+        //     let awayId = away.options[away.selectedIndex].value;
+        //     let awayName = away.options[away.selectedIndex].text;
+        //
+        //     if (homeId.trim() !== 'none') {
+        //         $("#selectedHome").css('display', '');
+        //         $("#homeTeam").text(homeName);
+        //     } else {
+        //         $("#selectedHome").css('display', 'none');
+        //     }
+        //     if (awayId.trim() !== 'none') {
+        //         $("#selectedAway").css('display', '');
+        //         $("#awayTeam").text(awayName);
+        //     } else {
+        //         $("#selectedAway").css('display', 'none');
+        //     }
+        // }
 
         //다음버튼
-        function next1() {
-            if ($("#selectedAway").css('display') === 'none' || $("#selectedHome").css('display') === 'none') {
-                alert("팀을 먼저 선택해주세요")
-            } else {
-                $("#memberSelect").css('display', '');
-                $("#selectTeam").css('display', 'none');
-                $("#1").css('background-color','')
-                $("#2").css('background-color','#4CAF50');
-                buttonCss()
-
-            }
-        }
+        // function next1() {
+        //     if ($("#selectedAway").css('display') === 'none' || $("#selectedHome").css('display') === 'none') {
+        //         alert("팀을 먼저 선택해주세요")
+        //     } else {
+        //         $("#memberSelect").css('display', '');
+        //         $("#selectTeam").css('display', 'none');
+        //         $("#1").css('background-color','')
+        //         $("#2").css('background-color','#4CAF50');
+        //         buttonCss()
+        //     }
+        // }
     </script>
     <script>
-        function buttonCss() {
-            if (($("#1").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
-                $("#prev").css('display', 'none')
-                $("#next1").css('display', '')
-                $("#next2").css('display', 'none')
-                $("#cancel").css('display', '')
-                $("#pay").css('display', 'none')
-            } else if (($("#2").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
-                $("#prev").css('display', '')
-                $("#next1").css('display', 'none')
-                $("#next2").css('display', '')
-                $("#cancel").css('display', 'none')
-                $("#pay").css('display', 'none')
-
-            } else if (($("#3").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
-                $("#prev").css('display', '')
-                $("#next1").css('display', 'none')
-                $("#next2").css('display', 'none')
-                $("#cancel").css('display', 'none')
-                $("#pay").css('display', '')
-            }
-        }
+        // function buttonCss() {
+        //     if (($("#1").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
+        //         $("#prev").css('display', 'none')
+        //         $("#next1").css('display', '')
+        //         $("#next2").css('display', 'none')
+        //         $("#cancel").css('display', '')
+        //         $("#pay").css('display', 'none')
+        //     } else if (($("#2").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
+        //         $("#prev").css('display', '')
+        //         $("#next1").css('display', 'none')
+        //         $("#next2").css('display', '')
+        //         $("#cancel").css('display', 'none')
+        //         $("#pay").css('display', 'none')
+        //
+        //     } else if (($("#3").css('background-color')) !== 'rgba(0, 0, 0, 0)') {
+        //         $("#prev").css('display', '')
+        //         $("#next1").css('display', 'none')
+        //         $("#next2").css('display', 'none')
+        //         $("#cancel").css('display', 'none')
+        //         $("#pay").css('display', '')
+        //     }
+        // }
     </script>
     <script>
-        function homeMemberNum() {
-            $("#homeMembers").remove();
-
-
-            let homeNum = document.getElementById("homeNum")
-
-            let homeNumId = homeNum.options[homeNum.selectedIndex].value;
-
-
-            if (homeNumId.trim()) {
-                console.log(homeNumId)
-                let $div = $("<div>");
-
-                $div.attr('id', 'homeMembers');
-                $("#homeDiv").append($div);
-
-                for (let i = 0; i < homeNumId; i++) {
-                    let html = "";
-                    html += `<div><button id=h` + (i + 1) + ` onclick="memberInsert(this)" style="width: 70px; height: 30px">`
-                    html += (i + 1) + `번 입력</button>`
-                    html += `&nbsp;&nbsp;`
-                    html += `<button style="width: 70px; height: 30px">난이도 입력</button></div>`
-                    $("#homeMembers").append(html);
-
-                }
-            }
-
-
-        }
-
-        function awayMemberNum() {
-            $("#awayMembers").remove();
-
-            let awayNum = document.getElementById("awayNum")
-            let awayNumId = awayNum.options[awayNum.selectedIndex].value;
-
-            if (awayNumId.trim()) {
-                console.log(awayNumId)
-                let $div = $("<div>");
-
-                $div.attr('id', 'awayMembers');
-                $("#awayDiv").append($div);
-                for (let i = 0; i < awayNumId; i++) {
-                    let html = "";
-                    html += `<div><button  id=a` + (i + 1) + ` onclick="memberInsert(this)" style="width: 70px; height: 30px">`
-                    html += (i + 1) + `번 입력</button>`
-                    html += `&nbsp;&nbsp;`
-                    html += `<button style="width: 70px; height: 30px">난이도 입력</button></div>`
-                    $("#awayMembers").append(html);
-
-                }
-
-            }
-
-
-        }
+        // function homeMemberNum() {
+        //     $("#homeMembers").remove();
+        //
+        //     let homeNum = document.getElementById("homeNum")
+        //
+        //     let homeNumId = homeNum.options[homeNum.selectedIndex].value;
+        //
+        //     if (homeNumId.trim()) {
+        //         console.log(homeNumId)
+        //         let $div = $("<div>");
+        //
+        //         $div.attr('id', 'homeMembers');
+        //         $("#homeDiv").append($div);
+        //
+        //         for (let i = 0; i < homeNumId; i++) {
+        //             let html = "";
+        //             html += `<div><button id=h` + (i + 1) + ` onclick="memberInsert(this)" style="width: 70px; height: 30px">`
+        //             html += (i + 1) + `번 입력</button>`
+        //             html += `&nbsp;&nbsp;`
+        //             html += `<button style="width: 70px; height: 30px">난이도 입력</button></div>`
+        //             $("#homeMembers").append(html);
+        //
+        //         }
+        //     }
+        //
+        //
+        // }
+        //
+        // function awayMemberNum() {
+        //     $("#awayMembers").remove();
+        //
+        //     let awayNum = document.getElementById("awayNum")
+        //     let awayNumId = awayNum.options[awayNum.selectedIndex].value;
+        //
+        //     if (awayNumId.trim()) {
+        //         console.log(awayNumId)
+        //         let $div = $("<div>");
+        //
+        //         $div.attr('id', 'awayMembers');
+        //         $("#awayDiv").append($div);
+        //         for (let i = 0; i < awayNumId; i++) {
+        //             let html = "";
+        //             html += `<div><button  id=a` + (i + 1) + ` onclick="memberInsert(this)" style="width: 70px; height: 30px">`
+        //             html += (i + 1) + `번 입력</button>`
+        //             html += `&nbsp;&nbsp;`
+        //             html += `<button style="width: 70px; height: 30px">난이도 입력</button></div>`
+        //             $("#awayMembers").append(html);
+        //
+        //         }
+        //
+        //     }
+        //
+        //
+        // }
     </script>
     <script>
         function memberInsert(e) {
             let btnId = e.getAttribute("id");
-            $(".modal").fadeIn();
+            $("#search-modal").fadeIn();
             $("#btnId").val(btnId);
         }
 
         //취소 버튼
         $("#cancelBtn").on("click", function () {
 
-            $(".modal").fadeOut();
+            $("#search-modal").fadeOut();
 
         })
 
@@ -362,7 +413,7 @@
                 let btnId = $("#btnId").val();
                 $("#" + btnId).text(code);
                 $("#" + btnId).attr('class', 'inserted');
-                $(".modal").fadeOut();
+                $("#search-modal").fadeOut();
             }
 
         });
