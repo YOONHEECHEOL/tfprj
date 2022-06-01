@@ -106,4 +106,9 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     public int insertNotInWorker(String workerId, String dated) {
         return mapper.insertNotInWorker(workerId, dated);
     }
+
+    @Override
+    public List<WorkerAttendanceVO> payCalc(String workerId) {
+        return mapper.payCalc(workerId);
+    }
 }

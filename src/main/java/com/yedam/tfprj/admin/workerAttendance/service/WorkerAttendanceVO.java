@@ -16,6 +16,7 @@ public class WorkerAttendanceVO {
     private int isLate;
     private int isAbsence;
     private String workerName;
+    private int allpay;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

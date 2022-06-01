@@ -214,6 +214,7 @@
                         },
                         method: 'POST'
                     }).done(function (response) {
+                        console.log(response);
                         if (response == '') {
                             alert('출근시간이 아닙니다.')
                         } else if(response.late == 0){
@@ -222,11 +223,39 @@
                             move(response.vo.percent, response.vo.getMTime);
                             console.log(response);
                             alert('출근 완료');
-                            if (response.absence == 1) {
-                                alert("결근처리 되었습니다.");
-                            } else if(response.late == 1){
-                                alert("지각입니다.");
-                            }
+
+                            document.getElementById('btn').style.display = "none";
+
+                            timer(response.vo.getMTime);
+
+                            var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+                            $('#out').append(btn);
+
+                            //퇴근버튼을 찍었을때 조기퇴근 등을 계산해주는 function
+
+                            outButtonClick(response.vo.quittingTime, workerId);
+                        }else if(response.late == 1){
+                            alert("지각처리 되었습니다.");
+                            $('#label').html(response.vo.percent + '%');
+                            move(response.vo.percent, response.vo.getMTime);
+
+                            alert('출근 완료');
+                            document.getElementById('btn').style.display = "none";
+
+                            timer(response.vo.getMTime);
+
+                            var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+                            $('#out').append(btn);
+
+                            //퇴근버튼을 찍었을때 조기퇴근 등을 계산해주는 function
+
+                            outButtonClick(response.vo.quittingTime, workerId);
+                        }else if(response.absence == 1){
+                            alert("결근처리 되었습니다.");
+                            $('#label').html(response.vo.percent + '%');
+                            move(response.vo.percent, response.vo.getMTime);
+
+                            alert('출근 완료');
                             document.getElementById('btn').style.display = "none";
 
                             timer(response.vo.getMTime);

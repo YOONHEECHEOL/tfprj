@@ -19,4 +19,6 @@ public interface WorkerService {
     public int workerDetailUpdate(String staffStatusCd, String birth, HttpServletResponse response, MultipartFile file, WorkerVO vo) throws IOException, ParseException;
     public int signUpUpdate();
     public WorkerVO loginSelect(WorkerVO vo);
+    public int updateAllLateAbsence(int isLate, int isAbsence, String workerId);
+    public int updateAllPay(String workerId, float allPay);
 }

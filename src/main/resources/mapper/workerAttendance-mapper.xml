@@ -9,14 +9,15 @@
                A.OUT_TIME,
                A.IS_LATE,
                A.IS_ABSENCE,
-               I.WORKER_NAME, W.GOING_TIME, W.QUITTING_TIME, A.ATT_DT ,I.POSITION_CD, I.USERTYPE, I.STARTDAY
+               I.WORKER_NAME, W.GOING_TIME, W.QUITTING_TIME, A.ATT_DT ,I.POSITION_CD, I.USERTYPE, I.STARTDAY, I.ALLPAY
         FROM STAFF_ATTENDANCE A
-               INNER JOIN STAFF_INFORMATION I
+                 INNER JOIN STAFF_INFORMATION I
                             ON A.WORKER_ID = I.WORKER_ID
-               INNER JOIN WORKSHEET W
+                 INNER JOIN WORKSHEET W
                             ON I.WORKER_ID = W.WORKER_ID
         WHERE TO_CHAR(current_date, 'yy-MM-dd hh24:mi') BETWEEN A.IN_TIME AND TO_CHAR(W.QUITTING_TIME, 'yy-MM-dd hh24:mi')
-        AND TO_DATE(A.ATT_DT, 'yy-MM-dd') = TO_DATE(current_date, 'yy-MM-dd')
+          AND TO_DATE(A.ATT_DT, 'yy-MM-dd') = TO_DATE(current_date, 'yy-MM-dd')
+          and to_char(w.going_time, 'yy-MM-dd') = a.att_dt
     </select>
 
     <select id="getNowWorker2" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
@@ -166,6 +167,12 @@
         0,
         0)
     </insert>
+
+    <select id="payCalc" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        select *
+        from staff_attendance
+        where worker_id = #{workerId}
+    </select>
 
 </mapper>
 

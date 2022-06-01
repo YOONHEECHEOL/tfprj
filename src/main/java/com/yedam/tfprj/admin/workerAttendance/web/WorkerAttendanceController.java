@@ -2,6 +2,8 @@ package com.yedam.tfprj.admin.workerAttendance.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yedam.tfprj.admin.worker.service.WorkerService;
+import com.yedam.tfprj.admin.worker.service.WorkerVO;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceService;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO;
 import com.yedam.tfprj.admin.workerAttendance.service.ReturnVO;
@@ -15,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Controller
 public class WorkerAttendanceController {
@@ -27,6 +30,9 @@ public class WorkerAttendanceController {
 
     @Autowired
     WorksheetService worksheetService;
+
+    @Autowired
+    WorkerService workerService;
 
 
     @RequestMapping("/adm/now_worker_attendance")
@@ -68,9 +74,9 @@ public class WorkerAttendanceController {
         //오늘 출근한 사람은 한번 더 출근하지 못하게.
         service.selectQuitTime(workerId);
         System.out.println("ㅋㅋ " +service.selectQuitTime(workerId));
-        if(difference < 60) {
+        if(difference > -150 && difference < 60) {
                 service.insertAttendance(workerId);
-        }else {
+        }else{
             return null;
         }
 
@@ -95,7 +101,7 @@ public class WorkerAttendanceController {
             rVo.setLate("0");
             return rVo;
         // 만약 실제 출근시간이 10분 이상, 120분 이하 늦게될때 지각처리
-        }else if(minute <= -10 && minute >= -120){
+        }else if(minute <= -10 && minute >= -119){
             service.updateIslate(workerId);
             rVo.setLate("1");
             return rVo;
@@ -145,7 +151,11 @@ public class WorkerAttendanceController {
     @ResponseBody
     @PostMapping("/adm/allLate")
     public WorkerAttendanceVO allLate(String workerId){
-        return service.allLate(workerId);
+        WorkerAttendanceVO vo = service.allLate(workerId);
+        int isLate = vo.getIsLate();
+        int isAbsence = vo.getIsAbsence();
+        workerService.updateAllLateAbsence(isLate, isAbsence, workerId);
+        return vo;
     }
 
     @ResponseBody
@@ -178,5 +188,36 @@ public class WorkerAttendanceController {
                 service.insertNotInWorker(workerId, dated);
             }
         }
+    }
+
+    @ResponseBody
+    @RequestMapping("/adm/payCalc")
+    public float payCalc(@RequestParam String workerId) {
+        List<WorkerAttendanceVO> list = service.payCalc(workerId);
+        //총 근무시간 구하기
+        float allWorkTime = 0;
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).getInTime() != null && !list.get(i).getInTime().equals("결근") && list.get(i).getOutTime() != null){
+
+                String strInTime = list.get(i).getInTime();
+                String strOutTime = list.get(i).getOutTime();
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+                LocalDateTime inDate = LocalDateTime.parse(strInTime, formatter);
+                LocalDateTime outDate = LocalDateTime.parse(strOutTime, formatter);
+
+                long inMilSec = inDate.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
+                long outMilSec = outDate.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
+
+                float time = outMilSec - inMilSec;
+                allWorkTime += time;
+
+            }
+        }
+        workerService.getWorker(workerId);
+        float allPay = (allWorkTime / 1000 / 60 / 60) * workerService.getWorker(workerId).getPayPerHour();
+        workerService.updateAllPay(workerId, allPay);
+
+        return (allWorkTime / 1000 / 60 / 60);
     }
 }

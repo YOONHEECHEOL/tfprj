@@ -41,10 +41,10 @@
                         <td th:width="100" id="quittingTime">18:00</td>
     <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
                     </tr>
-                    <tr>
+                    <tr id="realInOutTime">
                         <td th:width="100"></td>
-                        <td th:width="100" th:text="${nowWorker.inTime}" style="color:red">실제출근시간</td>
-                        <td th:width="100" th:text="${nowWorker.outTime}" style="color:red"></td>
+                        <td th:width="100" style="color:red">실제출근시간</td>
+                        <td th:width="100" style="color:red"></td>
                     </tr>
                     <tr>
                         <th th:width="100">총 지각횟수</th>
@@ -76,13 +76,13 @@
                     <tr>
                         <th th:width="100">근무 시작일</th>
                         <th th:width="100">직책</th>
-                        <th th:width="300">지금까지 지급한 금액</th>
+                        <th th:width="300">지급금액</th>
                     </tr>
                     <tr>
                         <td th:width="400" id="startDay">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
                         <td th:width="100" id="positionCd">월/목 알바</td>
                         <!-- 스크립트에서 th:text="${nowWorker.positionCd}"의 값이 '0'일때, '1'일때의 값을 .html()로 넣어주기 (완)  -->
-                        <td th:width="100">컴마 붙여서 숫자 표현</td>
+                        <td id="payAll" th:width="100">컴마 붙여서 숫자 표현</td>
                     </tr>
                 </tbody>
             </table>
@@ -94,9 +94,8 @@
                 </span>
                     <br><br>
                     <button id="makeWorksheet">근무표 작성</button>
-                    <button>인사관리</button>
-                    <button>새로운 근무자 등록</button>
-                    <button>근태관리</button>
+                    <button onclick = "location.href = '/adm/worker_hrm' ">인사관리</button>
+                    <button onclick = "location.href = '/adm/work_record' ">근태관리</button>
                 </div>
                 <hr>
                 <div id="today">
@@ -117,6 +116,10 @@
     </div>
     <script>
         $(document).ready(function () {
+            let numberFormat = new Intl.NumberFormat('en-US')
+            numberFormat.format('[[${nowWorker.allpay}]]')
+            $('#payAll').html(numberFormat.format('[[${nowWorker.allpay}]]') + '원')
+
             var goingTime = '[[${nowWorker.goingTime}]]'.substring(11, 16)
             $('#goingTime').html(goingTime);
 
@@ -248,8 +251,10 @@
                  })
             }
             weekFind();
-            console.log('[[${nowWorker}]]');
+            $('#realInOutTime').find("td:eq(1)").html('[[${nowWorker.inTime}]]'.substring(9,14));
+            $('#realInOutTime').find("td:eq(2)").html('[[${nowWorker.outTime}]]'.substring(9,14));
 
+            console.log('[[${nowWorker.workerId}]]')
 
             $.ajax({
                 url : "allLate",

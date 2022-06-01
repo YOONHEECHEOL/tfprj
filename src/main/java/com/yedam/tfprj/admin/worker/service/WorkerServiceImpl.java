@@ -125,4 +125,14 @@ public class WorkerServiceImpl implements WorkerService {
     public WorkerVO loginSelect(WorkerVO vo) {
         return mapper.loginSelect(vo);
     }
+
+    @Override
+    public int updateAllLateAbsence(int isLate, int isAbsence, String workerId) {
+        return mapper.updateAllLateAbsence(isLate, isAbsence, workerId);
+    }
+
+    @Override
+    public int updateAllPay(String workerId, float allPay) {
+        return mapper.updateAllPay(workerId, allPay);
+    }
 }

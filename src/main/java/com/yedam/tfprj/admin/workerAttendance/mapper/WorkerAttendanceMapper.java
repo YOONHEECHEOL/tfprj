@@ -25,4 +25,5 @@ public interface WorkerAttendanceMapper {
     public WorkerAttendanceVO allAbsence(String workerId);
     public List<WorkerAttendanceVO> selectNotInWorker(String dd, String ff);
     public int insertNotInWorker(String workerId, String dated);
+    public List<WorkerAttendanceVO> payCalc(String workerId);
 }

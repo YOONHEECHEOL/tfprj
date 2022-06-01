@@ -99,7 +99,9 @@
         function drawMemNonMemChart(){
             var options = {'title':'회원 비회원 구분',
                 'width':400,
-                'height':300};
+                'height':300,
+                legend: { position: 'bottom' }
+            };
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -179,7 +181,15 @@
         function avgSalesByDay(){
             var options = {'title':'요일별 평균 매출량',
                 'width':400,
-                'height':300};
+                'height':300,
+                legend: { position: 'bottom' },
+                series: {
+                    0: { color: '#a561bd' },
+                    1: { color: '#c784de' },
+                    2: { color: '#f1ca3a' },
+                    3: { color: '#2980b9' },
+                    4: { color: '#e67e22' }
+                }};
 
             // Create the data table.
             var data = new google.visualization.DataTable();
