@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/cli_layout">
+
+<th:block layout:fragment="content">
+
+    <t-h1 ko="예약결제" en="RES-PAY"></t-h1>
+
+    <span th:text="${res.getResId()}"></span>
+<!--    <span th:text="${res.getEndTime()}"></span><br>-->
+<!--    <span th:text="${res.getGameId()}"></span><br>-->
+<!--    <span th:text="${res.getMemberId()}"></span><br>-->
+<!--    <span th:text="${res.getMemberName()}"></span><br>-->
+<!--    <span th:text="${res.getResDate()}"></span><br>-->
+<!--    <span th:text="${res.getResId()}"></span><br>-->
+<!--    <span th:text="${res.getRoom()}"></span><br>-->
+<!--    <span th:text="${res.getStartTime()}"></span><br>-->
+<!--    <span th:text="${res.getStatusCd()}"></span><br>-->
+<!--    <span th:text="${res.getTel()}"></span><br><br>-->
+
+    <hr>
+
+<!--    <span th:text="${game.getRoom()}"></span>-->
+<!--    <span th:text="${game.getResId()}"></span>-->
+<!--    <span th:text="${game.getMemberName()}"></span>-->
+<!--    <span th:text="${game.getGameId()}"></span>-->
+<!--    <span th:text="${game.getAwayHits()}"></span>-->
+<!--    <span th:text="${game.getAwayPlayteamCd()}"></span>-->
+<!--    <span th:text="${game.getAwayScore()}"></span>-->
+<!--    <span th:text="${game.getHomeHits()}"></span>-->
+<!--    <span th:text="${game.getInnings()}"></span>-->
+    <span th:text="${game.getGameId()}"></span>
+
+
+
+
+</th:block>
+
+</html>

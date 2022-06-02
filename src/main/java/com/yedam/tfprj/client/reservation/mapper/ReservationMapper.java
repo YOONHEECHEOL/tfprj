@@ -1,6 +1,7 @@
 package com.yedam.tfprj.client.reservation.mapper;
 
 import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
+import com.yedam.tfprj.client.game.service.Game;
 import com.yedam.tfprj.client.reservation.service.GameVO;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import org.apache.ibatis.annotations.Insert;
@@ -31,7 +32,7 @@ public interface ReservationMapper {
     public void insertGameInReservation(Map<String, String> p);
 
     @Select("select * from game where game_id = (select max(game_id) from game)")
-    public String getLastGameId();
+    public GameVO getLastGameId();
 
     // insert member-game
     @Insert("insert into member_game (member_id, member_name, ground_cd, difficulty_cd, game_id, res_date)\n" +
@@ -43,7 +44,14 @@ public interface ReservationMapper {
             "        #{gameId},\n" +
             "        current_date\n" +
             "        )")
-    public void insertMemberGameInReservation(MemberGameVO vo);
+    public void insertMemberGameInReservation(Map<String, String> p);
 
+    // select game by game_id
+    @Select("select * from game where game_id = #{gameId}")
+    public GameVO getGameVoByGameId(int gameId);
+
+    // select reservation by resId
+  @Select("select * from reservation where res_id = #{resId}")
+  public Reservation getResByResId(int resId);
 
 }
