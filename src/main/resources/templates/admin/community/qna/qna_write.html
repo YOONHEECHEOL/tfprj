@@ -9,7 +9,7 @@
             crossorigin="anonymous"></script>
 
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -29,7 +29,7 @@
 
         <h1>QNA 작성</h1>
 
-        <form  name="form" id="form" role="form" method="post" action="/adm/fmInsert">
+        <form name="form" id="form" role="form" method="post" action="/adm/qnaInsert">
 
             <div class="mb-3">
                 <label for="title">제목</label>
@@ -45,7 +45,7 @@
             <div>
                 <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
 
-                <button type="button" style="float: right" onclick="location.href = '/adm/fm'"
+                <button type="button" style="float: right" onclick="location.href = '/adm/qna'"
                         class="btn btn-sm btn-primary">목록
                 </button>
             </div>
@@ -54,5 +54,27 @@
 
     </div>
 </article>
+<script>
+    ClassicEditor
+
+        .create(document.querySelector('#details'))
+
+        .then(editor => {
+
+            console.log(editor);
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+
+        });
+</script>
+<script>
+    CKEDITOR.replace("details", {
+        filebrowserUploadUrl: "/cli/imageUpload"
+    });
+</script>
 </body>
 </html>

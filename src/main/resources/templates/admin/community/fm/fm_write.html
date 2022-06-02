@@ -1,35 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-
-    <!-- jQuery -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
 
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <title>생긴거만 에디터 저장안됨 ㅋㅋㅋㅋ</title>
 
-    <style>
-        body {
-            padding-top: 70px;
-            padding-bottom: 30px;
-        }
-    </style>
-</head>
-<body>
 <article>
     <div class="container" role="main">
 
         <h1>QNA 작성</h1>
 
-        <form  name="form" id="form" role="form" method="post" action="/adm/qnaInsert">
+        <form  name="form" id="form" role="form" method="post" action="/adm/fmInsert">
 
             <div class="mb-3">
                 <label for="title">제목</label>
@@ -43,9 +34,9 @@
             </div>
 
             <div>
-                <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                <input type="button" onclick="formCheck()" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
 
-                <button type="button" style="float: right" onclick="location.href = '/adm/qna'"
+                <button type="button" style="float: right" onclick="location.href = '/adm/fm'"
                         class="btn btn-sm btn-primary">목록
                 </button>
             </div>
@@ -55,21 +46,17 @@
     </div>
 </article>
 <script>
-    ClassicEditor
-
-        .create( document.querySelector( '#details' ) )
-
-        .then( editor => {
-
-            console.log( editor );
-
-        } )
-
-        .catch( error => {
-
-            console.error( error );
-
-        } );
-</script>
-</body>
+    CKEDITOR.replace("details",{
+        filebrowserUploadUrl : "/cli/imageUpload"
+    });
+        function formCheck() {
+            if (form.title.value == "") {
+                alert("제목을 입력하세요.");
+                form.title.focus();
+                return false;
+            }
+            form.submit();
+        }
+    </script>
+</th:block>
 </html>
