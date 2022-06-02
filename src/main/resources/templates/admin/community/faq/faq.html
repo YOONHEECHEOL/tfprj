@@ -4,7 +4,7 @@
       layout:decorate="/layout/adm_layout">
 
 <th:block layout:fragment="content">
-    <t-h1 en="FAQ" ko="자주 묻는 질문"></t-h1>
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -59,9 +59,11 @@
 
     </style>
 
+<h1>FAQ</h1>
 <form method="post" action="/adm/faqTitleInsert">
     <div class="mb-3" id="big">
-        <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+        <label for="title">제목</label>
+        <input type="text" class="form-control" name="title" id="title" placeholder="입력해 주세요">
         <input type="submit" value="대분류 생성" id="create">
     </div>
 </form>

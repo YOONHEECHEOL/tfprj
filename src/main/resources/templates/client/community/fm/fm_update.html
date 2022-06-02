@@ -3,17 +3,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/cli_layout}">
 
-
+<body>
 <th:block layout:fragment="content">
-  <t-h1 en="FM" ko="친선경기"></t-h1>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
+<style>
+  body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+  }
+</style>
 
 <div class="container">
 
-
+  <div>
+    <h1>친선경기 수정</h1>
+  </div>
 
 
   <form th:id="fm" name="fm" method="post" action="/cli/fmUpdateForm">
@@ -55,5 +61,5 @@
 </script>
 
 </th:block>
-
+</body>
 </html>

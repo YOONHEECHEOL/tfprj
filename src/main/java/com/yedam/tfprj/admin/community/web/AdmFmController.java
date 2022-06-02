@@ -64,7 +64,7 @@ public class AdmFmController {
     @RequestMapping("/adm/fmWrite")
     public String AdmFmWrite(Model model, AdmFmVO vo) {
         model.addAttribute("fm", vo);
-        return "admin/community/fm/fm_write";
+        return "/adm/community/fm/fm_write";
     }
 
     @RequestMapping("/adm/fmInsert")
