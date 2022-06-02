@@ -7,7 +7,12 @@
     <select id="CliFmList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
         SELECT f_no, title, writer, wdate, views, details, team
         FROM fm_board
-        ORDER BY f_no ASC
+        <where>
+            <if test="title != null and title !=''">
+                TITLE LIKE '%' || #{title} || '%'
+            </if>
+        </where>
+        ORDER BY f_no DESC
     </select>
 
     <update id="CliFmViewCount">

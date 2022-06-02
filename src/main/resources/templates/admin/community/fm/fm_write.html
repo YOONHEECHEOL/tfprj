@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
+    <t-h1 en="" ko="친선 경기 게시판"></t-h1>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -13,12 +15,10 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>생긴거만 에디터 저장안됨 ㅋㅋㅋㅋ</title>
 
 <article>
     <div class="container" role="main">
 
-        <h1>QNA 작성</h1>
 
         <form  name="form" id="form" role="form" method="post" action="/adm/fmInsert">
 
@@ -45,6 +45,7 @@
 
     </div>
 </article>
+
 <script>
     CKEDITOR.replace("details",{
         filebrowserUploadUrl : "/cli/imageUpload"
@@ -58,5 +59,6 @@
             form.submit();
         }
     </script>
+
 </th:block>
 </html>

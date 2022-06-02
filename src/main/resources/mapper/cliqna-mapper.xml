@@ -5,9 +5,14 @@
 <mapper namespace="com.yedam.tfprj.client.community.mapper.CliQnaMapper">
 
     <select id="CliQnaList" resultType="com.yedam.tfprj.client.community.service.qna.CliQnaVO">
-        SELECT f_no, title, writer, wdate, views, details
+        SELECT q_no, title, writer, wdate, views, details
         FROM qna_board
-        ORDER BY q_no ASC
+        <where>
+            <if test="title != null and title !=''">
+                TITLE LIKE '%' || #{title} || '%'
+            </if>
+        </where>
+        ORDER BY q_no DESC
     </select>
 
     <update id="CliQnaViewCount">

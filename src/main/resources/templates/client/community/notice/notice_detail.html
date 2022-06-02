@@ -3,8 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/cli_layout}">
 
-<body>
 <th:block layout:fragment="content">
+    <t-h1 en="NOTICE" ko="공지사항"></t-h1>
+
     <div class="container">
         <form th:id="details" method="post" action="/cli/noticeUpdate">
 
@@ -48,13 +49,7 @@
     </div>
 
     <button onclick="location.href = '/cli/notice'">뒤로가기</button>
-    <script>
 
-        submitFrm.addEventListener('click', () => {
-            details.submit()
-        })
-
-    </script>
 </th:block>
-</body>
+
 </html>

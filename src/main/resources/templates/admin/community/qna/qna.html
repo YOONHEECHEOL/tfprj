@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>마 이게 공지사항 아이가</title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
+    <t-h1 en="" ko="QNA"></t-h1>
+
+
+    <link   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <style>
-        body {
-            padding: 100px;
-        }
-    </style>
-    <h1>QNA</h1>
-</head>
-<body>
+
+    <form>
+        <div>
+            <input type="text" th:value="${admQnaVO.title}"
+                   onclick="this.select()"
+                   name="title" placeholder="제목을 입력하세요"/>
+            <button type="submit">검색</button>
+        </div>
+    </form>
 <form th:id="details" method="post">
     <table class="table">
         <thead>
@@ -64,14 +67,13 @@
         </li>
     </ul>
 </nav>
-<script>
-    function callDetails(n) {
-        details.qNo.value = n;
-        details.action = "/adm/qnaDetail";
-        details.submit();
-    }
-</script>
-
-</body>
+    <script>
+        function callDetails(n) {
+            details.qNo.value = n;
+            details.action = "/adm/qnaDetail";
+            details.submit();
+        }
+    </script>
+</th:block>
 </html>
 

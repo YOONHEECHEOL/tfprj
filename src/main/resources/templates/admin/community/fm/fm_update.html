@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>공지사항 수정</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <style>
-        body {
 
-            padding-top: 70px;
 
-            padding-bottom: 30px;
-
-        }
-    </style>
-</head>
-<body>
 <div class="container">
 
     <div>
@@ -23,7 +15,7 @@
     </div>
 
 
-    <form th:id="fm" method="post" action="/adm/fmUpdateForm">
+    <form th:id="fm" name="fm" method="post" action="/adm/fmUpdateForm">
         <div>
             <label>게시글 번호</label>
             <input name="fNo" readonly="readonly" class="form-control" th:value="${fm.fNo}">
@@ -40,7 +32,7 @@
             <label>내용</label>
             <textarea name="details" type="text" class="form-control" rows="5" th:value="${fm.details}" th:text="${fm.details}"></textarea>
         </div>
-        <button type="submit" id="frm" style="float: left">전송</button>
+        <button type="button" onclick="formCheck()" id="frm" style="float: left">전송</button>
     </form>
 
     <input type="hidden" id="fNo" name="fNo" th:value="${fm.fNo}">
@@ -51,9 +43,15 @@
 </div>
 
 <script>
-    frm.addEventListener('click', () => {
-        fm.submit()
-    })
+
+    function formCheck() {
+        if (fm.title.value == "") {
+            alert("제목을 입력하세요.");
+            fm.title.focus();
+            return false;
+        }
+        fm.submit();
+    }
 </script>
-</body>
+</th:block>
 </html>

@@ -4,8 +4,9 @@
       layout:decorate="~{layout/cli_layout}">
 
 
-<body>
 <th:block layout:fragment="content">
+    <t-h1 en="FM" ko="친선경기"></t-h1>
+
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -21,12 +22,7 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <title>생긴거만 에디터 </title>
 
-    <style>
-        body {
-            padding-top: 70px;
-            padding-bottom: 30px;
-        }
-    </style>
+
 
 
     <article>
@@ -48,7 +44,7 @@
                 </div>
 
                 <div>
-                    <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                    <input type="button" onclick="formCheck()" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
 
                     <button type="button" style="float: right" onclick="location.href = '/cli/fm'"
                             class="btn btn-sm btn-primary">목록
@@ -63,7 +59,16 @@
         CKEDITOR.replace("details",{
             filebrowserUploadUrl : "/cli/imageUpload"
         });
+
+        function formCheck() {
+            if (form.title.value == "") {
+                alert("제목을 입력하세요.");
+                form.title.focus();
+                return false;
+            }
+            form.submit();
+        }
     </script>
 </th:block>
-</body>
+
 </html>

@@ -5,10 +5,12 @@
 
 
 
-<body>
 <th:block layout:fragment="content">
+    <t-h1 en="QNA" ko="문의 사항"></t-h1>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 <style>
@@ -21,17 +23,12 @@
         padding-top: 50px;
         padding-bottom: 50px;
     }
-    body{
-        padding-top: 100px;
-    }
 </style>
 
 <div class="container">
     <form th:id="details" method="post" action="/cli/qnaUpdate">
 
-        <div>
-            <h1>QNA 상세보기</h1>
-        </div>
+
 
         <div class="container" style="max-width: 880px;">
             <table th:each="q, status : ${qna}" border="1" class="card" id="frm">
@@ -129,5 +126,5 @@
 
 </script>
 </th:block>
-</body>
+
 </html>

@@ -4,8 +4,11 @@
       layout:decorate="~{layout/cli_layout}">
 
 
-<body>
+
 <th:block layout:fragment="content">
+    <t-h1 en="QNA" ko="문의 사항"></t-h1>
+
+
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -18,19 +21,9 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>생긴거만 에디터 저장안됨 ㅋㅋㅋㅋ</title>
-
-    <style>
-        body {
-            padding-top: 70px;
-            padding-bottom: 30px;
-        }
-    </style>
 
     <article>
         <div class="container" role="main">
-
-            <h1>QNA 작성</h1>
 
             <form name="form" id="form" role="form" method="post" action="/cli/qnaInsert">
 
@@ -73,12 +66,10 @@
                 console.error(error);
 
             });
-    </script>
-    <script>
+
         CKEDITOR.replace("details", {
             filebrowserUploadUrl: "/cli/imageUpload"
         });
     </script>
 </th:block>
-</body>
 </html>

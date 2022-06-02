@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>FAQ</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+
+<th:block layout:fragment="content">
+    <t-h1 en="FAQ" ko="자주 묻는 질문"></t-h1>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -54,20 +56,12 @@
             background-position: 0 30px;
         }
 
-        body {
-            margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 50px;
-        }
-    </style>
-</head>
-<body>
 
-<h1>FAQ</h1>
+    </style>
+
 <form method="post" action="/adm/faqTitleInsert">
     <div class="mb-3" id="big">
-        <label for="title">제목</label>
-        <input type="text" class="form-control" name="title" id="title" placeholder="입력해 주세요">
+        <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
         <input type="submit" value="대분류 생성" id="create">
     </div>
 </form>
@@ -86,5 +80,5 @@
     </div>
 </div>
 <button onclick="location.href = '/adm/faqWrite'" style="float: right">작성</button>
-</body>
+</th:block>
 </html>
