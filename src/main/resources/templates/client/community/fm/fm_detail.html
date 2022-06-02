@@ -4,8 +4,8 @@
       layout:decorate="~{layout/cli_layout}">
 
 
-<body>
 <th:block layout:fragment="content">
+    <t-h1 en="FM" ko="친선경기"></t-h1>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -21,17 +21,11 @@
             padding-bottom: 50px;
         }
 
-        body {
-            padding-top: 100px;
-        }
     </style>
 
     <div class="container">
         <form th:id="details" method="post" action="/cli/fmUpdate">
 
-            <div>
-                <h1>덤비라 조팝나무야</h1>
-            </div>
 
             <div class="container" style="max-width: 880px;">
                 <table th:each="f, status : ${fm}" border="1" class="card" id="frm">

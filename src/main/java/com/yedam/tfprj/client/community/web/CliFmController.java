@@ -70,7 +70,7 @@ public class CliFmController {
     public String CliFmWrite(Model model, CliFmVO vo) {
         model.addAttribute("fm", vo);
 
-        return "/client/community/fm/fmWrite";
+        return "/client/community/fm/fm_write";
     }
 
     @RequestMapping("/cli/fmInsert")

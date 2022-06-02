@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 
 @Controller
 public class CliQnaController {
@@ -36,6 +33,7 @@ public class CliQnaController {
 
     @RequestMapping("/cli/qnaDetail")
     public String qnaDetail(Model model, CliQnaVO vo) {
+
         service.CliQnaViewCount(vo.getQNo());
         vo.setQNo(vo.getQNo());
         model.addAttribute("qna", service.CliQnaSelect(vo)); //디테일 출력
@@ -77,12 +75,14 @@ public class CliQnaController {
     public String CliQnaWrite(Model model, CliQnaVO vo, HttpSession session) {
         String writer = (String) session.getAttribute("memberId");
         model.addAttribute("qna", vo);
-        return "/client/community/qna/qnaWrite";
+        return "client/community/qna/qna_write";
     }
 
 
     @RequestMapping("/cli/qnaInsert")
-    public String CliQnaInsert(Model model, CliQnaVO vo) {
+    public String CliQnaInsert(Model model, CliQnaVO vo, HttpSession session) {
+        String writer = (String) session.getAttribute("memberId");
+        vo.setWriter(writer);
         service.CliQnaInsert(vo);
         return "redirect:/cli/qna";
     }
@@ -112,7 +112,8 @@ public class CliQnaController {
         byte[] bytes = upload.getBytes();
 
         // 이미지를 업로드할 디렉토리(배포 디렉토리로 설정)
-        String uploadPath = request.getSession().getServletContext().getRealPath("/uploadImg");
+        String uploadPath = "D:/uploadImg";
+        /*request.getSession().getServletContext().getRealPath("/uploadImg");*/
 
         OutputStream out = new FileOutputStream(new File(uploadPath + "/" + fileName));
 
@@ -126,11 +127,35 @@ public class CliQnaController {
 
         // 서버=>클라이언트로 텍스트 전송(자바스크립트 실행)
         PrintWriter printWriter = response.getWriter();
-        String fileUrl = request.getContextPath() + "/uploadImg/" + fileName;
+        String fileUrl = "/download?name=" + fileName;
         printWriter.println("<script>window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + fileUrl
                 + "','이미지가 업로드되었습니다.')" + "</script>");
         printWriter.flush();
 
     }
+
+    @RequestMapping("/download")
+    public void download(HttpServletResponse response, @RequestParam String name) throws Exception {
+        try {
+            String path = "D:\\uploadImg\\"; // 경로에 접근할 때 역슬래시('\') 사용
+
+            //File file = new File(path+name);
+            //response.setHeader("Content-Disposition", "attachment;filename=" + file.getName()); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+
+            FileInputStream fileInputStream = new FileInputStream(path+name); // 파일 읽어오기
+            OutputStream out = response.getOutputStream();
+
+            int read = 0;
+            byte[] buffer = new byte[1024];
+            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
+                out.write(buffer, 0, read);
+            }
+
+        } catch (Exception e) {
+            throw new Exception("download error");
+        }
+    }
+
+
 
 }

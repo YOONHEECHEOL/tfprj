@@ -5,31 +5,23 @@
 
 
 
-<body>
 <th:block layout:fragment="content">
+    <t-h1 en="QNA" ko="문의 사항"></t-h1>
 
-<link rel="stylesheet"
+
+
+    <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous">
-<style>
-    body {
 
-        padding-top: 70px;
-
-        padding-bottom: 30px;
-
-    }
-</style>
 
 <div class="container">
 
-    <div>
-        <h1>QNA 수정</h1>
-    </div>
 
 
-    <form th:id="qna" method="post" action="/cli/qnaUpdateForm">
+
+    <form th:id="qna" name="qna" method="post" action="/cli/qnaUpdateForm">
         <div>
             <label>게시글 번호</label>
             <input name="qNo" readonly="readonly" class="form-control" th:value="${qna.qNo}">
@@ -58,10 +50,15 @@
 </div>
 
 <script>
-    frm.addEventListener('click', () => {
-        qna.submit()
-    })
+    function formCheck() {
+        if (qna.title.value == "") {
+            alert("제목을 입력하세요.");
+            qna.title.focus();
+            return false;
+        }
+        qna.submit();
+    }
 </script>
 </th:block>
-</body>
+
 </html>

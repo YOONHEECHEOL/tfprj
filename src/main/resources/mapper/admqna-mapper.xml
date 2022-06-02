@@ -7,7 +7,12 @@
     <select id="AdmQnaList" resultType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
         SELECT q_no, title, writer, wdate, views, details
         FROM qna_board
-        ORDER BY q_no ASC
+        <where>
+            <if test="title != null and title !=''">
+                TITLE LIKE '%' || #{title} || '%'
+            </if>
+        </where>
+        ORDER BY q_no DESC
     </select>
 
     <update id="AdmQnaViewCount">

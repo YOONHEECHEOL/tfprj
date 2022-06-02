@@ -7,7 +7,12 @@
     <select id="AdmNoticeList" resultType="com.yedam.tfprj.admin.community.service.notice.AdmNoticeVO">
         SELECT n_no, title, wdate, views
         FROM notice_board
-        ORDER BY n_no ASC
+        <where>
+            <if test="title != null and title !=''">
+                TITLE LIKE '%' || #{title} || '%'
+            </if>
+        </where>
+        ORDER BY n_no DESC
     </select>
 
     <update id="AdmNoticeViewCount">

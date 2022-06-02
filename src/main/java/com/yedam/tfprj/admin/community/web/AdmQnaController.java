@@ -66,7 +66,7 @@ public class AdmQnaController {
     @RequestMapping("/adm/qnaWrite")
     public String AdmQnaWrite(Model model, AdmQnaVO vo){
         model.addAttribute("qna", vo);
-        return "/admin/community/qna/qnaWrite";
+        return "/admin/community/qna/qna_write";
     }
 
 
