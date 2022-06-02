@@ -22,7 +22,7 @@
   </div>
 
 
-  <form th:id="fm" method="post" action="/cli/fmUpdateForm">
+  <form th:id="fm" name="fm" method="post" action="/cli/fmUpdateForm">
     <div>
       <label>게시글 번호</label>
       <input name="fNo" readonly="readonly" class="form-control" th:value="${fm.fNo}">
@@ -39,7 +39,7 @@
       <label>내용</label>
       <textarea name="details" type="text" class="form-control" rows="5" th:value="${fm.details}" th:text="${fm.details}"></textarea>
     </div>
-    <button type="submit" id="frm" style="float: left">전송</button>
+    <button type="button" onclick="formCheck()" id="frm" style="float: left">전송</button>
   </form>
 
   <input type="hidden" id="fNo" name="fNo" th:value="${fm.fNo}">
@@ -50,9 +50,14 @@
 </div>
 
 <script>
-  frm.addEventListener('click', () => {
-    fm.submit()
-  })
+  function formCheck() {
+    if (fm.title.value == "") {
+      alert("제목을 입력하세요.");
+      fm.title.focus();
+      return false;
+    }
+    fm.submit();
+  }
 </script>
 
 </th:block>

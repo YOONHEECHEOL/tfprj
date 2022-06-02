@@ -61,7 +61,7 @@ public class AdmNoticeController {
     @RequestMapping("/adm/noticeWrite")
     public String AdmNoticeWrite(Model model, AdmNoticeVO vo) {
         model.addAttribute("notice", vo);
-        return "admin/community/notice/noticeWrite";
+        return "/admin/community/notice/notice_write";
     }
 
     @RequestMapping("/adm/noticeInsert")

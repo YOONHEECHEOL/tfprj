@@ -48,7 +48,7 @@
                 </div>
 
                 <div>
-                    <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                    <input type="button" onclick="formCheck()" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
 
                     <button type="button" style="float: right" onclick="location.href = '/cli/fm'"
                             class="btn btn-sm btn-primary">목록
@@ -63,6 +63,15 @@
         CKEDITOR.replace("details",{
             filebrowserUploadUrl : "/cli/imageUpload"
         });
+
+        function formCheck() {
+            if (form.title.value == "") {
+                alert("제목을 입력하세요.");
+                form.title.focus();
+                return false;
+            }
+            form.submit();
+        }
     </script>
 </th:block>
 </body>

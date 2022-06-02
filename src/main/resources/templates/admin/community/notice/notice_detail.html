@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>귀찮게 꼭 디테일하게 해야하냐</title>
-</head>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
+
 <div class="container">
     <form th:id="details" method="post" action="/adm/noticeUpdate">
 
@@ -60,5 +58,5 @@
 
 </script>
 
-</body>
+</th:block>
 </html>
