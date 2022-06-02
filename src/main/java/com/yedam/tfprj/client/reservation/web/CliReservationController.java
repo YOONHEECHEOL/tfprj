@@ -1,6 +1,7 @@
 package com.yedam.tfprj.client.reservation.web;
 
 import com.yedam.tfprj.client.reservation.mapper.ReservationMapper;
+import com.yedam.tfprj.client.reservation.service.GameVO;
 import com.yedam.tfprj.client.reservation.service.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,16 +17,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CliReservationController {
+
     @Autowired
     ReservationMapper reservationMapper;
+
     @RequestMapping("/cli/reservation/room")
     public String reservation(){
         return "client/reservation/room";
     }
 
+    // insert and return last reservation
     @RequestMapping(value = "/cli/reservation/info", method = RequestMethod.POST)
     public String resInfo(Reservation reservation, Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -36,9 +41,13 @@ public class CliReservationController {
         }
         reservationMapper.insertReservation(reservation);
 
+        // 입력된 reservation 으로 정보 받기
+        reservation = reservationMapper.getLastReservation();
+
         model.addAttribute("reservation", reservation);
         return "client/reservation/info";}
 
+    //
     @RequestMapping("/cli/reservationList")
     public String findReservationList(Model model){
         model.addAttribute("rList",reservationMapper.findReservation());
@@ -60,6 +69,19 @@ public class CliReservationController {
     }
 
 
+    // gameInfo 데이터를 받아 insert 처리
+    @PostMapping("/cli/insertGame")
+    @ResponseBody
+    public String insertGame(@RequestBody Map<String, String> vo) {
+
+        System.out.println(">>vo = " + vo);
+
+        reservationMapper.insertGameInReservation(vo);
+
+        return reservationMapper.getLastGameId();
+    }
+
+    // memberGameInfo 데이터를 받아 처리
 
 
 }

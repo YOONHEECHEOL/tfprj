@@ -331,6 +331,7 @@ main.contents {
     background: #fff !important;
     border: 1px solid #bbb;
     z-index: 9999;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, .4);
 }
 .modal-content {
     border: 0 !important;
@@ -528,4 +529,74 @@ hr {
     border-bottom: 2px solid #1cc88a;
     border-right: 1px solid #1cc88a;
     border-left: 1px solid #1cc88a;
+}
+.res-member {
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 2px solid #222;
+}
+.res-member > div {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+.res-member > div button {
+    border: 1px solid #bbb;
+    width: 100%;
+    font-size: 1.2rem;
+    padding: .4rem 0;
+    text-align: center;
+    background: #fff;
+    color: #999;
+}
+.res-member > div button.inserted {
+    color: #222;
+    font-family: esM;
+    font-size: 1.6rem;
+}
+.tabcontent {
+    display: none;
+    min-height: 42vh;
+    padding: 2.4rem 0;
+}
+.tabcontent.active {
+    display: block;
+}
+#team-list {
+    border-top: 2px solid #222;
+    border-bottom: 2px solid #222;
+}
+#team-list > li {
+    display: block;
+    padding: 1.2rem 0;
+    text-align: center;
+    font-size: 1.6rem;
+    font-family: esM;
+    color: #222;
+    border-bottom: 1px solid #bbb;
+}
+#team-list > li:last-child {
+    border: 0px;
+}
+#team-list > li.selected {
+    background: #3765C7;
+    color: #fff;
+}
+.res-button-box {
+    width: 100vw;
+    height: 17.2rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 0 1.5rem;
+    background: #fff;
+    z-index: 200;
+}
+
+.row {
+    margin: 0 !important;
+}
+.v-step > div.checked {
+    background: #fd7e14;
+    height: .8rem;
 }

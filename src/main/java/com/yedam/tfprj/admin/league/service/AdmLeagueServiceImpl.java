@@ -16,6 +16,8 @@ import java.util.*;
 @Service
 public class AdmLeagueServiceImpl implements LeagueService {
 
+  int chkIdx = 0;
+
   @Autowired
   AdmLeagueMapper admLeagueMapper;
 
@@ -197,9 +199,11 @@ public class AdmLeagueServiceImpl implements LeagueService {
     List<LeagueStatusVO> finalReturnVal = returnVal;
 
     cntArr.forEach(index -> {
+
       List<LeagueStatusVO> v = new ArrayList<>();
       for(int i=0; i<index; i++) {
-        v.add(finalReturnVal.get(i));
+        v.add(finalReturnVal.get(chkIdx));
+        chkIdx = chkIdx + 1;
       }
       // map 에 정보 담기
       Map<String, Object> vv = new HashMap<>();
@@ -208,6 +212,7 @@ public class AdmLeagueServiceImpl implements LeagueService {
       // 최종 반환값에 map 담기
       returnMap.add(vv);
     });
+    chkIdx = 0;
 
     // return 담기
     admLeagueServiceVO.setLeagueStatusTeamList(returnMap);

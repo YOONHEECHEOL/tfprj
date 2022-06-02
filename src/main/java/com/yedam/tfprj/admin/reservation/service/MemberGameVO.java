@@ -2,6 +2,8 @@ package com.yedam.tfprj.admin.reservation.service;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class MemberGameVO {
     private String memberId;
@@ -14,6 +16,7 @@ public class MemberGameVO {
     private int batOrder;
     private int difficultyCd;
     private int gameId;
+    private Date resDate;
     private double battingAverage;
 
 

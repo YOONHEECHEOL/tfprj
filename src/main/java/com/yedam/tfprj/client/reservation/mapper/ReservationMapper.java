@@ -1,9 +1,14 @@
 package com.yedam.tfprj.client.reservation.mapper;
 
+import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
 import com.yedam.tfprj.client.reservation.service.GameVO;
 import com.yedam.tfprj.client.reservation.service.Reservation;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ReservationMapper {
@@ -17,7 +22,28 @@ public interface ReservationMapper {
 
     public List<String> teamList();
 
-    public int insertGame(GameVO gv);
+    // 최근 등록한 reservation 정보 들고오기
+    @Select("select * from reservation where res_id = (select max(res_id) from reservation)")
+    public Reservation getLastReservation();
+
+    // insert game
+    @Insert("insert into game (GAME_ID, RES_ID, MEMBER_ID, MEMBER_NAME, INNINGS, HOME_PLAYTEAM_CD, AWAY_PLAYTEAM_CD, ROOM) values (seq_game.nextval, #{resId}, #{memberId}, #{memberName}, #{innings}, #{homePlayteamCd}, #{awayPlayteamCd}, #{room})")
+    public void insertGameInReservation(Map<String, String> p);
+
+    @Select("select * from game where game_id = (select max(game_id) from game)")
+    public String getLastGameId();
+
+    // insert member-game
+    @Insert("insert into member_game (member_id, member_name, ground_cd, difficulty_cd, game_id, res_date)\n" +
+            "values (\n" +
+            "        #{memberId},\n" +
+            "        #{memberName},\n" +
+            "        #{groundCd},\n" +
+            "        #{difficultyCd},\n" +
+            "        #{gameId},\n" +
+            "        current_date\n" +
+            "        )")
+    public void insertMemberGameInReservation(MemberGameVO vo);
 
 
 }
