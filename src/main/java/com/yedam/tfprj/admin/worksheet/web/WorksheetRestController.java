@@ -27,12 +27,46 @@ public class WorksheetRestController {
         return service.jsonSheetList();
     }
 
+    @RequestMapping("/adm/deleteCalendar")
+    public String deleteCalendar(String date){
+
+        String dateListArr[] = date.split("-");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Integer.parseInt(dateListArr[0]), Integer.parseInt(dateListArr[1]) - 1, 1);
+        int monthLength = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        String month = ("0" + dateListArr[1]);
+
+        if(month.length() == 2){
+            String firstDate = dateListArr[0] + "-" + month + "-01";
+            String lastDate = dateListArr[0] + "-" + month + "-" +monthLength;
+
+            if(service.checkDateBeforeDelete(firstDate, lastDate).size() == 0) {
+                return "0";
+            }else{
+                service.deleteCalendar(firstDate, lastDate);
+            }
+        }else{
+            month = month.substring(1,3);
+            String firstDate = dateListArr[0] + "-" + month + "-01";
+            String lastDate = dateListArr[0] + "-" + month + monthLength;
+
+            if(service.checkDateBeforeDelete(firstDate, lastDate).size() == 0) {
+                return "0";
+            }else{
+                service.deleteCalendar(firstDate, lastDate);
+            }
+        }
+        return null;
+    }
+
     @RequestMapping("/adm/worksheetInsert")
     public String worksheetInsert(@RequestParam String workerArr, @RequestParam String date) {
         ObjectMapper objectMapper = new ObjectMapper();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String startDate;
         String endDate;
+        int monthLength;
+        String realDate = null;
 
         try {
             List<WorkerArrVO> list = Arrays.asList(objectMapper.readValue(workerArr, WorkerArrVO[].class));
@@ -42,7 +76,7 @@ public class WorksheetRestController {
 
             Calendar cal = Calendar.getInstance();
             cal.set(Integer.parseInt(dateListArr[0]), Integer.parseInt(dateListArr[1]) - 1, 1);
-            int monthLength = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+            monthLength = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
             System.out.println(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
             //dateListArr[0] = 2022
             //dateListArr[1] = 5
@@ -55,7 +89,7 @@ public class WorksheetRestController {
                     vo = list.get(j);
                     //WorkerArrVO List의 갯수만큼 반복문
                     for (int i = 1; i <= monthLength; i++) {
-                        String realDate;
+
                         if (i < 10) {
                             realDate = dateListArr[0] + "-0" + dateListArr[1] + "-0" + i;
                         } else {
@@ -103,16 +137,19 @@ public class WorksheetRestController {
                         }else{
                             return "0";
                         }
-
                     }
                 }
+                System.out.println("월초" + realDate.substring(0,7).concat("-01"));
+                System.out.println("년월일" +  realDate);
+                service.updateWeekend(realDate.substring(0,7).concat("-01"), realDate);
+                // 여기에 update로 사장님은 주말에 근무하게..
+
             } else {
                 // 해당 월이 10~12월 일때
                 for (int j = 0; j < list.size(); j++) {
                     vo = list.get(j);
                     System.out.println("asdf" + vo.getUserType());
                     for (int i = 1; i <= monthLength; i++) {
-                        String realDate;
                         if (i < 10) {
                             realDate = dateListArr[0] + "-" + dateListArr[1] + "-0" + i;
                         } else {
@@ -155,34 +192,37 @@ public class WorksheetRestController {
                         }
                     }
                 }
+                service.updateWeekend(realDate.substring(0,7).concat("-01"), realDate);
             }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        List<WorksheetVO> workList = service.worksheetList();
-        List<Map<String, Object>> jsonList = new ArrayList<>();
-        Map<String, Object> map;
-
-        for(int i=0; i<workList.size(); i++){
-            map = new HashMap<String, Object>();
-            map.put("title", workList.get(i).getWorkerId());
-            map.put("start", workList.get(i).getGoingTime());
-            map.put("end", workList.get(i).getQuittingTime());
-
-            jsonList.add(map);
-        }
-
-        String strJsonList = "";
-        try {
-            strJsonList = objectMapper.writeValueAsString(jsonList);
-            System.out.println("리턴타입 JSON" + strJsonList);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return strJsonList;
+//        List<WorksheetVO> workList = service.worksheetList();
+//        List<Map<String, Object>> jsonList = new ArrayList<>();
+//        Map<String, Object> map;
+//
+//        for(int i=0; i<workList.size(); i++){
+//            map = new HashMap<String, Object>();
+//            map.put("title", workList.get(i).getWorkerId());
+//            map.put("start", workList.get(i).getGoingTime());
+//            map.put("end", workList.get(i).getQuittingTime());
+//
+//            jsonList.add(map);
+//        }
+//
+//        String strJsonList = "";
+//        try {
+//            strJsonList = objectMapper.writeValueAsString(jsonList);
+//            System.out.println("리턴타입 JSON" + strJsonList);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+        return "1";
         //캘린더에 동적으로 날짜를 입력해주기 위해 타입을 맞춰준 후 리턴.
     }
+
+
 
     @PostMapping("/adm/calendarUpdate")
     public String calendarUpdate(@RequestParam String workerId, @RequestParam String goingTime, @RequestParam String quittingTime,

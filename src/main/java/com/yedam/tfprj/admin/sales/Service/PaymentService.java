@@ -9,4 +9,5 @@ public interface PaymentService {
     public List<Map<String, Object>> findMemNonMem(PaymentVO vo);
     public List<Map<String, Object>> findPayType(PaymentVO vo);
     public List<Map<String, Object>> avgSalesByDay(PaymentVO vo);
+    public List<Map<String, Object>> todaySell();
 }

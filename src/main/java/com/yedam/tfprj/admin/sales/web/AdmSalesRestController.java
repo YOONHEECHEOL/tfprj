@@ -37,4 +37,9 @@ public class AdmSalesRestController {
     public List<Map<String, Object>> avgSalesByDay(PaymentVO vo){
         return service.avgSalesByDay(vo);
     }
+
+    @RequestMapping("/adm/todaySell")
+    public List<Map<String, Object>> todaySell(){
+        return service.todaySell();
+    }
 }

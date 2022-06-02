@@ -31,4 +31,9 @@ public class PaymentServiceImpl implements PaymentService {
     public List<Map<String, Object>> avgSalesByDay(PaymentVO vo) {
         return mapper.avgSalesByDay(vo);
     }
+
+    @Override
+    public List<Map<String, Object>> todaySell() {
+        return mapper.todaySell();
+    }
 }

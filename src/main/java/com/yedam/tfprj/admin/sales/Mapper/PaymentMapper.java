@@ -16,4 +16,6 @@ public interface PaymentMapper {
     public List<Map<String, Object>> findPayType(PaymentVO vo);
     @MapKey("String")
     public List<Map<String, Object>> avgSalesByDay(PaymentVO vo);
+    @MapKey("String")
+    public List<Map<String, Object>> todaySell();
 }

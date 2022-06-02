@@ -36,7 +36,7 @@
                 <thead>
                     <tr>
                         <th>이름</th>
-                        <th>직책</th>
+<!--                        <th>직책</th>-->
                         <th>시간</th>
                     </tr>
                 </thead>
@@ -45,10 +45,10 @@
                     <td><select class="workerId">
                             <option th:each="l, status: ${allWorker}" th:text="${l.workerName}" th:value="${l.workerId}"></option>
                         </select></td>
-                    <td><select class="positionCd">
-                            <option value="0">월/목 알바중</option>
-                            <option value="1">화/수/금 알바중</option>
-                        </select></td>
+<!--                    <td><select class="positionCd">-->
+<!--                            <option value="0">월/목 알바중</option>-->
+<!--                            <option value="1">화/수/금 알바중</option>-->
+<!--                        </select></td>-->
                     <td><select class="userType">
                         <option value="0">1부</option>
                     </select></td>
@@ -59,10 +59,10 @@
                     <td><select class="workerId2">
                         <option th:each="l, status: ${allWorker}" th:text="${l.workerName}" th:value="${l.workerId}"></option>
                     </select></td>
-                    <td><select class="positionCd2">
-                        <option value="0">월/목 알바중</option>
-                        <option value="1">화/수/금 알바중</option>
-                    </select></td>
+<!--                    <td><select class="positionCd2">-->
+<!--                        <option value="0">월/목 알바중</option>-->
+<!--                        <option value="1">화/수/금 알바중</option>-->
+<!--                    </select></td>-->
                     <td><select class="userType2">
                         <option value="1">2부</option>
                     </select></td>
@@ -71,7 +71,7 @@
                 </tbody>
             </table>
             <button id="createBtn">근무표 생성</button>
-            <button>취소</button>
+            <button id="deleteBtn">근무표 삭제</button>
             <hr>
         </div>
     </div>
@@ -126,6 +126,7 @@
     </div><!-- /.modal -->
 
     <script>
+        var calendar;
 
         function dateCal(date){
 
@@ -164,7 +165,12 @@
         }
 
 
-
+        // let save = window.localStorage.getItem('saveDate');
+        // if( save == null){
+        //     save = new Date();
+        // }else{
+        //
+        // }
 
 
         $(document).ready(function () {
@@ -174,18 +180,56 @@
                 dataType: "json"
             });
 
-            request.done(function (data) {
+            deleteCalendar();
 
+            function deleteCalendar(){
+                $('#deleteBtn').on('click', function(){
+                    if (!confirm($('#fc-dom-1').html() + "의 데이터를 삭제하시겠습니까?")) {
+                        // 취소(아니오)
+                    } else {
+                        // 확인(예)
+                        let date = $('#fc-dom-1').html().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ).replace(' ', '-');
+                        $.ajax({
+                            url : "deleteCalendar",
+                            data : {date : date}
+                        }).done(function(response){
+                            console.log(response);
+                            if(response == "0"){
+                                alert('삭제할 데이터가 없습니다.')
+                            }else{
+                                let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
+                                let dateOffset = new Date(calendar.getDate().getTime() - offset);
+
+                                window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0,10))
+                                window.location.reload();
+                            }
+                        })
+                    }
+                })
+            }
+
+
+            request.done(function (data) {
 
 
 // calendar element 취득
                 var calendarEl = $('#calendar')[0];
+
+                let save =  window.localStorage.getItem("saveDate")
+                if(save == null && save != ''){
+                    save = new Date();
+                }
+
+                console.log(save);
+                window.localStorage.removeItem('saveDate');
 // full-calendar 생성하기
-                var calendar = new FullCalendar.Calendar(calendarEl, {
+                calendar = new FullCalendar.Calendar(calendarEl, {
                     height: '800px', // calendar 높이 설정
                     expandRows: true, // 화면에 맞게 높이 재설정
                     slotMinTime: '08:00', // Day 캘린더에서 시작 시간
                     slotMaxTime: '23:59', // Day 캘린더에서 종료 시간
+                    initialDate: save,
+
 // 해더에 표시할 툴바
                     headerToolbar: {
                         left: 'prev,next today',
@@ -235,7 +279,13 @@
                                    backgroundColor : "#008000"
                                },
                            }).done(function (response){
-                               console.log("asdf" + response);
+                               alert('수정 완료')
+                               let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
+                               let dateOffset = new Date(calendar.getDate().getTime() - offset);
+
+                               window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0,10))
+                               window.location.reload();
+
                            })
                         })
                     },
@@ -255,6 +305,7 @@
 
 // 캘린더 랜더링
                 calendar.render();
+                console.log(calendar.getDate().toISOString().substring(0,10));
 
                 $('.fc-prev-button fc-button fc-button-primary').on('click', function(){
                     console.log($('#fc-dom-1').html());
@@ -293,7 +344,7 @@
 
                     console.log(workerArr);
 
-                    if(b.workerId != c.workerId) {
+                    if(b.workerId != c.workerId && b.workerId != 'admin' && c.workerId != 'admin') {
                         $.ajax({
                             url: "worksheetInsert",
                             method: 'POST',
@@ -302,14 +353,18 @@
                                 date: date
                             },
                         }).done(function (response) {
-
                             console.log(response);
                             if (response == 0) {
                                 alert('해당 월에 이미 값이 존재합니다.')
                             } else {
                                 alert('근무표가 생성되었습니다.')
+                                let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
+                                let dateOffset = new Date(calendar.getDate().getTime() - offset);
+
+                                window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0,10))
+                                window.location.reload();
+
                             }
-                            window.location.reload();
                         })
                     }else{
                         alert('1부, 혹은 2부 근무자를 변경해주세요.')

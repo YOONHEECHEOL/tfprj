@@ -17,5 +17,8 @@ public interface WorksheetMapper {
     public WorksheetVO validateWorkTime(String workerId);
     public List<NewWorkSheetVO> selectNextWorker();
     public List<NewWorkSheetVO> yesterDayWorker();
+    public int updateWeekend(String firstDate, String lastDate);
+    public int deleteCalendar(String firstDate, String lastDate);
+    public List<WorksheetVO> checkDateBeforeDelete(String firstDate, String lastDate);
 
 }

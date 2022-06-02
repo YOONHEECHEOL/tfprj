@@ -52,5 +52,24 @@
         FROM WORKSHEET
     </select>
 
+    <update id="updateWeekend">
+        update worksheet
+        set worker_id = 'admin',
+            color = '#FF0000'
+        where TO_CHAR(work_dt, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+          AND TO_CHAR(work_dt, 'D') In(1,7)
+    </update>
+
+    <delete id="deleteCalendar">
+        DELETE WORKSHEET
+        WHERE TO_CHAR(WORK_DT, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+    </delete>
+
+    <select id="checkDateBeforeDelete" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
+        SELECT *
+        FROM WORKSHEET
+        WHERE TO_CHAR(WORK_DT, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+    </select>
+
 </mapper>
 

@@ -65,6 +65,13 @@
             END
     </select>
 
+    <select id="todaySell" resultType="map">
+        SELECT CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END AS "member", SUM(PAYMENT_AMOUNT) AS "paymentAmount"
+        FROM PAYMENT
+        where TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD')= to_char(current_date, 'yyyy-MM-dd')
+        GROUP BY CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END
+    </select>
+
 
 </mapper>
 
