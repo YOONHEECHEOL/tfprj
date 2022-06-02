@@ -111,4 +111,10 @@
         FROM (SELECT*FROM MEMBER ORDER BY GRADE) A
         WHERE MEMBER_ID LIKE '%' || #{memberId} || '%'
     </select>
+
+    <update id="releaseTeam" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
+        UPDATE MEMBER
+        SET TEAM_ID = 0
+        WHERE MEMBER_ID = #{memberId}
+    </update>
 </mapper>

@@ -63,5 +63,6 @@ public interface MemberService {
     //관리자페이지 리스트 조회시 memberId 검색기능
     public List<MemberVO> admSearchMember(MemberVO vo);
 
-
+    //팀원 방출
+    void releaseTeam(MemberVO vo);
 }

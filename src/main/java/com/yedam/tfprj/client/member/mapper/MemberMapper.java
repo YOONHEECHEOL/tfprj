@@ -48,4 +48,6 @@ public interface MemberMapper {
     void reasonUpdate(MemberVO vo);
 
     List<MemberVO> admSearchMember(MemberVO vo);
+
+    void releaseTeam(MemberVO vo);
 }

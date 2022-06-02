@@ -5,25 +5,48 @@
 
 
 <th:block layout:fragment="content">
-<div>
-    <table>
-        <tbody>
-        <tr>
-            <th>팀명</th>
-            <td><span th:text="${team.teamName}"></span></td>
-        </tr>
-        <tr>
-            <th>팀장</th>
-            <td><span th:text="${team.leader}"></span></td>
-        </tr>
-        </tbody>
-    </table>
     <div>
-        <h1>팀원</h1>
-    <div th:each="list, i : ${list}">
-        <span th:text="${list.memberId}"></span><br>
+        <table>
+            <tbody>
+            <tr>
+                <th>팀명</th>
+                <td><span th:text="${team.teamName}"></span></td>
+            </tr>
+            <tr>
+                <th>팀장</th>
+                <td><span th:text="${team.leader}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <form th:id="frm">
+                <h1>팀원</h1>
+                <div th:each="list, i : ${list}">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td th:if="${session.memberId ne list.memberId}" th:text="${list.memberId}"></td>
+                            <td th:if="${session.memberId ne list.memberId}">
+                                <button type="button" onclick="releaseTeam(this)">X</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="hidden" id="memberId" name="memberId">
+            </form>
+        </div>
     </div>
-    </div>
-</div>
+    <script>
+        function releaseTeam(e) {
+            var md = e.parentElement.parentElement.children[0].innerText;
+            if (confirm("방출하시겠습니까?") == true) {
+                frm.memberId.value=md;
+                frm.action="/cli/releaseTeam";
+                frm.method="POST";
+                frm.submit();
+            }
+        }
+    </script>
 </th:block>
 </html>

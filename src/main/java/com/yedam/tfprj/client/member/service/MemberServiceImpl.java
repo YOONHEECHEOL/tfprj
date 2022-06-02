@@ -150,6 +150,11 @@ public class MemberServiceImpl implements MemberService {
         System.out.println(vo);
         return memberMapper.admSearchMember(vo);
     }
+    //팀원 방출
+    @Override
+    public void releaseTeam(MemberVO vo) {
+        memberMapper.releaseTeam(vo);
+    }
 
 
 }
