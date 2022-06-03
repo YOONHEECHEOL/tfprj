@@ -30,10 +30,15 @@
     </select>
 
     <select id="getExecl" resultType="map">
-        select worker_id as "workerId",
-               staff_status_cd as "staffStatusCd",
-               worker_name as "workerName"
+        select worker_id as "아이디",
+               case when staff_status_cd = 0 then '근무중' else '퇴직' end as "근무상태",
+               worker_name as "이름",
+               phone_no as "전화번호",
+               startday as "시작일",
+               case when gender = 0 then '남' else '여' end as "성별",
+               allpay as "총 급여"
         from staff_information
+        where worker_Id not in('admin')
     </select>
 
     <select id="getWorkerListStaffCd1" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">

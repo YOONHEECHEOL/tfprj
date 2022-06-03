@@ -85,7 +85,7 @@ public class AdmWorkerController {
 
     @RequestMapping("/adm/worker_excel")
     public CommonExcelView excel(Model model){
-        String[] header = {"workerId", "staffStatusCd", "workerName"};
+        String[] header = {"아이디", "근무상태" ,"이름", "전화번호", "시작일", "성별", "총 급여"};
         model.addAttribute("headers", header);
         model.addAttribute("filename", "workerList");
         model.addAttribute("datas", workerServiceImpl.getExecl());
