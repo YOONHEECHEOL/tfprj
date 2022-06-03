@@ -22,7 +22,9 @@
                absence,
                usertype,
                to_char(going_time, 'HH24:mi'),
-               to_char(quitting_time, 'hh24:mi')
+               to_char(quitting_time, 'hh24:mi'),
+               allpay,
+               lastMonthPay
         from staff_information
         WHERE staff_Status_Cd = 0
     </select>
@@ -48,7 +50,8 @@
                absence,
                usertype,
                to_char(going_time, 'HH24:mi'),
-               to_char(quitting_time, 'hh24:mi')
+               to_char(quitting_time, 'hh24:mi'),
+               allpay
         from staff_information
         WHERE staff_Status_Cd = 1
     </select>
@@ -88,6 +91,12 @@
             <if test="positionCd != ''">
                 position_cd = #{positionCd},
             </if>
+            <if test="payPerHour != ''">
+                payPerHour = #{payPerHour},
+            </if>
+            <if test="lastMonthPay != ''">
+                lastMonthPay = #{lastMonthPay},
+            </if>
         </set>
         where worker_id = #{workerId}
     </update>
@@ -111,7 +120,9 @@
                                       roadaddress,
                                       jibunaddress,
                                       filename,
-                                      filepath)
+                                      filepath,
+                                      payperhour,
+                                      lastMonthPay)
         VALUES(
             #{workerId},
             #{staffStatusCd},
@@ -131,7 +142,9 @@
             #{roadAddress},
             #{jibunAddress},
             #{fileName},
-            #{filePath})
+            #{filePath},
+            #{payPerHour},
+            #{lastMonthPay})
     </insert>
 
     <update id="signUpUpdate">
@@ -153,6 +166,25 @@
         where worker_id = #{workerId}
         and password = #{password}
     </select>
+
+    <update id="updateAllLateAbsence">
+        update staff_information
+        set late = #{isLate},
+            absence = #{isAbsence}
+        where worker_id = #{workerId}
+    </update>
+
+    <update id="updateLastMonthPay">
+        update staff_information
+        set lastMonthPay = #{lastMonthPay}
+        where worker_id = #{workerId}
+    </update>
+
+    <update id="updateSumPay">
+        update staff_information
+        set allPay = #{allPay}
+        where worker_id = #{workerId}
+    </update>
 
 
 </mapper>

@@ -20,7 +20,7 @@
 
     <insert id="insertTeamMsg" parameterType="com.yedam.tfprj.client.message.service.MessageVO">
         INSERT INTO MESSAGE
-        VALUES (MESSAGE_SEQ.nextval, sysdate, 0, #{messageContents}, 1006, #{memberId}, #{temp})
+        VALUES (MESSAGE_SEQ.nextval, current_date, 0, #{messageContents}, 1006, #{memberId}, #{temp})
     </insert>
 
     <update id="isChkUpdate" parameterType="com.yedam.tfprj.client.message.service.MessageVO">

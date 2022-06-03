@@ -52,12 +52,12 @@
 
     <insert id="AdmQnaInsert" parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
         INSERT INTO QNA_BOARD
-        VALUES(qno_seq.nextval, #{title}, 'admin', sysdate, 0, #{details})
+        VALUES(qno_seq.nextval, #{title}, 'admin', current_date, 0, #{details})
     </insert>
 
     <insert id="AdmQnaAnswerInsert" parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">
         INSERT INTO QNA_ANSWER
-        VALUES(qcno_seq.nextval, sysdate, #{cdetails}, 'admin', #{qNo})
+        VALUES(qcno_seq.nextval, current_date, #{cdetails}, 'admin', #{qNo})
     </insert>
 
     <delete id="AdmQnaAnswerDelete" parameterType="com.yedam.tfprj.admin.community.service.qna.AdmQnaVO">

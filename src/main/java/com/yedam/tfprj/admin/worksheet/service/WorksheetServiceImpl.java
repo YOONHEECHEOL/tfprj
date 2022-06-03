@@ -73,4 +73,24 @@ public class WorksheetServiceImpl implements WorksheetService {
     public List<NewWorkSheetVO> selectNextWorker() {
         return mapper.selectNextWorker();
     }
+
+    @Override
+    public List<NewWorkSheetVO> yesterDayWorker() {
+        return mapper.yesterDayWorker();
+    }
+
+    @Override
+    public int updateWeekend(String firstDate, String lastDate) {
+        return mapper.updateWeekend(firstDate, lastDate);
+    }
+
+    @Override
+    public int deleteCalendar(String firstDate, String lastDate) {
+        return mapper.deleteCalendar(firstDate, lastDate);
+    }
+
+    @Override
+    public List<WorksheetVO> checkDateBeforeDelete(String firstDate, String lastDate) {
+        return mapper.checkDateBeforeDelete(firstDate, lastDate);
+    }
 }

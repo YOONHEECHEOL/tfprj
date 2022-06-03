@@ -214,34 +214,44 @@
                         },
                         method: 'POST'
                     }).done(function (response) {
+                        console.log(response);
                         if (response == '') {
                             alert('출근시간이 아닙니다.')
                         } else if(response.late == 0){
                             console.log("출근 버튼 누른 후" + response);
-                            $('#label').html(response.vo.percent + '%');
-                            move(response.vo.percent, response.vo.getMTime);
-                            console.log(response);
-                            alert('출근 완료');
-                            if (response.absence == 1) {
-                                alert("결근처리 되었습니다.");
-                            } else if(response.late == 1){
-                                alert("지각입니다.");
-                            }
-                            document.getElementById('btn').style.display = "none";
-
-                            timer(response.vo.getMTime);
-
-                            var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
-                            $('#out').append(btn);
-
-                            //퇴근버튼을 찍었을때 조기퇴근 등을 계산해주는 function
-
-                            outButtonClick(response.vo.quittingTime, workerId);
+                            checkWorkTime(response)
+                        }else if(response.late == 1){
+                            alert("지각처리 되었습니다.");
+                            checkWorkTime(response)
+                        }else if(response.absence == 1){
+                            alert("결근처리 되었습니다.");
+                            checkWorkTime(response)
+                        }else if(response.late == 3){
+                            alert('근무표에 등록되지 않은 근무자입니다.')
                         }
                     })
                 }
             })
         })
+
+        //근무 시간에 따라 지각, 결근, 출근시간이 아닐때, 시트표에 없는 근무자가 출근할때, 다른사람이 근무중일때를 체크함.
+        function checkWorkTime(response){
+            $('#label').html(response.vo.percent + '%');
+            move(response.vo.percent, response.vo.getMTime);
+            console.log(response);
+            alert('출근 완료');
+
+            document.getElementById('btn').style.display = "none";
+
+            timer(response.vo.getMTime);
+
+            var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+            $('#out').append(btn);
+
+            //퇴근버튼을 찍었을때 조기퇴근 등을 계산해주는 function
+
+            outButtonClick(response.vo.quittingTime, workerId);
+        }
 
         //오늘날짜 구하기
         function getToday() {
@@ -276,6 +286,13 @@
             return thisWeek;
         }
 
+        //근무자가 출근하지 않은 날이 있을수도 있기때문에, work_record tr에 값을 넣어주기
+        function notInValidation(){
+            $.ajax({
+                url : "notInValidation"
+            })
+        }
+        notInValidation()
 
         // 이번주 날짜가 들어간 태그 만들기.
         // 오늘은 빨간색으로 표시됨.

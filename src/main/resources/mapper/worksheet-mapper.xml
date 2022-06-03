@@ -11,7 +11,7 @@
     <select id="worksheetList" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
         SELECT worksheet_no, work_dt, worker_id, position_cd, user_type, going_time, quitting_time
         FROM WORKSHEET
-        WHERE work_dt IN(trunc(sysdate,'d'), trunc(sysdate,'d')+1, trunc(sysdate,'d')+2, trunc(sysdate,'d')+3, trunc(sysdate,'d')+4, trunc(sysdate,'d')+5, trunc(sysdate,'d')+6)
+        WHERE work_dt IN(trunc(current_date,'d'), trunc(current_date,'d')+1, trunc(current_date,'d')+2, trunc(current_date,'d')+3, trunc(current_date,'d')+4, trunc(current_date,'d')+5, trunc(current_date,'d')+6)
     </select>
 
     <select id="sheetValidation" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
@@ -38,13 +38,37 @@
     <select id="validateWorkTime" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
         select worker_id, work_dt ,going_time, quitting_time from worksheet
         where worker_id = #{workerId}
-        and to_date(going_time, 'yy-MM-dd') = to_date(sysdate, 'yy-MM-dd')
+        and to_date(going_time, 'yy-MM-dd') = to_date(current_date, 'yy-MM-dd')
     </select>
 
     <select id="selectNextWorker" resultType="com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO">
         SELECT *
         FROM WORKSHEET
         ORDER BY GOING_TIME
+    </select>
+
+    <select id="yesterDayWorker" resultType="com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO">
+        SELECT DISTINCT TO_CHAR(CURRENT_DATE - 1, 'YY-MM-DD') AS dated, worker_Id
+        FROM WORKSHEET
+    </select>
+
+    <update id="updateWeekend">
+        update worksheet
+        set worker_id = 'admin',
+            color = '#FF0000'
+        where TO_CHAR(work_dt, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+          AND TO_CHAR(work_dt, 'D') In(1,7)
+    </update>
+
+    <delete id="deleteCalendar">
+        DELETE WORKSHEET
+        WHERE TO_CHAR(WORK_DT, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+    </delete>
+
+    <select id="checkDateBeforeDelete" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">
+        SELECT *
+        FROM WORKSHEET
+        WHERE TO_CHAR(WORK_DT, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
     </select>
 
 </mapper>

@@ -3,18 +3,332 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <th:block layout:fragment="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xl-3 col-md-6 mb-4">
-        매출관리 페이지입니다.
-      </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div id="container">
+                    <h1 id="today"></h1>
+                    <h2>요일선택</h2>
+                    <div>
+                        <input type="radio" name="day" value="1">일
+                        <input type="radio" name="day" value="2">월
+                        <input type="radio" name="day" value="3">화
+                        <input type="radio" name="day" value="4">수
+                        <input type="radio" name="day" value="5">목
+                        <input type="radio" name="day" value="6">금
+                        <input type="radio" name="day" value="7">토
+                    </div>
+                    <div>
+                        <select id="selectMonth">
+                            <option>날짜 선택</option>
+                            <option value="1">1월</option>
+                            <option value="2">2월</option>
+                            <option value="3">3월</option>
+                            <option value="4">4월</option>
+                            <option value="5">5월</option>
+                            <option value="6">6월</option>
+                            <option value="7">7월</option>
+                            <option value="8">8월</option>
+                            <option value="9">9월</option>
+                            <option value="10">10월</option>
+                            <option value="11">11월</option>
+                            <option value="12">12월</option>
+                        </select>
+                    </div>
+                    <div id="pickLogic">
+                        <input type="text" width="50" class="datepicker" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" width="50" class="datepicker" readonly>
+                    </div>
+                    <div style="float: right">
+                        <button id="searchBtn">조회</button>
+                    </div>
+                </div>
+                    <div id="searchResult">
+
+                    </div>
+                <br><br><br><br><br>
+                <div id="chart_div2"></div>
+                <div id="chart_div3"></div>
+                <div id="chart_div4"></div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+
+        let today = new Date()
+        let week = new Array('일', '월', '화', '수', '목', '금', '토');
+        let year = today.getFullYear();
+        let month = ('0' + (today.getMonth() + 1)).slice(-2);
+        let day = ('0' + today.getDate()).slice(-2);
+        let dayWeek = week[today.getDay()]
+
+
+        let todayDate = year + "-" + month + "-" + day;
+        let todayFormat = year + "-" + month + "-" + day + " (" + dayWeek + ")"
+        $('#today').html(todayFormat)
+
+
+        //데이트피커
+        $(".datepicker").datepicker({
+            dateFormat: 'yy-mm-dd' //Input Display Format 변경
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+            ,changeYear: true //콤보박스에서 년 선택 가능
+            ,changeMonth: true //콤보박스에서 월 선택 가능
+            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
+            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+            ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
+            ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+            ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+        });
+
+
+        function drawMemNonMemChart(){
+            var options = {'title':'회원 비회원 구분',
+                'width':400,
+                'height':300,
+                legend: { position: 'bottom' }
+            };
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '매출');
+
+            let jsonData;
+            let day = $('input[name="day"]:checked').val();
+            let firstDate = $('#pickLogic').children('input:eq(0)').val();
+            let lastDate = $('#pickLogic').children('input:eq(1)').val();
+
+            //요일 선택하지 않았을때
+            if(day == undefined){
+                day = 0;
+            }
+
+            //ajax 호출
+            $.ajax({
+                url : "findMemNonMem",
+                data : {firstDate : firstDate,
+                        lastDate : lastDate,
+                        day : day
+                }
+            }).done(function(datas){
+                console.log(datas);
+                jsonData = [];
+                for(let data of datas){
+                    jsonData.push([data.member, data.paymentAmount])
+                }
+                console.log(jsonData);
+                data.addRows(jsonData);
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div2'))
+                chart.draw(data, options);
+            })
+        }
+
+        function drawPayTypeChart(){
+            var options = {'title':'온라인 오프라인 구분',
+                'width':400,
+                'height':300};
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '매출');
+
+            let jsonData;
+            let day = $('input[name="day"]:checked').val();
+            let firstDate = $('#pickLogic').children('input:eq(0)').val();
+            let lastDate = $('#pickLogic').children('input:eq(1)').val();
+
+            //요일 선택하지 않았을때
+            if(day == undefined){
+                day = 0;
+            }
+
+            //ajax 호출
+            $.ajax({
+                url : "findPayType",
+                data : {firstDate : firstDate,
+                        lastDate : lastDate,
+                        day : day
+                }
+            }).done(function(datas){
+                console.log(datas);
+                jsonData = [];
+                for(let data of datas){
+                    jsonData.push([data.pay, data.paymentAmount])
+                }
+                console.log(jsonData);
+                data.addRows(jsonData);
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+                chart.draw(data, options);
+            })
+        }
+
+        function avgSalesByDay(){
+            var options = {'title':'요일별 평균 매출량',
+                'width':400,
+                'height':300,
+                legend: { position: 'bottom' },
+                series: {
+                    0: { color: '#a561bd' },
+                    1: { color: '#c784de' },
+                    2: { color: '#f1ca3a' },
+                    3: { color: '#2980b9' },
+                    4: { color: '#e67e22' }
+                }};
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', '부서');
+            data.addColumn('number', '매출');
+
+            let jsonData;
+            let day = $('input[name="day"]:checked').val();
+            let firstDate = $('#pickLogic').children('input:eq(0)').val();
+            let lastDate = $('#pickLogic').children('input:eq(1)').val();
+
+            //요일 선택하지 않았을때
+            if(day == undefined){
+                day = 0;
+            }
+
+            //ajax 호출
+            $.ajax({
+                url : "avgSalesByDay",
+                data : {firstDate : firstDate,
+                        lastDate : lastDate,
+                }
+            }).done(function(datas){
+                console.log(datas);
+                jsonData = [];
+                for(let data of datas){
+                    jsonData.push([data.day, data.paymentAmount])
+                }
+                console.log(jsonData);
+                data.addRows(jsonData);
+                var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+                chart.draw(data, options);
+            })
+        }
+
+        function monthPick(){
+            $('#selectMonth').on('change', function(){
+                let today = new Date();
+
+                let selectDay = new Date(today.getFullYear(), $(this).val(), 0);
+                console.log(selectDay.getDate());
+
+                let selectDateFirstDay = today.getFullYear() + "-" + ('0' + $(this).val()).slice(-2) + "-01";
+                let selectDateLastDay = today.getFullYear() + "-" + ('0' + $(this).val()).slice(-2) + "-" + selectDay.getDate();
+
+                if($(this).val() > today.getMonth()+1){
+                    alert('현재 ' + (today.getMonth()+1) + '월까지 조회 가능합니다.')
+                    $("#selectMonth option:eq(0)").prop("selected", true);
+                    $('#pickLogic').children('input:eq(0)').val("");
+                    $('#pickLogic').children('input:eq(1)').val("");
+                }else if($(this).val() == today.getMonth()+1){
+                    $('#pickLogic').children('input:eq(0)').val(selectDateFirstDay)
+                    $('#pickLogic').children('input:eq(1)').val(`${todayDate}`)
+                }else{
+                    $('#pickLogic').children('input:eq(0)').val(selectDateFirstDay)
+                    $('#pickLogic').children('input:eq(1)').val(selectDateLastDay)
+                }
+
+
+            })
+        }
+
+        function pickLogic(){
+            $('#pickLogic').on('change', 'input', function(){
+                $('#pickLogic').children('input:eq(0)').val()
+                $('#pickLogic').children('input:eq(1)').val()
+
+                let today = new Date($('#pickLogic').children('input:eq(0)').val())
+                let nextDay = new Date($('#pickLogic').children('input:eq(1)').val())
+
+                if(today - nextDay > 0){
+                    alert('날짜를 다시 선택해주세요.')
+                    $('#pickLogic').children('input:eq(1)').val("");
+                }
+            })
+        }
+
+        function search(){
+            $('#searchBtn').on('click', function() {
+                $('#searchResult').empty();
+                if ($('#pickLogic').children('input:eq(0)').val() == "" || $('#pickLogic').children('input:eq(1)').val() == "") {
+                    alert('날짜를 선택해주세요.')
+                } else {
+                    let firstDate = $('#pickLogic').children('input:eq(0)').val();
+                    let lastDate = $('#pickLogic').children('input:eq(1)').val();
+                    let day = $('input[name="day"]:checked').val()
+                    if(day == undefined){
+                        day = 0;
+                    }
+                    console.log(day);
+                    $.ajax({
+                        url: "searchSales",
+                        data : { firstDate : firstDate,
+                                 lastDate : lastDate,
+                                 day : day
+                        }
+                    }).done(function(response){
+                        console.log(response);
+
+                        let sum = 0;
+                        let count = 0;
+
+                        for(let i=0; i<response.length; i++){
+                            sum += response[i].sum;
+                            count += response[i].count;
+                        }
+
+                        let div = `<div id="allSell"></div> <br>`
+                            div += `<div> ${firstDate} - ${lastDate}  </div>`
+
+                        for(let i=0; i<response.length; i++){
+                            div += `<div><convert-c-code data="${response[i].paymentMethodCd}"></convert-c-code>
+                                        <span>${response[i].count}회<span>
+                                        <span>${response[i].sum}원</span>
+                                    </div>`
+                        }
+                            div += `<div> 총 ${count}회 </div>
+                                    <div>${sum}원</div>`
+                        $('#searchResult').append(div);
+                    })
+
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart(){
+                        drawMemNonMemChart();
+                        drawPayTypeChart();
+                        avgSalesByDay();
+                    }
+                }
+            })
+        }
+
+        monthPick();
+        pickLogic();
+        search();
+
+    </script>
+
 </th:block>
 </body>
 </html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.admin.sales.Mapper.PaymentMapper">
+
+    <select id="paymentList" resultType="com.yedam.tfprj.admin.sales.Service.PaymentVO">
+        SELECT SUM(PAYMENT_AMOUNT) AS SUM, COUNT(PAYMENT_AMOUNT) AS COUNT, PROD_INFO_CD, PAYMENT_METHOD_CD
+        FROM PAYMENT
+        WHERE TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+        AND PAYMENT_STATUS_CD NOT IN (801, 803)
+        <if test='day != 0'>
+            AND TO_CHAR(PAYMENT_DATE, 'D') = #{day}
+        </if>
+        GROUP BY PROD_INFO_CD, PAYMENT_METHOD_CD
+    </select>
+
+    <select id="findMemNonMem" resultType="map">
+        SELECT CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END AS "member", SUM(PAYMENT_AMOUNT) AS "paymentAmount"
+        FROM PAYMENT
+        where TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+        <if test='day != 0'>
+            AND TO_CHAR(PAYMENT_DATE, 'D') = #{day}
+        </if>
+        GROUP BY CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END
+    </select>
+
+    <select id="findPayType" resultType="map">
+        SELECT CASE WHEN PAYMENT_METHOD_CD = '1701' THEN '현장결제'
+            WHEN PAYMENT_METHOD_CD = '1702' THEN '네이버페이'
+            WHEN PAYMENT_METHOD_CD = '1703' THEN '카카오페이'
+            WHEN PAYMENT_METHOD_CD = '1704' THEN '무통장입금'
+            END AS "pay"
+            , SUM(PAYMENT_AMOUNT) AS "paymentAmount"
+            FROM PAYMENT
+            where TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+            <if test='day != 0'>
+                AND TO_CHAR(PAYMENT_DATE, 'D') = #{day}
+            </if>
+            GROUP BY CASE WHEN PAYMENT_METHOD_CD = '1701' THEN '현장결제'
+            WHEN PAYMENT_METHOD_CD = '1702' THEN '네이버페이'
+            WHEN PAYMENT_METHOD_CD = '1703' THEN '카카오페이'
+            WHEN PAYMENT_METHOD_CD = '1704' THEN '무통장입금'
+            END
+    </select>
+
+    <select id="avgSalesByDay" resultType="map">
+        SELECT CASE WHEN TO_CHAR(PAYMENT_DATE, 'D') = 1 THEN '일요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 2 THEN '월요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 3 THEN '화요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 4 THEN '수요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 5 THEN '목요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 6 THEN '금요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 7 THEN '토요일'
+            END AS "day"
+            , ROUND(AVG(PAYMENT_AMOUNT)) AS "paymentAmount"
+            FROM PAYMENT
+            where TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
+            GROUP BY CASE WHEN TO_CHAR(PAYMENT_DATE, 'D') = 1 THEN '일요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 2 THEN '월요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 3 THEN '화요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 4 THEN '수요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 5 THEN '목요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 6 THEN '금요일'
+            WHEN TO_CHAR(PAYMENT_DATE, 'D') = 7 THEN '토요일'
+            END
+    </select>
+
+    <select id="todaySell" resultType="map">
+        SELECT CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END AS "member", SUM(PAYMENT_AMOUNT) AS "paymentAmount"
+        FROM PAYMENT
+        where TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD')= to_char(current_date, 'yyyy-MM-dd')
+        GROUP BY CASE WHEN MEMBER_ID = '0' THEN '비회원' ELSE '회원' END
+    </select>
+
+
+</mapper>
+

@@ -1,5 +1,6 @@
 package com.yedam.tfprj.admin.workerAttendance.service;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,4 +26,14 @@ public interface WorkerAttendanceService {
       public WorkerAttendanceVO weekLate(String workerId);
       public WorkerAttendanceVO monthLate(String workerId);
       public WorkerAttendanceVO allAbsence(String workerId);
+      public List<WorkerAttendanceVO> selectNotInWorker(String dd, String ff);
+      public int insertNotInWorker(String workerId, String dated);
+      public List<WorkerAttendanceVO> payCalc(String workerId);
+
+      public List<WorkerAttendanceVO> lastMonthPay(String workerId, String firstDate, String lastDate);
+
+      public int insertPayroll(PayrollVO vo);
+      public PayrollVO selectPayroll(PayrollVO vo);
+
+      public PayrollVO selectSumPayroll(PayrollVO vo);
    }

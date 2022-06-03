@@ -1,6 +1,7 @@
 package com.yedam.tfprj.admin.workerAttendance.service;
 
 import com.yedam.tfprj.admin.worker.mapper.WorkerMapper;
+import com.yedam.tfprj.admin.workerAttendance.mapper.PayrollMapper;
 import com.yedam.tfprj.admin.workerAttendance.mapper.WorkerAttendanceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import java.util.UUID;
 public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
 
     @Autowired WorkerAttendanceMapper mapper;
+
+    @Autowired PayrollMapper payrollMapper;
 
     @Override
     public WorkerAttendanceVO getNowWorker() {
@@ -95,5 +98,40 @@ public class WorkerAttendanceServiceImpl implements WorkerAttendanceService {
     @Override
     public WorkerAttendanceVO allAbsence(String workerId) {
         return mapper.allAbsence(workerId);
+    }
+
+    @Override
+    public List<WorkerAttendanceVO> selectNotInWorker(String dd, String ff) {
+        return mapper.selectNotInWorker(dd, ff);
+    }
+
+    @Override
+    public int insertNotInWorker(String workerId, String dated) {
+        return mapper.insertNotInWorker(workerId, dated);
+    }
+
+    @Override
+    public List<WorkerAttendanceVO> payCalc(String workerId) {
+        return mapper.payCalc(workerId);
+    }
+
+    @Override
+    public List<WorkerAttendanceVO> lastMonthPay(String workerId, String firstDate, String lastDate) {
+        return mapper.lastMonthPay(workerId, firstDate, lastDate);
+    }
+
+    @Override
+    public int insertPayroll(PayrollVO vo) {
+        return payrollMapper.insertPayroll(vo);
+    }
+
+    @Override
+    public PayrollVO selectPayroll(PayrollVO vo) {
+        return payrollMapper.selectPayroll(vo);
+    }
+
+    @Override
+    public PayrollVO selectSumPayroll(PayrollVO vo) {
+        return payrollMapper.selectSumPayroll(vo);
     }
 }

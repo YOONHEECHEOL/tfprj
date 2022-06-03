@@ -9,33 +9,34 @@
                A.OUT_TIME,
                A.IS_LATE,
                A.IS_ABSENCE,
-               I.WORKER_NAME, W.GOING_TIME, W.QUITTING_TIME, A.ATT_DT ,I.POSITION_CD, I.USERTYPE, I.STARTDAY
+               I.WORKER_NAME, W.GOING_TIME, W.QUITTING_TIME, A.ATT_DT ,I.POSITION_CD, I.USERTYPE, I.STARTDAY, I.ALLPAY
         FROM STAFF_ATTENDANCE A
-               INNER JOIN STAFF_INFORMATION I
+                 INNER JOIN STAFF_INFORMATION I
                             ON A.WORKER_ID = I.WORKER_ID
-               INNER JOIN WORKSHEET W
+                 INNER JOIN WORKSHEET W
                             ON I.WORKER_ID = W.WORKER_ID
-        WHERE TO_CHAR(SYSDATE, 'YY-MM-DD HH24:MI') BETWEEN TO_CHAR(W.GOING_TIME, 'YY-MM-DD HH24:MI') AND TO_CHAR(W.QUITTING_TIME, 'YY-MM-DD HH24:MI')
-          AND TO_DATE(A.ATT_DT, 'YY-MM-DD') = TO_DATE(SYSDATE, 'YY-MM-DD')
+        WHERE TO_CHAR(current_date, 'yy-MM-dd hh24:mi') BETWEEN A.IN_TIME AND TO_CHAR(W.QUITTING_TIME, 'yy-MM-dd hh24:mi')
+          AND TO_DATE(A.ATT_DT, 'yy-MM-dd') = TO_DATE(current_date, 'yy-MM-dd')
+          and to_char(w.going_time, 'yy-MM-dd') = a.att_dt
     </select>
 
     <select id="getNowWorker2" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
         select *
         from worksheet
-        where to_char(sysdate, 'hh24:mi') between to_char(going_time, 'hh24:mi') and to_char(quitting_time, 'hh24:mi')
-        and work_dt = to_char(sysdate, 'yy-MM-dd')
+        where to_char(current_date, 'hh24:mi') between to_char(going_time, 'hh24:mi') and to_char(quitting_time, 'hh24:mi')
+        and work_dt = to_char(current_date, 'yy-MM-dd')
     </select>
 
     <insert id="insertAttendance">
         Insert into staff_attendance(att_id, worker_id, att_dt, in_time, is_late, is_absence)
-        VALUES(SEQ_ATTENDANCE.nextval, #{workerId}, to_char(sysdate, 'yy-MM-dd'), to_char(sysdate, 'yy-MM-dd hh24:mi'), 0, 0)
+        VALUES(SEQ_ATTENDANCE.nextval, #{workerId}, to_char(current_date, 'yy-MM-dd'), to_char(current_date, 'yy-MM-dd hh24:mi'), 0, 0)
     </insert>
 
     <select id="getWorkerInOutTime" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
         select w.worker_id, s.att_dt, w.going_time, quitting_time, s.in_time, s.out_time
         from worksheet w, staff_attendance s
         where w.worker_id = s.worker_id
-          and s.att_Dt = to_char(sysdate, 'yy-MM-dd')
+          and s.att_Dt = to_char(current_date, 'yy-MM-dd')
           and to_char(w.going_time, 'yy-MM-dd') = s.att_dt
           and w.worker_id = #{workerId}
     </select>
@@ -43,21 +44,21 @@
     <update id="updateIslate">
         UPDATE STAFF_ATTENDANCE SET IS_LATE = 1
         WHERE WORKER_ID = #{workerId}
-        AND ATT_DT = TO_CHAR(SYSDATE, 'yy-MM-dd')
+        AND ATT_DT = TO_CHAR(current_date, 'yy-MM-dd')
         AND ATT_DT = (SELECT TO_CHAR(GOING_TIME, 'yy-MM-dd')
                         FROM WORKSHEET
                         WHERE WORKER_ID = #{workerId}
-                        AND TO_CHAR(GOING_TIME, 'yy-MM-dd') = TO_CHAR(SYSDATE, 'yy-MM-dd'))
+                        AND TO_CHAR(GOING_TIME, 'yy-MM-dd') = TO_CHAR(current_date, 'yy-MM-dd'))
     </update>
 
     <update id="updateIsAbsence">
         UPDATE STAFF_ATTENDANCE SET IS_ABSENCE = 1
         WHERE WORKER_ID = #{workerId}
-        AND ATT_DT = TO_CHAR(SYSDATE, 'yy-MM-dd')
+        AND ATT_DT = TO_CHAR(current_date, 'yy-MM-dd')
         AND ATT_DT = (SELECT TO_CHAR(GOING_TIME, 'yy-MM-dd')
                         FROM WORKSHEET
                         WHERE WORKER_ID = #{workerId}
-                        AND TO_CHAR(GOING_TIME, 'yy-MM-dd') = TO_CHAR(SYSDATE, 'yy-MM-dd'))
+                        AND TO_CHAR(GOING_TIME, 'yy-MM-dd') = TO_CHAR(current_date, 'yy-MM-dd'))
     </update>
 
     <select id="getSecond" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
@@ -66,18 +67,18 @@
         FROM staff_attendance s, worksheet w
         where s.worker_id = w.worker_id
           and s.worker_id = #{workerId}
-          and s.att_Dt = to_char(sysdate, 'yy-MM-dd')
+          and s.att_Dt = to_char(current_date, 'yy-MM-dd')
           and to_char(w.going_time, 'yy-MM-dd') = s.att_dt
     </select>
 
     <update id="updateQuit">
-        UPDATE staff_attendance SET out_time = to_char(sysdate, 'yy-MM-dd hh24:mi')
+        UPDATE staff_attendance SET out_time = to_char(current_date, 'yy-MM-dd hh24:mi')
         WHERE worker_id = #{workerId}
-          and att_Dt = to_char(sysdate, 'yy-MM-dd')
+          and att_Dt = to_char(current_date, 'yy-MM-dd')
           and att_dt = (select to_char(going_time, 'yy-MM-dd')
                         from worksheet
                         where worker_id = #{workerId}
-                        and to_char(going_time, 'yy-MM-dd') = to_char(sysdate, 'yy-MM-dd'))
+                        and to_char(going_time, 'yy-MM-dd') = to_char(current_date, 'yy-MM-dd'))
 
     </update>
 
@@ -88,31 +89,31 @@
                QUITTING_TIME,
                TO_DATE(S.IN_TIME, 'YY-MM-DD HH24:MI') AS inMTime,
                S.OUT_TIME,
-               ROUND(((SYSDATE - TO_DATE(S.IN_TIME, 'YY-MM-DD HH24:MI')) *24)/((QUITTING_TIME - GOING_TIME) *24),2) * 100  AS percent,
-               ROUND((W.QUITTING_TIME - SYSDATE) * 24 * 60 * 60, 2) AS getMTime
+               ROUND(((current_date - TO_DATE(S.IN_TIME, 'YY-MM-DD HH24:MI')) *24)/((QUITTING_TIME - GOING_TIME) *24),2) * 100  AS percent,
+               ROUND((W.QUITTING_TIME - current_date) * 24 * 60 * 60, 2) AS getMTime
         FROM WORKSHEET W, STAFF_ATTENDANCE S
         WHERE W.WORKER_ID = S.WORKER_ID
-               AND S.ATT_DT = TO_CHAR(SYSDATE, 'YY-MM-DD')
+               AND S.ATT_DT = TO_CHAR(current_date, 'YY-MM-DD')
                AND TO_CHAR(W.GOING_TIME, 'YY-MM-DD') = S.ATT_DT
                AND W.WORKER_ID = #{workerId}
     </select>
 
     <select id="selectQuitTime" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
         select * from staff_attendance
-        where att_dt = to_char(sysdate, 'yy-MM-dd')
+        where att_dt = to_char(current_date, 'yy-MM-dd')
         and worker_id = #{workerId}
     </select>
 
     <select id="selectStaffInOutWeek" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
         SELECT *
         FROM staff_attendance
-        WHERE to_date(att_dt, 'yy-MM-dd') IN(trunc(sysdate,'d'),
-                                             trunc(sysdate,'d')+1,
-                                             trunc(sysdate,'d')+2,
-                                             trunc(sysdate,'d')+3,
-                                             trunc(sysdate,'d')+4,
-                                             trunc(sysdate,'d')+5,
-                                             trunc(sysdate,'d')+6)
+        WHERE to_date(att_dt, 'yy-MM-dd') IN(trunc(current_date,'d'),
+                                             trunc(current_date,'d')+1,
+                                             trunc(current_date,'d')+2,
+                                             trunc(current_date,'d')+3,
+                                             trunc(current_date,'d')+4,
+                                             trunc(current_date,'d')+5,
+                                             trunc(current_date,'d')+6)
         ORDER BY ATT_DT
     </select>
 
@@ -125,14 +126,14 @@
     <select id="weekLate" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
         SELECT NVL(SUM(IS_LATE), 0) AS IS_LATE
         FROM STAFF_ATTENDANCE
-        WHERE ATT_DT IN(TRUNC(SYSDATE,'D'), TRUNC(SYSDATE,'D')+1, TRUNC(SYSDATE,'D')+2, TRUNC(SYSDATE,'D')+3, TRUNC(SYSDATE,'D')+4, TRUNC(SYSDATE,'D')+5, TRUNC(SYSDATE,'D')+6)
+        WHERE ATT_DT IN(TRUNC(current_date,'D'), TRUNC(current_date,'D')+1, TRUNC(current_date,'D')+2, TRUNC(current_date,'D')+3, TRUNC(current_date,'D')+4, TRUNC(current_date,'D')+5, TRUNC(current_date,'D')+6)
         AND WORKER_ID = #{workerId}
     </select>
 
     <select id="monthLate" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
         SELECT NVL(SUM(IS_LATE), 0) AS IS_LATE
         FROM STAFF_ATTENDANCE
-        WHERE SUBSTR(ATT_DT,0,8) BETWEEN (TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD') ) AND (LAST_DAY(SYSDATE))
+        WHERE SUBSTR(ATT_DT,0,8) BETWEEN (TO_CHAR(TRUNC(current_date,'MM'),'YYYYMMDD') ) AND (LAST_DAY(current_date))
         AND WORKER_ID = #{workerId}
     </select>
 
@@ -140,6 +141,44 @@
         SELECT NVL(SUM(IS_ABSENCE), 0) AS IS_ABSENCE
         FROM STAFF_ATTENDANCE
         WHERE WORKER_ID = #{workerId}
+    </select>
+
+    <select id="selectNotInWorker" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        SELECT *
+        FROM STAFF_ATTENDANCE
+        WHERE WORKER_ID = #{dd}
+        AND ATT_DT = #{ff}
+    </select>
+
+    <insert id="insertNotInWorker">
+        Insert into staff_attendance(att_id,
+                            worker_id,
+                            att_dt,
+                            in_time,
+                            out_time,
+                            is_late,
+                            is_absence)
+        VALUES(
+        SEQ_ATTENDANCE.nextval,
+        #{workerId},
+        #{dated},
+        '결근',
+        '결근',
+        0,
+        0)
+    </insert>
+
+    <select id="payCalc" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        select *
+        from staff_attendance
+        where worker_id = #{workerId}
+    </select>
+
+    <select id="lastMonthPay" resultType="com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO">
+        select *
+        from staff_attendance
+        where worker_id = #{workerId}
+        and att_dt between #{firstDate} and #{lastDate}
     </select>
 
 </mapper>

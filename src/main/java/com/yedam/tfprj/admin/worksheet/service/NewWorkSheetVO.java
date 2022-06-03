@@ -33,4 +33,5 @@ public class NewWorkSheetVO {
     private String color;
     private String textColor;
     private String backgroundColor;
+    private String dated;
 }
