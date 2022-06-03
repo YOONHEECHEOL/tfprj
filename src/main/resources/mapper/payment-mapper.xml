@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.tfprj.admin.sales.Mapper.PaymentMapper">
 
-    <select id="paymentList" resultType="com.yedam.tfprj.admin.sales.Service.PaymentVO">
+    <select id="paymentList" resultType="com.yedam.tfprj.admin.sales.Service.AdmPaymentVO">
         SELECT SUM(PAYMENT_AMOUNT) AS SUM, COUNT(PAYMENT_AMOUNT) AS COUNT, PROD_INFO_CD, PAYMENT_METHOD_CD
         FROM PAYMENT
         WHERE TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}

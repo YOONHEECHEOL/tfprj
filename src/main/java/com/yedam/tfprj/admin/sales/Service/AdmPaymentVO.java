@@ -3,7 +3,7 @@ package com.yedam.tfprj.admin.sales.Service;
 import lombok.Data;
 
 @Data
-public class PaymentVO {
+public class AdmPaymentVO {
     private int paymentId;
     private String paymentDate;
     private int paymentAmount;

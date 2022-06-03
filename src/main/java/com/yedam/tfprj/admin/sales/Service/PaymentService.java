@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface PaymentService {
 
-    public List<PaymentVO> paymentList(PaymentVO vo);
-    public List<Map<String, Object>> findMemNonMem(PaymentVO vo);
-    public List<Map<String, Object>> findPayType(PaymentVO vo);
-    public List<Map<String, Object>> avgSalesByDay(PaymentVO vo);
+    public List<AdmPaymentVO> paymentList(AdmPaymentVO vo);
+    public List<Map<String, Object>> findMemNonMem(AdmPaymentVO vo);
+    public List<Map<String, Object>> findPayType(AdmPaymentVO vo);
+    public List<Map<String, Object>> avgSalesByDay(AdmPaymentVO vo);
     public List<Map<String, Object>> todaySell();
 }

@@ -13,22 +13,22 @@ public class PaymentServiceImpl implements PaymentService {
     PaymentMapper mapper;
 
     @Override
-    public List<PaymentVO> paymentList(PaymentVO vo) {
+    public List<AdmPaymentVO> paymentList(AdmPaymentVO vo) {
         return mapper.paymentList(vo);
     }
 
     @Override
-    public List<Map<String, Object>> findMemNonMem(PaymentVO vo) {
+    public List<Map<String, Object>> findMemNonMem(AdmPaymentVO vo) {
         return mapper.findMemNonMem(vo);
     }
 
     @Override
-    public List<Map<String, Object>> findPayType(PaymentVO vo) {
+    public List<Map<String, Object>> findPayType(AdmPaymentVO vo) {
         return mapper.findPayType(vo);
     }
 
     @Override
-    public List<Map<String, Object>> avgSalesByDay(PaymentVO vo) {
+    public List<Map<String, Object>> avgSalesByDay(AdmPaymentVO vo) {
         return mapper.avgSalesByDay(vo);
     }
 
