@@ -29,9 +29,9 @@
           <!-- 리그 정보 조회 -->
           <!-- 리그 신청 완료 -->
           <button th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1801'}" th:data-lno="${l.getLeagueId()}" onclick="cancelLeague()" class="button button-danger">신청취소</button>
-          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1801'}" th:href="${'#'}" class="button button-primary">결제하기</a>
-          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1803'}" th:href="${'#'}" class="button button-success">결제대기 중</a>
-          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1804'}" th:href="${'#'}" class="c-button">승인대기 중</a>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1801'}" th:data-lno="${l.getLeagueId()}" onclick="payLeague()" class="button button-primary">결제하기</a>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1803'}" th:href="${'#'}" class="button button-success">결제확인 중</a>
+          <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1804'}" th:href="${'#'}" class="button button-success">승인대기 중</a>
           <a th:if="${l.getLeagueStatusCd() == '501' && l.getIsApplyStatus() == '1805'}" th:href="${'#'}" class="c-button">일정확인 하기</a>
 
           <!-- 신청 취소 처리 후 -->
@@ -81,6 +81,12 @@
       let leagueId = event.target.getAttribute('data-lno');
 
       location.href = '/cli/leagueCancel?leagueId=' + leagueId;
+    }
+
+    function payLeague() {
+      let leagueId = event.target.getAttribute('data-lno');
+
+      location.href = '/cli/leaguePay?leagueId=' + leagueId;
     }
 
   </script>

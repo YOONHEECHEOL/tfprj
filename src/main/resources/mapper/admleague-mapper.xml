@@ -24,7 +24,7 @@
         values (
                 SEQ_LEAGUE.nextval,
                 #{leagueName},
-                current_date,
+                current_date ,
                 #{startDate},
                 #{endDate},
                 #{prizeMoney},

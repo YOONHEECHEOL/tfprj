@@ -153,6 +153,18 @@ h4.h4 {
     left: 0;
 }
 
+/* mouseover modal */
+.mo-rm {
+    position: relative;
+}
+.mo-modal {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    border: 1px solid #ddd;
+    padding: 1.2rem;
+}
+
 /* contents */
 .main-margin {
     margin-top: 8vh;
@@ -166,7 +178,7 @@ main.contents {
 }
 
 /* nav */
-.nav {
+.navi {
     width: calc(80% - 16%);
     padding: 8%;
     height: 100vh;
@@ -177,17 +189,17 @@ main.contents {
     left: -100vw;
     transition: .3s;
 }
-.nav.active {
+.navi.active {
     width: 80%;
     left: 0;
 }
-.nav > ul > li {
+.navi > ul > li {
     margin: 2rem 0;
 }
-.nav > ul > li a {
+.navi > ul > li a {
     font-size: 1.6rem;
 }
-.nav > ul > li > ul > li {
+.navi > ul > li > ul > li {
     padding-left: .8rem;
 }
 .csn-bg {
@@ -217,7 +229,17 @@ main.contents {
     font-size: 1.6rem;
     color: #999;
 }
-
+.message-success {
+    padding: .8rem 0;
+    text-align: center;
+    color: #3765C7;
+    font-size: 2rem;
+    word-break: keep-all;
+}
+.message-success > span {
+    font-size: 1.6rem;
+    color: #999;
+}
 
 /* footer */
 .footer {
@@ -319,6 +341,7 @@ main.contents {
     background: #fff !important;
     border: 1px solid #bbb;
     z-index: 9999;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, .4);
 }
 .modal-content {
     border: 0 !important;
@@ -386,3 +409,204 @@ main.contents {
 /*.a-list > li div,  team-info  {*/
 /*    pointer-events: none;*/
 /*}*/
+.tm-r {
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+}
+.tm-table {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0 1.2rem;
+}
+.tm-table > li {
+    width: 12rem;
+    margin: 1.2rem 0;
+    padding: .6rem 1.2rem;
+    border: 1px solid #bbb;
+    display: block;
+    text-align: center;
+    position: relative;
+}
+.tm-table > li::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 24px;
+    background: #222;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+}
+.tm-table > li::before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 22px;
+    background: #222;
+    position: absolute;
+    bottom: -23px;
+    left: 50%;
+}
+.tm-table.nbl > li::before {
+    display: none !important;
+}
+.tm-table.lastbl > li::after {
+    display: none !important;
+}
+
+.line-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* client reservation */
+.res-time {
+    width: 100%;
+}
+.res-time * {
+    background: #fff;
+}
+.res-time td {
+    width: 25%;
+}
+.res-time td button, .res-time th button {
+    display: block;
+    width: 100%;
+    border: 1px solid #bbb;
+    padding: 1.2rem 0;
+    text-align: center;
+    font-size: 1.6rem;
+    font-family: esM;
+    border-radius: .4rem;
+}
+.res-time td button.btn-danger, .res-time th button.btn-danger {
+    background: #FF4F4F;
+    color: #fff;
+}
+.res-time td button.btn-success, .res-time th button.btn-success {
+    background: #0f6848;
+    color: #fff;
+}
+
+.bf-5 {
+    font-size: 2.8rem;
+    font-family: esB;
+}
+.bf-4 {
+    font-size: 2.4rem;
+    font-family: esM;
+}
+.bf-3 {
+    font-size: 2rem;
+    font-family: esM;
+}
+.bf-2 {
+    font-size: 1.6rem;
+    font-family: esL;
+}
+.bf-1 {
+    font-size: 1.2rem;
+    font-family: esL;
+}
+
+hr {
+    border-top: 1px solid #bbb;
+}
+
+.steps div {
+    text-align: center;
+    font-family: esL;
+    font-size: 1.6rem;
+    border-top: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+    padding: .4rem 0;
+}
+.steps div span {
+    color: #1c294e;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #1c294e;
+}
+.steps div.active {
+    background: #1cc88a;
+    color: #222;
+    border-top: 2px solid #1cc88a;
+    border-bottom: 2px solid #1cc88a;
+    border-right: 1px solid #1cc88a;
+    border-left: 1px solid #1cc88a;
+}
+.res-member {
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 2px solid #222;
+}
+.res-member > div {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+.res-member > div button {
+    border: 1px solid #bbb;
+    width: 100%;
+    font-size: 1.2rem;
+    padding: .4rem 0;
+    text-align: center;
+    background: #fff;
+    color: #999;
+}
+.res-member > div button.inserted {
+    color: #222;
+    font-family: esM;
+    font-size: 1.6rem;
+}
+.tabcontent {
+    display: none;
+    min-height: 42vh;
+    padding: 2.4rem 0;
+}
+.tabcontent.active {
+    display: block;
+}
+#team-list {
+    border-top: 2px solid #222;
+    border-bottom: 2px solid #222;
+}
+#team-list > li {
+    display: block;
+    padding: 1.2rem 0;
+    text-align: center;
+    font-size: 1.6rem;
+    font-family: esM;
+    color: #222;
+    border-bottom: 1px solid #bbb;
+}
+#team-list > li:last-child {
+    border: 0px;
+}
+#team-list > li.selected {
+    background: #3765C7;
+    color: #fff;
+}
+.res-button-box {
+    width: 100vw;
+    height: 17.2rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 0 1.5rem;
+    background: #fff;
+    z-index: 200;
+}
+
+.row {
+    margin: 0 !important;
+}
+.v-step > div.checked {
+    background: #fd7e14;
+    height: .8rem;
+}

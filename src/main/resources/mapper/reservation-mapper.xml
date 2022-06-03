@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.tfprj.client.reservation.mapper.ReservationMapper">
+
+
     <select id="findReservation" resultType="Reservation">
         SELECT *
         FROM reservation
@@ -13,6 +15,46 @@
     <select id="reservationCheck" resultType="com.yedam.tfprj.client.reservation.service.Reservation">
         select room, start_time, end_time from reservation where to_char(start_time,'yyyy-mm-dd') = #{date} and room = #{room}
     </select>
+
+
+    <select id="teamList" resultType="java.lang.String">
+        select code_value from common_code where code_value_id = '001'
+    </select>
+
+    <insert id="insertReservation">
+        INSERT INTO reservation
+        (
+            res_id,
+            member_id,
+            start_time,
+            end_time,
+            room,
+            status_cd,
+            GAME_ID,
+            res_date,
+            TEL,
+            MEMBER_NAME
+        )
+        VALUES
+            (
+                SEQ_RESERVATION.NEXTVAL,
+                #{memberId},
+                #{startTime},
+                #{endTime},
+                #{room},
+                700,
+                (select nvl(max(game_Id),0)+1 from game),
+                current_date,
+                #{tel},
+                #{memberName}
+            )
+    </insert>
+
+
+    <insert id="insertGame">
+
+
+    </insert>
 
 
 </mapper>

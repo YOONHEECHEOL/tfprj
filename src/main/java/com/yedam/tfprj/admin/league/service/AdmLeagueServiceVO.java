@@ -7,6 +7,7 @@ import com.yedam.tfprj.client.team.service.TeamVO;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class AdmLeagueServiceVO {
@@ -19,5 +20,6 @@ public class AdmLeagueServiceVO {
     private List<LeagueApplyVO> leagueApplyVOList;
     private List<TeamVO> leagueApplyTeam;
     private List<TeamVO> leagueApplyApproveTeam;
+    private List<Map<String, Object>> leagueStatusTeamList;
 
 }

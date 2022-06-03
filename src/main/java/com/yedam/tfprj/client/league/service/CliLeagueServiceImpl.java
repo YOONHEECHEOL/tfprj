@@ -15,10 +15,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +53,7 @@ public class CliLeagueServiceImpl implements LeagueService{
             System.out.println("teamId = " + teamId);
 
             try {
-                chk = cliLeagueMapper.isLeagueApplyStatus( league.getLeagueId(), teamId);
+                chk = cliLeagueMapper.isLeagueApplyStatus( league.getLeagueId(), teamId, memberId);
                 System.out.println("chk = " + chk);
                 if(chk == null) {
                     chk = "0";
@@ -97,8 +94,20 @@ public class CliLeagueServiceImpl implements LeagueService{
         return cliLeagueServiceVO;
     }
 
-    // 나의 리그 조회
+    @Override
+    public void payLeague(String leagueId, HttpServletRequest request) {
 
+        int leagueIdInt = Integer.parseInt(leagueId);
+        String memberId = request.getSession().getAttribute("memberId").toString();
+        int teamId = Integer.parseInt(cliLeagueMapper.selectTeamId(memberId));
+
+        // 결제 insert
+        // payAmount 입력 처리 예정
+        cliLeagueMapper.insertLeaguePayment(1000, memberId);
+
+        cliLeagueMapper.payLeague(leagueIdInt, teamId);
+
+    }
 
     // My page league 페이지
     @Override
@@ -137,8 +146,7 @@ public class CliLeagueServiceImpl implements LeagueService{
             System.out.println("teamId = " + teamId);
 
             try {
-                chk = cliLeagueMapper.isLeagueApplyStatus( league.getLeagueId(), teamId);
-                System.out.println("chk = " + chk);
+                chk = cliLeagueMapper.isLeagueApplyStatus( league.getLeagueId(), teamId, memberId);
                 if(chk == null) {
                     chk = "0";
                 }
@@ -201,16 +209,45 @@ public class CliLeagueServiceImpl implements LeagueService{
 
     }
 
+    // 리그 신청 시 참가하한 팀원 불러오기
+    @Override
+    public List<Map<String, String>> getLeagueApplyMember(int leagueId, String memberId) {
+        List<String> members = new ArrayList<>();
+
+        String teamId = cliLeagueMapper.selectTeamId(memberId);
+
+        String membersStr = cliLeagueMapper.getLeagueApplyTeamMember(leagueId, teamId);
+
+        members = Arrays.asList(membersStr.split(", "));
+        System.out.println("members = " + members);
+
+        List<Map<String, String>> returnVal = new ArrayList<>();
+        members.forEach(res -> {
+            if(!res.equals("")) {
+                Map<String, String> temp = new HashMap<>();
+                temp.put("name", res);
+                returnVal.add(temp);
+            }
+        });
+
+        return returnVal;
+    }
+
     // 리그 신청 처리
     @Override
     public void insertLeagueApply(CliLeagueServiceVO cliLeagueServiceVO, List<Map<String, Object>> getLeagueParticipatedMember) {
 
         // memberId 에 들어갈 String list
-        List<String> ddd = new ArrayList<>();
+//        List<String> ddd = new ArrayList<>();
+        Set<String> ddd = new HashSet<>();
         if (getLeagueParticipatedMember != null) {
             for(int i=0; i<getLeagueParticipatedMember.size(); i++) {
 //          dd[0] += returnVal.get(i).get("value");
-                ddd.add(getLeagueParticipatedMember.get(i).get("value").toString());
+                try {
+                    ddd.add(getLeagueParticipatedMember.get(i).get("value").toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             LeagueApplyVO leagueApplyVO = new LeagueApplyVO();

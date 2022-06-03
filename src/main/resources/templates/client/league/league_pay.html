@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/cli_layout">
 
-</body>
+<th:block layout:fragment="content">
+
+    <t-h1 ko="참가비 결제" en="PAY"></t-h1>
+
+    <t-h2 th:ko="${l.leagueVO.leagueName} + ' 참가 신청'"></t-h2>
+    <h3 class="h3">리그 정보</h3>
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>
+                <span th:text="${l.leagueVO.leagueId}"></span><br>
+                <convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code><br>
+                <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                <span>상금 : </span><span th:text="${l.leagueVO.prizeMoney}">상금</span><br>
+                <span th:text="${'참가비 : ' + l.leagueVO.entryFee}">참가비</span><br>
+                <!--                    <span th:text="${'승리팀 : ' + l.leagueVO.winningTeam}">승리팀</span><br>-->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4 class="h4" th:text="${l.teamVO.getTeamName()}"></h4>
+                <div>
+                    <span th:text="${l.teamVO.getLeader()}"></span>
+                </div>
+                <ul>
+                    <li th:each="s, index : ${ml}" ><span th:text="${index.index+1 + '번 타자 - ' + s.get('name')}"></span></li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="h3">결제정보</h3>
+    <span th:text="${'참가비 : ' + l.leagueVO.getEntryFee()}"></span>
+
+    <div class="button__box">
+        <button class="c-button" th:data-lno="${l.leagueVO.getLeagueId()}" onclick="payLeague1()">현장결제</button>
+    </div>
+
+    <div class="button__box">
+        <button class="c-button">현장결제</button>
+    </div>
+
+    <div class="button__box">
+        <button class="c-button">현장결제</button>
+    </div>
+
+    <script>
+
+        function payLeague1() {
+            let lno = event.target.getAttribute('data-lno');
+            console.log(lno)
+            location.href = '/cli/leaguePayDone?leagueId=' + lno;
+        }
+
+    </script>
+
+</th:block>
+
+
 </html>
