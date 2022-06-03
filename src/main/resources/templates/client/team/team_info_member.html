@@ -18,8 +18,9 @@
             </tr>
             </tbody>
         </table>
+        <h1>팀원</h1>
         <div th:each="list, i : ${list}">
-            <span th:text="${list.memberId}"></span><br>
+            <td th:if="${team.leader ne list.memberId}" th:text="${list.memberId}"></td>
         </div>
     </div>
 </th:block>

@@ -21,7 +21,7 @@ public class AdmCommonController {
         return "admin/common/home";
     }
 
-    @RequestMapping("/adm/login")
+    @RequestMapping("/adm/loginview")
     public String admLogin() {
         return "admin/common/login";
     }

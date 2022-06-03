@@ -88,13 +88,13 @@
         let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
 
         $(".addMemBtn").on("click", function () {
+            $("#memberList").html('');
             $(".modal").fadeIn();
             cliSliderNavBg.classList.toggle('active')
         })
 
         //취소버튼 클릭 시 Modal 닫기
         $("#cancelBtn").on("click", function () {
-
             $(".modal").fadeOut();
             cliSliderNavBg.classList.remove('active');
         })

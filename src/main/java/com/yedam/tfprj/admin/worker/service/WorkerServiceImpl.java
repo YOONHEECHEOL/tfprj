@@ -1,7 +1,12 @@
 package com.yedam.tfprj.admin.worker.service;
 
 import com.yedam.tfprj.admin.worker.mapper.WorkerMapper;
+import com.yedam.tfprj.client.member.service.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class WorkerServiceImpl implements WorkerService {
+public class WorkerServiceImpl implements WorkerService, UserDetailsService {
     @Autowired
     WorkerMapper mapper;
 
@@ -74,7 +79,8 @@ public class WorkerServiceImpl implements WorkerService {
         out.println("<script>window.close()</script> ");
         // 자바스크립트에서 window.close()를 사용할 경우 데이터를 submit 하기전에 window.close()가 실행되기 때문에,
         // 컨트롤러에서 스크립트 코드 사용
-
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 
         mapper.admWorkerHrmWrite(vo);
     }
@@ -139,5 +145,14 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public int updateSumPay(String workerId, float allPay) {
         return mapper.updateSumPay(workerId, allPay);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String workerId) throws UsernameNotFoundException {
+        WorkerVO vo = mapper.getWorker(workerId);
+        if (vo == null){
+            throw new UsernameNotFoundException("User not authorized.");
+        }
+        return vo;
     }
 }

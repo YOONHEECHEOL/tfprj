@@ -13,9 +13,18 @@ public interface MsgService {
     //팀초대 메시지 전송
     public void insertTeamMsg(TeamMsgVO teamMsgVO);
 
+    //출결 메시지 조회
+    public MsgServiceVO getAttendMsg(HttpServletRequest request);
+
+    //출결 메시지 전송
+    public void insertAttendMsg(AttendMsgVO attendMsgVO);
+
     //내메세지 조회 시 메시지 일괄 읽음처리
     public void isChkUpdate(MessageVO messageVO, HttpServletRequest request);
 
     //초대메시지 응답 완료 시 메시지 상태 '응답완료' 처리
     public void invResUpdate(MessageVO messageVO, HttpServletRequest request);
+
+    // 관리자Todo 메세지 전송
+    public void insertTodoMsg();
 }

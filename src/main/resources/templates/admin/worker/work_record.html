@@ -29,6 +29,9 @@
             color: white;
         }
     </style>
+    <!-- msg 만들기용 -->
+    <input type="hidden" id="chkWork" value="출근">
+
     <div id="newTag"></div>
     <div id="allTag">
         <h1>JavaScript Progress Bar</h1>
@@ -109,6 +112,9 @@
 
         // 4. 퇴근버튼을 찍었을때 ajax로 전송하는 function
         function quitAjax(workerId) {
+            <!-- 퇴근 메세지 전송 -->
+            insertAttendWorker();
+
             $.ajax({
                 url: "updateQuit",
                 data: {
@@ -177,6 +183,8 @@
                     timer(response.vo.getMTime);
 
                     var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+                    insertChkWorker('퇴근');
+
                     $('#out').append(btn);
 
                     outButtonClick(response.vo.quittingTime, workerId);
@@ -214,10 +222,12 @@
                         },
                         method: 'POST'
                     }).done(function (response) {
-                        console.log(response);
+                        <!-- 출근 메세지 전송 -->
+                        insertAttendWorker();
+
                         if (response == '') {
                             alert('출근시간이 아닙니다.')
-                        } else if(response.late == 0){
+                        } else if(response.late == 0) {
                             console.log("출근 버튼 누른 후" + response);
                             checkWorkTime(response)
                         }else if(response.late == 1){
@@ -286,13 +296,6 @@
             return thisWeek;
         }
 
-        //근무자가 출근하지 않은 날이 있을수도 있기때문에, work_record tr에 값을 넣어주기
-        function notInValidation(){
-            $.ajax({
-                url : "notInValidation"
-            })
-        }
-        notInValidation()
 
         // 이번주 날짜가 들어간 태그 만들기.
         // 오늘은 빨간색으로 표시됨.
@@ -312,40 +315,64 @@
             $.ajax({
                 url: "getWeekList"
             }).done(function (response) {
-                    console.log(response);
-                    var tr2 = "<tr>";
-                    for (let i = 0; i < response.length; i++) {
-                        if (response[i].workerId == '[[${session.workerId}]]') {
-                            console.log('dd');
-                            if (response[i].inTime != null) {
-                                tr2 += "<td width='100'>" + response[i].inTime + "</td>"
-                            }else {
-                                tr2 += "<td width='100'>" + "출근 전" + "</td>"
-                            }
+                console.log(response);
+                var tr2 = "<tr>";
+                for (let i = 0; i < response.length; i++) {
+                    if (response[i].workerId == '[[${session.workerId}]]') {
+                        console.log('dd');
+                        if (response[i].inTime != null) {
+                            tr2 += "<td width='100'>" + response[i].inTime + "</td>"
+                        } else {
+                            tr2 += "<td width='100'>" + "출근 전" + "</td>"
                         }
                     }
-                    tr2 += "</td>";
-                    $('#getTable').append(tr2);
+                }
+                tr2 += "</td>";
+                $('#getTable').append(tr2);
 
-                    var tr3 = "<tr>";
-                    for (let i = 0; i < response.length; i++) {
-                        if (response[i].workerId == '[[${session.workerId}]]') {
-                            console.log('dd');
-                            if (response[i].outTime != null) {
-                                tr3 += "<td width='100'>" + response[i].outTime + "</td>"
-                            }else{
-                                tr3 += "<td width='100'>" + "퇴근 전" + "</td>"
-                            }
+                var tr3 = "<tr>";
+                for (let i = 0; i < response.length; i++) {
+                    if (response[i].workerId == '[[${session.workerId}]]') {
+                        console.log('dd');
+                        if (response[i].outTime != null) {
+                            tr3 += "<td width='100'>" + response[i].outTime + "</td>"
+                        } else {
+                            tr3 += "<td width='100'>" + "퇴근 전" + "</td>"
                         }
                     }
-                    tr3 += "</td>";
-                    $('#getTable').append(tr3);
+                }
+                tr3 += "</td>";
+                $('#getTable').append(tr3);
             })
 
         }
 
         weekTrMaker();
 
+        function insertAttendWorker() {
+            var workerId = '[[${session.workerId}]]';
+
+            // field 값 전하기
+            let chkWork = document.querySelector('#chkWork').value;
+
+            fetch('/msg/insertAttendMsg', {
+                method: 'post',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify({
+                    workerId : workerId,
+                    chkWork : chkWork
+                })
+            })
+                .then(res => res.text())
+                .then(res => console.log(res))
+        }
+
+        <!-- 출퇴근 문자 가져오기 -->
+        function insertChkWorker(input) {
+            let tg = document.querySelector('#chkWork')
+
+            tg.value = input;
+        }
 
     </script>
 </th:block>

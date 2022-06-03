@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/adm_layout">
+<th:block layout:fragment="content">
+    <div th:each="m:${msg}">
+        <span th:if="${m.getIsMessageCd() == 1001}">출결 msg</span>
+        <!-- /adm/ -->
+        <span th:if="${m.getIsMessageCd() == 1003}">체크리스트 msg</span>
+        <span th:text="${m.getMessageContents()}"></span>
+        <span th:text="${m.getMsgTime()}"></span>
+        <!-- -->
+        [[${session.memberId}]]
+        [[${session.workerId}]]
+    </div>
+</th:block>
+</html>
