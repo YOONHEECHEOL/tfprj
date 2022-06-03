@@ -30,6 +30,16 @@
         and game_id = #{gameId}
 
     </update>
+    <update id="updateGameStatus">
+        update reservation
+        set status_cd = 702
+        where res_id = #{resId}
+    </update>
+    <update id="updatePaidStatus">
+        update payment
+        set payment_status_cd = 802
+        where payment_id = (select payment_id from reservation where res_id = #{resId})
+    </update>
 
     <select id="gameInfo" parameterType="string" resultType="com.yedam.tfprj.admin.reservation.service.AdmGameVO">
         select *

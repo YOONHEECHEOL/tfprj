@@ -50,10 +50,10 @@
         <td th:align="center">
             <convert-c-code th:data="${l.getStatusCd()}"></convert-c-code>
         </td>
-        <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' ">
-            <button th:class="cancel">취소</button>
+        <td th:align="center" th:if="${l.getStatusCd()}== '701'">
+            <button th:class="cancel">취소</button><button th:class="paid">결제완료처리</button>
         </td>
-        <td th:align="center" th:unless="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "></td>
+        <td th:align="center" th:unless="${l.getStatusCd()}== '701'"></td>
         <td th:align="center" th:width="150"><a th:class="details"
                                                 th:href="${'reservation_day_detail?resId=' + l.getResId()}">상세히 보기</a>
         </td>
@@ -153,7 +153,26 @@
     $(".hidden").attr('style', "display:none;");
 </script>
 <script>
+    $("tbody").on("click", ".paid", function () {
+        let statusCd = ($(this).closest($("tr")).find($(".hidden")).text());
+        let resId = ($(this).closest($("tr")).find($(".resId")).text());
+        console.log(statusCd);
+        console.log(resId);
+        if (!confirm("결제가 완료되었으면 확인을 눌러주세요")) {
+            alert("취소");
+        } else {
+            $.ajax({
+                url: "updateGameStatus",
+                method: 'POST',
+                data: {resId: resId}
+            }).done(function (response) {
+                location.reload();
+            })
 
+
+            alert("확인");
+        }
+    })
 </script>
 
 </html>
