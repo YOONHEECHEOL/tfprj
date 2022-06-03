@@ -22,9 +22,11 @@ public class ReservationVO {
     private int room;
     private String statusCd;
     private int gameId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh24:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh24:mm:ss", timezone = "Asia/Seoul")
     private Date resDate;
     private String tel;
-    private String name;
+    private String memberName;
     private String paymentId;
     private String paymentStatusCd;
     private String paymentMethodCd;

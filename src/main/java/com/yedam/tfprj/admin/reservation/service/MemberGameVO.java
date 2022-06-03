@@ -1,6 +1,8 @@
 package com.yedam.tfprj.admin.reservation.service;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,6 +18,8 @@ public class MemberGameVO {
     private int batOrder;
     private int difficultyCd;
     private int gameId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh24:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh24:mm:ss", timezone = "Asia/Seoul")
     private Date resDate;
     private double battingAverage;
 

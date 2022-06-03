@@ -38,13 +38,23 @@
     </select>
 
 
-    <select id="gameInfoList" resultType="com.yedam.tfprj.admin.reservation.service.MemberGameVO">
+    <select id="homeTeamList" resultType="com.yedam.tfprj.admin.reservation.service.MemberGameVO">
         select *
         from member_game
         where game_id = (select r.game_id from reservation r where r.res_id = #{resId})
+        and ground_cd = 1
         order by ground_cd asc,  bat_order asc
-
     </select>
+
+    <select id="awayTeamList" resultType="com.yedam.tfprj.admin.reservation.service.MemberGameVO">
+        select *
+        from member_game
+        where game_id = (select r.game_id from reservation r where r.res_id = #{resId})
+          and ground_cd = 2
+        order by ground_cd asc,  bat_order asc
+    </select>
+
+
     <select id="resInfo" resultType="com.yedam.tfprj.admin.reservation.service.ReservationVO">
         select *
         from reservation r, payment p
@@ -59,6 +69,7 @@
         and password = #{password}
         and member_name = #{memberName}
     </select>
+
 
 
 </mapper>

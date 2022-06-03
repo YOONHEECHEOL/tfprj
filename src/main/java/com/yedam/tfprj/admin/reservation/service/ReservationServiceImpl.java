@@ -66,8 +66,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<MemberGameVO> gameInfoList(String resId) {
-        List<MemberGameVO> giList = mapper.gameInfoList(resId);
+    public List<MemberGameVO> homeTeamList(String resId) {
+        List<MemberGameVO> giList = mapper.homeTeamList(resId);
         for(int i=0; i<giList.size();i++){
 
             double battingAverage = (double)giList.get(i).getHits()/giList.get(i).getBatCounts();
@@ -76,6 +76,18 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
 
+        return giList;
+    }
+
+    @Override
+    public List<MemberGameVO> awayTeamList(String resId) {
+        List<MemberGameVO> giList = mapper.awayTeamList(resId);
+        for(int i=0; i<giList.size();i++){
+
+            double battingAverage = (double)giList.get(i).getHits()/giList.get(i).getBatCounts();
+            double ba = Math.round(battingAverage*1000)/1000.0;
+            giList.get(i).setBattingAverage(ba);
+        }
         return giList;
     }
 
