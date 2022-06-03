@@ -33,20 +33,24 @@
                         console.log(numberFormat.format(response[1].allPay)+'원')
                         var selectTr = "";
                         for (let i = 0; i < response.length; i++) {
-                            selectTr = `<tr data-workerid = ${response[i].workerId}>`;
-                            selectTr += "<td>" + response[i].workerName + "</td>";
-                            selectTr += "<td>" + response[i].startDay + "</td>";
-                            selectTr += "<td>" + response[i].late + " 회" + "</td>";
-                            selectTr += "<td>" + response[i].absence + " 회" + "</td>";
+                            if(response[i].workerId == 'admin'){
 
-                            selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
-                            selectTr += "<td>" + "<select class ='selectbox'>" +
-                                "                       <option value='0'>알바 중</option>" +
-                                "                       <option value='1'>퇴직</option>" +
-                                "               </select>" + "</td>";
-                            selectTr += "<td>" + "<button class='readWorker'>조회</button>" + "</td>";
-                            selectTr += "</tr>"
-                            $('#tbody').append(selectTr);
+                            }else{
+                                selectTr = `<tr data-workerid = ${response[i].workerId}>`;
+                                selectTr += "<td>" + response[i].workerName + "</td>";
+                                selectTr += "<td>" + response[i].startDay + "</td>";
+                                selectTr += "<td>" + response[i].late + " 회" + "</td>";
+                                selectTr += "<td>" + response[i].absence + " 회" + "</td>";
+                                selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
+                                selectTr += "<td>" + numberFormat.format(response[i].lastMonthPay)+'원' + "</td>";
+                                selectTr += "<td>" + "<select class ='selectbox'>" +
+                                    "                       <option value='0'>알바 중</option>" +
+                                    "                       <option value='1'>퇴직</option>" +
+                                    "               </select>" + "</td>";
+                                selectTr += "<td>" + "<button class='readWorker'>조회</button>" + "</td>";
+                                selectTr += "</tr>"
+                                $('#tbody').append(selectTr);
+                            }
                         }
                     })
             }
@@ -145,8 +149,8 @@
                             selectTr += "<td>" + response[i].startDay + "</td>";
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
                             selectTr += "<td>" + response[i].absence + " 회" + "</td>";
-
                             selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
+                            selectTr += "<td>" + numberFormat.format(response[i].lastMonthPay)+'원' + "</td>";
                             selectTr += "<td>" + "<select class ='selectbox'>" +
                                 "                       <option value='1'>퇴직</option>" +
                                 "                       <option value='0'>알바 중</option>" +
@@ -194,7 +198,8 @@
                             <th th:width="300">근무 시작일</th>
                             <th th:width="100">총 지각</th>
                             <th th:width="100">총 결근</th>
-                            <th th:width="200">지급 금액</th>
+                            <th th:width="100">총 지급 금액</th>
+                            <th th:width="100">저번달 급여</th>
                             <th th:width="100">상태</th>
                             <th th:width="200">상세조회</th>
                         </tr>
@@ -215,7 +220,8 @@
                             <th th:width="300">근무 시작일</th>
                             <th th:width="100">총 지각</th>
                             <th th:width="100">총 결근</th>
-                            <th th:width="200">지급 금액</th>
+                            <th th:width="200">총 지급 금액</th>
+
                             <th th:width="100">상태</th>
                             <th th:width="200">상세조회</th>
                         </tr>

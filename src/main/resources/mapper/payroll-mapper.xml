@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.tfprj.admin.workerAttendance.mapper.PayrollMapper">
+
+    <insert id="insertPayroll">
+        insert into payroll
+        values(seq_payroll.nextval, #{workerId}, #{firstDate}, #{allWorkTime}, #{hWage}, #{wage})
+    </insert>
+
+    <select id="selectPayroll" resultType="com.yedam.tfprj.admin.workerAttendance.service.PayrollVO">
+        select * from payroll
+        where worker_id = #{workerId}
+        and work_dt = #{firstDate}
+    </select>
+
+    <select id="selectSumPayroll" resultType="com.yedam.tfprj.admin.workerAttendance.service.PayrollVO">
+        select sum(wage) as wage
+        from payroll
+        where worker_id = #{workerId}
+    </select>
+
+</mapper>
+

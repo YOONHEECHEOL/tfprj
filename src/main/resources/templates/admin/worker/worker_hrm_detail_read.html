@@ -131,19 +131,44 @@
 
 
 <script>
-    function payCalc(){
-        $.ajax({
-            url : "payCalc",
-            data : { workerId : '[[${workerInfo.workerId}]]'}
-        }).done(function(response){
-            console.log(response)
-            let numberFormat = new Intl.NumberFormat('en-US')
-            console.log(numberFormat.format(response * '[[${workerInfo.payPerHour}]]'))
-            $('#payAll').html(numberFormat.format(response * '[[${workerInfo.payPerHour}]]')+'원')
-        })
+    // function payCalc(){
+    //     $.ajax({
+    //         url : "payCalc",
+    //         data : { workerId : '[[${workerInfo.workerId}]]'}
+    //     }).done(function(response){
+    //         console.log(response)
+    //         let numberFormat = new Intl.NumberFormat('en-US')
+    //         console.log(numberFormat.format(response * '[[${workerInfo.payPerHour}]]'))
+    //         $('#payAll').html(numberFormat.format(Math.floor(response * '[[${workerInfo.payPerHour}]]'))+'원')
+    //     })
+    // }
+
+
+    function lastMonth(){
+        let date = new Date();
+        let firstDayOfMonth = new Date( date.getFullYear(), date.getMonth() , 1 );
+        let lastMonth = new Date ( firstDayOfMonth.setDate( firstDayOfMonth.getDate() ) );
+
+        let firstDate = lastMonth.toISOString().substring(0,8).concat("01").substring(2,10);
+        let lastDate = lastMonth.toISOString().substring(0,10).substring(2,10);
+
+        console.log(firstDate);
+        console.log(lastDate);
+
+       $.ajax({
+           url : "lastMonthPay",
+           data : {workerId : '[[${workerInfo.workerId}]]',
+                   firstDate : firstDate,
+                   lastDate : lastDate
+           }
+       }).done(function(response){
+           console.log(response)
+           $('#payAll').html((response)+'원');
+       })
     }
 
-    payCalc();
+    lastMonth();
+    // payCalc();
 
     //업로드 된 사진이 없을경우 프로필 사진 숨김처리.
     console.log($('#realImage').attr("src"));

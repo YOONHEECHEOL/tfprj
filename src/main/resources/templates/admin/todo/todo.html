@@ -116,13 +116,11 @@
                     arr.push($(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").attr('class'));
                 }
 
-                // if(arr.indexOf('') != '-1'){
-                //
-                // }else{
-                //     $(this).parents('div').parents('div').find('tbody').find('tr').find("td:eq(0)").addClass('processCompleteYn')
-                // }
-
-
+                if(arr.indexOf('') != '-1'){
+                    $(this).parents('div').parents('div').find('tbody').find('tr').find("td:eq(0)").removeClass('processCompleteYn')
+                }else{
+                    $(this).parents('div').parents('div').find('tbody').find('tr').find("td:eq(0)").addClass('processCompleteYn')
+                }
 
                     for (let i = 0; i < response.length; i++) {
                         if ($(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").attr('class') == '') {

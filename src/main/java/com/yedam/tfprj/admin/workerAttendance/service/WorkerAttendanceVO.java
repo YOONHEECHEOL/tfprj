@@ -38,4 +38,7 @@ public class WorkerAttendanceVO {
     private String percent;
     private String inMTime;
     private String getMTime;
+
+    private String firstDate;
+    private String lastDate;
 }

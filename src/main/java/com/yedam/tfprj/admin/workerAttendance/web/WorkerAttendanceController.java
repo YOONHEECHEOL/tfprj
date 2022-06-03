@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yedam.tfprj.admin.worker.service.WorkerService;
 import com.yedam.tfprj.admin.worker.service.WorkerVO;
+import com.yedam.tfprj.admin.workerAttendance.service.PayrollVO;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceService;
 import com.yedam.tfprj.admin.workerAttendance.service.WorkerAttendanceVO;
 import com.yedam.tfprj.admin.workerAttendance.service.ReturnVO;
@@ -33,6 +34,7 @@ public class WorkerAttendanceController {
 
     @Autowired
     WorkerService workerService;
+
 
 
     @RequestMapping("/adm/now_worker_attendance")
@@ -195,12 +197,13 @@ public class WorkerAttendanceController {
         }
     }
 
+
+
     @ResponseBody
-    @RequestMapping("/adm/payCalc")
-    public float payCalc(@RequestParam String workerId) {
-        List<WorkerAttendanceVO> list = service.payCalc(workerId);
-        //총 근무시간 구하기
-        float allWorkTime = 0;
+    @RequestMapping("/adm/lastMonthPay")
+    public float lastMonthPay(@RequestParam String workerId, @RequestParam String firstDate ,@RequestParam String lastDate) {
+        List<WorkerAttendanceVO> list = service.lastMonthPay(workerId, firstDate, lastDate);
+        int allWorkTime = 0;
         for(int i=0; i<list.size(); i++){
             if(list.get(i).getInTime() != null && !list.get(i).getInTime().equals("결근") && list.get(i).getOutTime() != null){
 
@@ -219,11 +222,34 @@ public class WorkerAttendanceController {
 
             }
         }
-        workerService.getWorker(workerId);
-        float allPay = (allWorkTime / 1000 / 60 / 60) * workerService.getWorker(workerId).getPayPerHour();
-        workerService.updateAllPay(workerId, allPay);
+        //payId = 시퀀스 SEQ.PAYROLL.nextval
+        //workerId = 근무자아이디 workerId
+        //wage = 총 급여 allWorkTime * workerService.getWorker(workerId).getPayPerHour()
+        //work_dt = 저번달 1일 넣기 걍 firstDate
+        //workTime = 지난 달 총 근무시간 allWorkTime
+        //H_wage = 근무자에게 설정된 급여 workerService.getWorker(workerId).getPayPerHour()
+        //payments_date = 급여 지급일 매달 10일, if문으로 10일이 됐을때 지난달의 급여를 한번만 insert 해줌
+        PayrollVO pVo = new PayrollVO();
 
-        return (allWorkTime / 1000 / 60 / 60);
+        pVo.setWorkerId(workerId);
+        pVo.setFirstDate(firstDate);
+        pVo.setHWage(workerService.getWorker(workerId).getPayPerHour());
+        pVo.setAllWorkTime(Math.round(allWorkTime / 1000 / 60 / 60));
+        pVo.setWage(Math.round((allWorkTime / 1000 / 60 / 60) * workerService.getWorker(workerId).getPayPerHour()));
+
+        if(service.selectPayroll(pVo) == null) {
+            service.insertPayroll(pVo);
+        }
+
+        float lastMonthPay = service.selectPayroll(pVo).getWage();
+        float allPay = service.selectSumPayroll(pVo).getWage();
+
+        workerService.updateLastMonthPay(workerId, lastMonthPay);
+        workerService.updateSumPay(workerId, allPay);
+
+        workerService.getWorker(workerId);
+
+        return allPay;
     }
 
     @ResponseBody

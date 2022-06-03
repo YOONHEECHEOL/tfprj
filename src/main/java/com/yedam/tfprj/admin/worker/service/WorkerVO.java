@@ -26,6 +26,7 @@ public class WorkerVO {
     private Date startDay;
 
     private int allPay;
+    private int lastMonthPay;
     private int payPerHour;
     private int positionCd;
     private int late;

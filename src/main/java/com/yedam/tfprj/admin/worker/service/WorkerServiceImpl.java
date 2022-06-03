@@ -132,7 +132,12 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    public int updateAllPay(String workerId, float allPay) {
-        return mapper.updateAllPay(workerId, allPay);
+    public int updateLastMonthPay(String workerId, float lastMonthPay) {
+        return mapper.updateLastMonthPay(workerId, lastMonthPay);
+    }
+
+    @Override
+    public int updateSumPay(String workerId, float allPay) {
+        return mapper.updateSumPay(workerId, allPay);
     }
 }
