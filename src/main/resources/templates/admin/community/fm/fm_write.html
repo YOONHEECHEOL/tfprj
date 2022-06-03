@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
+    <t-h1 en="" ko="친선 경기 게시판"></t-h1>
 
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -15,14 +15,12 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>생긴거만 에디터 저장안됨 ㅋㅋㅋㅋ</title>
 
 <article>
     <div class="container" role="main">
 
-        <h1>QNA 작성</h1>
 
-        <form name="form" id="form" role="form" method="post" action="/adm/qnaInsert">
+        <form  name="form" id="form" role="form" method="post" action="/adm/fmInsert">
 
             <div class="mb-3">
                 <label for="title">제목</label>
@@ -38,7 +36,7 @@
             <div>
                 <input type="button" onclick="formCheck()" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
 
-                <button type="button" style="float: right" onclick="location.href = '/adm/qna'"
+                <button type="button" style="float: right" onclick="location.href = '/adm/fm'"
                         class="btn btn-sm btn-primary">목록
                 </button>
             </div>
@@ -47,35 +45,20 @@
 
     </div>
 </article>
+
 <script>
-    ClassicEditor
-
-        .create(document.querySelector('#details'))
-
-        .then(editor => {
-
-            console.log(editor);
-
-        })
-
-        .catch(error => {
-
-            console.error(error);
-
-        });
-
-    CKEDITOR.replace("details", {
-        filebrowserUploadUrl: "/cli/imageUpload"
+    CKEDITOR.replace("details",{
+        filebrowserUploadUrl : "/cli/imageUpload"
     });
-
-    function formCheck() {
-        if (form.title.value == "") {
-            alert("제목을 입력하세요.");
-            form.title.focus();
-            return false;
+        function formCheck() {
+            if (form.title.value == "") {
+                alert("제목을 입력하세요.");
+                form.title.focus();
+                return false;
+            }
+            form.submit();
         }
-        form.submit();
-    }
-</script>
+    </script>
+
 </th:block>
 </html>

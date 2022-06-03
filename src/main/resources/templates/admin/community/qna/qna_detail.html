@@ -3,6 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
+    <t-h1 en="" ko="QNA"></t-h1>
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -22,9 +24,6 @@
 <div class="container">
     <form th:id="details" method="post" action="/adm/qnaUpdate">
 
-        <div>
-            <h1>QNA 상세보기</h1>
-        </div>
 
         <div class="container" style="max-width: 880px;">
             <table th:each="q, status : ${qna}" border="1" class="card" id="frm">
