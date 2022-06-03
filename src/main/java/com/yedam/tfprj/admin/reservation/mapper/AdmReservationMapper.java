@@ -17,7 +17,9 @@ public interface AdmReservationMapper {
 
     public AdmGameVO gameInfo(String resId);
 
-    public List<MemberGameVO> gameInfoList(String resId);
+    public List<MemberGameVO> homeTeamList(String resId);
+
+    public List<MemberGameVO> awayTeamList(String resId);
 
     public ReservationVO resInfo(String resId);
 

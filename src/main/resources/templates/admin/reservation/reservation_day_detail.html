@@ -17,48 +17,53 @@
         <h3 id="clock" style="color:black;">clock</h3>
     </div>
 
-    <div th:class="gameInfoList" th:each="giList, index : ${gameInfoList}">
-        <span th:if="${giList.memberId == null}" th:text="비회원"> </span>
-        <span th:unless="${giList.memberId == null}" th:text="${giList.memberId}"></span>
-        <span th:class="memberName" th:text="${giList.memberName}"> </span>
-        <span th:text="${giList.groundCd}"> </span>
-        <span th:text="'안타 : '+${giList.hits}"> </span>
-        <span th:text="${giList.homeruns}"> </span>
-        <span th:text="'최고 비거리 : '+${giList.highestDistance}+'미터'"> </span>
-        <span th:text="'타석 : '+${giList.batCounts}"> </span>
-        <span th:text="${giList.batOrder}"> </span>
-        <span th:text="${giList.difficultyCd}"> </span>
-        <span th:text="${giList.gameId}"> </span>
-        <span th:text="'타율 : ' + ${giList.getBattingAverage()}"> </span>
-        <button th:if="${giList.memberId == null}" th:class="btn">ID입력</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <div>아니 뭐임</div>
 
+            </div>
+            <div class="col-6">
+                <div class="col-3" th:class="homeList" th:each="homeList, index : ${homeTeamList}">
+                    <span th:if="${homeList.memberId == null}" th:text="비회원"> </span>
+                    <span th:unless="${homeList.memberId == null}" th:text="${homeList.memberId}"></span>
+                    <span th:class="memberName" th:text="${homeList.memberName}"> </span>
+                    <span th:text="${homeList.groundCd}"> </span>
+                    <span th:text="'안타 : '+${homeList.hits}"> </span>
+                    <span th:text="${homeList.homeruns}"> </span>
+                    <span th:text="'최고 비거리 : '+${homeList.highestDistance}+'미터'"> </span>
+                    <span th:text="'타석 : '+${homeList.batCounts}"> </span>
+                    <span th:text="${homeList.batOrder}"> </span>
+                    <span th:text="${homeList.difficultyCd}"> </span>
+                    <span th:text="${homeList.gameId}"> </span>
+                    <span th:text="'타율 : ' + ${homeList.getBattingAverage()}"> </span>
+                    <button th:if="${homeList.memberId == null}" th:class="btn">ID입력</button>
+                </div>
+                <div class="col-3" th:class="awayList" th:each="awayList, index : ${awayTeamList}">
+                    <span th:if="${awayList.memberId == null}" th:text="비회원"> </span>
+                    <span th:unless="${awayList.memberId == null}" th:text="${awayList.memberId}"></span>
+                    <span th:class="memberName" th:text="${awayList.memberName}"> </span>
+                    <span th:text="${awayList.groundCd}"> </span>
+                    <span th:text="'안타 : '+${awayList.hits}"> </span>
+                    <span th:text="${awayList.homeruns}"> </span>
+                    <span th:text="'최고 비거리 : '+${awayList.highestDistance}+'미터'"> </span>
+                    <span th:text="'타석 : '+${awayList.batCounts}"> </span>
+                    <span th:text="${awayList.batOrder}"> </span>
+                    <span th:text="${awayList.difficultyCd}"> </span>
+                    <span th:text="${awayList.gameId}"> </span>
+                    <span th:text="'타율 : ' + ${awayList.getBattingAverage()}"> </span>
+                    <button th:if="${awayList.memberId == null}" th:class="btn">ID입력</button>
+
+                </div>
+
+            </div>
+        </div>
     </div>
+
+
     <div>
-        <span th:id="gameId" th:text="${gameInfo.gameId}"> </span>
-        <span th:id="resId" th:text="${gameInfo.resId}"> </span>
-        <span th:text="${gameInfo.memberId}"> </span>
-        <span th:text="${gameInfo.memberName}"> </span>
-        <span th:text="${gameInfo.innings}"> </span>
-        <span th:text="${gameInfo.homeName}"> </span>
-        <span th:text="${gameInfo.awayName}"> </span>
-        <span th:text="${gameInfo.homeScore}"> </span>
-        <span th:text="${gameInfo.awayScore}"> </span>
-        <span th:text="${gameInfo.homeHits}"> </span>
-        <span th:text="${gameInfo.awayHits}"> </span>
-        <span th:text="${gameInfo.homeHomeruns}"> </span>
-        <span th:text="${gameInfo.awayHomeruns}"> </span>
-        <span th:text="${gameInfo.homePlayteamCd}"> </span>
-        <span th:text="${gameInfo.awayPlayteamCd}"> </span>
-        <span th:text="${gameInfo.winLose}"> </span>
-        <span th:text="${gameInfo.leagueId}"> </span>
-        <span th:text="${gameInfo.roundCd}"> </span>
-        <span th:text="${gameInfo.room}"> </span>
-        <span th:text="${#dates.format(resInfo.startTime, 'HH:mm')}"> </span>
-        <span th:text="${#dates.format(resInfo.endTime, 'HH:mm')}"> </span>
-        <span> <convert-c-code th:data="${resInfo.paymentStatusCd}"></convert-c-code> </span>
+        <button onclick="history.back()">뒤로가기</button>
     </div>
-
-    <div><button onclick="history.back()">뒤로가기</button></div>
 
 
     <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
@@ -123,7 +128,10 @@
     setInterval(clock, 1000); // 1초마다 실행
 </script>
 <script>
-    $(".gameInfoList").on("click", ".btn", function () {
+    $(".homeList").on("click", ".btn", insertMemberId)
+    $(".awayList").on("click", ".btn", insertMemberId)
+
+    function insertMemberId() {
         let memberName = $(this).prevAll(".memberName").text();
         let gameId = $("#gameId").text();
         console.log(gameId);
@@ -146,7 +154,7 @@
                     memberId: memberId,
                     password: password,
                     memberName: memberName,
-                    gameId : gameId
+                    gameId: gameId
                 },
                 success: function (response) {
                     console.log("리턴 결과" + response);
@@ -167,7 +175,15 @@
             });
             //첫번째 아쟉스 끝
         }) //버튼 클릭 이벤트 끝
-    })
+    }
+</script>
+<script>
+    let gameInfo = '${gameInfo}';
+    let gameInfoList = '${gameInfoList}';
+
+    console.log(gameInfo)
+
+
 </script>
 
 

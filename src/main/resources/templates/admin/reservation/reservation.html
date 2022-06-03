@@ -72,9 +72,9 @@
                     },
 
 
-                    select: function (arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+                    dateClick: function (arg) {
                         console.log(arg)
-                        let popUrl = "/adm/reservation/reservation_day?startStr="+arg.startStr;
+                        let popUrl = "/adm/reservation/reservation_day?startStr="+arg.dateStr;
                         let popOption = 'left=600, width=1500, height=800, location=no, status=no, scrollbars=yes'
                         window.open(popUrl, "name", popOption);
 

@@ -7,7 +7,9 @@
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
-    <script th:defer th:src="@{/js/yjs.js}" ></script>
+    <script th:defer th:src="@{/js/yjs.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <h1>일별 조회</h1>
@@ -17,8 +19,8 @@
     <thead>
     <tr>
         <th th:align="center" th:width="100">no</th>
-        <th th:align="center"  th:width="100">룸</th>
-        <th th:align="center"  th:width="500">시간</th>
+        <th th:align="center" th:width="100">룸</th>
+        <th th:align="center" th:width="500">시간</th>
         <th th:align="center" th:width="150">금액</th>
         <th th:align="center" th:width="150">예약자</th>
         <th th:align="center" th:width="150">결제상태</th>
@@ -34,28 +36,67 @@
         <td th:class="hidden" th:text="${l.getStatusCd}"></td>
         <td th:class="resId" th:align="center" th:text="${l.getResId()}">no</td>
         <td th:align="center" th:text="${l.getRoom()}">룸</td>
-        <td th:align="center" th:class="time" th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간</td>
-        <td th:align="center" th:class="price">금액</td>
-        <td th:align="center" th:text="${l.getName()}">예약자</td>
-        <td th:align="center" class="gameStatus" >
-            <convert-c-code  th:data="${l.getPaymentStatusCd()}"></convert-c-code>
+        <td th:align="center" th:class="time"
+            th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간
         </td>
-        <td th:align="center" >
+        <td th:align="center" th:class="price">금액</td>
+        <td th:align="center" th:text="${l.memberName}">예약자</td>
+        <td th:align="center" class="gameStatus">
+            <convert-c-code th:data="${l.getPaymentStatusCd()}"></convert-c-code>
+        </td>
+        <td th:align="center">
             <convert-c-code th:data="${l.getPaymentMethodCd()}"></convert-c-code>
         </td>
-        <td th:align="center" >
+        <td th:align="center">
             <convert-c-code th:data="${l.getStatusCd()}"></convert-c-code>
         </td>
-        <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "><button th:class="cancel">취소</button></td>
+        <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' ">
+            <button th:class="cancel">취소</button>
+        </td>
         <td th:align="center" th:unless="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "></td>
-        <td th:align="center" th:width="150"><a th:class="details" th:href="${'reservation_day_detail?resId=' + l.getResId()}">상세히 보기</a></td>
+        <td th:align="center" th:width="150"><a th:class="details"
+                                                th:href="${'reservation_day_detail?resId=' + l.getResId()}">상세히 보기</a>
+        </td>
     </tr>
-
-
     </tbody>
 
-</table>
 
+</table>
+<button>예약생성</button>
+
+<!--모달 시작-->
+<div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="col-xs-4" for="memberId">ID</label>
+                        <input class="inputModal" name="memberId" id="memberId" required="required">
+                        </input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label class="col-xs-4" for="password">비밀번호</label>
+                        <input class="inputModal" type="text" name="password" id="password"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer modalBtnContainer-addEvent">
+                <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="save-event">입력</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 </body>
@@ -67,15 +108,15 @@
     console.log(priceList);
 
 
-    let length =  timeList.length;
-    for(let i=0; i<length; i++){
+    let length = timeList.length;
+    for (let i = 0; i < length; i++) {
         var text = timeList[i].innerHTML;
-        var startTime = text.substring(0,2);
-        var endTime = text.substring(8,10);
-        var time = endTime-startTime;
+        var startTime = text.substring(0, 2);
+        var endTime = text.substring(8, 10);
+        var time = endTime - startTime;
         console.log(text);
-        timeList[i].innerHTML = text+ "&nbsp"+ "("+time + "시간)";
-        priceList[i].innerHTML=  time * 50000;
+        timeList[i].innerHTML = text + "&nbsp" + "(" + time + "시간)";
+        priceList[i].innerHTML = time * 50000;
     }
     console.log(length);
 </script>
@@ -85,7 +126,7 @@
 </script>
 
 <script>
-    $("tbody").on("click",".cancel",function(){
+    $("tbody").on("click", ".cancel", function () {
         let statusCd = ($(this).closest($("tr")).find($(".hidden")).text());
         let resId = ($(this).closest($("tr")).find($(".resId")).text());
         console.log(statusCd);
@@ -94,10 +135,10 @@
             alert("취소");
         } else {
             $.ajax({
-                url : "update_payment_cd",
-                method : 'POST',
-                data : {resId : resId}
-            }).done(function(response){
+                url: "update_payment_cd",
+                method: 'POST',
+                data: {resId: resId}
+            }).done(function (response) {
                 location.reload();
             })
 
@@ -109,7 +150,7 @@
 
 </script>
 <script>
-$(".hidden").attr('style',"display:none;");
+    $(".hidden").attr('style', "display:none;");
 </script>
 <script>
 
