@@ -63,7 +63,7 @@
           <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
              href="/cli/signUp" class="button button-success">signUp</a>
           <a th:if="${#session.getAttribute('log') == 'y'}"
-             th:href="${'/cli/logout?memberId=' + #session.getAttribute('memberId')}" class="btn btn-danger">logout</a>
+             href="/cli/logout" class="btn btn-danger">logout</a>
         </div>
       </li>
     </ul>

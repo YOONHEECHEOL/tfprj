@@ -1,6 +1,6 @@
 package com.yedam.tfprj.admin.sales.Mapper;
 
-import com.yedam.tfprj.admin.sales.Service.PaymentVO;
+import com.yedam.tfprj.admin.sales.Service.AdmPaymentVO;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,13 +9,13 @@ import java.util.Map;
 
 @Mapper
 public interface PaymentMapper {
-    public List<PaymentVO> paymentList(PaymentVO vo);
+    public List<AdmPaymentVO> paymentList(AdmPaymentVO vo);
     @MapKey("String")
-    public List<Map<String, Object>> findMemNonMem(PaymentVO vo);
+    public List<Map<String, Object>> findMemNonMem(AdmPaymentVO vo);
     @MapKey("String")
-    public List<Map<String, Object>> findPayType(PaymentVO vo);
+    public List<Map<String, Object>> findPayType(AdmPaymentVO vo);
     @MapKey("String")
-    public List<Map<String, Object>> avgSalesByDay(PaymentVO vo);
+    public List<Map<String, Object>> avgSalesByDay(AdmPaymentVO vo);
     @MapKey("String")
     public List<Map<String, Object>> todaySell();
 }
