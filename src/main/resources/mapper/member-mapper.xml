@@ -4,7 +4,6 @@
 <mapper namespace="com.yedam.tfprj.client.member.mapper.MemberMapper">
 
     <insert id="insertMember" parameterType="com.yedam.tfprj.client.member.service.MemberVO">
-
         INSERT INTO MEMBER
             (member_id, password, member_name, tel)
         VALUES (#{memberId}, #{password}, #{memberName}, #{tel})
@@ -20,7 +19,6 @@
             AND PASSWORD = #{password}
         </if>
     </select>
-
     <select id="findOne"
             parameterType="com.yedam.tfprj.client.member.service.MemberVO"
             resultType="com.yedam.tfprj.client.member.service.MemberVO">

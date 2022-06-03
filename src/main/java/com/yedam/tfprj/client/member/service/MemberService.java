@@ -2,8 +2,6 @@ package com.yedam.tfprj.client.member.service;
 
 
 import com.yedam.tfprj.admin.reservation.service.MemberGameVO;
-import com.yedam.tfprj.client.game.service.GameVO;
-import com.yedam.tfprj.client.message.service.MessageVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

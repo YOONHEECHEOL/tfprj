@@ -12,7 +12,7 @@
     </resultMap>
 
     <insert id="createTeam" parameterType="com.yedam.tfprj.client.team.service.TeamVO">
-        INSERT INTO TEAM VALUES( seq_team.nextVal, #{leader},0,0,0,#{teamName})
+        INSERT INTO TEAM VALUES( seq_team.nextVal, #{leader},0,0,0,#{teamName},null)
     </insert>
 
     <select id="findTeam" resultType="com.yedam.tfprj.client.team.service.TeamVO"

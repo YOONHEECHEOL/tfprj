@@ -2,14 +2,12 @@ package com.yedam.tfprj.client.common.web;
 
 
 import com.yedam.tfprj.client.member.service.MemberService;
+import com.yedam.tfprj.client.member.service.MemberServiceImpl;
 import com.yedam.tfprj.client.member.service.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,19 +20,14 @@ public class CliLogInController {
     @Autowired
     MemberService memberServiceImpl;
 
+    @Autowired
+    MemberServiceImpl memberService;
+
     // login
-    @RequestMapping("/cli/login")
-    public String login(HttpServletRequest request, MemberVO vo, HttpServletResponse response) throws IOException {
-        vo = memberServiceImpl.selectMember(request, vo);
-        if(vo == null){
+    @RequestMapping("/cli/loginFail")
+    public void login(HttpServletResponse response) throws IOException {
             response.setContentType("text/html; charset=utf-8");
             response.getWriter().println("<script>alert('로그인 실패'); location.href='/cli/loginview'</script>");
-            return null;
-
-        } else {
-            return "redirect:/cli/home";
-        }
-
     }
 
     // logout
@@ -54,7 +47,7 @@ public class CliLogInController {
     public String idCheck(HttpServletRequest request, MemberVO memberVO) {
 
         memberVO = memberServiceImpl.selectMember(request, memberVO);
-        if(memberVO != null) {
+        if (memberVO != null) {
             return "y";
         } else
             return "n";
@@ -69,15 +62,15 @@ public class CliLogInController {
 
     // 회원가입
     @GetMapping("/cli/signUp")
-    public String SignUp(Model model , MemberVO vo){
+    public String SignUp(Model model, MemberVO vo) {
         return "client/common/signup";
     }
 
     // 회원가입 처리
     @PostMapping("/cli/insertMember")
-    public String insert(MemberVO vo){
+    public String insert(MemberVO vo) {
 
-       memberServiceImpl.insertMember(vo);
+        memberServiceImpl.insertMember(vo);
         return "redirect:/cli/loginview";
     }
 

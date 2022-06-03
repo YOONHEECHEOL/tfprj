@@ -7,10 +7,10 @@
 
     <t-h1 ko="로그인" en="LOG-IN"></t-h1>
 
-    <form id="frm" name="frm" action="/cli/login" method="post">
+    <form id="frm" name="frm" action="/login" method="post">
         <div class="form-group">
 <!--            <i class="far fa-envelope"></i>-->
-            <input placeholder="아이디" type="text" name="memberId" class="form-control">
+            <input placeholder="아이디" type="text" name="username" class="form-control">
         </div>
 <!--        <i class="fas fa-key"></i>-->
         <input placeholder="패스워드" type="password" name="password" class="form-control">
@@ -24,9 +24,9 @@
 
     <script type="text/javascript">
         function formCheck() {
-            if (frm.memberId.value == "") {
+            if (frm.username.value == "") {
                 alert("아이디를 입력하세요.");
-                frm.memberId.focus();
+                frm.username.focus();
                 return false;
             }
 
