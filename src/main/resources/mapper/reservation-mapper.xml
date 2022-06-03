@@ -9,9 +9,10 @@
         FROM reservation
     </select>
 
-    <select id="findMemberReservation" parameterType="Reservation" resultType="Reservation">
+    <select id="findMemberReservation" parameterType="String" resultType="Reservation">
         SELECT*FROM RESERVATION WHERE MEMBER_ID=#{memberId}
     </select>
+
     <select id="reservationCheck" resultType="com.yedam.tfprj.client.reservation.service.Reservation">
         select room, start_time, end_time from reservation where to_char(start_time,'yyyy-mm-dd') = #{date} and room = #{room}
     </select>

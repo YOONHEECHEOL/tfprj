@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface CliReservationService {
     public List<Reservation> findReservation();
-    public Reservation findMemberReservation(Reservation rsv, HttpServletRequest request);
+    public List<Reservation> findMemberReservation(Reservation rsv, HttpServletRequest request);
 
 
     int insertReservation(Reservation rsv);

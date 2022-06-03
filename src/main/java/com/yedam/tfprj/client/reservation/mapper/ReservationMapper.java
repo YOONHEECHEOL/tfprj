@@ -14,7 +14,7 @@ import java.util.Map;
 public interface ReservationMapper {
     public List<Reservation> findReservation();
 
-    public Reservation findMemberReservation(Reservation rsv);
+    public List<Reservation> findMemberReservation(String memberId);
 
     public int insertReservation(Reservation rsv);
 

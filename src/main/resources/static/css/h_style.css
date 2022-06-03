@@ -492,26 +492,6 @@ main.contents {
     color: #fff;
 }
 
-.bf-5 {
-    font-size: 2.8rem;
-    font-family: esB;
-}
-.bf-4 {
-    font-size: 2.4rem;
-    font-family: esM;
-}
-.bf-3 {
-    font-size: 2rem;
-    font-family: esM;
-}
-.bf-2 {
-    font-size: 1.6rem;
-    font-family: esL;
-}
-.bf-1 {
-    font-size: 1.2rem;
-    font-family: esL;
-}
 
 hr {
     border-top: 1px solid #bbb;
@@ -609,4 +589,44 @@ hr {
 .v-step > div.checked {
     background: #fd7e14;
     height: .8rem;
+}
+
+/* font size */
+.f14 * {
+    font-size: 1.4rem;
+}
+
+/* font style */
+.bf-5 {
+    font-size: 2.8rem;
+    font-family: esB;
+}
+.bf-4 {
+    font-size: 2.4rem;
+    font-family: esM;
+}
+.bf-3 {
+    font-size: 2rem;
+    font-family: esM;
+}
+.bf-2 {
+    font-size: 1.6rem;
+    font-family: esL;
+}
+.bf-1 {
+    font-size: 1.2rem;
+    font-family: esL;
+}
+
+.sf-3 {
+    font-size: 2.2rem;
+    color: #999;
+}
+.sf-2 {
+    font-size: 1.6rem;
+    color: #999;
+}
+.sf-1 {
+    font-size: 1.2rem;
+    color: #999;
 }
