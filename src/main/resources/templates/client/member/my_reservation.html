@@ -5,15 +5,16 @@
 
 <th:block layout:fragment="content">
 
-    <t-h1 ko="나의 예약조회" en="MY-RES"></t-h1>
+    <t-h1 ko="마이페이지" en="MY-INFO"></t-h1>
 
     <t-h2 ko="현재 예약현황"></t-h2>
 
-    <table class="table">
+    <table class="table table-list">
         <thead>
             <tr>
-                <td class="bf-3">예약시간</td>
-                <td class="bf-3">예약상태</td>
+                <th class="bf-2 text-center">예약시간</th>
+                <th class="bf-2 text-center">구장</th>
+                <th class="bf-2 text-center">예약상태</th>
             </tr>
         </thead>
         <tbody class="f14">
@@ -21,14 +22,16 @@
                 <td>
                 <!-- <span th:text="${mresv.resId}"></span><br>-->
                     <span th:text="${'[ ' + #dates.format(mresv.startTime, 'yy-MM-dd') + ' ]'}"></span><br>
-                    <span class="bf-3" th:text="${#dates.format(mresv.startTime, 'HH:mm') + ' - ' + #dates.format(mresv.endTime, 'HH:mm')}"></span><br>
+                    <span class="bf-2" th:text="${#dates.format(mresv.startTime, 'HH:mm') + ' - ' + #dates.format(mresv.endTime, 'HH:mm')}"></span><br>
                 <!-- <span th:text="${mresv.endTime}"></span><br>-->
-                    <span th:text="${mresv.room + ' 구장'}"></span><br>
-                    <span th:text="${#dates.format(mresv.resDate)}"></span><br>
+                    <span class="sf-1" th:text="${#dates.format(mresv.resDate, 'yy-MM-dd HH:mm') + '에 예약되었습니다.'}"></span><br>
                     <span th:if="${mresv.statusCd eq 703}"><button type="text" th:class="finGameDetail">경기 결과 조회</button></span>
                     <span th:if="${mresv.statusCd eq 701}"><button type="text" th:class="rsvDetail">예약 조회</button></span>
                 </td>
-                <td>
+                <td class="text-center">
+                    <span class="bf-2" th:text="${mresv.room + ' 구장'}"></span>
+                </td>
+                <td class="text-center">
                     <convert-c-code th:data="${mresv.statusCd}"></convert-c-code>
                 </td>
             </tr>

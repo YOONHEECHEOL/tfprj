@@ -4,31 +4,54 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h1>내 정보 조회</h1>
-        </div>
-    </div>
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>나의 정보</h3>
-        </div>
-    </div>
-    <form th:id="myView" method="POST">
-        <div th:class="row">
-            <div th:class="col-auto">
-                <div>
-                    <span th:text="${member.memberId}"></span><br>
-                    <span th:text="${member.memberName}"></span><br>
-                    <span th:text="${member.tel}"></span><br>
-                    <span th:text="${member.grade}"></span><br>
-                    <input th:type="button" th:attr="onclick=|callUpdateForm('${member.memberId}')|" th:value="정보수정">
-                </div>
-            </div>
-            <input th:type="hidden" th:id="memberId" th:name="memberId">
-        </div>
 
+    <t-h1 ko="마이페이지" en="MY-INFO"></t-h1>
+
+    <t-h2 ko="나의 정보"></t-h2>
+
+    <form th:id="myView" method="POST">
+        <table class="table f14">
+            <thead>
+                <tr>
+                    <th>항목</th>
+                    <th>정보</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>아이디</td>
+                    <td>
+                        <span th:text="${member.memberId}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td>
+                        <span th:text="${member.memberName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>연락처</td>
+                    <td>
+                        <span th:text="${member.tel}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>등급</td>
+                    <td>
+                        <span th:text="${member.grade}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input th:type="button" class="c-button mt20" th:attr="onclick=|callUpdateForm('${member.memberId}')|" th:value="정보수정">
+                        <input th:type="hidden" th:id="memberId" th:name="memberId">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </form>
+
     <script>
         function callUpdateForm(n) {
             myView.memberId.value = n;

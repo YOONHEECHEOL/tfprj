@@ -4,47 +4,48 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h1>내 정보 수정</h1>
-        </div>
-    </div>
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>나의 정보</h3>
-        </div>
-    </div>
+
+    <t-h1 ko="마이페이지" en="MY-INFO"></t-h1>
+
+    <t-h2 ko="나의 정보 수정"></t-h2>
+
     <form th:id="updateView" action="/cli/myInfoUpdate" method="POST">
-        <div th:class="row">
-            <div th:class="col-auto">
-                <div th:each="member, i : ${member}">
-                    <table>
-                        <tr>
-                            <th>아이디</th>
-                            <td><input th:type="text" th:name="memberId" th:value="${member.memberId}" readonly></td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <td><input th:type="text" th:name="memberName" th:value="${member.memberName}" readonly></td>
-                        </tr>
-                        <tr>
-                            <th>비밀번호</th>
-                            <td><input th:type="password" th:name="password" th:value="${member.password}" ></td>
-                        </tr>
-                        <tr>
-                            <th>전화번호</th>
-                            <td><input th:type="text" th:name="tel" th:value="${member.tel}"></td>
-                        </tr>
-                        <tr>
-                            <th>회원등급</th>
-                            <td><input th:type="text" th:name="grade" th:value="${member.grade}" readonly></td>
-                        </tr>
-                    </table>
-                    <button type="submit">변경사항저장</button>
-                </div>
+        <div th:each="member, i : ${member}">
+            <table class="table f14">
+                <tr>
+                    <th>아이디</th>
+                    <td><input th:type="text" class="form-control-lg" th:name="memberId" th:value="${member.memberId}" readonly></td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td><input th:type="text" class="form-control-lg" th:name="memberName" th:value="${member.memberName}" readonly></td>
+                </tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td><input th:type="password" class="form-control-lg" th:name="password" th:value="${member.password}" ></td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td><input th:type="text" class="form-control-lg" th:name="tel" th:value="${member.tel}"></td>
+                </tr>
+                <tr>
+                    <th>회원등급</th>
+                    <td><input th:type="text" class="form-control-lg" th:name="grade" th:value="${member.grade}" readonly></td>
+                </tr>
+            </table>
+            <div class="button__box">
+                <a onclick="toBack()" class="c-button">취소하기</a>
+                <button type="submit" class="c-button">변경사항저장</button>
             </div>
         </div>
     </form>
+
+    <script>
+        const toBack = () => {
+            history.back();
+        }
+    </script>
+
 </th:block>
 
 </html>

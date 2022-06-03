@@ -26,13 +26,13 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/adm/home","/adm/login","/resources/**").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
+                .antMatchers( "/admin/**","/adm/**","/resources/**").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
                 // USER, ADMIN 접근 허용
-                .antMatchers("/adm").hasRole("ADMIN")
+                .antMatchers("/admin").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/adm/loginview")
-                .loginProcessingUrl("/adm/login")
+                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/adm/home")
                 .successHandler(admLoginSuccessHandler())
                 .failureUrl("/adm/loginFail") // 인증에 실패했을 때 보여주는 화면 url, 로그인 form으로 파라미터값 error=true로 보낸다.

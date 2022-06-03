@@ -630,3 +630,51 @@ hr {
     font-size: 1.2rem;
     color: #999;
 }
+
+/* faq */
+.faq input[id*="answer"] {
+    display: none;
+}
+
+.faq input[id*="answer"] + label {
+    display: block;
+    padding: 1.2rem;
+    border-bottom: 1px solid #bbb;
+    color: #222;
+    font-family: esL;
+    font-size: 1.6rem;
+    background: #f1f1f1;
+    cursor: pointer;
+    position: relative;
+}
+
+.faq input[id*="answer"] label em {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    margin-top: 15px;
+    display: inline-block;
+    background: url("./static/images/arrow.png") 0 0 no-repeat;
+}
+
+.faq input[id*="answer"] + label + div {
+    max-height: 0;
+    transition: all .35s;
+    overflow: hidden;
+    background: #ebebeb;
+    font-size: 11px;
+}
+
+.faq input[id*="answer"] + label + div p {
+    display: inline-block;
+}
+
+.faq input[id*="answer"]:checked + label + div {
+    max-height: 100px;
+}
+
+.faq input[id*="answer"]:checked + label em {
+    background-position: 0 30px;
+}
