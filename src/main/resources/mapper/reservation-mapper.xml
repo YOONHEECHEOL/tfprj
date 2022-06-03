@@ -34,7 +34,6 @@
             res_date,
             TEL,
             MEMBER_NAME
-
         )
         VALUES
             (

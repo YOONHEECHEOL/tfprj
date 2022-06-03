@@ -1,5 +1,6 @@
 package com.yedam.tfprj.client.reservation.web;
 
+import com.yedam.tfprj.client.payment.service.PaymentVO;
 import com.yedam.tfprj.client.reservation.mapper.ReservationMapper;
 import com.yedam.tfprj.client.reservation.service.GameVO;
 import com.yedam.tfprj.client.reservation.service.Reservation;
@@ -62,13 +63,51 @@ public class CliReservationController {
     System.out.println(">>>resNo = " + resNo);
     System.out.println(">>>gameId = " + gameId);
 
-    // 예약 Id
+    // 예약 건
     model.addAttribute("res", reservationMapper.getResByResId(Integer.parseInt(resNo)));
 
-    // game Id
+    // game 건
     model.addAttribute("game", reservationMapper.getGameVoByGameId(Integer.parseInt(gameId)));
 
     return "client/reservation/pay";
+  }
+
+  // 예약 결제 완료 페이지로 이동
+  @RequestMapping("/cli/resPayDone")
+  public String resPayDone(PaymentVO vo) {
+
+    System.out.println(">>>param = " + vo);
+
+    // pay table 에 해당 건 입력 후
+    reservationMapper.insertResPayment(vo);
+
+    // payment_id, res_id 값 받기
+    int payId = reservationMapper.getLastPayment().getPaymentId();
+    int resId = reservationMapper.getLastReservation().getResId();
+
+    // reservation 에 payment_id update
+    reservationMapper.setResPayment(payId, resId);
+
+    return "client/reservation/pay_done";
+  }
+
+  // 예약 결제 완료 페이지로 이동
+  @RequestMapping("/cli/resPayCancel")
+  public String resPayCancel(String resId, String gameId) {
+
+    int ri = Integer.parseInt(resId);
+    int gi = Integer.parseInt(gameId);
+
+    // reservation table 에서 resId 건 예약 delete
+    reservationMapper.deleteResById(ri);
+
+    // game table 에서 gameId 건 delete
+    reservationMapper.deleteGameById(gi);
+
+    // member-game table 에서 gameId 해당 건 delete
+    reservationMapper.deleteMemberGameByGameId(gi);
+
+    return "client/reservation/pay_cancel";
   }
 
   @GetMapping("/cli/reservation/reservationCheck")

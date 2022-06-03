@@ -229,7 +229,17 @@ main.contents {
     font-size: 1.6rem;
     color: #999;
 }
-
+.message-success {
+    padding: .8rem 0;
+    text-align: center;
+    color: #3765C7;
+    font-size: 2rem;
+    word-break: keep-all;
+}
+.message-success > span {
+    font-size: 1.6rem;
+    color: #999;
+}
 
 /* footer */
 .footer {

@@ -25,4 +25,6 @@ public class Reservation {
     private Date resDate;
     private String tel;
     private String memberName;
+    private String paymentId;
+
 }

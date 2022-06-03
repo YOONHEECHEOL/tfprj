@@ -7,15 +7,20 @@
 
     <t-h1 ko="예약결제" en="RES-PAY"></t-h1>
 
-    <span th:text="${res.getResId()}"></span>
-<!--    <span th:text="${res.getEndTime()}"></span><br>-->
+    <input type="hidden" id="resId" th:value="${res.getResId()}">
+    <input type="hidden" id="gameId" th:value="${game.getGameId()}">
+
+    <span th:text="${res.getResId()}"></span><br>
+    <span th:text="${#dates.format(res.getStartTime(), 'yy-MM-dd HH:mm') + ' - ' + #dates.format(res.getEndTime(), 'HH:mm')}"></span>
+    <input type="hidden" th:value="${#dates.format(res.getStartTime(), 'HH')}" id="startTime">
+    <input type="hidden" th:value="${#dates.format(res.getEndTime(), 'HH')}" id="endTime">
+<!--    <span th:text="${#dates.format(res.getEndTime(), 'HH:mm')}"></span><br>-->
 <!--    <span th:text="${res.getGameId()}"></span><br>-->
 <!--    <span th:text="${res.getMemberId()}"></span><br>-->
 <!--    <span th:text="${res.getMemberName()}"></span><br>-->
 <!--    <span th:text="${res.getResDate()}"></span><br>-->
 <!--    <span th:text="${res.getResId()}"></span><br>-->
 <!--    <span th:text="${res.getRoom()}"></span><br>-->
-<!--    <span th:text="${res.getStartTime()}"></span><br>-->
 <!--    <span th:text="${res.getStatusCd()}"></span><br>-->
 <!--    <span th:text="${res.getTel()}"></span><br><br>-->
 
@@ -32,7 +37,100 @@
 <!--    <span th:text="${game.getInnings()}"></span>-->
     <span th:text="${game.getGameId()}"></span>
 
+    <div class="message-caution">
+        결제 취소 시 예약이 취소됩니다.<br>
+        <span>📢현장결제 및 무통장 입금은 관리자 확인 후 결제완료됩니다.</span>
+    </div>
 
+    <ul id="paymentMethod">
+        <li><button class="c-button" data-val="1701">현장결제</button></li>
+        <li><button class="c-button" data-val="1702">네이버페이</button></li>
+        <li><button class="c-button" data-val="1703">카카오페이</button></li>
+        <li><button class="c-button" data-val="1704">무통장입금</button></li>
+    </ul>
+
+    <div class="button__box">
+
+
+
+
+    </div>
+
+    <div class="button__box">
+        <button class="button button-common" onclick="resCancel()">취소하기</button>
+        <a class="button button-primary" onclick="pay()">결제하기</a>
+    </div>
+
+    <!-- 결제 건 form -->
+    <form action="/cli/resPayDone" method="get" id="payDoneFrm">
+
+        <input type="hidden" value="" id="paymentAmount" name="paymentAmount">
+        <input type="hidden" value="1501" id="prodInfoCd" name="prodInfoCd">
+        <input type="hidden" th:value="${#session.getAttribute('memberId')}" id="memberId" name="memberId">
+        <input type="hidden" value="" id="paymentMethodCd" name="paymentMethodCd">
+        <input type="hidden" value="" id="paymentStatusCd" name="paymentStatusCd">
+
+    </form>
+
+    <script>
+
+        let $startTime = document.querySelector('#startTime').value;
+        let $endTime = document.querySelector('#endTime').value;
+
+        // paymentAmount value insert
+        let $paymentAmount = ($endTime - $startTime) * 50000;
+        document.querySelector('#paymentAmount').value = $paymentAmount;
+
+        const paymentMethod = () => {
+            let t = document.querySelector('#paymentMethod');
+
+            t.addEventListener('click', () => {
+                if(event.target.tagName === 'BUTTON') {
+                    removeActive();
+                    let val = event.target.getAttribute('data-val');
+                    document.querySelector('#paymentMethodCd').value = val;
+                    event.target.classList.add('active')
+
+                    if(val == 1701 || val == 1704) {
+                        document.querySelector('#paymentStatusCd').value = 801;
+                    } else {
+                        document.querySelector('#paymentStatusCd').value = 802;
+                    }
+                }
+            })
+        }
+
+        const removeActive = () => {
+            let tg = document.querySelector('#paymentMethod').children
+            for(let i=0; i<tg.length; i++) {
+                tg[i].querySelector('button').classList.remove('active')
+            }
+        }
+
+        paymentMethod()
+
+        // 취소 시 Reservation, Game, Member-Game table 에서 해당 예약과 관련된 건 모두 삭제
+        const resCancel = () => {
+            // res 처리를 위한 param 값
+            let $resId = document.querySelector('#resId').value;
+
+            // game 처리를 위한 param 값
+            let $gameId = document.querySelector('#gameId').value;
+
+            location.href = '/cli/resPayCancel?resId=' + $resId + '&gameId=' + $gameId;
+        }
+
+
+        // 결제하기
+        const pay = () => {
+
+            //validate 추가
+
+
+            document.querySelector('#payDoneFrm').submit();
+        }
+
+    </script>
 
 
 </th:block>
