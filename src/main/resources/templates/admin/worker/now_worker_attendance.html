@@ -23,7 +23,7 @@
             <div class="col-xl-12 col-md-6 mb-4">
                 <span><h1>현재 근무자 조회</h1></span>
                 <span>
-            <table>
+            <table class="table-hover">
                 <thead>
                     <tr>
                         <th th:width="100">근무자명</th>
@@ -93,16 +93,16 @@
                     <div id="nextWorker">기홍길</div>
                 </span>
                     <br><br>
-                    <button id="makeWorksheet">근무표 작성</button>
-                    <button onclick = "location.href = '/adm/worker_hrm' ">인사관리</button>
-                    <button onclick = "location.href = '/adm/work_record' ">근태관리</button>
+                    <button id="makeWorksheet" class="btn btn-outline-dark">근무표 작성</button>
+                    <button onclick = "location.href = '/adm/worker_hrm' " class="btn btn-outline-dark">인사관리</button>
+                    <button onclick = "location.href = '/adm/work_record' " class="btn btn-outline-dark">근태관리</button>
                 </div>
                 <hr>
                 <div id="today">
                     주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
                 </div>
                 <div>
-                    <table>
+                    <table class="table">
                         <thead id="thead">
 
                         </thead>

@@ -47,7 +47,7 @@
                                     "                       <option value='0'>알바 중</option>" +
                                     "                       <option value='1'>퇴직</option>" +
                                     "               </select>" + "</td>";
-                                selectTr += "<td>" + "<button class='readWorker'>조회</button>" + "</td>";
+                                selectTr += "<td>" + "<button class='readWorker btn btn-outline-dark'>조회</button>" + "</td>";
                                 selectTr += "</tr>"
                                 $('#tbody').append(selectTr);
                             }
@@ -74,7 +74,7 @@
                                 "                       <option value='1'>퇴직</option>" +
                                 "                       <option value='0'>알바 중</option>" +
                                 "               </select>" + "</td>";
-                            selectTr += "<td>" + "<button class='readWorker'>조회</button>" + "</td>";
+                            selectTr += "<td>" + "<button class='readWorker btn btn-outline-dark'>조회</button>" + "</td>";
                             selectTr += "</tr>"
                             $('#tbodyOut').append(selectTr);
                         }
@@ -186,11 +186,11 @@
         <div class="row">
             <div class="col-xl-8 col-md-6 mb-4">
                 <span>현재 근무자</span>
-                <span style="float: right"><button id="workerInsertBtn">새로운 근무자 등록</button></span>
-                <span style="float: right"><button onclick = "location.href = '/adm/worker_excel' ">엑셀 다운로드</button></span>
+                <span style="float: right"><button id="workerInsertBtn" class="btn btn-outline-dark">새로운 근무자 등록</button></span>
+                <span style="float: right"><button onclick = "location.href = '/adm/worker_excel' " class="btn btn-outline-dark">엑셀 다운로드</button></span>
 
                 <div>
-                    <table id="table">
+                    <table id="table" class="table tableSubHeadingColor">
                         <hr>
                         <thead>
                         <tr>
@@ -229,7 +229,6 @@
                         </tbody>
                     </table>
                     <br><br>
-                    <div>페이징</div>
                 </div>
             </div>
 
