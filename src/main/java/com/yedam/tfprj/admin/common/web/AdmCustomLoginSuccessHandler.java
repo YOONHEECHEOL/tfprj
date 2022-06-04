@@ -22,13 +22,12 @@ public class AdmCustomLoginSuccessHandler implements AuthenticationSuccessHandle
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         HttpSession httpSession = request.getSession();
-        String workerId = (String) authentication.getPrincipal();
-        WorkerVO vo = mapper.getWorker(workerId);
+        WorkerVO vo = (WorkerVO) authentication.getPrincipal();
         httpSession.setAttribute("worker", vo);
         httpSession.setAttribute("workerId", vo.getWorkerId());
         httpSession.setAttribute("log", "y");
         httpSession.setAttribute("message", vo.getWorkerId() + "님 로그인되었습니다.");
         httpSession.setAttribute("positionCd", vo.getPositionCd());
-        response.sendRedirect("/adm/home");
+        response.sendRedirect("/adm/index");
     }
 }

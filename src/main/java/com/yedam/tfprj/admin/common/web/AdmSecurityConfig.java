@@ -1,7 +1,6 @@
 package com.yedam.tfprj.admin.common.web;
 
 import com.yedam.tfprj.admin.worker.service.WorkerServiceImpl;
-import com.yedam.tfprj.client.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Order(2)
+@Order(1)
 public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
     private final WorkerServiceImpl workerServiceImpl;
     /**
@@ -26,14 +25,17 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/admin/**","/adm/**","/resources/**").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
+                .antMatchers( "/adm/login","/adm/loginview","/resources/**","/css/**","/ckeditor/**","/font/**","/images/**","/js/**","/vendor/**").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
                 // USER, ADMIN 접근 허용
-                .antMatchers("/admin").hasRole("ADMIN")
+                //.antMatchers("/adm/**","/admin/**").hasRole("ADMIN")
+                .and()
+                .antMatcher("/adm/**")
+                .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/adm/loginview")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/adm/home")
+                .loginProcessingUrl("/adm/login")
+                .defaultSuccessUrl("/adm/index")
                 .successHandler(admLoginSuccessHandler())
                 .failureUrl("/adm/loginFail") // 인증에 실패했을 때 보여주는 화면 url, 로그인 form으로 파라미터값 error=true로 보낸다.
                 .and()
