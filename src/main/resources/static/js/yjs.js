@@ -34,12 +34,11 @@ class tH1 extends HTMLElement {
     style.innerText = `
       h1.h1 {
           font-family: "esB";
-          font-size: 4rem;
+          font-size: 3.6rem;
           position: absolute;
           color: #3765C7;
-          bottom: 0;
+          bottom: .4rem;
           left: 0;
-          padding: 2rem 0 0;
           margin: 0;
           display: inline-block;
       }
@@ -50,8 +49,8 @@ class tH1 extends HTMLElement {
       .h1__box > div > span {
           font-family: "esB";
           position: absolute;
-          bottom: -1.8rem;
-          font-size: 4.4rem;
+          bottom: -1.6rem;
+          font-size: 3.8rem;
           color: #fff;
       }
       .h1__box > div {

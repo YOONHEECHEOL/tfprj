@@ -94,7 +94,12 @@ public class CliLeagueServiceImpl implements LeagueService{
         return cliLeagueServiceVO;
     }
 
-    @Override
+  @Override
+  public List<LeagueVO> getLeagueListForHome() {
+    return cliLeagueMapper.getLeagueListforHome();
+  }
+
+  @Override
     public void payLeague(String leagueId, HttpServletRequest request) {
 
         int leagueIdInt = Integer.parseInt(leagueId);

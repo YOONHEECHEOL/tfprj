@@ -10,6 +10,9 @@ public interface LeagueService {
     // 전체 리스트 조회(현재/지난 리그 분류되어 return)
     public CliLeagueServiceVO getLeagueList(HttpServletRequest request);
 
+    // home 화면용 리스트 조회
+    public List<LeagueVO> getLeagueListForHome();
+
     // 리그 상세조회
     public CliLeagueServiceVO getLeagueDetail(int lno, String memberId);
 

@@ -5,7 +5,7 @@
     <select id="getLeagueList" resultType="com.yedam.tfprj.client.league.service.LeagueVO">
         select *
         from league
-        order by end_date desc
+        order by start_date desc
     </select>
 
     <select id="getLeagueDetail" resultType="com.yedam.tfprj.client.league.service.LeagueVO" parameterType="int">

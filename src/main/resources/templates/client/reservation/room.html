@@ -7,7 +7,7 @@
 
     <t-h1 ko="예약" en="RES"></t-h1>
 
-    <div class="row align-items-center">
+    <div class="row align-items-center px-0">
         <div class="col-8">
             <span id="dateVal" class="bf-4" onchange="reservedTimeCheck()" readonly></span>
         </div>
@@ -16,14 +16,14 @@
         </div>
     </div>
 
-    <hr>
+    <hr class="mt20">
 
-    <div class="row justify-content-around mt20">
-        <button onclick="prev()" class="c-button col-3">이전</button>
+    <div class="row align-items-center justify-content-between mt20">
+        <button onclick="prev()" class="c-button col-3"><i class="fa-solid fa-angle-left"></i></button>
         <div>
             <span class="bf-4" id="room">1</span><span class="bf-4"> 구장</span>
         </div>
-        <button onclick="next()" class="c-button col-3">다음</button>
+        <button onclick="next()" class="c-button col-3"><i class="fa-solid fa-angle-right"></i></button>
     </div>
 
     <div class="mt20">
@@ -75,6 +75,13 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <hr class="mt20">
+
+    <div class="message-success">
+        예약할 날짜와 시간을 선택해주세요!<br>
+        <span>📢 예약은 한건의 예약만 가능합니다.</span>
     </div>
 
     <hr class="mt20">

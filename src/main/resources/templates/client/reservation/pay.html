@@ -10,6 +10,10 @@
     <input type="hidden" id="resId" th:value="${res.getResId()}">
     <input type="hidden" id="gameId" th:value="${game.getGameId()}">
 
+    <table class="table">
+        <thead></thead>
+    </table>
+
     <span th:text="${res.getResId()}"></span><br>
     <span th:text="${#dates.format(res.getStartTime(), 'yy-MM-dd HH:mm') + ' - ' + #dates.format(res.getEndTime(), 'HH:mm')}"></span>
     <input type="hidden" th:value="${#dates.format(res.getStartTime(), 'HH')}" id="startTime">
@@ -39,7 +43,7 @@
 
     <div class="message-caution">
         결제 취소 시 예약이 취소됩니다.<br>
-        <span>📢현장결제 및 무통장 입금은 관리자 확인 후 결제완료됩니다.</span>
+        <span>📢 현장결제 및 무통장 입금은 관리자 확인 후 결제완료됩니다.</span>
     </div>
 
     <ul id="paymentMethod">

@@ -14,6 +14,9 @@ public interface CliLeagueMapper {
 
     public List<LeagueVO> getLeagueList();
 
+    @Select("select * from (select * from LEAGUE order by START_DATE desc) where ROWNUM < 4")
+    public List<LeagueVO> getLeagueListforHome();
+
     public LeagueVO getLeagueDetail(int lno);
 
     // 리그 참가

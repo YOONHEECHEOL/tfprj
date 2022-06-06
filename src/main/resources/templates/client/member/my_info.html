@@ -39,13 +39,16 @@
                 <tr>
                     <td>등급</td>
                     <td>
-                        <span th:text="${member.grade}"></span>
+                        <convert-c-code th:data="${member.grade}"></convert-c-code>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input th:type="button" class="c-button mt20" th:attr="onclick=|callUpdateForm('${member.memberId}')|" th:value="정보수정">
-                        <input th:type="hidden" th:id="memberId" th:name="memberId">
+                        <div class="button__box mt20">
+                            <a onclick="javascript: history.back()" class="c-button">취소하기</a>
+                            <input th:type="button" class="c-button" th:attr="onclick=|callUpdateForm('${member.memberId}')|" th:value="정보수정">
+                            <input th:type="hidden" th:id="memberId" th:name="memberId">
+                        </div>
                     </td>
                 </tr>
             </tbody>
