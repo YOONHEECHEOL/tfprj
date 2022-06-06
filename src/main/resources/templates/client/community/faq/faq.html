@@ -10,70 +10,23 @@
 
     <t-h1 en="FAQ" ko="자주묻는질문"></t-h1>
 
-    <style>
-        input[id*="answer"] {
-            display: none;
-        }
-
-        input[id*="answer"] + label {
-            display: block;
-            padding-top: 20px;
-            border: 1px solid #2d4373;
-            border-bottom: 0;
-            color: #ebebeb;
-            font-weight: 900;
-            background: #2d4373;
-            cursor: pointer;
-            position: relative;
-        }
-
-        input[id*="answer"] label em {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            width: 30px;
-            height: 30px;
-            margin-top: 15px;
-            display: inline-block;
-            background: url("./static/images/arrow.png") 0 0 no-repeat;
-        }
-
-        input[id*="answer"] + label + div {
-            max-height: 0;
-            transition: all .35s;
-            overflow: hidden;
-            background: #ebebeb;
-            font-size: 11px;
-        }
-
-        input[id*="answer"] + label + div p {
-            display: inline-block;
-        }
-
-        input[id*="answer"]:checked + label + div {
-            max-height: 100px;
-        }
-
-        input[id*="answer"]:checked + label em {
-            background-position: 0 30px;
-        }
-
-    </style>
-
-    <div th:each="f:${faq}">
-        <h3 th:text="${f.title}">대분류</h3>
-
-        <div class="accordion">
-            <th:block th:each="t:${f.cliFaqList}">
-                <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
-                <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
-                <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용
-                    내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-            </th:block>
+    <div class="faq__box">
+        <div th:each="f:${faq}" class="faq mt20">
+            <div class="bf-3 p" th:text="${'💬 ' + f.title}">대분류</div>
+            <hr>
+            <div class="accordion">
+                <th:block th:each="t:${f.cliFaqList}">
+                    <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
+                    <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
+                    <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
+                        내용내용내용내용내용내용내용내용내용내용내용내용
+                        내용내용내용내용내용내용내용내용내용내용내용내용
+                        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+                </th:block>
+            </div>
         </div>
     </div>
+
 
 </th:block>
 </body>

@@ -31,45 +31,67 @@
             color: white;
         }
     </style>
-    <h1>체크리스트</h1>
-    <div>
-        <button onclick = "location.href = '/adm/todo' ">바로가기</button>
-        <table class="table table-hover">
-            <tbody id="checkList">
 
-            </tbody>
-        </table>
-    </div>
-    <h1>현재 출근한 근무자</h1><br>
-    <h2 id="notInComment"></h2>
-    <div id="myProgress" style="display: none">
-        <div id="myBar">
-            <div id="label">0%</div>
+    <div class="row">
+
+        <div class="col-4 a__box">
+            <t-h2 ko="현재 출근한 근무자"></t-h2>
+            <div class="bf-3" id="notInComment"></div>
+            <div id="myProgress" style="display: none">
+                <div id="myBar">
+                    <div id="label">0%</div>
+                </div>
+            </div>
+            <div id="div2"><br>
+                <p id="dd"></p>
+            </div>
+            <div id="out"><br>
+                <h1 id="demo"></h1>
+            </div>
         </div>
-    </div>
-    <div id="div2"><br>
-        <p id="dd"></p>
-    </div>
-    <div id="out"><br>
-        <h1 id="demo"></h1>
-    </div>
-    <h1>금일의 매출</h1><br>
-    <div id="chart_div2"></div><br>
-    <h1>주간 근무표</h1>
 
-    <div id="today">
-        주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
-    </div>
-    <div>
-        <table>
-            <thead id="thead">
+        <div class="col-4 a__box">
+            <t-h2 ko="체크리스트"></t-h2>
 
-            </thead>
-            <tbody id="tbody">
 
-            </tbody>
-        </table>
+            <table class="table table-hover">
+                <tbody id="checkList">
+
+                </tbody>
+            </table>
+            <div class="button__box mt20">
+                <button class="c-button" onclick = "location.href = '/adm/todo' ">바로가기</button>
+            </div>
+        </div>
+
+
+        <div class="col-4 a__box">
+            <t-h2 ko="금일의 매출"></t-h2>
+            <div id="chart_div2"></div><br>
+        </div>
+
+        <div class="col-12 a__box f16">
+            <t-h2 ko="주간 근무표"></t-h2>
+
+            <div id="today" class="bf-3 p">
+                주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
+            </div>
+            <table class="table mt20 f16">
+                <thead id="thead">
+
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
+
+
+
+
 
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

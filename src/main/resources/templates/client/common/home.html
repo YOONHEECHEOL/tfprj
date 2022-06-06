@@ -97,8 +97,8 @@
     </div>
 
     <!-- 공지사항 -->
-    <div class="bf-3">공지사항</div>
-    <table class="table f14">
+    <div class="bf-3 p mt20"><i class="fa-solid fa-microphone"></i> 공지사항</div>
+    <table class="table f14 mt12 home-table">
         <thead>
             <tr>
                 <th>제목</th>
@@ -115,15 +115,19 @@
             fetch('/cli/noticeListHome')
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 let tg = document.querySelector('#notice-list')
+                console.log(res);
                 res.forEach(l => {
                     let inner = document.createElement('tr')
+
+                    // set nno attr
+                    inner.setAttribute('data-nno', l.nno)
+
                     let title = document.createElement('td');
                     title.innerText = l.title;
 
                     let date = document.createElement('td')
-                    date.innerText = l.wdate;
+                    date.innerText = l.wdate.substr(0, 10);
                     inner.append(title, date);
                     tg.append(inner);
                 })
@@ -134,11 +138,11 @@
 
     <!-- qna -->
 
-
+    <hr class="m20">
 
     <!-- 현재 진행 중인 리그 -->
-    <div class="bf-3">리그 리스트</div>
-    <table class="table f14">
+    <div class="bf-3 p mt20"><i class="fa-solid fa-crown"></i> 리그 리스트</div>
+    <table class="table f14 mt12 home-table">
         <thead>
         <tr>
             <th>제목</th>
@@ -159,6 +163,10 @@
                     let tg = document.querySelector('#league-list')
                     res.forEach(l => {
                         let inner = document.createElement('tr')
+
+                        // set league_id attr
+                        inner.setAttribute('data-lno', l.leagueId);
+
                         let title = document.createElement('td');
                         title.innerText = l.leagueName;
 
@@ -170,6 +178,25 @@
                 })
         }
         getLeagueList();
+
+
+        // 공지사항, 리그 상세페이지 이동 function
+        const viewDetail = () => {
+            let notice = document.querySelector('#notice-list')
+            notice.addEventListener('click', () => {
+                let tg = event.target.parentNode;
+                console.log(tg.getAttribute('data-nno'))
+                location.href = '/cli/noticeDetail?nNo=' + tg.getAttribute('data-nno')
+            })
+
+            let league = document.querySelector('#league-list')
+            league.addEventListener('click', () => {
+                let tg = event.target.parentNode;
+                console.log(tg.getAttribute('data-lno'))
+                location.href = '/cli/leagueDetail?lno=' + tg.getAttribute('data-lno')
+            })
+        }
+        viewDetail();
     </script>
 
 

@@ -3,88 +3,90 @@
 
 <th:block th:fragment="topbarFragment">
 
-  <!-- header -->
-<!--  <header th:unless="${#request.getRequestURI()} != '/'" class="header">-->
-  <header th:attr="class=${(#request.getRequestURI() == '/cli/home' || #request.getRequestURI() == '/cli/login') ? 'header' : 'header header-black'}" >
+    <!-- header -->
+    <!--  <header th:unless="${#request.getRequestURI()} != '/'" class="header">-->
+    <header th:attr="class=${(#request.getRequestURI() == '/cli/home' || #request.getRequestURI() == '/cli/login') ? 'header' : 'header header-black'}">
 
-    <div class="row w100 justify-content-between align-items-center">
+        <div class="row w100 justify-content-between align-items-center">
 
-      <div class="col-auto">
-        <a href="/" class="logo"><img th:src="@{/images/cli/c_logo.svg}" alt=""></a>
-      </div>
-      <div class="col-auto" >
-        <img th:src="@{/images/cli/menu.svg}" id="cli-slider-menu" class="header__menu" alt="">
-      </div>
+            <div class="col-auto">
+                <a href="/" class="logo"><img th:src="@{/images/cli/c_logo.svg}" alt=""></a>
+            </div>
+            <div class="col-auto">
+                <img th:src="@{/images/cli/menu.svg}" id="cli-slider-menu" class="header__menu" alt="">
+            </div>
 
-    </div>
-
-  </header>
-
-  <!-- slider menu -->
-  <nav class="navi" id="cli-slider-nav">
-    <ul>
-      <li>
-        <a href="/cli/myReservation/"><h3 class="h3">나의 예약</h3></a>
-      </li>
-      <li>
-        <a href="/cli/league"><h3 class="h3">마이페이지</h3></a>
-        <ul>
-          <li><a href="/cli/myInfo">정보조회</a></li>
-          <li><a href="/cli/myScore">나의 기록</a></li>
-          <li><a href="/cli/myTeam">팀</a></li>
-          <li><a href="/cli/myMessage">메세지</a></li>
-          <li><a href="/cli/myTrophy">트로피</a></li>
-        </ul>
-      </li>
-      <li>
-          <a href="/cli/league"><h3 class="h3">리그</h3></a>
-          <ul>
-            <li><a href="/cli/league">리그 현황</a></li>
-            <li th:if="${#session.getAttribute('memberId') != null}"><a href="/cli/myLeague">나의 리그</a></li>
-          </ul>
-      </li>
-      <li>
-        <a href=""><h3 class="h3">커뮤니티</h3></a>
-        <ul>
-          <li><a href="/cli/notice">공지사항</a></li>
-          <li><a href="/cli/qna">QnA</a></li>
-          <li><a href="/cli/faq">Faq</a></li>
-          <li><a href="/cli/fm">친선경기게시판</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href=""><h3 class="h3">스토어</h3></a>
-      </li>
-      <li>
-        <div class="button__box">
-          <a href="/cli/home" class="button button-common">home</a>
-          <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
-             href="/cli/loginview" class="button button-primary">login</a>
-          <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
-             href="/cli/signUp" class="button button-success">signUp</a>
-          <a th:if="${#session.getAttribute('log') == 'y'}"
-             href="/cli/logout" class="btn btn-danger">logout</a>
         </div>
-      </li>
-    </ul>
-  </nav>
-  <div class="csn-bg" id="cli-slider-nav-bg"></div>
 
-  <script>
-    // slider
-    const slider = () => {
-      let cliSliderMenu = document.querySelector('#cli-slider-menu')
-      let cliSliderNav = document.querySelector('#cli-slider-nav')
-      let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
+    </header>
 
-      cliSliderMenu.addEventListener('click', () => {
-        cliSliderNav.classList.toggle('active')
-        cliSliderNavBg.classList.toggle('active')
-      })
-    }
-    slider();
+    <!-- slider menu -->
+    <nav class="navi" id="cli-slider-nav">
+        <ul>
+            <li>
+                <a href="/cli/reservation/room"><div class="bf-3 p"><i class="fa-solid fa-book"></i>예약</div></a>
+                <ul>
+                    <li><a href="/cli/reservation/room">예약하기</a></li>
+                    <li><a href="/cli/myReservation/">나의 예약</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/cli/myInfo"><div class="bf-3 p"><i class="fa-solid fa-circle-user"></i>마이페이지</div></a>
+                <ul>
+                    <li><a href="/cli/myInfo">정보조회</a></li>
+                    <li><a href="/cli/myScore">나의 기록</a></li>
+                    <li><a href="/cli/myTeam">팀</a></li>
+                    <li><a href="/cli/myMessage">메세지</a></li>
+                    <li><a href="/cli/myTrophy">트로피</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/cli/league"><div class="bf-3 p"><i class="fa-solid fa-crown"></i>리그</div></a>
+                <ul>
+                    <li><a href="/cli/league">리그 현황</a></li>
+                    <li><a href="/cli/myLeague">나의 리그</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href=""><div class="bf-3 p"><i class="fa-solid fa-comments"></i>커뮤니티</div></a>
+                <ul>
+                    <li><a href="/cli/notice">공지사항</a></li>
+                    <li><a href="/cli/qna">QnA</a></li>
+                    <li><a href="/cli/faq">Faq</a></li>
+                    <li><a href="/cli/fm">친선경기게시판</a></li>
+                </ul>
+            </li>
+<!--            <li>-->
+<!--                <a href=""><h3 class="h3">스토어</h3></a>-->
+<!--            </li>-->
+        </ul>
+        <div class="button__box mt20">
+            <a href="/cli/home" class="button button-common">home</a>
+            <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
+               href="/cli/loginview" class="button button-primary">login</a>
+            <a th:if="${#session.getAttribute('log') == 'n' || #session.getAttribute('log') == 'null'}"
+               href="/cli/signUp" class="button button-success">signUp</a>
+            <a th:if="${#session.getAttribute('log') == 'y'}"
+               href="/cli/logout" class="button button-danger">logout</a>
+        </div>
+    </nav>
+    <div class="csn-bg" id="cli-slider-nav-bg"></div>
 
-  </script>
+    <script>
+        // slider
+        const slider = () => {
+            let cliSliderMenu = document.querySelector('#cli-slider-menu')
+            let cliSliderNav = document.querySelector('#cli-slider-nav')
+            let cliSliderNavBg = document.querySelector('#cli-slider-nav-bg')
+
+            cliSliderMenu.addEventListener('click', () => {
+                cliSliderNav.classList.toggle('active')
+                cliSliderNavBg.classList.toggle('active')
+            })
+        }
+        slider();
+
+    </script>
 
 </th:block>
 </html>

@@ -6,60 +6,63 @@
 
 <th:block layout:fragment="content">
 
-  <t-h1 en="LEAGUE" ko="리그"></t-h1>
-<!--  <t-h2 ko="리그게시판"></t-h2>-->
+    <t-h1 en="LEAGUE" ko="리그"></t-h1>
+    <!--  <t-h2 ko="리그게시판"></t-h2>-->
 
-  <h3 class="h3">참가가능한 리그</h3>
+    <t-h2 ko="참가가능한 리그"></t-h2>
 
-  <table class="table">
-    <tbody >
-      <tr th:each="l, status: ${currentLeagueList}">
-        <td><span th:text="${l.leagueId}">리그ID</span></td>
-        <td>
-          <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
-          <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code><br>
-<!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
-          <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-          <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
-<!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
-<!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
-          <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
-          <span th:text="${'참가팀 : ' + l.getParticipationTeam()}">참가팀</span><br>
-          <span th:text="${l.winningTeam}">승리팀</span><br>
-          <!-- 로그인 시 -->
-          <div class="button__box" th:if="${#session.getAttribute('memberId') != null}">
-            <a th:if="${l.getIsApply() == 'y'}" class="c-button disabled">이미 참가한 리그</a>
-            <a th:if="${l.getIsApply() == 'n'}" class="c-button" th:href="${'/cli/leagueDetail?lno=' + l.leagueId}">참가하기</a>
-          </div>
-          <!-- 비로그인 -->
-          <div class="button__box" th:if="${#session.getAttribute('memberId') == null}">
-            <a class="c-button" th:href="${'/cli/loginview'}">로그인 필요</a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
+    <table class="table f14">
+        <tbody>
+        <tr th:each="l, status: ${currentLeagueList}">
+            <td><span th:text="${l.leagueId}">리그ID</span></td>
+            <td>
+                <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
+                <br>
+                <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
+                <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
+                <!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
+                <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
+                <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
+                <span th:text="${'참가팀 : ' + l.getParticipationTeam()}">참가팀</span><br>
+                <span th:text="${l.winningTeam}">승리팀</span><br>
+                <!-- 로그인 시 -->
+                <div class="button__box" th:if="${#session.getAttribute('memberId') != null}">
+                    <a th:if="${l.getIsApply() == 'y'}" class="c-button disabled">이미 참가한 리그</a>
+                    <a th:if="${l.getIsApply() == 'n'}" class="c-button"
+                       th:href="${'/cli/leagueDetail?lno=' + l.leagueId}">참가하기</a>
+                </div>
+                <!-- 비로그인 -->
+                <div class="button__box" th:if="${#session.getAttribute('memberId') == null}">
+                    <a class="c-button" th:href="${'/cli/loginview'}">로그인 필요</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
 
-  </table>
+    </table>
 
-  <h3 class="h3">지난 리그</h3>
-  <table class="table">
-    <tbody th:each="l, status: ${passedLeagueList}">
-      <tr>
-        <td><span th:text="${l.leagueId}">리그ID</span></td>
-        <td>
-          <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
-          <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code><br>
-<!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
-          <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-          <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
-<!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
-<!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
-          <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
-          <span th:text="${l.winningTeam}">승리팀</span><br>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <t-h2 ko="지난 리그"></t-h2>
+    <table class="table f14">
+        <tbody th:each="l, status: ${passedLeagueList}">
+        <tr>
+            <td><span th:text="${l.leagueId}">리그ID</span></td>
+            <td>
+                <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
+                <br>
+                <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
+                <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
+                <!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
+                <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
+                <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
+                <span th:text="${l.winningTeam}">승리팀</span><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </th:block>
 

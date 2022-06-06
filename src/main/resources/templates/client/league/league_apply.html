@@ -12,21 +12,36 @@
     <table class="table">
         <tbody>
         <tr>
-            <td>
-                <span th:text="${l.leagueVO.leagueId}"></span><br>
-                <convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code><br>
-                <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-                <span>상금 : </span><span th:text="${l.leagueVO.prizeMoney}">상금</span><br>
-                <span th:text="${'참가비 : ' + l.leagueVO.entryFee}">참가비</span><br>
-<!--                <span th:text="${'승리팀 : ' + l.leagueVO.winningTeam}">승리팀</span><br>-->
+            <td class="f14">
+                <div class="bf-3 p">리그 정보</div>
+                <div class="row px-0 mt12">
+
+                    <!-- 리그 기간 -->
+                    <div class="col-4 bf-2">
+                        <input type="hidden" th:value="${l.leagueVO.leagueId}">
+                        리그 기간
+                    </div>
+                    <div class="col-8 bf-2">
+                        <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'MM-dd')}">시작일</span> [<convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code>]
+                    </div>
+
+                    <!-- 리그 상금 -->
+                    <div class="col-4 bf-2">상금</div>
+                    <div class="col-8 bf-2"><span th:text="${l.leagueVO.prizeMoney}">상금</span></div>
+
+                    <!-- 리그 참가비 -->
+                    <div class="col-4 bf-2">참가비</div>
+                    <div class="col-8 bf-2"><span th:text="${l.leagueVO.entryFee}">참가비</span></div>
+
+                </div>
             </td>
         </tr>
         <tr>
             <td th:if="${l.loginedMember.getTeamId() != 0}">
                 <!-- 세션을 통해 팀 조회, 없으면 팀생성 버튼 -->
-                <h3 class="h3">나의 팀</h3>
+                <div class="bf-3 p">나의 팀</div>
                 <!--                    <span th:text="${l.teamVO.getTeamId()}">팀아이디</span><br>-->
-                <div class="row">
+                <div class="row mt12">
                     <div class="col-6">
                         <h4 class="h4" th:text="${'[팀명] ' + l.teamVO.getTeamName()}">팀이름</h4>
                     </div>
@@ -40,10 +55,10 @@
                 <!--                    <span th:text="${l.teamVO.getWin()}">팀 승수</span>-->
 
                 <!-- 팀이 있으면 팀원 option 생성 후 select 에 append -->
-                <h3 class="h3" th:data="${l.leagueVO.getParticipationMember()}" id="sm">선발 타자</h3>
+                <div class="bf-3 p" th:data="${l.leagueVO.getParticipationMember()}" id="sm">선발 타자</div>
                     <input type="hidden" th:value="${l.leagueVO.getLeagueId()}" name="lno">
                     <input type="hidden" value="" id="formVal" name="formVal">
-                    <div class="row " id="outputSelect">
+                    <div class="row mt12" id="outputSelect">
                         <div class="col-12" th:each="m, status: ${selectedMember}" >
                             <!-- 선택된 멤버 입력 -->
 
@@ -55,8 +70,8 @@
                 </div>
 
                 <div class="button__box mt20">
-                    <button class="c-button" onclick="" >나의 리그신청</button>
-                    <button class="c-button" onclick="" >신청취소</button>
+                    <button class="button button-danger" onclick="" >신청취소</button>
+                    <a class="button button-primary" href="" >나의 리그</a>
                 </div>
                 <!--                    th:href="${'/cli/leagueApply?lno=' + l.leagueVO.getLeagueId()}"-->
             </td>

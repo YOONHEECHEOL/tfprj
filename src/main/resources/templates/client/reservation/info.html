@@ -388,7 +388,7 @@
                    aria-label="Search">
 
             <button class="c-button mt20" id="searchBtn"
-                    type="button">Search
+                    type="button"><i class="fa-solid fa-magnifying-glass"></i> Search
             </button>
 
             <div class="bf-3 mt20">검색결과</div>
@@ -404,16 +404,20 @@
             <input type="hidden" id="difficultyVal">
             <!-- 여기서 -->
 
-            <div class="bf-3 mt20">난이도 입력</div>
-            <!-- 난이도 입력 -->
-            <ul id="diff-list" class="tm-table">
-                <li data-code="201">아마추어</li>
-                <li data-code="202">세미프로</li>
-                <li data-code="203">프로</li>
-            </ul>
+            <div class="dp-none" id="diff_box">
+                <div class="bf-3 mt20">난이도 입력</div>
+                <!-- 난이도 입력 -->
+                <div id="diff-list" class="button__box">
+                    <button class="c-button" data-code="201">아마추어</button>
+                    <button class="c-button" data-code="202">세미프로</button>
+                    <button class="c-button" data-code="203">프로</button>
+                </div>
+            </div>
 
 
-            <div class="button__box">
+            <hr class="mt20">
+
+            <div class="button__box mt20">
                 <button class="button button-common" id="cancelBtn">취소하기</button>
                 <button class="button button-primary" id="regMemberBtn">입력하기</button>
             </div>
@@ -524,8 +528,16 @@
 
 
         document.querySelector('#diff-list').addEventListener('click', () => {
+            // attr remove
+            let tg = document.querySelector('#diff-list').children;
+            for (i = 0; i < tg.length; i++) {
+                tg[i].className = tg[i].className.replace(" active", "");
+            }
+
+
             let txtVal = event.target.innerText;
             let codeVal = event.target.getAttribute('data-code');
+            event.target.classList.add('active')
 
             let tt = document.querySelector('#difficultyVal');
             tt.setAttribute('value', txtVal);
@@ -620,6 +632,9 @@
                 for (list of data) {
                     $("#memberList").append(makeTr(list));
                 }
+
+                // 난이도 버튼 생성
+                $('#diff_box').attr('class', ' ')
             })
         })
 

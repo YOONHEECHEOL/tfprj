@@ -30,24 +30,24 @@
                     .done(function (response) {
                         console.log(response);
                         let numberFormat = new Intl.NumberFormat('en-US')
-                        console.log(numberFormat.format(response[1].allPay)+'원')
+                        console.log(numberFormat.format(response[1].allPay) + '원')
                         var selectTr = "";
                         for (let i = 0; i < response.length; i++) {
-                            if(response[i].workerId == 'admin'){
+                            if (response[i].workerId == 'admin') {
 
-                            }else{
+                            } else {
                                 selectTr = `<tr data-workerid = ${response[i].workerId}>`;
                                 selectTr += "<td>" + response[i].workerName + "</td>";
                                 selectTr += "<td>" + response[i].startDay + "</td>";
                                 selectTr += "<td>" + response[i].late + " 회" + "</td>";
                                 selectTr += "<td>" + response[i].absence + " 회" + "</td>";
-                                selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
-                                selectTr += "<td>" + numberFormat.format(response[i].lastMonthPay)+'원' + "</td>";
+                                selectTr += "<td>" + numberFormat.format(response[i].allPay) + '원' + "</td>";
+                                selectTr += "<td>" + numberFormat.format(response[i].lastMonthPay) + '원' + "</td>";
                                 selectTr += "<td>" + "<select class ='selectbox'>" +
                                     "                       <option value='0'>알바 중</option>" +
                                     "                       <option value='1'>퇴직</option>" +
                                     "               </select>" + "</td>";
-                                selectTr += "<td>" + "<button class='readWorker btn btn-outline-dark'>조회</button>" + "</td>";
+                                selectTr += "<td>" + "<button class='readWorker btn btn-outline-dark'><i class='fa-solid fa-magnifying-glass'></i>조회</button>" + "</td>";
                                 selectTr += "</tr>"
                                 $('#tbody').append(selectTr);
                             }
@@ -69,12 +69,12 @@
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
                             selectTr += "<td>" + response[i].absence + " 회" + "</td>";
 
-                            selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
+                            selectTr += "<td>" + numberFormat.format(response[i].allPay) + '원' + "</td>";
                             selectTr += "<td>" + "<select class ='selectbox'>" +
                                 "                       <option value='1'>퇴직</option>" +
                                 "                       <option value='0'>알바 중</option>" +
                                 "               </select>" + "</td>";
-                            selectTr += "<td>" + "<button class='readWorker btn btn-outline-dark'>조회</button>" + "</td>";
+                            selectTr += "<td>" + "<button class='readWorker btn btn-outline-dark'><i class='fa-solid fa-magnifying-glass'></i>조회</button>" + "</td>";
                             selectTr += "</tr>"
                             $('#tbodyOut').append(selectTr);
                         }
@@ -108,12 +108,12 @@
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
                             selectTr += "<td>" + response[i].absence + " 회" + "</td>";
 
-                            selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
+                            selectTr += "<td>" + numberFormat.format(response[i].allPay) + '원' + "</td>";
                             selectTr += "<td>" + "<select class ='selectbox'>" +
                                 "                       <option value='1'>퇴직</option>" +
                                 "                       <option value='0'>알바 중</option>" +
                                 "               </select>" + "</td>";
-                            selectTr += "<td>" + "<button>조회</button>" + "</td>";
+                            selectTr += "<td>" + "<button><i class='fa-solid fa-magnifying-glass'></i>조회</button>" + "</td>";
                             selectTr += "</tr>"
                             $('#tbodyOut').append(selectTr);
                         }
@@ -149,8 +149,8 @@
                             selectTr += "<td>" + response[i].startDay + "</td>";
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
                             selectTr += "<td>" + response[i].absence + " 회" + "</td>";
-                            selectTr += "<td>" + numberFormat.format(response[i].allPay)+'원' + "</td>";
-                            selectTr += "<td>" + numberFormat.format(response[i].lastMonthPay)+'원' + "</td>";
+                            selectTr += "<td>" + numberFormat.format(response[i].allPay) + '원' + "</td>";
+                            selectTr += "<td>" + numberFormat.format(response[i].lastMonthPay) + '원' + "</td>";
                             selectTr += "<td>" + "<select class ='selectbox'>" +
                                 "                       <option value='1'>퇴직</option>" +
                                 "                       <option value='0'>알바 중</option>" +
@@ -164,75 +164,80 @@
                 });
             }
 
-            $('#tbody').on('click', '.readWorker', function (){
+            $('#tbody').on('click', '.readWorker', function () {
                 console.log($(this).closest('tr').data('workerid'));
                 workerId = $(this).closest('tr').data('workerid');
-                let popUrl = "worker_hrm_detail_read?workerId="+workerId+'';
+                let popUrl = "worker_hrm_detail_read?workerId=" + workerId + '';
                 let popOption = 'left=600, width=600, height=800, location=no, status=no, scrollbars=yes'
                 window.open(popUrl, "name", popOption);
             })
 
-            $('#tbodyOut').on('click', '.readWorker', function (){
+            $('#tbodyOut').on('click', '.readWorker', function () {
                 console.log($(this).closest('tr').data('workerid'));
                 workerId = $(this).closest('tr').data('workerid');
-                let popUrl = "worker_hrm_detail_read?workerId="+workerId+'';
+                let popUrl = "worker_hrm_detail_read?workerId=" + workerId + '';
                 let popOption = 'left=600, width=600, height=800, location=no, status=no, scrollbars=yes'
                 window.open(popUrl, "name", popOption);
             })
 
         })
     </script>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-8 col-md-6 mb-4">
-                <span>현재 근무자</span>
-                <span style="float: right"><button id="workerInsertBtn" class="btn btn-outline-dark">새로운 근무자 등록</button></span>
-                <span style="float: right"><button onclick = "location.href = '/adm/worker_excel' " class="btn btn-outline-dark">엑셀 다운로드</button></span>
 
-                <div>
-                    <table id="table" class="table tableSubHeadingColor">
-                        <hr>
-                        <thead>
-                        <tr>
-                            <th th:width="100">이름</th>
-                            <th th:width="300">근무 시작일</th>
-                            <th th:width="100">총 지각</th>
-                            <th th:width="100">총 결근</th>
-                            <th th:width="100">총 지급 금액</th>
-                            <th th:width="100">저번달 급여</th>
-                            <th th:width="100">상태</th>
-                            <th th:width="200">상세조회</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody">
-                        </tbody>
-                    </table>
-                    <hr>
-                    <br><br><br>
-                    <span>퇴직한 근무자</span>
+    <a-h1 ko="근무자 관리" en="WORKER"></a-h1>
 
-                    <table>
-                        <hr>
-                        <thead>
-                        <tr>
-                            <th th:width="100">이름</th>
-                            <th th:width="300">근무 시작일</th>
-                            <th th:width="100">총 지각</th>
-                            <th th:width="100">총 결근</th>
-                            <th th:width="200">총 지급 금액</th>
+    <div class="row">
 
-                            <th th:width="100">상태</th>
-                            <th th:width="200">상세조회</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbodyOut">
-                        </tbody>
-                    </table>
-                    <br><br>
-                </div>
-            </div>
+        <div class="col-10">
 
         </div>
+
+        <div class="col-2">
+            <div class="button__box">
+                <button id="workerInsertBtn" class="c-button">새로운 근무자 등록</button>
+                <button onclick="location.href = '/adm/worker_excel' " class="c-button">엑셀 다운로드</button>
+            </div>
+        </div>
+
+        <div class="col-12 f16 a__box">
+            <t-h2 ko="현재 근무자"></t-h2>
+            <table id="table" class="table tableSubHeadingColor">
+                <thead>
+                <tr>
+                    <th th:width="100">이름</th>
+                    <th th:width="300">근무 시작일</th>
+                    <th th:width="100">총 지각</th>
+                    <th th:width="100">총 결근</th>
+                    <th th:width="100">총 지급 금액</th>
+                    <th th:width="100">저번달 급여</th>
+                    <th th:width="100">상태</th>
+                    <th th:width="200">상세조회</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 f16 a__box">
+            <t-h2 ko="퇴직한 근무자"></t-h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th th:width="100">이름</th>
+                    <th th:width="300">근무 시작일</th>
+                    <th th:width="100">총 지각</th>
+                    <th th:width="100">총 결근</th>
+                    <th th:width="200">총 지급 금액</th>
+
+                    <th th:width="100">상태</th>
+                    <th th:width="200">상세조회</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyOut">
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 </th:block>

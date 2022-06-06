@@ -7,62 +7,73 @@
 
 <th:block layout:fragment="content">
 
-  <a-h1 ko="리그관리" en="LEAGUE"></a-h1>
-  <div class="row justify-content-end">
-    <div class="col-2">
-      <button class="c-button" id="addLeague">리그생성</button>
+    <a-h1 ko="리그관리" en="LEAGUE"></a-h1>
+
+    <div class="row justify-content-end">
+        <div class="col-2">
+            <button class="c-button" id="addLeague">리그생성</button>
+        </div>
     </div>
-  </div>
-  <div class="row" id="output">
 
-    <div class="col" id="admLeagueList">
+    <div class="row f16" id="output">
+        <div class="col">
+            <div class="row">
+                <div class="col-12 a__box os" id="admLeagueList">
 
-      <t-h2 ko="현재 진행 중 리그"></t-h2>
-      <table class="table">
-        <tbody>
-        <tr th:each="l, status: ${l.currentList}">
-          <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
-          <td>
-            <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
-            <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
-            <br>
-            <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
-            <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-            <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
-            <!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
-            <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
-            <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
-            <span th:text="${l.winningTeam}">승리팀</span><br>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+                    <t-h2 ko="현재 진행 중 리그"></t-h2>
+                    <table class="table">
+                        <tbody>
+                        <tr th:each="l, status: ${l.currentList}">
+                            <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
+                            <td>
+                                <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                                <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
+                                <br>
+                                <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
+                                <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                                <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
+                                <!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
+                                <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
+                                <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
+                                <span th:text="${l.winningTeam}">승리팀</span><br>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-      <t-h2 ko="지난 리그"></t-h2>
-      <table class="table">
-        <tbody>
-        <tr th:each="l, status: ${l.passedList}">
-          <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
-          <td>
-            <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
-            <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
-            <br>
-            <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
-            <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-            <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
-            <!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
-            <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
-            <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
-            <span th:text="${l.winningTeam}">승리팀</span><br>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+                </div>
+
+                <div class="col-12 a__box os">
+                    <t-h2 ko="지난 리그"></t-h2>
+                    <table class="table">
+                        <tbody>
+                        <tr th:each="l, status: ${l.passedList}">
+                            <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
+                            <td>
+                                <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                                <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
+                                <br>
+                                <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
+                                <span th:text="${#dates.format(l.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.endDate, 'yyyy-MM-dd')}">시작일</span><br>
+                                <span>상금 : </span><span th:text="${l.prizeMoney}">상금</span><br>
+                                <!--          <span th:text="${l.leagueStatusCd}">리그상태코드</span><br>-->
+                                <!--          <span th:text="${l.tournamentId}">토너먼트ID</span><br>-->
+                                <span th:text="${'참가비 : ' + l.entryFee}">참가비</span><br>
+                                <span th:text="${l.winningTeam}">승리팀</span><br>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 이곳에 리그생성 페이지 추가됨 -->
+
 
     </div>
-    <!-- 이곳에 리그생성 페이지 추가됨 -->
 
-  </div>
 
   <script>
 
@@ -71,7 +82,7 @@
       console.log();
       if (output.children.length != 2) {
         let c = document.createElement('div')
-        c.setAttribute('class', 'col-4')
+        c.setAttribute('class', 'col-4 a__box')
 
         c.innerHTML = `
         <t-h2 ko="리그 생성하기"></t-h2>
