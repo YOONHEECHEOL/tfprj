@@ -8,62 +8,78 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
     <script th:defer th:src="@{/js/yjs.js}"></script>
+    <link th:href="@{/css/h_style.css}" rel="stylesheet" type="text/css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div>
-    <div>
-        <h3 id="clock" style="color:black;">clock</h3>
-    </div>
+
+    <t-h1 ko="일별조회" en="RESERVATION"></t-h1>
+
+
+    <h3 id="clock" class="bf-4" >clock</h3>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4">
-                <div>아니 뭐임</div>
+            <div class="col-12 a__box nh">
+                <div class="f16">
+                    <t-h2 ko="HOME TEAM"></t-h2>
+                    <div>
+                        <table class="table">
+                            <tr class="homeList" th:each="homeList, index : ${homeTeamList}">
+                                <td th:if="${homeList.memberId == null}" th:text="비회원"> </td>
+                                <td th:unless="${homeList.memberId == null}" th:text="${homeList.memberId}"></td>
+                                <td th:class="memberName" th:text="${homeList.memberName}"> </td>
+                                <td th:text="${homeList.groundCd}"> </td>
+                                <td th:text="'안타 : '+${homeList.hits}"> </td>
+                                <td th:text="${homeList.homeruns}"> </td>
+                                <td th:text="'최고 비거리 : '+${homeList.highestDistance}+'미터'"> </td>
+                                <td th:text="'타석 : '+${homeList.batCounts}"> </td>
+                                <td th:text="${homeList.batOrder}"> </td>
+                                <td th:text="${homeList.difficultyCd}"> </td>
+                                <td th:text="${homeList.gameId}"> </td>
+                                <td th:text="'타율 : ' + ${homeList.getBattingAverage()}"> </td>
+                                <td><button th:if="${homeList.memberId == null}" class="btn btn-primary">ID입력</button></td>
 
-            </div>
-            <div class="col-6">
-                <div class="col-3" th:class="homeList" th:each="homeList, index : ${homeTeamList}">
-                    <span th:if="${homeList.memberId == null}" th:text="비회원"> </span>
-                    <span th:unless="${homeList.memberId == null}" th:text="${homeList.memberId}"></span>
-                    <span th:class="memberName" th:text="${homeList.memberName}"> </span>
-                    <span th:text="${homeList.groundCd}"> </span>
-                    <span th:text="'안타 : '+${homeList.hits}"> </span>
-                    <span th:text="${homeList.homeruns}"> </span>
-                    <span th:text="'최고 비거리 : '+${homeList.highestDistance}+'미터'"> </span>
-                    <span th:text="'타석 : '+${homeList.batCounts}"> </span>
-                    <span th:text="${homeList.batOrder}"> </span>
-                    <span th:text="${homeList.difficultyCd}"> </span>
-                    <span th:text="${homeList.gameId}"> </span>
-                    <span th:text="'타율 : ' + ${homeList.getBattingAverage()}"> </span>
-                    <button th:if="${homeList.memberId == null}" th:class="btn">ID입력</button>
+                            </tr>
+                        </table>
+
+                    </div>
+
+
+                    <t-h2 ko="AWAY TEAM"></t-h2>
+                    <div class="">
+                        <table class="table">
+                            <tr class="awayList" th:each="awayList, index : ${awayTeamList}">
+                                <td th:if="${awayList.memberId == null}" th:text="비회원"> </td>
+                                <td th:unless="${awayList.memberId == null}" th:text="${awayList.memberId}"></td>
+                                <td th:class="memberName" th:text="${awayList.memberName}"> </td>
+                                <td th:text="${awayList.groundCd}"> </td>
+                                <td th:text="'안타 : '+${awayList.hits}"> </td>
+                                <td th:text="${awayList.homeruns}"> </td>
+                                <td th:text="'최고 비거리 : '+${awayList.highestDistance}+'미터'"> </td>
+                                <td th:text="'타석 : '+${awayList.batCounts}"> </td>
+                                <td th:text="${awayList.batOrder}"> </td>
+                                <td th:text="${awayList.difficultyCd}"> </td>
+                                <td th:text="${awayList.gameId}"> </td>
+                                <td th:text="'타율 : ' + ${awayList.getBattingAverage()}"> </td>
+                                <td><button th:if="${awayList.memberId == null}" class="btn btn-primary">ID입력</button></td>
+
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="col-3" th:class="awayList" th:each="awayList, index : ${awayTeamList}">
-                    <span th:if="${awayList.memberId == null}" th:text="비회원"> </span>
-                    <span th:unless="${awayList.memberId == null}" th:text="${awayList.memberId}"></span>
-                    <span th:class="memberName" th:text="${awayList.memberName}"> </span>
-                    <span th:text="${awayList.groundCd}"> </span>
-                    <span th:text="'안타 : '+${awayList.hits}"> </span>
-                    <span th:text="${awayList.homeruns}"> </span>
-                    <span th:text="'최고 비거리 : '+${awayList.highestDistance}+'미터'"> </span>
-                    <span th:text="'타석 : '+${awayList.batCounts}"> </span>
-                    <span th:text="${awayList.batOrder}"> </span>
-                    <span th:text="${awayList.difficultyCd}"> </span>
-                    <span th:text="${awayList.gameId}"> </span>
-                    <span th:text="'타율 : ' + ${awayList.getBattingAverage()}"> </span>
-                    <button th:if="${awayList.memberId == null}" th:class="btn">ID입력</button>
 
+
+                <div>
+                    <button class="c-button" onclick="history.back()">뒤로가기</button>
                 </div>
-
             </div>
         </div>
     </div>
 
 
-    <div>
-        <button onclick="history.back()">뒤로가기</button>
-    </div>
 
 
     <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">

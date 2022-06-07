@@ -27,14 +27,14 @@
     </form>
 
     <form th:id="details" method="post">
-        <table class="table">
+        <table class="table f14">
             <thead>
             <tr>
                 <th>no</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
-                <th>조회수</th>
+<!--                <th>조회수</th>-->
             </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
                     <td th:text="${qna.title}"></td>
                     <td th:text="${qna.writer}"></td>
                     <td th:text="${#strings.substring(qna.wdate, 0, 10)}"></td>
-                    <td th:text="${qna.views}"></td>
+<!--                    <td th:text="${qna.views}"></td>-->
                 </tr>
             </div>
             </tbody>
