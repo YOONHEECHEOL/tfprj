@@ -5,6 +5,7 @@ import com.yedam.tfprj.client.member.service.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         httpSession.setAttribute("member", vo);
         httpSession.setAttribute("memberId", vo.getMemberId());
         httpSession.setAttribute("log", "y");
-        httpSession.setAttribute("message", vo.getMemberId() + "님 로그인되었습니다.");
-        response.sendRedirect("/cli/home");
+        response.sendRedirect("/cli/home?message=" + vo.getMemberId() + UriEncoder.encode("님 로그인되었습니다."));
     }
 }

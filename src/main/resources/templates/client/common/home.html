@@ -6,8 +6,8 @@
 <th:block layout:fragment="content">
 
     <div id="hmodal" class="hmodal">
-        <span th:if="${#session.getAttribute('message') != 'n'}"
-              th:text="${#session.getAttribute('message')}">message</span>
+        <span th:if="${#request.getAttribute('message') != null}"
+              th:text="${#request.getAttribute('message')}">message</span>
         <!--    <span>asdf</span>-->
     </div>
 

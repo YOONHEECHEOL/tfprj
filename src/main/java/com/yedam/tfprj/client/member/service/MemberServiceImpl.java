@@ -187,6 +187,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         MemberVO vo = new MemberVO();
         vo.setMemberId(memberId);
         vo = memberMapper.selectMember(vo);
+        vo.setMemberAuth("ROLE_USER");
         if (vo == null){
             throw new UsernameNotFoundException("User not authorized.");
         }

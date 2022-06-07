@@ -21,7 +21,7 @@ public class MemberVO implements UserDetails {
     private String preferred;
     private int    teamId;
     private int ROWNUM;
-    private String memberAuth ="USER";
+    private String memberAuth;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
