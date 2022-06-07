@@ -6,6 +6,7 @@
     <select id="allWorkerList" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
         select *
         from staff_information
+        where staff_status_cd = 0
     </select>
 
     <select id="getWorkerList" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
@@ -170,6 +171,11 @@
         select * from staff_information
         where worker_id = #{workerId}
         and password = #{password}
+    </select>
+
+    <select id="isIdCheck" resultType="com.yedam.tfprj.admin.worker.service.WorkerVO">
+        select * from staff_information
+        where worker_id = #{workerId}
     </select>
 
     <update id="updateAllLateAbsence">
