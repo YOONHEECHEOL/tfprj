@@ -270,8 +270,8 @@
             content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList" onClick="return false;">` + "</td>"
             content += "<td>" + makeCheckListNum() + "</td>"
             content += `<td style=${textDeco}; class="${response.chkPicFileName}">` + response.chkContents + "</td>"
-            content += "<td><button type='submit' class='processComplete btn btn-outline-dark'>해결</button></td>"
-            content += `<td><button type='submit' class='btn btn-outline-dark' chk-no='${response.chkNo}'>상세정보</button></td>`
+            content += "<td><button type='submit' class='processComplete c-button'>해결</button></td>"
+            content += `<td><button type='submit' class='c-button' chk-no='${response.chkNo}'>상세정보</button></td>`
             content += "</tr>"
 
             $('#checkList').append(content)

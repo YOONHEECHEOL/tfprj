@@ -17,29 +17,31 @@
                 window.open(popUrl, "name", popOption);
             })
         })
+
+        console.log('[[${nowWorker}]]');
     </script>
 
     <a-h1 ko="현재 근무자 조회" en="WORKER"></a-h1>
 
     <div class="row">
         <div class="col-6 a__box">
-
-            <table class="table-hover table f16">
-                <thead>
+            <div th:if="${nowWorker.workerName != null}">
+                <table class="table-hover table f16" >
+                    <thead>
                     <tr>
-                        <th th:width="100">근무자명</th>
-                        <th th:width="100">출근시간</th>
-                        <th th:width="100">퇴근시간</th>
+                        <th th:width="50">근무자명</th>
+                        <th th:width="50">출근시간</th>
+                        <th th:width="50">퇴근시간</th>
                     </tr>
-                </thead>
-                <tbody th:each="l, status: ${nowWorker}">
+                    </thead>
+                    <tbody th:each="l, status: ${nowWorker}">
                     <tr>
-                        <td th:width="100" th:text="${nowWorker.workerName}">홍길동</td>
+                        <td th:width="50" th:text="${nowWorker.workerName}">홍길동</td>
                         <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
                         <!--                값 조회가 안될때 청크에러 뜸.             -->
-                        <td th:width="100" id="goingTime">13:00</td>
+                        <td th:width="50" id="goingTime">13:00</td>
                         <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
-                        <td th:width="100" id="quittingTime">18:00</td>
+                        <td th:width="50" id="quittingTime">18:00</td>
                         <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
                     </tr>
                     <tr id="realInOutTime">
@@ -76,17 +78,24 @@
                     </tr>
                     <tr>
                         <th th:width="100">근무 시작일</th>
-                        <th th:width="100">직책</th>
                         <th th:width="300">지급금액</th>
                     </tr>
                     <tr>
                         <td th:width="400" id="startDay">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
-                        <td th:width="100" id="positionCd">월/목 알바</td>
-                        <!-- 스크립트에서 th:text="${nowWorker.positionCd}"의 값이 '0'일때, '1'일때의 값을 .html()로 넣어주기 (완)  -->
                         <td id="payAll" th:width="100">컴마 붙여서 숫자 표현</td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${nowWorker.workerName == null}">
+                <table class="table-hover table f16" >
+                    <tbody>
+                    <tr>
+                        <td>현재 근무중인 근무자가 없습니다.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="col-6 a__box">
@@ -180,11 +189,6 @@
 
             $('#startDay').html(startDay);
 
-            if ([[${nowWorker.positionCd}]] == 0) {
-                $('#positionCd').html('월/목')
-            } else {
-                $('#positionCd').html('화/수/금')
-            }
 
             //오늘날짜 구하기
             var today = new Date();

@@ -15,8 +15,35 @@
 <script>
     //근무자 정보 작성 후 확인 버튼을 눌렀을 때 알림창
     function validateForm(){
-    $('#submitFrm').submit();
-    alert('작성완료.')
+        if($('input[name=workerId]').val() != $('input[name=workerName]').val()){
+            alert('아이디와 이름은 같게해주세요.')
+        }else if( $('input[name=workerId]').val() == ''){
+            alert('아이디를 입력해주세요.')
+            $('input[name=workerId]').focus();
+        }else if($('input[name=workerName]').val() == ''){
+            alert('이름을 입력해주세요.')
+            $('input[name=workerName]').focus();
+        }else if($('input[name=password]').val() == ''){
+            alert('비밀번호를 입력해주세요.')
+        }else{
+            $('#submitFrm').submit();
+            alert('작성완료.')
+        }
+    }
+
+    function ajaxDuplication(){
+        $.ajax({
+            url : ajaxDuplication()
+        }).done(function(response){
+            if(response == '1'){
+                alert('중복입니다.')
+                return;
+            }
+        })
+    }
+
+    function closeForm(){
+        window.close();
     }
 </script>
 <div>
@@ -24,7 +51,7 @@
     <h4>근무자 등록</h4>
     <div>
         <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_write}" enctype="multipart/form-data">
-            - 아이디 : <input type="text" name="workerId"><br><br>
+            - 아이디 : <input type="text" name="workerId">  <button type="button" onclick="ajaxDuplication()">중복체크</button><br><br>
             - 이름 : <input type="text" name="workerName"> <br><br>
             - 비밀번호 : <input type="password" name="password"> <br><br>
             - 연락처 : <input type="text" name="phoneNo"> <br><br>
@@ -57,7 +84,7 @@
                   </select>
 
     <span><button type="button" onclick="validateForm()">저장하기</button></span>
-    <span><button>취소하기</button></span>
+    <span><button type="button" onclick="closeForm()"}>취소하기</button></span>
     </form>
 </div>
 </div>

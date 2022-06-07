@@ -209,7 +209,6 @@
                 if (response != '') {
                     if (response[response.length - 1].outTime == null && response != '') {
                         alert('전 근무자가 퇴근체크를 하지 않았습니다.')
-                        // 밥먹고 고치자
                     } else {
                         alert('오늘 이미 퇴근처리 하셨습니다.')
                     }
@@ -317,6 +316,18 @@
             }).done(function (response) {
                 console.log(response);
                 var tr2 = "<tr>";
+                // 오늘 날짜 - weekFind의 첫번째 일의 숫자
+                // 그다음에 그 뺀 숫자만큼 for문을 돌려서 td태그를 만듦.
+                let dateDiff = new Date().toISOString().substring(8,10) - weekFind()[0].substring(8,10);
+
+                for(let i=0; i<dateDiff; i++){
+                    for(let j=0; j<response.length; j++){
+                        if(weekFind()[i].substring(8,10) != response[j].attDt.substring(6,8)){
+                            tr2 += "<td width='100' rowspan='2'>" + "휴무" + "</td>"
+                        }
+                    }
+                }
+
                 for (let i = 0; i < response.length; i++) {
                     if (response[i].workerId == '[[${session.workerId}]]') {
                         console.log('dd');
@@ -331,6 +342,15 @@
                 $('#getTable').append(tr2);
 
                 var tr3 = "<tr>";
+
+                // for(let i=0; i<dateDiff; i++){
+                //     for(let j=0; j<response.length; j++){
+                //         if(weekFind()[i].substring(8,10) != response[j].attDt.substring(6,8)){
+                //             tr3 += "<td width='100'>" + "" + "</td>"
+                //         }
+                //     }
+                // }
+
                 for (let i = 0; i < response.length; i++) {
                     if (response[i].workerId == '[[${session.workerId}]]') {
                         console.log('dd');
