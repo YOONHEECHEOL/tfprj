@@ -8,24 +8,26 @@
 <th:block layout:fragment="content">
     <t-h1 en="FM" ko="친선경기"></t-h1>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"-->
+<!--          rel="stylesheet"-->
+<!--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"-->
+<!--          crossorigin="anonymous">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
 
     <form>
-        <div>
-            <input type="text" th:value="${cliFmVO.title}"
+        <div class="mt20">
+            <input class="form-control" type="text" th:value="${cliFmVO.title}"
                    onclick="this.select()"
                    name="title" placeholder="제목을 입력하세요"/>
-            <button type="submit">검색</button>
+            <div class="button__box">
+                <button class="c-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            </div>
         </div>
     </form>
 
     <form th:id="details" method="post">
-        <table class="table">
+        <table class="table f14 mt20">
             <thead>
             <tr>
                 <th>no</th>
@@ -37,13 +39,11 @@
             </thead>
             <tbody>
             <div id="fm">
-                <tr th:attr="onclick=|callDetails('${fm.fNo}')|" th:each="fm : ${pageInfo.list}"
-                    onmouseover='this.style.background="#fcecae";'
-                    onmouseleave='this.style.background="#FFFFFF";'>
+                <tr th:attr="onclick=|callDetails('${fm.fNo}')|" th:each="fm : ${pageInfo.list}">
                     <td th:text="${fm.fNo}"></td>
                     <td th:text="${fm.title}"></td>
                     <td th:text="${fm.writer}"></td>
-                    <td th:text="${fm.wdate}"></td>
+                    <td th:text="${#strings.substring(fm.wdate, 0, 10)}"></td>
                     <td th:text="${fm.team}"></td>
                 </tr>
             </div>
@@ -52,26 +52,31 @@
         <input th:type="hidden" th:id="fNo" th:name="fNo">
     </form>
 
-    <button onclick="location.href = '/cli/fmWrite'" style="float: right" th:if="${session.memberId ne null}">작성</button>
-    <button onclick="location.href = '/'" style="float: right">홈</button>
     <!-- 페이징 -->
     <nav>
-        <ul>
+        <ul class="pagination">
             <!-- getPrePage : 이전 페이지 -->
-            <li th:classappend="${pageInfo.getPrePage() == 0} ? 'disabled'">
-                <a th:href="@{fm(pageNum=${pageInfo.getPrePage()})}">Previous</a>
+            <li class="page-item" th:classappend="${pageInfo.getPrePage() == 0} ? 'disabled'">
+                <a th:href="@{fm(pageNum=${pageInfo.getPrePage()})}"><i class="fa-solid fa-angle-left"></i></a>
             </li>
             <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-            <li th:each="page: ${#numbers.sequence(pageInfo.getNavigateFirstPage(), pageInfo.getNavigateLastPage())}"
+            <li class="page-item" th:each="page: ${#numbers.sequence(pageInfo.getNavigateFirstPage(), pageInfo.getNavigateLastPage())}"
                 th:classappend="${page == pageInfo.getPageNum()} ? 'active'">
                 <a th:text="${page}" th:href="@{fm(pageNum=${page})}"></a>
             </li>
             <!-- getPrePage : 다음 페이지 -->
-            <li th:classappend="${pageInfo.getNextPage() == 0} ? 'disabled'">
-                <a th:href="@{fm(pageNum=${pageInfo.getNextPage()})}">Next</a>
+            <li class="page-item" th:classappend="${pageInfo.getNextPage() == 0} ? 'disabled'">
+                <a th:href="@{fm(pageNum=${pageInfo.getNextPage()})}"><i class="fa-solid fa-angle-right"></i></a>
             </li>
         </ul>
     </nav>
+
+
+    <div class="button__box">
+        <button class="c-button" onclick="location.href = '/cli/fmWrite'" th:if="${session.memberId ne null}">작성</button>
+        <!--        <button onclick="location.href = '/'" style="float: right">홈</button>-->
+    </div>
+
     <script>
         function callDetails(n) {
             details.fNo.value = n;

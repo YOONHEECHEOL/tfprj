@@ -9,16 +9,30 @@
 
     <t-h2 th:ko="${l.leagueVO.leagueName} + ' 참가 신청'"></t-h2>
     <h3 class="h3">리그 정보</h3>
-    <table class="table">
+    <table class="table f14">
         <tbody>
         <tr>
             <td>
-                <span th:text="${l.leagueVO.leagueId}"></span><br>
-                <convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code><br>
-                <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'yyyy-MM-dd')}">시작일</span><br>
-                <span>상금 : </span><span th:text="${l.leagueVO.prizeMoney}">상금</span><br>
-                <span th:text="${'참가비 : ' + l.leagueVO.entryFee}">참가비</span><br>
-                <!--                    <span th:text="${'승리팀 : ' + l.leagueVO.winningTeam}">승리팀</span><br>-->
+                <div class="row px-0">
+
+                    <!-- 리그 기간 -->
+                    <div class="col-4 bf-2">
+                        <input type="hidden" th:value="${l.leagueVO.leagueId}">
+                        리그 기간
+                    </div>
+                    <div class="col-8 bf-2">
+                        <span th:text="${#dates.format(l.leagueVO.startDate, 'yyyy-MM-dd') + ' - ' + #dates.format(l.leagueVO.endDate, 'MM-dd')}">시작일</span> [<convert-c-code th:data="${l.leagueVO.leagueStatusCd}"></convert-c-code>]
+                    </div>
+
+                    <!-- 리그 상금 -->
+                    <div class="col-4 bf-2">상금</div>
+                    <div class="col-8 bf-2"><span th:text="${l.leagueVO.prizeMoney}">상금</span></div>
+
+                    <!-- 리그 참가비 -->
+                    <div class="col-4 bf-2">참가비</div>
+                    <div class="col-8 bf-2"><span th:text="${l.leagueVO.entryFee}">참가비</span></div>
+
+                </div>
             </td>
         </tr>
         <tr>

@@ -18,12 +18,13 @@
             })
         })
     </script>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-12 col-md-6 mb-4">
-                <span><h1>현재 근무자 조회</h1></span>
-                <span>
-            <table>
+
+    <a-h1 ko="현재 근무자 조회" en="WORKER"></a-h1>
+
+    <div class="row">
+        <div class="col-6 a__box">
+
+            <table class="table-hover table f16">
                 <thead>
                     <tr>
                         <th th:width="100">근무자명</th>
@@ -31,15 +32,15 @@
                         <th th:width="100">퇴근시간</th>
                     </tr>
                 </thead>
-                <tbody th:each="l, status: ${nowWorker}" >
+                <tbody th:each="l, status: ${nowWorker}">
                     <tr>
                         <td th:width="100" th:text="${nowWorker.workerName}">홍길동</td>
-    <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
-    <!--                값 조회가 안될때 청크에러 뜸.             -->
+                        <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
+                        <!--                값 조회가 안될때 청크에러 뜸.             -->
                         <td th:width="100" id="goingTime">13:00</td>
-    <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
+                        <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
                         <td th:width="100" id="quittingTime">18:00</td>
-    <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
+                        <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
                     </tr>
                     <tr id="realInOutTime">
                         <td th:width="100"></td>
@@ -49,22 +50,22 @@
                     <tr>
                         <th th:width="100">총 지각횟수</th>
                         <!--  총 지각횟수, 결근 횟수는 work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 지각횟수를 전부다 더한 값을 넣어줌. -->
-<!--                        select sum(is_late)-->
-<!--                        from staff_attendance-->
-<!--                        where worker_id = 'test3';-->
+                        <!--                        select sum(is_late)-->
+                        <!--                        from staff_attendance-->
+                        <!--                        where worker_id = 'test3';-->
                         <th th:width="100">주간지각</th>
                         <!--  주간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 주의 지각횟수를 전부다 더한 값을 넣어줌. -->
-<!--                        select sum(is_late)-->
-<!--                        from staff_attendance-->
-<!--                        where worker_id = 'test3'-->
-<!--                        and att_dt IN(trunc(current_date,'d'), trunc(current_date,'d')+1, trunc(current_date,'d')+2, trunc(current_date,'d')+3, trunc(current_date,'d')+4, trunc(current_date,'d')+5, trunc(current_date,'d')+6)-->
+                        <!--                        select sum(is_late)-->
+                        <!--                        from staff_attendance-->
+                        <!--                        where worker_id = 'test3'-->
+                        <!--                        and att_dt IN(trunc(current_date,'d'), trunc(current_date,'d')+1, trunc(current_date,'d')+2, trunc(current_date,'d')+3, trunc(current_date,'d')+4, trunc(current_date,'d')+5, trunc(current_date,'d')+6)-->
                         <th th:width="100">월간 지각</th>
                         <!--  월간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 달의 지각횟수를 전부다 더한 값을 넣어줌. -->
-<!--                        SELECT  -->
-<!--                        SUM(is_late)  -->
-<!--                        FROM staff_attendance-->
-<!--                        WHERE SUBSTR(att_dt,0,8) BETWEEN (TO_CHAR(TRUNC(current_date,'MM'),'YYYYMMDD') ) AND (LAST_DAY(current_date))-->
-<!--                        AND worker_id = 'test3-->
+                        <!--                        SELECT  -->
+                        <!--                        SUM(is_late)  -->
+                        <!--                        FROM staff_attendance-->
+                        <!--                        WHERE SUBSTR(att_dt,0,8) BETWEEN (TO_CHAR(TRUNC(current_date,'MM'),'YYYYMMDD') ) AND (LAST_DAY(current_date))-->
+                        <!--                        AND worker_id = 'test3-->
                         <th th:width="100">결근</th>
                     </tr>
                     <tr>
@@ -86,34 +87,37 @@
                     </tr>
                 </tbody>
             </table>
-            </span>
-                <br><br>
-                <div>
+        </div>
+
+        <div class="col-6 a__box">
+            <div>
                 <span>다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
                     <div id="nextWorker">기홍길</div>
                 </span>
-                    <br><br>
-                    <button id="makeWorksheet">근무표 작성</button>
-                    <button onclick = "location.href = '/adm/worker_hrm' ">인사관리</button>
-                    <button onclick = "location.href = '/adm/work_record' ">근태관리</button>
-                </div>
-                <hr>
-                <div id="today">
-                    주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
-                </div>
-                <div>
-                    <table>
-                        <thead id="thead">
-
-                        </thead>
-                        <tbody id="tbody">
-
-                        </tbody>
-                    </table>
-                </div>
+                <br><br>
+                <button id="makeWorksheet" class="btn btn-outline-dark">근무표 작성</button>
+                <button onclick="location.href = '/adm/worker_hrm' " class="btn btn-outline-dark">인사관리</button>
+                <button onclick="location.href = '/adm/work_record' " class="btn btn-outline-dark">근태관리</button>
             </div>
         </div>
+
+        <div class="col-12 a__box">
+            <div id="today" class="bf-3">
+                주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
+            </div>
+
+            <table class="table f16">
+                <thead id="thead">
+
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
     <script>
         $(document).ready(function () {
             let numberFormat = new Intl.NumberFormat('en-US')
@@ -126,9 +130,9 @@
             var quittingTime = '[[${nowWorker.quittingTime}]]'.substring(11, 16)
             $('#quittingTime').html(quittingTime);
 
-            function dateChange(date){
+            function dateChange(date) {
                 console.log(date);
-                var day = date.substring(4,7)
+                var day = date.substring(4, 7)
                 switch (day) {
                     case "Jan":
                         day = '01';
@@ -169,15 +173,16 @@
                 }
                 return day;
             }
+
             dateChange('[[${nowWorker.startDay}]]');
             // KST 문자열 형식을 2022-05-20 으로 바꾸는방법
-            var startDay = '[[${nowWorker.startDay}]]'.substring('[[${nowWorker.startDay}]]'.length - 4) + "-" + dateChange('[[${nowWorker.startDay}]]') + "-" + '[[${nowWorker.startDay}]]'.substring(8,10)
+            var startDay = '[[${nowWorker.startDay}]]'.substring('[[${nowWorker.startDay}]]'.length - 4) + "-" + dateChange('[[${nowWorker.startDay}]]') + "-" + '[[${nowWorker.startDay}]]'.substring(8, 10)
 
             $('#startDay').html(startDay);
 
-            if([[${nowWorker.positionCd}]] == 0){
+            if ([[${nowWorker.positionCd}]] == 0) {
                 $('#positionCd').html('월/목')
-            }else{
+            } else {
                 $('#positionCd').html('화/수/금')
             }
 
@@ -187,17 +192,17 @@
             $('#today').html(dateString);
 
             //이번 주 7일 + 요일 구해서 tr태그 동적으로 만들어주기.
-            function weekFind(){
+            function weekFind() {
                 var currentDay = new Date();
                 var theYear = currentDay.getFullYear();
                 var theMonth = currentDay.getMonth();
-                var theDate  = currentDay.getDate();
+                var theDate = currentDay.getDate();
                 var theDayOfWeek = currentDay.getDay();
 
                 var thisWeek = [];
                 var week = ['일', '월', '화', '수', '목', '금', '토'];
 
-                for(var i=0; i<7; i++) {
+                for (var i = 0; i < 7; i++) {
                     var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
                     var yyyy = resultDay.getFullYear();
                     var mm = Number(resultDay.getMonth()) + 1;
@@ -214,87 +219,88 @@
                 // 이번주 날짜가 들어간 태그 만들기.
                 // 오늘은 빨간색으로 표시됨.
                 //<td>태그 안에 실제근무자가 한번 더 표시되게.
-                var tr =  "<tr>";
+                var tr = "<tr>";
                 for (let i = 0; i < thisWeek.length; i++) {
-                    if(thisWeek[i].indexOf(dateString) == -1){
+                    if (thisWeek[i].indexOf(dateString) == -1) {
                         tr += "<td>" + thisWeek[i] + "</td>";
-                    }else{
+                    } else {
                         tr += "<td style='color: #ca2819'>" + thisWeek[i] + "</td>";
                     }
                 }
                 tr += "</tr>"
                 $('#thead').append(tr);
 
-                 $.ajax({
-                     url : "jsonSheetList"
-                 }).done(function(response){
+                $.ajax({
+                    url: "jsonSheetList"
+                }).done(function (response) {
                     console.log(response);
                     // 1부 근무자들을 대상으로 동적으로 tr태그를 만들어줌.
-                     tr = "<tr>";
-                     for (let i = 0; i < response.length; i++) {
-                         if(response[i].quittingTime.substring(11,21).replace('24', '') == "07:30:00"){
-                             tr += "<td>" + response[i].workerId + "</td>"
-                         }
-                     }
-                     tr += "</tr>";
-                     $('#tbody').append(tr);
+                    tr = "<tr>";
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i].quittingTime.substring(11, 21).replace('24', '') == "07:30:00") {
+                            tr += "<td>" + response[i].workerId + "</td>"
+                        }
+                    }
+                    tr += "</tr>";
+                    $('#tbody').append(tr);
 
-                     // 2부 근무자들
-                     var tr2 = "<tr>";
-                     for (let i = 0; i < response.length; i++) {
-                         if(response[i].quittingTime.substring(11,21).replace('24', '') == "11:59:00"){
-                             tr2 += "<td>" + response[i].workerId + "</td>"
-                         }
-                     }
-                     tr2 += "</tr>";
-                     $('#tbody').append(tr2);
-                 })
+                    // 2부 근무자들
+                    var tr2 = "<tr>";
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i].quittingTime.substring(11, 21).replace('24', '') == "11:59:00") {
+                            tr2 += "<td>" + response[i].workerId + "</td>"
+                        }
+                    }
+                    tr2 += "</tr>";
+                    $('#tbody').append(tr2);
+                })
             }
+
             weekFind();
-            $('#realInOutTime').find("td:eq(1)").html('[[${nowWorker.inTime}]]'.substring(9,14));
-            $('#realInOutTime').find("td:eq(2)").html('[[${nowWorker.outTime}]]'.substring(9,14));
+            $('#realInOutTime').find("td:eq(1)").html('[[${nowWorker.inTime}]]'.substring(9, 14));
+            $('#realInOutTime').find("td:eq(2)").html('[[${nowWorker.outTime}]]'.substring(9, 14));
 
             console.log('[[${nowWorker.workerId}]]')
 
             $.ajax({
-                url : "allLate",
-                data : {
-                    workerId : '[[${nowWorker.workerId}]]'
+                url: "allLate",
+                data: {
+                    workerId: '[[${nowWorker.workerId}]]'
                 },
-                method : 'post'
-            }).done(function(response){
+                method: 'post'
+            }).done(function (response) {
                 console.log(response)
                 $('#allLate').html(response.isLate + "회");
                 $('#allAbsence').html(response.isAbsence + "회");
             })
 
             $.ajax({
-                url : "weekLate",
-                data : {
-                    workerId : '[[${nowWorker.workerId}]]'
+                url: "weekLate",
+                data: {
+                    workerId: '[[${nowWorker.workerId}]]'
                 },
-                method : 'post'
-            }).done(function(response){
+                method: 'post'
+            }).done(function (response) {
                 $('#weekLate').html(response.isLate + "회")
             })
 
             $.ajax({
-                url : "monthLate",
-                data : {
-                    workerId : '[[${nowWorker.workerId}]]'
+                url: "monthLate",
+                data: {
+                    workerId: '[[${nowWorker.workerId}]]'
                 },
-                method : 'post'
-            }).done(function(response){
+                method: 'post'
+            }).done(function (response) {
                 $('#monthLate').html(response.isLate + "회")
             })
 
             $.ajax({
-                url : "selectNextWorker"
-            }).done(function(response){
+                url: "selectNextWorker"
+            }).done(function (response) {
                 console.log(response);
-                for(let i=0; i<response.length; i++){
-                    if(response[i].workDt.indexOf(dateString) == 0){
-                        if(response[i].workerId != '[[${nowWorker.workerId}]]') {
+                for (let i = 0; i < response.length; i++) {
+                    if (response[i].workDt.indexOf(dateString) == 0) {
+                        if (response[i].workerId != '[[${nowWorker.workerId}]]') {
                             console.log(response[i].workerId);
                             $('#nextWorker').html(response[i].workerId);
                             //여기까지 0526 00:41

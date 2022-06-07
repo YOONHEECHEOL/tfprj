@@ -7,42 +7,27 @@
 <th:block layout:fragment="content">
     <t-h1 en="FM" ko="친선경기"></t-h1>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <style>
-        #frm {
-            padding-top: 50px;
-            padding-bottom: 50px;
-            border: none;
-        }
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
 
-        #table2 {
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
 
-    </style>
-
-    <div class="container">
         <form th:id="details" method="post" action="/cli/fmUpdate">
 
-
-            <div class="container" style="max-width: 880px;">
-                <table th:each="f, status : ${fm}" border="1" class="card" id="frm">
+                <table th:each="f, status : ${fm}" class="table f14" id="frm">
                     <tr>
-                        <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
-                        <td th:text="${f.fNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
-                        <th width="105" style="padding: 1px 1px 1px 10px">작성자</th>
-                        <td th:text="${f.writer}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
-                        <th width="105" height="39" style="padding: 1px 1px 1px 10px">작성일자</th>
-                        <td th:text="${f.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
+                        <th>글번호</th>
+                        <td th:text="${f.fNo}"></td>
+                        <th>작성자</th>
+                        <td th:text="${f.writer}"></td>
+                        <th>작성일자</th>
+                        <td th:text="${f.wdate}" ></td>
                     </tr>
                     <tr>
-                        <th height="39" style="padding: 1px 1px 1px 10px">제목</th>
-                        <td th:text="${f.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
+                        <th>제목</th>
+                        <td th:text="${f.title}" colspan="6" ></td>
                     </tr>
                     <tr>
-                        <th style="padding:50px 50px 50px 50px">내용</th>
+<!--                        <th>내용</th>-->
                         <td th:utext="${f.details}" colspan="6">
                         <textarea id="details" name="details" class="form-control" rows="10" cols="80"
                                   required="required">
@@ -57,64 +42,47 @@
                     <input type="hidden" id="writer" name="writer" th:value="${f.writer}">
                 </table>
 
-
-            </div>
-            <br>
             <input th:type="hidden" th:id="fNo" th:name="fNo">
         </form>
+
+    <div class="button__box">
+        <button class="c-button" onclick="location.href = '/cli/fm'">뒤로가기</button>
+
+        <button class="c-button" th:onclick="|location.href = '@{/cli/fmDelete?fNo={no}(no=${fm.fNo})}'|" th:if="${session.memberId == fm.writer}">삭제</button>
+        <button class="c-button" id="submitFrm" th:if="${session.memberId == fm.writer}">수정</button>
     </div>
 
-    <button onclick="location.href = '/cli/fm'">뒤로가기</button>
-    <button th:onclick="|location.href = '@{/cli/fmDelete?fNo={no}(no=${fm.fNo})}'|" style="float: right" th:if="${session.memberId == fm.writer}">삭제</button>
-    <button id="submitFrm" style="float: right"th:if="${session.memberId == fm.writer}">수정</button>
+    <t-h2 ko="답글"></t-h2>
 
-    <h1>답글</h1>
+    <form>
+        <table id="table2" class="table mt20 f14">
+            <tbody>
+            <tr id="fm" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
+                <td>
+                    <span th:text="${re.cdetails + ' [ ' +re.cwriter + ' ]'}"></span><i th:if="${session.memberId == re.cwriter}" th:onclick="|location.href = '@{/cli/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|" class="fa-solid fa-delete-left del-comm"></i><br>
+                    <span th:text="${#strings.substring(re.cdate, 0, 10) + '에 작성되었습니다.' }"></span>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input th:type="hidden" th:id="fNo" th:name="fNo">
+    </form>
 
     <form method="post" action="/cli/fmAnswerInsert" th:if="${session.memberId ne null}">
-        <div class="mb-3">
-            <label for="cdetails">내용</label>
+        <div class="mt12">
             <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
                       placeholder="내용을 입력해 주세요"></textarea>
         </div>
-        <div>
-            <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="작성">
+        <div class="button__box">
+            <input type="submit" class="c-button" id="btnSave" value="작성">
         </div>
         <input type="hidden" name="fNo" th:value="${fm.fNo}">
     </form>
 
 
-    <div class="container">
-        <form>
-            <table id="table2" class="table">
-                <thead>
-                <tr>
-                    <th>작성자 + 작성일</th>
-                    <th>내용</th>
-                </tr>
-                </thead>
-                <tbody>
-                <div id="fm" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
-                    <tr>
-                        <td th:text="${re.cwriter}"></td>
 
-                        <td th:text="${re.cdetails}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="${re.cdate}"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" style="float: right" th:if="${session.memberId == re.cwriter}"
-                                    th:onclick="|location.href = '@{/cli/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
-                            </button>
-                        </td>
-                    </tr>
-                </div>
-                </tbody>
-            </table>
-            <input th:type="hidden" th:id="fNo" th:name="fNo">
-        </form>
-    </diV>
+
 
 
     <script>

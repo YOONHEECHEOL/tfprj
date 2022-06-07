@@ -5,57 +5,222 @@
 
 <th:block layout:fragment="content">
 
-  <div id="hmodal" class="hmodal" >
-    <span th:if="${#session.getAttribute('message') != 'n'}" th:text="${#session.getAttribute('message')}">message</span>
-    <!--    <span>asdf</span>-->
-  </div>
-
-  <div class="cover--black vh100">
-    <img th:src="@{/images/cli/main_bg.jpg}" class="vh100" alt="">
-
-    <div class="currentRes">
-      <!-- 예약정보 출력 -->
-      <div class="row">
-        <div class="col-12">
-          <h2 class="h2">예약현황</h2>
-        </div>
-      </div>
-
-      <!-- 버튼 위치 -->
-      <div class="row">
-        <div class="col-6"></div>
-        <div class="col-6">
-          <div class="button__box">
-            <a class="button button-nude button-primary" href="/cli/reservation/room" >예약하기</a>
-          </div>
-        </div>
-      </div>
+    <div id="hmodal" class="hmodal">
+        <span th:if="${#session.getAttribute('message') != 'n'}"
+              th:text="${#session.getAttribute('message')}">message</span>
+        <!--    <span>asdf</span>-->
     </div>
-  </div>
+
+    <div class="cover--black vh100">
+<!--        <img th:src="@{/images/cli/f_logo.svg}" alt="메인 화면 로고" class="main__logo">-->
+        <img th:src="@{/images/cli/main_bg.jpg}" class="vh100" alt="">
+
+        <div class="currentRes">
+            <!-- 예약정보 출력 -->
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="bf-4">예약현황</h2>
+                </div>
+            </div>
+
+            <table class="mt12 home__res">
+                <tr>
+                    <td>
+                        <span class="bf-2">1 구장</span>
+                    </td>
+                    <td>
+                        <span id="room1" class="bf-2">확인 중</span>
+                    </td>
+                    <td>
+                        <span class="bf-2">2 구장</span>
+                    </td>
+                    <td>
+                        <span id="room2" class="bf-2">확인 중</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="bf-2">3 구장</span>
+                    </td>
+                    <td>
+                        <span id="room3" class="bf-2">확인 중</span>
+                    </td>
+                    <td>
+                        <span class="bf-2">4 구장</span>
+                    </td>
+                    <td>
+                        <span id="room4" class="bf-2">확인 중</span>
+                    </td>
+                </tr>
+            </table>
+
+            <script>
+                // reservation 현재 예약 가능한지 확인
+                const chkResNow = () => {
+                    fetch('/cli/chkResNow')
+                    .then(res => res.json())
+                    .then(res => {
+                        let i = 1;
+                        res.forEach(chk => {
+                            let tg = document.querySelector('#room' + i);
+                            if(chk.chk === 'y') {
+                                tg.innerText = '예약 가능';
+                                tg.classList.add('b')
+                            } else {
+                                tg.innerText = '예약 불가';
+                                tg.classList.add('r')
+                            }
+                            i++;
+                        })
+                    })
+                }
+                chkResNow();
+
+                // 현재시간에서 + 1시간 한 시간이 startTime 인 reservation 이 있는지 select
 
 
+            </script>
 
-  <script>
+            <!-- 버튼 위치 -->
+            <div class="row mt20 px-0">
+                <div class="col-12">
+                    <div class="button__box">
+                        <a class="button button-nude button-primary" href="/cli/reservation/room">예약하기</a>
+                    </div>
+                </div>
+            </div>
 
-    // hmodal
-    const hmodal = () => {
-      let h = document.querySelector('#hmodal')
-      let t = document.querySelector('#hmodal > span')
-      if(t.innerHTML != '') {
-        h.classList.add('active')
-        setTimeout(() => {
-          h.classList.remove('active')
-          fetch('http://localhost:18000/cli/resetMessage')
-            .then(res => res.text())
-            .then(res => console.log(res))
-          // h.remove();
-        }, 1500)
-        // session message 삭제
-      }
-    }
-    hmodal();
+            <div class="look_down">
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+        </div>
+    </div>
 
-  </script>
+    <!-- 공지사항 -->
+    <div class="bf-3 p mt20"><i class="fa-solid fa-microphone"></i> 공지사항</div>
+    <table class="table f14 mt12 home-table">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody id="notice-list">
+
+        </tbody>
+    </table>
+
+    <script>
+        const getNoticeList = () => {
+            fetch('/cli/noticeListHome')
+            .then(res => res.json())
+            .then(res => {
+                let tg = document.querySelector('#notice-list')
+                console.log(res);
+                res.forEach(l => {
+                    let inner = document.createElement('tr')
+
+                    // set nno attr
+                    inner.setAttribute('data-nno', l.nno)
+
+                    let title = document.createElement('td');
+                    title.innerText = l.title;
+
+                    let date = document.createElement('td')
+                    date.innerText = l.wdate.substr(0, 10);
+                    inner.append(title, date);
+                    tg.append(inner);
+                })
+            })
+        }
+        getNoticeList();
+    </script>
+
+    <!-- qna -->
+
+    <hr class="m20">
+
+    <!-- 현재 진행 중인 리그 -->
+    <div class="bf-3 p mt20"><i class="fa-solid fa-crown"></i> 리그 리스트</div>
+    <table class="table f14 mt12 home-table">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody id="league-list">
+
+        </tbody>
+    </table>
+
+    <script>
+        const getLeagueList = () => {
+            fetch('/cli/leagueListHome')
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res)
+                    let tg = document.querySelector('#league-list')
+                    res.forEach(l => {
+                        let inner = document.createElement('tr')
+
+                        // set league_id attr
+                        inner.setAttribute('data-lno', l.leagueId);
+
+                        let title = document.createElement('td');
+                        title.innerText = l.leagueName;
+
+                        let date = document.createElement('td')
+                        date.innerText = l.startDate;
+                        inner.append(title, date);
+                        tg.append(inner);
+                    })
+                })
+        }
+        getLeagueList();
+
+
+        // 공지사항, 리그 상세페이지 이동 function
+        const viewDetail = () => {
+            let notice = document.querySelector('#notice-list')
+            notice.addEventListener('click', () => {
+                let tg = event.target.parentNode;
+                console.log(tg.getAttribute('data-nno'))
+                location.href = '/cli/noticeDetail?nNo=' + tg.getAttribute('data-nno')
+            })
+
+            let league = document.querySelector('#league-list')
+            league.addEventListener('click', () => {
+                let tg = event.target.parentNode;
+                console.log(tg.getAttribute('data-lno'))
+                location.href = '/cli/leagueDetail?lno=' + tg.getAttribute('data-lno')
+            })
+        }
+        viewDetail();
+    </script>
+
+
+    <script>
+
+        // hmodal
+        const hmodal = () => {
+            let h = document.querySelector('#hmodal')
+            let t = document.querySelector('#hmodal > span')
+            if (t.innerHTML != '') {
+                h.classList.add('active')
+                setTimeout(() => {
+                    h.classList.remove('active')
+                    fetch('http://localhost:18000/cli/resetMessage')
+                        .then(res => res.text())
+                        .then(res => console.log(res))
+                    // h.remove();
+                }, 1500)
+                // session message 삭제
+            }
+        }
+        hmodal();
+
+    </script>
 
 </th:block>
 

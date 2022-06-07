@@ -24,11 +24,12 @@ public class CliReservationServiceImpl implements CliReservationService {
     }
 
     @Override
-    public Reservation findMemberReservation(Reservation rsv, HttpServletRequest request) {
+    public List<Reservation> findMemberReservation(Reservation rsv, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        rsv.setMemberId((String) (session.getAttribute("memberId")));
-        rsv = reservationMapper.findMemberReservation(rsv);
-        return rsv;
+
+        String memberId = session.getAttribute("memberId").toString();
+
+        return reservationMapper.findMemberReservation(memberId);
     }
 
     @Override

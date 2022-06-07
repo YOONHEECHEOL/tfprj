@@ -20,7 +20,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         HttpSession httpSession = request.getSession();
         MemberVO vo = (MemberVO)authentication.getPrincipal();
-        vo=  memberMapper.selectMember(vo);
+       // vo=  memberMapper.selectMember(vo);
         httpSession.setAttribute("member", vo);
         httpSession.setAttribute("memberId", vo.getMemberId());
         httpSession.setAttribute("log", "y");

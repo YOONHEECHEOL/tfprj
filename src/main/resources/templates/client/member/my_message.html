@@ -5,6 +5,13 @@
 
 <th:block layout:fragment="content">
 
+    <t-h1 ko="마이페이지" en="MY-MESSAGE"></t-h1>
+
+    <t-h2 ko="수신한 메세지"></t-h2>
+
+    <div th:if="${msg.size() eq 0}" class="message-success mt20">
+        <span>수신된 메세지가 없습니다!</span>
+    </div>
 
     <div th:each="m:${msg}">
 

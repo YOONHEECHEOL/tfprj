@@ -12,15 +12,13 @@
     <input type="hidden" th:value="${reservation.getResId()}" id="currentResId">
     <input type="hidden" th:value="${#session.getAttribute('memberId')}" id="currentMemberId">
 
-    <div class="row align-items-center">
-        <div class="col-8">
-      <span id="dateVal" class="bf-3" th:text="${#dates.format(reservation.startTime, 'yyyy-MM-dd')}"
-            onchange="reservedTimeCheck()" readonly></span>
-        </div>
-        <div th:class="col-4">
-            <!--            <input th:type="button" class="c-button" id="rsvBtn" th:value="날짜변경">-->
-        </div>
-    </div>
+    <!--    <div class="row align-items-center px-0">-->
+    <!--        <div class="col-12">-->
+    <!--            <span id="dateVal" class="bf-3" th:text="${#dates.format(reservation.startTime, 'yyyy-MM-dd')}" onchange="reservedTimeCheck()" readonly></span>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!-- 날짜 변경 기능 현재불가 -->
+    <!--    <input th:type="button" class="c-button" id="rsvBtn" th:value="날짜변경">-->
 
     <!--    <div class="row steps">-->
     <!--        <div th:id="1" class="col-4 active"><span>step01</span><br>팀선택</div>-->
@@ -29,10 +27,21 @@
     <!--    </div>-->
 
     <div class="row steps">
-        <div class="col-4 tablinks active" data-no="1" onclick="openCity(event, 'team')"><span>step01</span><br>팀선택
+        <div class="col-4 tablinks active" data-no="1" onclick="openCity(event, 'team')">
+            <span>step01</span>
+            <b>팀선택</b>
+            <i class="fa-solid fa-baseball-bat-ball"></i>
         </div>
-        <div class="col-4 tablinks" data-no="2" onclick="openCity(event, 'member')"><span>step02</span><br>멤버입력</div>
-        <div class="col-4 tablinks" data-no="3" onclick="openCity(event, 'inning')"><span>step03</span><br>이닝</div>
+        <div class="col-4 tablinks" data-no="2" onclick="openCity(event, 'member')">
+            <span>step02</span>
+            <b>멤버입력</b>
+            <i class="fa-solid fa-people-group"></i>
+        </div>
+        <div class="col-4 tablinks" data-no="3" onclick="openCity(event, 'inning')">
+            <span>step03</span>
+            <b>이닝</b>
+            <i class="fa-solid fa-baseball"></i>
+        </div>
     </div>
 
     <!-- validate box -->
@@ -45,44 +54,63 @@
 
     <div id="team" class="tabcontent" style="display: block">
         <!-- team -->
-        <div class="row align-items-center mt20">
-            <div class="col">
-                <span class="bf-3">시간</span>
+        <div class="g__box">
+            <div class="row align-items-center">
+                <div class="col">
+                    <span class="bf-2">날짜</span>
+                </div>
+                <div class="col">
+            <span class="bf-2"
+                  th:text="|${#dates.format(reservation.startTime, 'yy-MM-dd')}|"></span>
+                </div>
             </div>
-            <div class="col">
-        <span class="bf-3"
-              th:text="|${#dates.format(reservation.startTime, 'HH:mm')} - ${#dates.format(reservation.endTime, 'HH:mm')}|"></span>
-            </div>
-        </div>
 
-        <div class="row align-items-center mt20">
-            <div class="col">
-                <span class="bf-3">구장</span>
+            <div class="row align-items-center">
+                <div class="col">
+                    <span class="bf-2">시간</span>
+                </div>
+                <div class="col">
+            <span class="bf-2"
+                  th:text="|${#dates.format(reservation.startTime, 'HH:mm')} - ${#dates.format(reservation.endTime, 'HH:mm')}|"></span>
+                </div>
             </div>
-            <div class="col">
-                <span class="bf-3" id="roomNo" th:data-room="${reservation.room}"
-                      th:text="|${reservation.room} 구장|"></span>
+
+            <div class="row align-items-center">
+                <div class="col">
+                    <span class="bf-2">구장</span>
+                </div>
+                <div class="col">
+                    <span class="bf-2" id="roomNo" th:data-room="${reservation.room}"
+                          th:text="|${reservation.room} 구장|"></span>
+                </div>
             </div>
         </div>
 
         <hr>
 
-        <div class="row" id="selectTeam">
+        <div class="row mt20" id="selectTeam">
             <div class="col-12">
                 <span class="bf-4">팀</span>
             </div>
 
             <div class="col-6">
-                <span class="bf-2">홈팀</span>
-                <button class="c-button" id="homeTeam" onclick="openTeamModal()">팀 선택</button>
+                <div class="bf-2 text-center">홈팀</div>
+                <button class="c-button bb" id="homeTeam" onclick="openTeamModal()">팀 선택</button>
             </div>
             <div class="col-6">
-                <span class="bf-2">원정팀</span>
-                <button class="c-button" id="awayTeam" onclick="openTeamModal()">팀 선택</button>
+                <div class="bf-2 text-center">원정팀</div>
+                <button class="c-button bb" id="awayTeam" onclick="openTeamModal()">팀 선택</button>
             </div>
         </div>
 
+        <hr class="mt20">
+
+        <div class="message-success">
+            <span>📢 [팀 선택] 버튼을 눌러 팀을 선택해주세요!</span>
+        </div>
+
         <div id="team-modal" class="modal">
+            <div class="bf-3 text-center mb20">프로팀 목록</div>
             <ul id="team-list">
                 <li data-code="101">삼성라이온즈</li>
                 <li data-code="102">KIA타이거즈</li>
@@ -94,6 +122,13 @@
                 <li data-code="108">NC다이노스</li>
                 <li data-code="109">KTWIZ</li>
             </ul>
+            <div class="message-success mt20">
+                원하시는 프로팀을 선택해주세요!<br>
+                <span>📢 프로팀을 꼭 입력해주셔야 합니다.</span>
+            </div>
+
+            <hr>
+
             <div class="button__box mt20">
                 <button class="button button-common" id="cancel-team-modal" onclick="cancelBtnFnc()">취소하기</button>
                 <button class="button button-primary" id="select-team" onclick="cancelBtnFnc()">선택하기</button>
@@ -180,7 +215,7 @@
                 <span class="bf-4">멤버</span>
             </div>
             <div class="col-6">
-                <span class="bf-2">홈팀</span>
+                <div class="bf-2 text-center">홈팀</div>
                 <div>
                     <select id="homeNum" class="form-control-lg" onchange="homeMemberNum()">
                         <option>멤버수</option>
@@ -197,7 +232,7 @@
                 </div>
             </div>
             <div class="col-6 ">
-                <span class="bf-2">원정팀</span>
+                <div class="bf-2 text-center">원정팀</div>
                 <div>
                     <select id="awayNum" class="form-control-lg" onchange="awayMemberNum()">
                         <option>멤버수</option>
@@ -214,6 +249,12 @@
                 </div>
             </div>
         </div>
+
+        <hr class="mt20">
+
+        <div class="message-success mt20">
+            <span>📢 경기에 참가할 인원 수 만큼 입력 후<br>기록 입력을 원하시는 분은 아이디를 입력해주세요!</span>
+        </div>
         <!-- //member -->
     </div>
 
@@ -225,18 +266,22 @@
             <button class="c-button" data-val="6">6 이닝</button>
             <button class="c-button" data-val="9">9 이닝</button>
         </div>
+
+        <hr class="mt20">
+
+        <div class="message-success mt20">
+            <span>📢 예약하시는 경기의<br>총 이닝 수를 선택해주세요!</span>
+        </div>
         <!-- //inning -->
     </div>
 
     <!-- buttons -->
     <div class="res-button-box">
-        <div class="row">
-            <div class="button__box col-12">
-                <button class="button button-common" id="cancel">취소</button>
-                <button class="button button-common" id="prevBtn" onclick="prevFnc()">이전</button>
-                <button class="button button-primary" id="nextBtn" onclick="nextFnc()">다음</button>
-                <button class="c-button button-danger" onclick="finalDataProcessing()">제출 테스트</button>
-            </div>
+        <div class="button__box col-12">
+            <button class="button button-common" id="cancel">취소</button>
+            <button class="button button-primary" id="prevBtn" onclick="prevFnc()">이전</button>
+            <button class="button button-primary" id="nextBtn" onclick="nextFnc()">다음</button>
+            <button class="button button-danger dp-none" id="submitBtn" data-chk="n" onclick="finalDataProcessing()">제출</button>
         </div>
     </div>
 
@@ -251,6 +296,9 @@
                     let val = event.target.getAttribute('data-val');
                     event.target.classList.add('active');
                     chkProgress(2);
+
+                    // validate
+                    validateFrm()
                 }
             })
         }
@@ -272,13 +320,17 @@
                 // tablinks active 시키기
                 removeTabAttr()
 
+                let submitBtn = document.querySelector('#submitBtn')
+                let submitBtnChk = submitBtn.getAttribute('data-chk')
+
+                submitBtn.classList.add('dp-none')
+                nextBtn.classList.remove('dp-none')
+
                 let tablinks = document.getElementsByClassName("tablinks");
                 tablinks[tabChk].className += " active";
 
                 let tabcontent = document.getElementsByClassName("tabcontent");
                 tabcontent[tabChk].style.display = "block";
-            } else {
-                alert('이전 없음')
             }
 
         }
@@ -298,8 +350,6 @@
 
                 let tabcontent = document.getElementsByClassName("tabcontent");
                 tabcontent[tabChk].style.display = "block";
-            } else {
-                alert('다음 없음')
             }
         }
 
@@ -333,32 +383,41 @@
     <div th:class="modal" id="search-modal">
         <div th:class="modal-content">
             <t-h2 ko="회원검색"></t-h2>
-            <input type="text" class="form-control" id="searchVal"
+            <input type="text" class="form-control-lg" id="searchVal"
                    name="searchVal" placeholder="Search"
                    aria-label="Search">
-            <div>
-                <table>
-                    <tbody th:id="memberList">
 
-                    </tbody>
-                </table>
-            </div>
-            <button class="btn btn-outline-secondary" id="searchBtn"
-                    type="button">Search
+            <button class="c-button mt20" id="searchBtn"
+                    type="button"><i class="fa-solid fa-magnifying-glass"></i> Search
             </button>
+
+            <div class="bf-3 mt20">검색결과</div>
+            <table class="table a-table">
+                <tbody th:id="memberList" >
+
+                </tbody>
+            </table>
+
+            <hr class="mt20">
+
             <input type="hidden" id="btnId">
             <input type="hidden" id="difficultyVal">
             <!-- 여기서 -->
 
-            <!-- 난이도 입력 -->
-            <ul id="diff-list">
-                <li data-code="201">아마추어</li>
-                <li data-code="202">세미프로</li>
-                <li data-code="203">프로</li>
-            </ul>
+            <div class="dp-none" id="diff_box">
+                <div class="bf-3 mt20">난이도 입력</div>
+                <!-- 난이도 입력 -->
+                <div id="diff-list" class="button__box">
+                    <button class="c-button" data-code="201">아마추어</button>
+                    <button class="c-button" data-code="202">세미프로</button>
+                    <button class="c-button" data-code="203">프로</button>
+                </div>
+            </div>
 
 
-            <div class="button__box">
+            <hr class="mt20">
+
+            <div class="button__box mt20">
                 <button class="button button-common" id="cancelBtn">취소하기</button>
                 <button class="button button-primary" id="regMemberBtn">입력하기</button>
             </div>
@@ -371,6 +430,18 @@
     <script>
         let memberInsertList = [];
         let bbbb = 0;
+
+        // 제출하기 버튼
+        const validateFrm = () => {
+            let submitBtn = document.querySelector('#submitBtn')
+            let submitBtnChk = submitBtn.getAttribute('data-chk')
+            let nextBtn = document.querySelector('#nextBtn')
+            let inningsVal = document.querySelector('#inningValue > .active').getAttribute('data-val')
+            if (inningsVal != null) {
+                nextBtn.classList.add('dp-none')
+                submitBtn.classList.remove('dp-none')
+            }
+        }
 
         // insert game
         const insertGame = () => {
@@ -429,8 +500,8 @@
                         headers: {'Content-type': 'application/json'},
                         body: JSON.stringify(memberGameInfo)
                     })
-                    .then(res => res.text())
-                    .then(res => console.log(res))
+                        .then(res => res.text())
+                        .then(res => console.log(res))
 
                 }
                 res('member-game insert 처리됨.')
@@ -457,8 +528,16 @@
 
 
         document.querySelector('#diff-list').addEventListener('click', () => {
+            // attr remove
+            let tg = document.querySelector('#diff-list').children;
+            for (i = 0; i < tg.length; i++) {
+                tg[i].className = tg[i].className.replace(" active", "");
+            }
+
+
             let txtVal = event.target.innerText;
             let codeVal = event.target.getAttribute('data-code');
+            event.target.classList.add('active')
 
             let tt = document.querySelector('#difficultyVal');
             tt.setAttribute('value', txtVal);
@@ -553,6 +632,9 @@
                 for (list of data) {
                     $("#memberList").append(makeTr(list));
                 }
+
+                // 난이도 버튼 생성
+                $('#diff_box').attr('class', ' ')
             })
         })
 

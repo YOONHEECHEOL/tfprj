@@ -48,6 +48,9 @@
         let chkChk = 0;
         let count = 0;
 
+
+        // 1. 체크리스트에 체크가 안된 채 날짜가 지나면
+        // messageTransYn 값이 1로 바뀜.
         function message(){
             var today = new Date();
 
@@ -77,6 +80,7 @@
         }
 
 
+        //2. 삭제 버튼을 눌렀을 때 첫번째 td태그에 class가 적용되어있지 않으면 전부다 삭제됨.
         function deleteAllBtn(response) {
             $("body").on("click", "#deleteAllBtn", function () {
                 for (let i = 0; i < response.length; i++) {
@@ -108,6 +112,7 @@
         }
 
 
+        // 3.해결 버튼을 눌렀을 때, 체크리스트에 전부 다 체크되어 있을때 class가 적용됨.
         function completeAllBtn(response) {
             $("body").on("click", "#completeAllBtn", function () {
 
@@ -155,6 +160,7 @@
         }
 
 
+        //4. 전체선택 버튼을 눌렀을때 전체 체크박스가 체크됨.
         function allSelect(response) {
             let jsonData = JSON.stringify(response);
 
@@ -212,12 +218,14 @@
             })
         }
 
+        //5. 체크리스트 번호 생성
         function makeCheckListNum() {
             count++
             return count;
         }
 
 
+        //6. tr td태그를 생성하기 위한 function
         function makeTr(response) {
             let checked = '';
             let textDeco = '';
@@ -241,6 +249,8 @@
             $('tbody').append(content)
         }
 
+
+        //7.
         function ajaxProcessCompleteUpdate(chkNo, processCompleteYn) {
             let processCompleteYnNum = '';
             if (processCompleteYn == true) {
@@ -261,6 +271,7 @@
             })
         }
 
+        //8. 해결 버튼을 눌렀을때 예외사항을 처리했을 경우에 class가 추가됨.(admin 계정으로만 가능)
         function processComplete() {
             $('tbody').on('click', '.processComplete', function () {
                 let chkNo = $(this).parents('td').parents('tr').find("input").attr('id');
@@ -311,7 +322,7 @@
             })
         }
 
-        //해결 버튼을 눌렀을때 해당 Class를 가지고 있는지 true, false로 판단 후 ajax function으로 전달
+        //9. 해결 버튼을 눌렀을때 해당 Class를 가지고 있는지 true, false로 판단 후 ajax function으로 전달
         function processCompleteCheck(yn, chkNo) {
             let processYn = yn.parents('td').parents('tr').find("td:eq(0)").hasClass('processCompleteYn');
             console.log(processYn);
@@ -344,7 +355,7 @@
         }
 
 
-
+        //10. todolist를 만드는 function
         function createToDo() {
             console.log($('#toDoInput').val());
 
@@ -542,6 +553,8 @@
 
         }
 
+
+        //댓글 삭제, delete가 아니라 update로 comment의 값을 null로 만들어줌.
         function ajaxCommentDelete(chkNo) {
 
             if('[[${session.positionCd}]]' == 1){
@@ -583,6 +596,7 @@
             reader.readAsDataURL(event.target.files[0]);
         }
 
+        // 체크리스트에 체크하는 function, 사진이 등록되어있지 않으면 체크리스트에 체크할 수 없음.
         function checkContent() {
             let chkNo = '';
             let isChk = '';

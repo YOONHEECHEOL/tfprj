@@ -5,6 +5,11 @@
 <th:block layout:fragment="content">
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <t-h1 ko="마이페이지" en="MY-SCORE"></t-h1>
+
+    <t-h2 ko="나의 스코어 조회"></t-h2>
+
     <div th:if="${score.size eq 0}">
         <span>기록이 없습니다.</span>
     </div>
