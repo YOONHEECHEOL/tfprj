@@ -27,7 +27,6 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers( "/adm/login","/adm/loginview","/resources/**","/css/**","/ckeditor/**","/font/**","/images/**","/js/**","/vendor/**").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
                 // USER, ADMIN 접근 허용
-                //.antMatchers("/adm/**","/admin/**").hasRole("ADMIN")
                 .and()
                 .antMatcher("/adm/**")
                 .authorizeRequests().anyRequest().authenticated()
@@ -38,6 +37,11 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/adm/index")
                 .successHandler(admLoginSuccessHandler())
                 .failureUrl("/adm/loginFail") // 인증에 실패했을 때 보여주는 화면 url, 로그인 form으로 파라미터값 error=true로 보낸다.
+                .and()
+                .logout()
+                .logoutUrl("/adm/logout")
+                .logoutSuccessHandler(admLogoutSuccessHandler())
+                .invalidateHttpSession(true)
                 .and()
                 .csrf().disable();		//로그인 창
     }
@@ -54,5 +58,10 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AdmCustomLoginSuccessHandler admLoginSuccessHandler(){
         return new AdmCustomLoginSuccessHandler();
+    }
+
+    @Bean
+    public AdmCustomLogoutSuccessHandler admLogoutSuccessHandler(){
+        return new AdmCustomLogoutSuccessHandler();
     }
 }

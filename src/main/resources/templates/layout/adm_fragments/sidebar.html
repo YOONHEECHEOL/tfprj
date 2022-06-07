@@ -127,6 +127,12 @@
       message
     </div>
 
+      <!-- Sidebar Logout-->
+      <div class="button__box mt20">
+          <a th:if="${#session.getAttribute('log') == 'y'}"
+             href="/adm/logout" class="button button-danger">logout</a>
+      </div>
+
   </ul>
   <!-- End of Sidebar -->
 </th:block>
