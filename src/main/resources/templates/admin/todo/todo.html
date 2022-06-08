@@ -8,23 +8,28 @@
 </head>
 <body>
 <th:block layout:fragment="content">
-    <style>
-        .processCompleteYn {
-            background-color: #25f54e;
-            width: 30px;
-            height: 30px;
-            border-radius: 50px;
-        }
-    </style>
+
+
+    <t-h1 ko="오늘 할일" en="TODO-LIST"></t-h1>
+
     <div class="container-fluid">
         <div class="row" id="tg">
-            <div class="col-6">
+            <div class="col a__box">
+                <t-h2 ko="등록된 할일 리스트"></t-h2>
                 <div th:if="${session.positionCd == 1}">
-                    <button class="btn btn-primary" id="selectAllBtn">전체선택</button>
-                    <button class="btn btn-primary" id="completeAllBtn">해결</button>
-                    <button class="btn btn-primary" id="deleteAllBtn">삭제</button>
+                    <button class="c-button" id="selectAllBtn">전체선택</button>
+                    <button class="c-button" id="completeAllBtn">해결</button>
+                    <button class="c-button" id="deleteAllBtn">삭제</button>
                 </div>
-                <table>
+                <table class="table f16">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="*">
+                        <col width="15%">
+                        <col width="15%">
+                    </colgroup>
                     <thead>
                     <tr>
                         <th>해결여부</th>
@@ -242,8 +247,8 @@
             content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList">` + "</td>"
             content += "<td>" + makeCheckListNum() + "</td>"
             content += `<td style=${textDeco}; class="${response.chkPicFileName}">` + response.chkContents + "</td>"
-            content += "<td><button type='submit' class='processComplete'>해결</button></td>"
-            content += `<td><button type='submit' onclick='openPannel()' chk-no='${response.chkNo}'>상세정보</button></td>`
+            content += "<td><button type='submit' class='processComplete c-button'>해결</button></td>"
+            content += `<td><button class="c-button" type='submit' onclick='openPannel()' chk-no='${response.chkNo}'>상세정보</button></td>`
             content += "</tr>"
 
             $('tbody').append(content)
@@ -345,10 +350,12 @@
                 message()
             })
             let todoMake = "";
-            todoMake = "<div>"
-            todoMake += "<input id='toDoInput' type='text' width='1000px'>"
-            todoMake += "<button onclick='createToDo()'>TODO 추가</button>"
-            todoMake += "</div>"
+            todoMake = `
+                <div class="row justify-content-between">
+                  <input id='toDoInput' class="col-6 form-control"  type='text' placeholder="할 일을 입력해주세요!">
+                  <button class='c-button col-4' onclick='createToDo()'>TODO 추가</button>
+                </div>
+            `;
 
 
             $('#toDoListCreate').prepend(todoMake);
@@ -402,8 +409,7 @@
 
         function makePannel(chkCnt) {
             let pannel = document.createElement('div')
-            pannel.setAttribute('class', 'col-6')
-            pannel.setAttribute('style', 'background: lightgray;')
+            pannel.setAttribute('class', 'col-6 a__box')
 
             $.ajax({
                 url: "selectCheckListInfo",
@@ -416,35 +422,38 @@
 
                 pannel.innerHTML = `
                     <form method="post" action="/adm/todoFileUpload" enctype="multipart/form-data">
-                        <h3>title</h3>
-                        <h1>${response.chkContents}</h1>
+                        <div class="bf-4">${response.chkContents}</div>
                         <input type="hidden" value="${response.chkNo}" name="chkNo">
-                        <input type="file" name="file" onchange="setThumbnail(event);"><br><br>
-                        <div id="image_container"></div>
-                        <div id="image"><img id="realImage"  src="/images/adm/${response.chkPicFileName}" style="width:250px; height:300px;"/></div>
-                        <button type="submit" class="btn button-primary" style="float: right;">업로드</button>
+                        <input class="btn btn-primary" type="file" name="file" onchange="setThumbnail(event);">
+                        <div id="image_container" class="mt12"></div>
+                        <div id="image" class="mt12"><img id="realImage"  src="/images/adm/${response.chkPicFileName}" style="width:250px; height:300px;"/></div>
+                        <button type="submit" class="c-button">업로드</button>
                     </form>
-                    <br><br><br>
 
-                    <h2><b>Comment</b></h2>
+                    <hr class="mt20">
+
+                    <div class="mt20 bf-3">Comment</div>
+
                     <div id="allComment">
                         <div>
                             댓글 <input type="text" id="comment">
                         </div>
-                        <button type="submit" id="commentBtn" onclick="ajaxComment(${response.chkNo})">댓글달기</button>
+                        <button type="submit"  class="c-button" id="commentBtn" onclick="ajaxComment(${response.chkNo})">댓글달기</button>
                     </div>
 
+                    <hr class="mt20">
+
                     <!--  댓글 보이는 영역 -->
-                    <div id="commentArea" style="display: none">
-                        <h3 id="commentPlace"></h3>
-                        <button onclick="ajaxCommentFix(${response.chkNo}); ">수정</button>
-                        <button onclick="ajaxCommentDelete(${response.chkNo})">삭제</button>
+                    <h3 id="commentPlace" class="mt20 bf-3"></h3>
+                    <div id="commentArea" class="button__box" style="display: none">
+                        <button  class="c-button" onclick="ajaxCommentFix(${response.chkNo}); ">수정</button>
+                        <button  class="c-button" onclick="ajaxCommentDelete(${response.chkNo})">삭제</button>
                     </div>
 
                     <!--  댓글 수정 영역 -->
                     <div id="commentUpdateArea" style="display: none">
                         <input id="updateComment" type="text">
-                        <button id="updateCommentBtn">입력</button>
+                        <button  class="c-button" id="updateCommentBtn">입력</button>
                     </div>
                 `
                 ThumbnailNull();
@@ -496,7 +505,7 @@
                         console.log(response);
                         $('#commentPlace').html(response.commentContent);
                         $('#allComment').hide();
-                        $('#commentArea').css('display', 'block');
+                        $('#commentArea').css('display', 'flex');
                     })
                 }
             }else{
@@ -510,7 +519,7 @@
         //상세조회 페이지에서 댓글을 달았으면, 댓글 창은 사라지고 댓글만 보이기.
         function readComment(comment) {
             if (comment != null) {
-                $('#commentArea').css('display', 'block');
+                $('#commentArea').css('display', 'flex');
                 $('#commentPlace').html(comment);
                 $('#allComment').hide();
             }
@@ -523,7 +532,7 @@
             if('[[${session.positionCd}]]' == 1){
                 $('#comment').val("");
                 if ($('#commentUpdateArea').css("display") == "none") {
-                    $('#commentUpdateArea').css('display', 'block');
+                    $('#commentUpdateArea').css('display', 'flex');
                 } else {
                     $('#commentUpdateArea').css('display', 'none');
                 }
@@ -541,7 +550,7 @@
                         }).done(function (response) {
                             $('#updateComment').val("");
                             console.log(response);
-                            $('#commentArea').css('display', 'block');
+                            $('#commentArea').css('display', 'flex');
                             $('#commentPlace').html(response.commentContent);
                         })
                     }
@@ -572,7 +581,7 @@
                         console.log(response);
                         $('#commentArea').hide();
                         //$('#commentUpdateArea').hide();
-                        $('#allComment').css('display', 'block');
+                        $('#allComment').css('display', 'flex');
                         $('#commentUpdateArea').hide();
                     })
                     // 확인(예) 버튼 클릭 시 이벤트

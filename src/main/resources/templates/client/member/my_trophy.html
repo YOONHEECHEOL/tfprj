@@ -6,10 +6,167 @@
 <th:block layout:fragment="content">
 
 
-    <t-h1 ko="마이페이지" en="MY-TROPHY"></t-h1>
+  <t-h1 ko="마이페이지" en="MY-TROPHY"></t-h1>
 
-    <t-h2 ko="트로피 조회"><t-h2>
+  <t-h2 ko="트로피 조회"></t-h2>
 
 
-</th:block>>
+  <div class="row">
+    <div class="col-12">
+
+      <div class="message-caution">
+        <span>📢 해당 서비스는 메타마스크를 사용합니다.<br> 미설치 시 설치해주시기 바랍니다. </span>
+      </div>
+
+      <div class="button__box">
+        <button onclick="loginWithEth()" class="c-button" id="linkButton">
+          <i class="fa-solid fa-link"></i>디지털 지갑 연결
+        </button>
+        <button id="logoutButton" onclick="logout()" class="c-button">
+          <i class="fa-solid fa-link-slash"></i>연결 해제
+        </button>
+      </div>
+
+      <!-- 로그인된 아이디 -->
+      <p id="userAddress" class="bf-3"></p>
+
+      <div class="button__box mt20 dp-none" id="getOpenSeaBtn">
+        <button onclick="getOpenseaItems()" class="c-button bb">트로피 조회</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div>
+    <div id='openseaItems' class="openseaItems">
+      <!-- Opensea items go here -->
+    </div>
+  </div>
+
+  <script>
+    window.userAddress = null;
+    window.onload = async () => {
+      // Init Web3 connected to ETH network
+      if (!window.ethereum) {
+        alert("No ETH brower extension detected.");
+      }
+
+      // Load in Localstore key
+      window.userAddress = window.localStorage.getItem("userAddress");
+      showAddress();
+    };
+
+    // Use this function to turn a 42 character ETH address
+    // into an address like 0x345...12345
+    function truncateAddress(address) {
+      if (!address) {
+        return "";
+      }
+      return `${address.substr(0, 5)}...${address.substr(
+        address.length - 5,
+        address.length
+      )}`;
+    }
+
+    // Display or remove the users know address on the frontend
+    function showAddress() {
+      // 연결되어 있음
+      if (!window.userAddress) {
+        document.getElementById("userAddress").innerText = "";
+        document.getElementById("logoutButton").classList.add("dp-none");
+        document.getElementById("linkButton").classList.remove("dp-none");
+        document.getElementById("getOpenSeaBtn").classList.add('dp-none');
+        return false;
+      }
+
+      document.getElementById(
+        "userAddress"
+      ).innerHTML = `<div class="text-center bf-2">연결된 지갑 - ${truncateAddress(window.userAddress)}</div>`;
+      document.getElementById("logoutButton").classList.remove("dp-none");
+      document.getElementById("linkButton").classList.add("dp-none");
+      document.getElementById("getOpenSeaBtn").classList.remove('dp-none');
+    }
+
+    // remove stored user address and reset frontend
+    function logout() {
+      window.userAddress = null;
+      window.localStorage.removeItem("userAddress");
+      showAddress();
+    }
+
+    // Login with Web3 via Metamasks window.ethereum library
+    async function loginWithEth() {
+      if (window.ethereum) {
+        try {
+          // We use this since ethereum.enable() is deprecated. This method is not
+          // available in Web3JS - so we call it directly from metamasks' library
+          const selectedAccount = await window.ethereum
+            .request({
+              method: "eth_requestAccounts",
+            })
+            .then((accounts) => accounts[0])
+            .catch(() => {
+              throw Error("No account selected!");
+            });
+          window.userAddress = selectedAccount;
+          window.localStorage.setItem("userAddress", selectedAccount);
+          showAddress();
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert("Etherium 지갑이 없습니다!");
+      }
+    }
+
+    async function getOpenseaItems() {
+      if (!window.userAddress) {
+        return
+      }
+      const osContainer = document.getElementById('openseaItems')
+
+      // https://testnets-api.opensea.io/api/v1/assets?owner=0x12B3829bF22f41f13c91acECA4395F9D790bFdeE&order_direction=desc&offset=0&limit=20
+
+      // https://testnets-api.opensea.io/api/v1/assets?owner=${window.userAddress}&order_direction=desc&offset=0&limit=20
+      const items = await fetch(`https://api.opensea.io/api/v1/assets?owner=${window.userAddress}&order_direction=desc&limit=20&include_orders=false`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          return res.assets
+        })
+        .catch((e) => {
+          console.error(e)
+          console.error('Could not talk to OpenSea')
+          return null
+        })
+
+      if (items.length === 0) {
+        return
+      }
+
+      items.forEach((nft) => {
+        const {name, image_url, description, permalink} = nft
+
+        const newElement = document.createElement('div')
+        newElement.innerHTML = `
+                      <!-- Opensea listing item-->
+                      <a href='${permalink}' target="_blank">
+                          <img
+                            src='${image_url}'
+                            class='w-full rounded-lg' />
+                          <div class='mt12'>
+                            <div class='bf-2'>${name}</div>
+                            <div class='bf-2'>${description ?? ''}</div>
+                          </div>
+                      </a>
+                      <!-- End Opensea listing item-->
+                    `
+
+        osContainer.appendChild(newElement)
+      })
+    }
+  </script>
+
+</th:block>
+>
 </html>
