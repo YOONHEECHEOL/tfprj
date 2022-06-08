@@ -73,9 +73,14 @@ public class CliReservationController {
   }
 
   // 예약 결제 완료 페이지로 이동
-  @RequestMapping("/cli/resPayDone")
-  public String resPayDone(PaymentVO vo) {
-
+  @RequestMapping(value = "/cli/resPayDone", method = RequestMethod.GET)
+  public String resPayDone(String paymentAmount, String prodInfoCd, String memberId, String paymentMethodCd, String paymentStatusCd) {
+    PaymentVO vo = new PaymentVO();
+    vo.setPaymentStatusCd(paymentStatusCd);
+    vo.setPaymentAmount(Integer.parseInt(paymentAmount));
+    vo.setProdInfoCd(prodInfoCd);
+    vo.setMemberId(memberId);
+    vo.setPaymentMethodCd(paymentMethodCd);
     System.out.println(">>>param = " + vo);
 
     // pay table 에 해당 건 입력 후
@@ -90,6 +95,13 @@ public class CliReservationController {
 
     return "client/reservation/pay_done";
   }
+
+  @RequestMapping(value = "/cli/resPayDonePage")
+  public String resPayDone() {
+
+    return "client/reservation/pay_done";
+  }
+
 
   // 예약 결제 완료 페이지로 이동
   @RequestMapping("/cli/resPayCancel")
