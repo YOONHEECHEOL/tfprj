@@ -64,7 +64,7 @@
                     type="button">Search
             </button>
             <!-- 여기서 -->
-            <div class="button__box mt20">
+            <div class="button__box">
                 <button class="button button-common" id="cancelBtn">취소하기</button>
                 <button class="button button-primary" id="regMemberBtn">등록하기</button>
             </div>
@@ -139,7 +139,6 @@
                 url: "/cli/searchMember",
                 data: {memberId: $("#searchVal").val()}
             }).done(function (data) {
-                console.log(data)
                 $("#memberList").html('');
                 for (list of data) {
                     $("#memberList").append(makeTr(list));
