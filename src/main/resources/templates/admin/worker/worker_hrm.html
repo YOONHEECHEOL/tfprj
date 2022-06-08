@@ -26,7 +26,7 @@
 
             // 현재 알바 중인 상태의 근무자 리스트를 받아옴.
             function workerListStaffCd0() {
-                $.ajax("worker_hrm_list")
+                $.ajax('workerHrmList')
                     .done(function (response) {
                         console.log(response);
                         let numberFormat = new Intl.NumberFormat('en-US')

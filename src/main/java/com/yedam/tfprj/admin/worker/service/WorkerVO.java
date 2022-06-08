@@ -48,7 +48,7 @@ public class WorkerVO implements UserDetails {
     private String fileName;
     private String filePath;
     private String originalFileName;
-    private String workerAuth;
+    private String workerAuth = "ROLE_ADMIN";
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(this.workerAuth));

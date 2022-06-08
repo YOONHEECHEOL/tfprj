@@ -13,8 +13,10 @@ public class AdmWorkerRestController {
     @Autowired
     WorkerService workerServiceImpl;
 
-    @GetMapping("/adm/worker_hrm_list")
+    @RequestMapping("/adm/workerHrmList")
     public List<WorkerVO> workerHrmList() {
+        System.out.println("안나오십니까");
+        System.out.println("안나오십니까" + workerServiceImpl.getWorkerList());
         return workerServiceImpl.getWorkerList();
     }
 
