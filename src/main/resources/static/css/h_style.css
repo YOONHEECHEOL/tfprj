@@ -20,7 +20,7 @@
 
 html, body {
     font-family: 'Noto Sans kr';
-    font-size: 16px !important;
+    font-size: 10px !important;
     color: #222;
 }
 
@@ -768,16 +768,16 @@ hr {
     100% { transform: translate(34%); }
 }
 
-/* font size */
-/*.f20 * {*/
-/*    font-size: 2rem;*/
-/*}*/
-/*.f16 * {*/
-/*    font-size: 1.6rem;*/
-/*}*/
-/*.f14 * {*/
-/*    font-size: 1.4rem;*/
-/*}*/
+ /*font size */
+.f20 * {
+    font-size: 2rem;
+}
+.f16 * {
+    font-size: 1.6rem;
+}
+.f14 * {
+    font-size: 1.4rem;
+}
 
 /* font style */
 .bf-5 {
