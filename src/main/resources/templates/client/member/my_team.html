@@ -7,13 +7,8 @@
 
     <t-h1 ko="마이페이지" en="MY-TEAM"></t-h1>
 
-    <t-h2 ko="팀 조회"><t-h2>
+    <t-h2 ko="팀 조회"></t-h2>
 
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h1>팀</h1>
-        </div>
-    </div>
     <div th:class="row">
         <div th:class="col-auto">
             <div th:if="${team eq null}">
@@ -39,7 +34,6 @@
                         <input th:type="button" id="memberBtn" th:if="${session.memberId ne team.leader}" th:value="${'팀 상세 조회'}">
                     </form>
                 </div>
-
                 <!--팀원 추가-->
                 <div th:id="addMem">
                     <input th:type="button" th:class="addMemBtn" th:value="팀원추가">
@@ -142,8 +136,10 @@
                 url: "/cli/searchMember",
                 data: {memberId: $("#searchVal").val()}
             }).done(function (data) {
+                console.log(data);
                 $("#memberList").html('');
                 for (list of data) {
+                    console.log(list);
                     $("#memberList").append(makeTr(list));
                 }
             })
