@@ -9,26 +9,26 @@
 
 <body>
 <th:block layout:fragment="content">
-<!--    <style>-->
-<!--        #myProgress {-->
-<!--            position: relative;-->
-<!--            width: 50%;-->
-<!--            height: 30px;-->
-<!--            background-color: #ddd;-->
-<!--        }-->
+    <!--    <style>-->
+    <!--        #myProgress {-->
+    <!--            position: relative;-->
+    <!--            width: 50%;-->
+    <!--            height: 30px;-->
+    <!--            background-color: #ddd;-->
+    <!--        }-->
 
-<!--        #myBar {-->
-<!--            position: absolute;-->
-<!--            height: 100%;-->
-<!--            background-color: #4CAF50;-->
-<!--        }-->
+    <!--        #myBar {-->
+    <!--            position: absolute;-->
+    <!--            height: 100%;-->
+    <!--            background-color: #4CAF50;-->
+    <!--        }-->
 
-<!--        #label {-->
-<!--            text-align: center;-->
-<!--            line-height: 30px;-->
-<!--            color: white;-->
-<!--        }-->
-<!--    </style>-->
+    <!--        #label {-->
+    <!--            text-align: center;-->
+    <!--            line-height: 30px;-->
+    <!--            color: white;-->
+    <!--        }-->
+    <!--    </style>-->
     <!-- msg 만들기용 -->
     <input type="hidden" id="chkWork" value="출근">
 
@@ -50,7 +50,7 @@
             <h1 id="demo"></h1>
         </div>
         <hr>
-        <div id="getTable"></div>
+        <table class="table" id="getTable"></table>
         <br>
         <button type="button" id="btn" class="btn btn-primary">출근하기</button>
     </div>
@@ -211,7 +211,6 @@
                 if (response != '') {
                     if (response[response.length - 1].outTime == null && response != '') {
                         alert('전 근무자가 퇴근체크를 하지 않았습니다.')
-                        // 밥먹고 고치자
                     } else {
                         alert('오늘 이미 퇴근처리 하셨습니다.')
                     }
@@ -229,16 +228,16 @@
 
                         if (response == '') {
                             alert('출근시간이 아닙니다.')
-                        } else if(response.late == 0) {
+                        } else if (response.late == 0) {
                             console.log("출근 버튼 누른 후" + response);
                             checkWorkTime(response)
-                        }else if(response.late == 1){
+                        } else if (response.late == 1) {
                             alert("지각처리 되었습니다.");
                             checkWorkTime(response)
-                        }else if(response.absence == 1){
+                        } else if (response.absence == 1) {
                             alert("결근처리 되었습니다.");
                             checkWorkTime(response)
-                        }else if(response.late == 3){
+                        } else if (response.late == 3) {
                             alert('근무표에 등록되지 않은 근무자입니다.')
                         }
                     })
@@ -247,7 +246,7 @@
         })
 
         //근무 시간에 따라 지각, 결근, 출근시간이 아닐때, 시트표에 없는 근무자가 출근할때, 다른사람이 근무중일때를 체크함.
-        function checkWorkTime(response){
+        function checkWorkTime(response) {
             $('#label').html(response.vo.percent + '%');
             move(response.vo.percent, response.vo.getMTime);
             console.log(response);
@@ -303,48 +302,111 @@
         // 오늘은 빨간색으로 표시됨.
         //<td>태그 안에 실제근무자가 한번 더 표시되게.
         function weekTrMaker() {
+            let chkArr = [];
+
+            // 이번주 출력
             var tr = "<tr>";
-            for (let i = 0; i < weekFind().length; i++) {
-                if (weekFind()[i].indexOf(getToday()) == -1) {
-                    tr += "<td width='100'>" + weekFind()[i] + "</td>";
+            let j = 0;
+            for (let j = 0; j < weekFind().length; j++) {
+                if (weekFind()[j].indexOf(getToday()) == -1) {
+                    tr += "<td class='firstTr text-center bf-1' width='100'>" + weekFind()[j] + "</td>";
                 } else {
-                    tr += "<td width='100' style='color: #ca2819'>" + weekFind()[i] + "</td>";
+                    tr += "<td class='firstTr text-center bf-1' width='100' style='color: #ca2819'>" + weekFind()[j] + "</td>";
                 }
+
+                // 검색용 arr
+                chkArr.push(weekFind()[j]);
             }
             tr += "</tr>"
             $('#getTable').append(tr);
+            console.log(chkArr)
 
+
+            // 출근한 사람 불러오는 부분
             $.ajax({
                 url: "getWeekList"
             }).done(function (response) {
                 console.log(response);
-                var tr2 = "<tr>";
-                for (let i = 0; i < response.length; i++) {
-                    if (response[i].workerId == '[[${session.workerId}]]') {
-                        console.log('dd');
-                        if (response[i].inTime != null) {
-                            tr2 += "<td width='100'>" + response[i].inTime + "</td>"
-                        } else {
-                            tr2 += "<td width='100'>" + "출근 전" + "</td>"
-                        }
-                    }
-                }
-                tr2 += "</td>";
-                $('#getTable').append(tr2);
 
-                var tr3 = "<tr>";
-                for (let i = 0; i < response.length; i++) {
-                    if (response[i].workerId == '[[${session.workerId}]]') {
-                        console.log('dd');
-                        if (response[i].outTime != null) {
-                            tr3 += "<td width='100'>" + response[i].outTime + "</td>"
-                        } else {
-                            tr3 += "<td width='100'>" + "퇴근 전" + "</td>"
+                let memberId = "[[${session.workerId}]]";
+
+                let tr = document.createElement('tr');
+                let tr2 = document.createElement('tr');
+                chkArr.forEach(l => {
+
+
+                    let td = document.createElement('td')
+                    let td2 = document.createElement('td');
+                    td.setAttribute('class', 'text-center bf-1')
+                    td2.setAttribute('class', 'text-center bf-1')
+                    response.forEach(i => {
+                        let tmp = l.substring(2, 10)
+                        console.log('tmp================')
+                        console.log(i.attDt)
+                        console.log(tmp)
+                        console.log('//================')
+                        if(i.attDt == tmp && memberId == i.workerId) {
+                            td.innerHTML = i.inTime + `<br>` + '[' + i.workerId + ']';
+
+                            if (i.outTime != null) {
+                                td2.innerHTML = i.outTime + `<br>` + '[' + i.workerId + ']';
+                            } else {
+                                td2.innerHTML = '퇴근 전' + `<br>` + '[' + i.workerId + ']';
+                            }
+
+
                         }
-                    }
-                }
-                tr3 += "</td>";
-                $('#getTable').append(tr3);
+                    })
+                    tr.append(td);
+                    tr2.append(td2);
+                    document.querySelector('#getTable').append(tr);
+                    document.querySelector('#getTable').append(tr2);
+                })
+
+
+
+                // var tr2 = "<tr>";
+                //
+                // for (let i = 0; i < response.length; i++) {
+                //     for (let j = 0; j < weekFind().length; j++) {
+                //         if (response[i].workerId == '[[${session.workerId}]]') {
+                //             console.log(weekFind()[j].substring(2, 10));
+                //             console.log(response[i].inTime.substring(0, 8));
+                //             if (weekFind()[j].substring(2, 10) == response[i].inTime.substring(0, 8)) {
+                //                 var firtr = $('.firstTr');
+                //
+                //                 if (response[i].inTime != null) {
+                //                     tr2 += "<td width='100'>" + response[i].inTime + "</td>"
+                //                 } else {
+                //                     tr2 += "<td width='100'>" + "출근 전" + "</td>"
+                //                 }
+                //
+                //                 // if ($('.firstTr').html() == response[i].inTime.substring(0, 8)) {
+                //                 //
+                //                 // }
+                //             }
+                //         }
+                //     }
+                // }
+                //
+                // tr2 += "</td>";
+                // $('#getTable').append(tr2);
+
+                // var tr3 = "<tr>";
+                //
+                //
+                // for (let i = 0; i < response.length; i++) {
+                //     if (response[i].workerId == '[[${session.workerId}]]') {
+                //         console.log('dd');
+                //         if (response[i].outTime != null) {
+                //             tr3 += "<td width='100'>" + response[i].outTime + "</td>"
+                //         } else {
+                //             tr3 += "<td width='100'>" + "퇴근 전" + "</td>"
+                //         }
+                //     }
+                // }
+                // tr3 += "</td>";
+                // $('#getTable').append(tr3);
             })
 
         }
@@ -361,8 +423,8 @@
                 method: 'post',
                 headers: {'Content-type': 'application/json'},
                 body: JSON.stringify({
-                    workerId : workerId,
-                    chkWork : chkWork
+                    workerId: workerId,
+                    chkWork: chkWork
                 })
             })
                 .then(res => res.text())
