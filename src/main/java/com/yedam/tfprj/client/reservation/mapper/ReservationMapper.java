@@ -109,5 +109,7 @@ public interface ReservationMapper {
 
 
   // 현재 진행 중인 리그
+  @Delete("delete from reservation where res_id = #{resId}")
+  public void deleteResByResId(int resId);
 
 }

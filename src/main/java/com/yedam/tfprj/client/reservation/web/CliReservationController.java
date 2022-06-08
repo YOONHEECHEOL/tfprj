@@ -160,4 +160,17 @@ public class CliReservationController {
     return "memberGame insert 처리됨";
   }
 
+  // 예약 중 취소 시 예약 삭제
+  @RequestMapping("/cli/deleteReservation")
+  public String deleteReservation(int resId) {
+
+    System.out.println(">>resId = " + resId);
+
+    reservationMapper.deleteResByResId(resId);
+
+    return "redirect:/cli/reservation/room";
+
+  }
+
+
 }

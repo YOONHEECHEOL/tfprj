@@ -278,7 +278,7 @@
     <!-- buttons -->
     <div class="res-button-box">
         <div class="button__box col-12">
-            <button class="button button-common" id="cancel">취소</button>
+            <a th:href="${'/cli/deleteReservation?resId=' + reservation.getResId()}" class="button button-common" id="cancel">취소</a>
             <button class="button button-primary" id="prevBtn" onclick="prevFnc()">이전</button>
             <button class="button button-primary" id="nextBtn" onclick="nextFnc()">다음</button>
             <button class="button button-danger dp-none" id="submitBtn" data-chk="n" onclick="finalDataProcessing()">제출</button>
