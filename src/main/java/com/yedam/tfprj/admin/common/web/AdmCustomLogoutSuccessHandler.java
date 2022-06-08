@@ -12,12 +12,7 @@ import java.io.IOException;
 public class AdmCustomLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("관리자로그아웃 후 ===========================" + request.getRequestURI().contains("/cli"));
-        if(request.getRequestURI().contains("/adm")){
-            response.sendRedirect("/adm/loginview");
-        }else{
-            response.sendRedirect("/cli/loginview");
-        }
+        response.sendRedirect("/adm/loginview");
 
     }
 }
