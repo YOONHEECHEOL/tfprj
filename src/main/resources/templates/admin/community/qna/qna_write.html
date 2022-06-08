@@ -38,10 +38,10 @@
             </div>
 
             <div>
-                <input type="button" onclick="formCheck()" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                <input type="button" onclick="formCheck()" style="float: right" class="c-button col-2" id="btnSave" value="생성">
 
                 <button type="button" style="float: right" onclick="location.href = '/adm/qna'"
-                        class="btn btn-sm btn-primary">목록
+                        class="c-button col-2">목록
                 </button>
             </div>
 
@@ -50,22 +50,6 @@
     </div>
 </article>
 <script>
-    ClassicEditor
-
-        .create(document.querySelector('#details'))
-
-        .then(editor => {
-
-            console.log(editor);
-
-        })
-
-        .catch(error => {
-
-            console.error(error);
-
-        });
-
     CKEDITOR.replace("details", {
         filebrowserUploadUrl: "/cli/imageUpload"
     });

@@ -62,9 +62,9 @@
     </form>
 </div>
 
-<button onclick="location.href = '/adm/qna'">뒤로가기</button>
-<button th:onclick="|location.href = '@{/adm/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right">삭제</button>
-<button id="submitFrm" style="float: right">수정</button>
+<button class="c-button col-2" onclick="location.href = '/adm/qna'">뒤로가기</button>
+<button class="c-button col-1" th:onclick="|location.href = '@{/adm/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right">삭제</button>
+<button class="c-button col-1" id="submitFrm" style="float: right">수정</button>
 
 <h1>답글</h1>
 
@@ -75,7 +75,7 @@
                   placeholder="내용을 입력해 주세요"></textarea>
     </div>
     <div>
-        <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="작성">
+        <input type="submit" style="float: right" class="c-button col-1" id="btnSave" value="작성">
     </div>
     <input type="hidden" name="qNo" th:value="${qna.qNo}">
 </form>

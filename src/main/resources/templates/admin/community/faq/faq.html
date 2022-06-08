@@ -10,9 +10,9 @@
 <!--          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
 
 <form method="post" action="/adm/faqTitleInsert">
-    <div class="mb-3" id="big">
-        <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
-        <input type="submit" value="대분류 생성" id="create">
+    <div class="button__box f16">
+    <input type="text" class="form-control col-9" name="title" id="title" placeholder="제목을 입력해 주세요">
+        <input class="c-button col-2" type="submit" value="대분류 생성" id="create">
     </div>
 </form>
 
@@ -31,7 +31,7 @@
                 </th:block>
             </div>
         </div>
-        <button onclick="location.href = '/adm/faqWrite'" style="float: right">작성</button>
+        <a class="c-button col-1" onclick="location.href = '/adm/faqWrite'">작성</a>
     </div>
 
 </th:block>

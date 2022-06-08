@@ -20,15 +20,11 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>생긴거만 에디터 </title>
-
-
 
 
     <article>
         <div class="container" role="main">
 
-            <h1>친선경기 작성</h1>
 
             <form name="form" id="form" role="form" method="post" action="/cli/fmInsert">
 
@@ -44,10 +40,11 @@
                 </div>
 
                 <div>
-                    <input type="button" onclick="formCheck()" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                    <input type="button" onclick="formCheck()" style="float: right" class="c-button col-3"
+                           id="btnSave" value="생성">
 
                     <button type="button" style="float: right" onclick="location.href = '/cli/fm'"
-                            class="btn btn-sm btn-primary">목록
+                            class="c-button col-3">목록
                     </button>
                 </div>
 
@@ -56,8 +53,8 @@
         </div>
     </article>
     <script>
-        CKEDITOR.replace("details",{
-            filebrowserUploadUrl : "/cli/imageUpload"
+        CKEDITOR.replace("details", {
+            filebrowserUploadUrl: "/cli/imageUpload"
         });
 
         function formCheck() {
