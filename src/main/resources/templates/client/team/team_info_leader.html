@@ -5,45 +5,51 @@
 
 
 <th:block layout:fragment="content">
-    <div>
-        <table>
-            <tbody>
-            <tr>
-                <th>팀명</th>
-                <td><span th:text="${team.teamName}"></span></td>
-            </tr>
-            <tr>
-                <th>팀장</th>
-                <td><span th:text="${team.leader}"></span></td>
-            </tr>
-            </tbody>
-        </table>
-        <div>
-            <form th:id="frm">
-                <h1>팀원</h1>
-                <div th:each="list, i : ${list}">
-                    <table>
+
+    <t-h1 ko="마이페이지" en="MY-TEAM"></t-h1>
+
+    <t-h2 ko="팀 상세조회"></t-h2>
+    <div class="row px-0">
+        <div th:class="col-12">
+            <table class="table f16">
+                <tbody>
+                <tr>
+                    <th class="bf-2 p">팀명</th>
+                    <td><span th:text="${team.teamName}"></span></td>
+                </tr>
+                <tr>
+                    <th class="bf-2 p">팀장</th>
+                    <td><span th:text="${team.leader}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <form th:id="frm">
+                    <t-h2 ko="팀원"></t-h2>
+                    <table class="table f14">
                         <tbody>
-                        <tr>
+                        <tr th:each="list, i : ${list}">
+                            <th th:if="${session.memberId ne list.memberId}" class="bf-2 p">팀원</th>
                             <td th:if="${session.memberId ne list.memberId}" th:text="${list.memberId}"></td>
                             <td th:if="${session.memberId ne list.memberId}">
-                                <button type="button" onclick="releaseTeam(this)">X</button>
+                                <button type="button" class="c-button" onclick="releaseTeam(this)">X</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                </div>
-                <input type="hidden" id="memberId" name="memberId">
-            </form>
+                    <input type="hidden" id="memberId" name="memberId">
+                </form>
+                <a onclick="javascript: history.back()" class="c-button">뒤로가기</a>
+            </div>
         </div>
     </div>
     <script>
         function releaseTeam(e) {
-            var md = e.parentElement.parentElement.children[0].innerText;
+            var md = e.parentElement.parentElement.children[1].innerText;
             if (confirm("방출하시겠습니까?") == true) {
-                frm.memberId.value=md;
-                frm.action="/cli/releaseTeam";
-                frm.method="POST";
+                frm.memberId.value = md;
+                frm.action = "/cli/releaseTeam";
+                frm.method = "POST";
                 frm.submit();
             }
         }
