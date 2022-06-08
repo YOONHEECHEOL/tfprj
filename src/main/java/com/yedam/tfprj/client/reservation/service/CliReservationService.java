@@ -17,4 +17,8 @@ public interface CliReservationService {
     public List<Reservation>  reservationCheck(String date, String room);
 
     public List<String> teamList();
+
+    // resId 를 받아서 reservation 삭제
+    public void deleteReservation();
+
 }

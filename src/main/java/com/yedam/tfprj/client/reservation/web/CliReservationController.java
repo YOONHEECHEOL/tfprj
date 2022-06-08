@@ -92,6 +92,7 @@ public class CliReservationController {
 
     // reservation 에 payment_id update
     reservationMapper.setResPayment(payId, resId);
+    reservationMapper.updateStatusCd(resId);
 
     return "client/reservation/pay_done";
   }
@@ -158,5 +159,18 @@ public class CliReservationController {
 
     return "memberGame insert 처리됨";
   }
+
+  // 예약 중 취소 시 예약 삭제
+  @RequestMapping("/cli/deleteReservation")
+  public String deleteReservation(int resId) {
+
+    System.out.println(">>resId = " + resId);
+
+    reservationMapper.deleteResByResId(resId);
+
+    return "redirect:/cli/reservation/room";
+
+  }
+
 
 }
