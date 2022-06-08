@@ -150,6 +150,7 @@ public class WorkerServiceImpl implements WorkerService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String workerId) throws UsernameNotFoundException {
         WorkerVO vo = mapper.getWorker(workerId);
+        vo.setWorkerAuth("ROLE_ADMIN");
         if (vo == null){
             throw new UsernameNotFoundException("User not authorized.");
         }

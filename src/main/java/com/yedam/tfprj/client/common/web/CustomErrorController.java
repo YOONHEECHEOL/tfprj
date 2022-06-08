@@ -24,11 +24,13 @@ public class CustomErrorController implements ErrorController {
 
         if(status != null) {
             int statusCode = Integer.valueOf(status.toString());
-
+            if(statusCode == HttpStatus.FORBIDDEN.value()){
+                return VIEW_PATH + "403";
+            }
             if(statusCode == HttpStatus.NOT_FOUND.value()){
                 return VIEW_PATH + "404";
             }
-            if(statusCode == HttpStatus.FORBIDDEN.value()){
+            if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()){
                 return VIEW_PATH + "500";
             }
         }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Test Error Page!</title>
+  <link rel="stylesheet" href="css/error.css" th:href="@{/css/error.css}" />
+</head>
+<body>
+<div class="errorPage">
+  <span>권한이 없습니다.</span>
+  <form id="frm">
+  <div th:if="${session.memberId != null} ">
+    <button type="button" onclick="admLogin()">로그인 페이지로 이동</button>
+  </div>
+  <div th:if="${session.workerId != null}">
+    <button type="button" onclick="cliLogin()">로그인 페이지로 이동</button>
+  </div>
+  </form>
+</div>
+<script>
+
+  function admLogin(){
+    frm.action = "/cli/logout";
+    frm.submit();
+  }
+  function cliLogin(){
+    frm.action = "/adm/logout";
+    frm.submit();
+  }
+</script>
+</body>
+</html>

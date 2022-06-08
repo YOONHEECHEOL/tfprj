@@ -16,6 +16,7 @@
     <logger name="jdbc.resultset" level="OFF"/>
     <logger name="jdbc.resultsettable" level="OFF"/>
     <logger name="jdbc.connection" level="OFF"/>
+    <logger name="org.thymeleaf" level="OFF"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />

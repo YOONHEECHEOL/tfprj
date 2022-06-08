@@ -4,88 +4,30 @@
       layout:decorate="~{layout/cli_layout}">
 
 <th:block layout:fragment="content">
-    <style>
-        .contain {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        #capt {
-            width: 170px;
-            height: 72px;
-            font-size: 37px;
-            background-color: #dddde2;
-            padding: 5px;
-            border: none;
-            letter-spacing: 1px;
-            float: left;
-            color: #2d2e33;
-            border-radius: 5px 0 0 5px;
-        }
-
-        #refresh {
-            float: left;
-            background-color: #dddde2;
-            height: 82px;
-            border-radius: 0 5px 5px 0;
-        }
-
-        #refresh img {
-            margin-top: 20px;
-            cursor: pointer;
-        }
-
-        #textinput {
-            width: 170px;
-            height: 70px;
-            font-size: 37px;
-            background-color: #dddde2;
-            border: none;
-            margin-left: 10px;
-            border-radius: 5px;
-            padding: 5px;
-            color: #2d2e33;
-        }
-
-        .contain button {
-            padding: 8px 20px;
-            height: 35px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            margin-left: 10px;
-            margin-top: 25px;
-            background-color: #dddde2;
-            color: #2d2e33;
-            transition: .5s;
-        }
-
-    </style>
 
     <t-h1 ko="회원가입" en="SIGN-UP"></t-h1>
     <t-h2 ko="정보입력"></t-h2>
 
     <form id="frm" action="/cli/insertMember" method="post" onsubmit="return formCheck()">
 
-        <input type="text" name="memberId" id="memberId" required="required" placeholder="아이디 입력.."/>
+        <input class="form-control" type="text" name="memberId" id="memberId" required="required" placeholder="아이디 입력.."/>
         <button type="button" id="checkId"
                 class="c-button" value="No" onclick="isIdCheck()">중복체크
         </button>
 
         <div class="form-group">
-            <input type="password" name="password" id="password" placeholder="비밀번호 입력.."/>
+            <input class="form-control" type="password" name="password" id="password" placeholder="비밀번호 입력.."/>
         </div>
 
         <div class="form-group">
-            <input type="password" style="-ms-ime-mode: inactive" id="password1" placeholder="비밀번호 확인.."/>
+            <input class="form-control" type="password" style="-ms-ime-mode: inactive" id="password1" placeholder="비밀번호 확인.."/>
         </div>
 
         <div class="form-group">
-            <input type="text" name="memberName" id="member_name" placeholder="이름 입력.." korOnly/>
+            <input class="form-control" type="text" name="memberName" id="member_name" placeholder="이름 입력.." korOnly/>
         </div>
         <div class="form-group">
-            <input type="text" name="tel" id="tel" maxlength="11" minlength="11" placeholder='휴대폰 -없이 입력'
+            <input class="form-control" type="text" name="tel" id="tel" maxlength="11" minlength="11" placeholder='휴대폰 -없이 입력'
                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
         </div>
         <div class="form-group form-button">
