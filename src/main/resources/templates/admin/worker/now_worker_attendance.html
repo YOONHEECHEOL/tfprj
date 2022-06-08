@@ -25,8 +25,9 @@
 
     <div class="row">
         <div class="col-6 a__box">
+            <t-h2 ko="현재 근무자 조회"></t-h2>
             <div th:if="${nowWorker.workerName != null}">
-                <table class="table-hover table f16" >
+                <table class="table-hover table f16 text-center bf-2" >
                     <thead>
                     <tr>
                         <th th:width="50">근무자명</th>
@@ -99,8 +100,9 @@
         </div>
 
         <div class="col-6 a__box">
+            <t-h2 ko="종합관리"></t-h2>
             <div>
-                <span>다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
+                <span class="text-center bf-2">다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
                     <div id="nextWorker">기홍길</div>
                 </span>
                 <br><br>
@@ -111,11 +113,12 @@
         </div>
 
         <div class="col-12 a__box">
+            <t-h2 ko="주간 근무표"></t-h2>
             <div id="today" class="bf-3">
                 주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
             </div>
 
-            <table class="table f16">
+            <table class="table f16 text-center bf-2">
                 <thead id="thead">
 
                 </thead>

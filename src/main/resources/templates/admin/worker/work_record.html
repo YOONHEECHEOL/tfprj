@@ -36,8 +36,7 @@
 
     <div id="newTag"></div>
     <div id="allTag">
-        <h1>JavaScript Progress Bar</h1>
-        <h2 th:text="${session.workerId}"></h2>
+        <h2 class="text-center bf-3" style='color: #72ca19' th:text="${session.workerId}"></h2>
         <div id="myProgress" style="display: none">
             <div id="myBar">
                 <div id="label">0%</div>
@@ -346,11 +345,11 @@
                         console.log(tmp)
                         console.log('//================')
                         if(i.attDt == tmp && memberId == i.workerId) {
-                            td.innerHTML = i.inTime + `<br>` + '[' + i.workerId + ']';
+                            td.innerHTML = i.inTime;
                             if (i.outTime != null) {
-                                td2.innerHTML = i.outTime + `<br>` + '[' + i.workerId + ']';
+                                td2.innerHTML = i.outTime;
                             } else {
-                                td2.innerHTML = '퇴근 전' + `<br>` + '[' + i.workerId + ']';
+                                td2.innerHTML = '근무 중';
                             }
                             //오늘날짜 일 - 이번주 토~일이 양수일때
                         }else if(new Date().toISOString().substring(8,10) - l.substring(8, 10) > 0 && td.innerHTML == ''){
