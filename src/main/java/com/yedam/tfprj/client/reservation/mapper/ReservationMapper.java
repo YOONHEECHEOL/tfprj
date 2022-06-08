@@ -98,6 +98,12 @@ public interface ReservationMapper {
           "and     room = #{roomNo}")
   public String getIsResNow(int roomNo);
 
+  // 예약 완료 시 status_cd 예약완료 바꾸기
+  @Update("    update reservation\n" +
+          "    set status_cd = 701\n" +
+          "    where res_id = #{res_id}")
+  public void updateStatusCd(int resId);
+
   // 공지사항 최신 3개 출력
   // 전체 반환 후 3개만 출력
 

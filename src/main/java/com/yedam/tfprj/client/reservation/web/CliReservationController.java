@@ -92,6 +92,7 @@ public class CliReservationController {
 
     // reservation 에 payment_id update
     reservationMapper.setResPayment(payId, resId);
+    reservationMapper.updateStatusCd(resId);
 
     return "client/reservation/pay_done";
   }
