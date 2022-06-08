@@ -1019,3 +1019,35 @@ i.black {
     border-radius: .4rem;
     cursor: pointer;
 }
+
+/* opensea */
+.openseaItems {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.openseaItems > div {
+    width: calc(50% - 2.4rem - 1.2rem);
+    height: 0;
+    margin: 1.2rem .6rem;
+    padding: .6rem;
+    padding-top: calc(50% - 2.4rem - 1.2rem);
+    border: 1px solid #bbb;
+    border-radius: .4rem;
+    position: relative;
+}
+.openseaItems > div > a {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0;
+    text-align: center;
+}
+.fc-toolbar-title {
+    font-family: esM;
+    color: #222;
+}

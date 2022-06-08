@@ -7,62 +7,75 @@
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
+    <link th:href="@{/css/h_style.css}" rel="stylesheet" type="text/css" >
     <script th:defer th:src="@{/js/yjs.js}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-<h1>일별 조회</h1>
-<h3 th:text="${date}"></h3>
-<h4>근무자 등록</h4>
-<table th:border="1">
-    <thead>
-    <tr>
-        <th th:align="center" th:width="100">no</th>
-        <th th:align="center" th:width="100">룸</th>
-        <th th:align="center" th:width="500">시간</th>
-        <th th:align="center" th:width="150">금액</th>
-        <th th:align="center" th:width="150">예약자</th>
-        <th th:align="center" th:width="150">결제상태</th>
-        <th th:align="center" th:width="150">결제방법</th>
-        <th th:align="center" th:width="150">게임상태</th>
-        <th th:align="center" th:width="150">예약설정</th>
-    </tr>
-    </thead>
-    <tbody>
 
-    <tr th:each="l, index : ${dayResList}">
-        <input type="hidden" id="resId" name="resId" th:value="${l.getResId()}">
-        <td th:class="hidden" th:text="${l.getStatusCd}"></td>
-        <td th:class="resId" th:align="center" th:text="${l.getResId()}">no</td>
-        <td th:align="center" th:text="${l.getRoom()}">룸</td>
-        <td th:align="center" th:class="time"
-            th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간
-        </td>
-        <td th:align="center" th:class="price">금액</td>
-        <td th:align="center" th:text="${l.memberName}">예약자</td>
-        <td th:align="center" class="gameStatus">
-            <convert-c-code th:data="${l.getPaymentStatusCd()}"></convert-c-code>
-        </td>
-        <td th:align="center">
-            <convert-c-code th:data="${l.getPaymentMethodCd()}"></convert-c-code>
-        </td>
-        <td th:align="center">
-            <convert-c-code th:data="${l.getStatusCd()}"></convert-c-code>
-        </td>
-        <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' ">
-            <button th:class="cancel">취소</button>
-        </td>
-        <td th:align="center" th:unless="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "></td>
-        <td th:align="center" th:width="150"><a th:class="details"
-                                                th:href="${'reservation_day_detail?resId=' + l.getResId()}">상세히 보기</a>
-        </td>
-    </tr>
-    </tbody>
+<body class="container-fluid">
+<t-h1 ko="일별조회" en="RESERVATION"></t-h1>
+<t-h2 ko="날짜별 예약현황"></t-h2>
+
+<div class="bf-5" th:text="${'[ ' + date + ' ]'}"></div>
+
+<div class="col-12 a__box nh">
+    <table class="table f16">
+        <thead>
+        <tr>
+            <th class="text-center" th:width="100">no</th>
+            <th class="text-center" th:width="100">룸</th>
+            <th class="text-center" th:width="500">시간</th>
+            <th class="text-center" th:width="150">금액</th>
+            <th class="text-center" th:width="150">예약자</th>
+            <th class="text-center" th:width="150">결제상태</th>
+            <th class="text-center" th:width="150">결제방법</th>
+            <th class="text-center" th:width="150">게임상태</th>
+            <th class="text-center" th:width="150">예약설정</th>
+            <th> </th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="l, index : ${dayResList}">
+            <input type="hidden" id="resId" name="resId" th:value="${l.getResId()}">
+            <td th:class="hidden" th:text="${l.getStatusCd}"></td>
+            <td th:class="resId" th:align="center" th:text="${l.getResId()}">no</td>
+            <td th:align="center" th:text="${l.getRoom()}">룸</td>
+            <td th:align="center" th:class="time"
+                th:text="|${#dates.format(l.getStartTime(), 'HH:mm')} - ${#dates.format(l.getEndTime(), 'HH:mm')} |">시간
+            </td>
+            <td th:align="center" th:class="price">금액</td>
+            <td th:align="center" th:text="${l.memberName}">예약자</td>
+            <td th:align="center" class="gameStatus">
+                <convert-c-code th:data="${l.getPaymentStatusCd()}"></convert-c-code>
+            </td>
+            <td th:align="center">
+                <convert-c-code th:data="${l.getPaymentMethodCd()}"></convert-c-code>
+            </td>
+            <td th:align="center">
+                <convert-c-code th:data="${l.getStatusCd()}"></convert-c-code>
+            </td>
+            <td th:align="center" th:if="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' ">
+                <button th:class="cancel">취소</button>
+            </td>
+            <td th:align="center" th:unless="${l.getStatusCd()}== '701' or ${l.getStatusCd()}== '702' "></td>
+            <td th:align="center" th:width="150"><a class="details btn btn-primary"
+                                                    th:href="${'reservation_day_detail?resId=' + l.getResId()}">상세히 보기</a>
+            </td>
+        </tr>
+        </tbody>
 
 
-</table>
-<button>예약생성</button>
+    </table>
+
+    <div class="row justify-content-end">
+        <div class="col-4">
+            <button class="c-button">예약생성</button>
+        </div>
+    </div>
+</div>
+
 
 <!--모달 시작-->
 <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">

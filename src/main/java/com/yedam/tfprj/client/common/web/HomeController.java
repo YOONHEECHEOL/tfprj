@@ -66,4 +66,9 @@ public class HomeController {
     return homeServiceImpl.getHomeLeagueList();
   }
 
+  @RequestMapping("/cli/trophy")
+  public String blockTest() {
+    return "client/league/trophyTest";
+  }
+
 }

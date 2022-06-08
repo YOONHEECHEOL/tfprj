@@ -70,12 +70,12 @@ function reservedTimeCheck(date, room) {
                                 console.log(j + k);
 
                                 console.log($('#' + (j + k)).text());
-                                $('#' + (j + k)).attr('class', "btn btn-danger")
+                                $('#' + (j + k)).attr('class', "btn-danger")
                             }
 
                         } else {
                             console.log("야야야")
-                            $('#' + (j)).attr('class', "btn btn-danger")
+                            $('#' + (j)).attr('class', "btn-danger")
                         }
 
 
@@ -91,12 +91,12 @@ function reservedTimeCheck(date, room) {
                                 console.log(j + k);
 
                                 console.log($('#' + (j + k)).text());
-                                $('#' + (j + k)).attr('class', "btn btn-danger")
+                                $('#' + (j + k)).attr('class', "btn-danger")
                             }
 
                         } else {
                             console.log("야야야")
-                            $('#' + (j)).attr('class', "btn btn-danger")
+                            $('#' + (j)).attr('class', "btn-danger")
                         }
 
 
@@ -152,7 +152,7 @@ function removeClass() {
 
 // 클릭된 시간 배열
 const f1 = () => {
-    let clickedClassList = document.getElementsByClassName("btn btn-success");
+    let clickedClassList = document.getElementsByClassName("btn-success");
     console.log("클릭된 클래스 리스트는 : " + clickedClassList);
     let clickedTimeList = [];
 
@@ -168,7 +168,7 @@ const f1 = () => {
 
 // 예약된 시간 배열(startTime 기준)
 const f2 = () => {
-    let reservedClassList = document.getElementsByClassName("btn btn-danger");
+    let reservedClassList = document.getElementsByClassName("btn-danger");
     let reservedTimeList = [];
     for (let i = 0; i < reservedClassList.length; i++) {
         var id = reservedClassList[i].getAttribute('id');
@@ -189,12 +189,12 @@ function clickTimetable(startTime) {
         console.log(timeClass);
 
 
-        if (timeClass == 'btn btn-danger') {
+        if (timeClass == 'btn-danger') {
             alert("이미 예약된 시간입니다")
-        } else if (timeClass == 'btn btn-success') {
+        } else if (timeClass == 'btn-success') {
             $('#' + (startTime)).removeClass();
         } else {
-            $('#' + (startTime)).attr('class', 'btn btn-success')
+            $('#' + (startTime)).attr('class', 'btn-success')
             let clickedTimeArray = f1().sort();
             console.log(clickedTimeArray);
             for (let i = 0; i < clickedTimeArray.length; i++) {

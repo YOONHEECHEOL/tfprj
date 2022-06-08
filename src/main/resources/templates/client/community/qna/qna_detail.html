@@ -4,125 +4,136 @@
       layout:decorate="~{layout/cli_layout}">
 
 
-
 <th:block layout:fragment="content">
-    <t-h1 en="QNA" ko="문의 사항"></t-h1>
+  <t-h1 en="QNA" ko="문의 사항"></t-h1>
+
+  <t-h2 ko="상세보기"></t-h2>
 
 
+  <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"-->
+  <!--      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!--<style>-->
+  <!--    #frm{-->
+  <!--        padding-top: 50px;-->
+  <!--        padding-bottom: 50px;-->
+  <!--        border: none;-->
+  <!--    }-->
+  <!--    #table2{-->
+  <!--        padding-top: 50px;-->
+  <!--        padding-bottom: 50px;-->
+  <!--    }-->
+  <!--</style>-->
 
-<style>
-    #frm{
-        padding-top: 50px;
-        padding-bottom: 50px;
-        border: none;
-    }
-    #table2{
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-</style>
-
-<div class="container">
-    <form th:id="details" method="post" action="/cli/qnaUpdate">
+  <div class="row px-0">
 
 
-
-        <div class="container" style="max-width: 880px;">
-            <table th:each="q, status : ${qna}" border="1" class="card" id="frm">
-                <tr>
-                    <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
-                    <td th:text="${q.qNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
-                    <th width="105" style="padding: 1px 1px 1px 10px">작성자</th>
-                    <td th:text="${q.writer}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
-                    <th width="105" height="39" style="padding: 1px 1px 1px 10px">작성일자</th>
-                    <td th:text="${q.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
-                </tr>
-                <tr>
-                    <th height="39" style="padding: 1px 1px 1px 10px">제목</th>
-                    <td th:text="${q.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
-                </tr>
-                <tr>
-                    <th style="padding:50px 50px 50px 50px">내용</th>
-                    <td th:utext="${q.details}" colspan="6">
+    <div class="col-12">
+      <form th:id="details" method="post" action="/cli/qnaUpdate">
+        <table th:each="q, status : ${qna}" class="table f14" id="frm">
+          <tr>
+            <th>글번호</th>
+            <td th:text="${q.qNo}"></td>
+          </tr>
+          <tr>
+            <th>작성자</th>
+            <td th:text="${q.writer}"></td>
+          </tr>
+          <tr>
+            <th>작성일자</th>
+            <td th:text="${q.wdate}"></td>
+          </tr>
+          <tr>
+            <th height="39">제목</th>
+            <td th:text="${q.title}" colspan="6"></td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td th:utext="${q.details}" colspan="6">
                         <textarea id="details" name="details" class="form-control" rows="10" cols="80"
                                   required="required">
                         </textarea>
-                    </td>
-                </tr>
-                <input type="hidden" id="qNo" name="qNo" th:value="${q.qNo}">
-                <input type="hidden" id="title" name="title" th:value="${q.title}">
-                <input type="hidden" id="wdate" name="wdate" th:value="${q.wdate}">
-                <input type="hidden" id="views" name="views" th:value="${q.views}">
-                <input type="hidden" id="qdetails" name="details" th:value="${q.details}">
-                <input type="hidden" id="writer" name="writer" th:value="${q.writer}">
-            </table>
+            </td>
+          </tr>
+          <input type="hidden" id="qNo" name="qNo" th:value="${q.qNo}">
+          <input type="hidden" id="title" name="title" th:value="${q.title}">
+          <input type="hidden" id="wdate" name="wdate" th:value="${q.wdate}">
+          <input type="hidden" id="views" name="views" th:value="${q.views}">
+          <input type="hidden" id="qdetails" name="details" th:value="${q.details}">
+          <input type="hidden" id="writer" name="writer" th:value="${q.writer}">
+        </table>
 
 
+      </form>
+    </div>
+    <br>
+    <input th:type="hidden" th:id="qNo" th:name="qNo">
+  </div>
+
+  <div class="button__box">
+    <button class="c-button" onclick="location.href = '/cli/qna'">뒤로가기</button>
+    <button class="c-button" th:onclick="|location.href = '@{/cli/qnaDelete?qNo={no}(no=${qna.qNo})}'|"
+            th:if="${session.memberId == qna.writer}">삭제
+    </button>
+    <button class="c-button" id="submitFrm" th:if="${session.memberId == qna.writer}">수정</button>
+  </div>
+
+  <hr class="mt20">
+
+  <div  class="bf-3 mt20">답글</div>
+
+  <div>
+    <form>
+      <table id="table2" class="table f14">
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th>작성자 + 작성일</th>-->
+<!--          <th>내용</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+        <tbody>
+        <div id="qna" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
+          <tr>
+            <td>
+
+              <span class="bf-2" th:text="${re.cdetails}"></span>
+              <span class="bf-2" th:text="${' [ ' + re.cwriter + ' ]'}"></span><br>
+              <span class="sf-1" th:text="${re.cdate}"></span>
+
+            </td>
+          <tr>
+            <td>
+              <button type="button" th:if="${session.memberId == re.cwriter}" style="float: right"
+                      th:onclick="|location.href = '@{/cli/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
+              </button>
+            </td>
+          </tr>
         </div>
-        <br>
-        <input th:type="hidden" th:id="qNo" th:name="qNo">
+        </tbody>
+      </table>
+      <input th:type="hidden" th:id="qNo" th:name="qNo">
     </form>
-</div>
+  </diV>
 
-<button onclick="location.href = '/cli/qna'">뒤로가기</button>
-<button th:onclick="|location.href = '@{/cli/qnaDelete?qNo={no}(no=${qna.qNo})}'|" style="float: right" th:if="${session.memberId == qna.writer}">삭제</button>
-<button id="submitFrm" style="float: right" th:if="${session.memberId == qna.writer}">수정</button>
-
-<h1>답글</h1>
-
-<!--<form method="post" action="/cli/qnaAnswerInsert" th:if="${session.memberId ne null}">
-    <div class="mb-3">
-        <label for="cdetails">내용</label>
-        <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
-                  placeholder="내용을 입력해 주세요"></textarea>
+  <form method="post" action="/cli/qnaAnswerInsert" th:if="${session.memberId ne null}">
+    <div class="mb-3 mt12">
+      <label for="cdetails" class="bf-2">내용</label>
+      <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
+                placeholder="내용을 입력해 주세요"></textarea>
     </div>
     <div>
-        <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="작성">
+      <input type="submit" class="c-button" id="btnSave" value="작성">
     </div>
     <input type="hidden" name="qNo" th:value="${qna.qNo}">
-</form>-->
+  </form>
 
-<div class="container" >
-    <form>
-        <table id="table2" class="table">
-            <thead>
-            <tr>
-                <th>작성자 + 작성일</th>
-                <th>내용</th>
-            </tr>
-            </thead>
-            <tbody>
-            <div id="qna" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
-                <tr>
-                    <td th:text="${re.cwriter}"></td>
-
-                    <td th:text="${re.cdetails}"></td>
-                </tr>
-                <tr>
-                    <td th:text="${re.cdate}"></td>
-                </tr>
-                <tr>
-                    <td><button type="button" th:if="${session.memberId == re.cwriter}" style="float: right" th:onclick="|location.href = '@{/cli/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제</button></td>
-                </tr>
-            </div>
-            </tbody>
-        </table>
-        <input th:type="hidden" th:id="qNo" th:name="qNo">
-    </form>
-</diV>
-
-
-
-<script>
+  <script>
 
     submitFrm.addEventListener('click', () => {
-        details.submit()
+      details.submit()
     })
 
-</script>
+  </script>
 </th:block>
 
 </html>

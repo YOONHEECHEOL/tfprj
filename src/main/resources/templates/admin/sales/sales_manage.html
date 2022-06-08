@@ -9,44 +9,65 @@
 <body>
 <th:block layout:fragment="content">
 
-    <div class="container-fluid">
+    <a-h1 ko="매출 관리" en="SALES"></a-h1>
+
+    <div>
         <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-12 a__box">
                 <div id="container">
-                    <h1 id="today"></h1>
-                    <h2>요일선택</h2>
-                    <div>
-                        <input type="radio" name="day" value="1">일
-                        <input type="radio" name="day" value="2">월
-                        <input type="radio" name="day" value="3">화
-                        <input type="radio" name="day" value="4">수
-                        <input type="radio" name="day" value="5">목
-                        <input type="radio" name="day" value="6">금
-                        <input type="radio" name="day" value="7">토
+                    <t-h2 ko="검색 옵션"></t-h2>
+                    <div class="bf-4" id="today"></div>
+
+                    <hr class="mt20">
+
+                    <div class="row px-0 justify-content-start mt20">
+                        <div class="col-2">
+                            <div class="bf-3">요일선택</div>
+                        </div>
+                        <div class="col-2">
+                            <div class="bf-3">
+                                <input type="radio" name="day" value="1">일
+                                <input type="radio" name="day" value="2">월
+                                <input type="radio" name="day" value="3">화
+                                <input type="radio" name="day" value="4">수
+                                <input type="radio" name="day" value="5">목
+                                <input type="radio" name="day" value="6">금
+                                <input type="radio" name="day" value="7">토
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <select id="selectMonth">
-                            <option>날짜 선택</option>
-                            <option value="1">1월</option>
-                            <option value="2">2월</option>
-                            <option value="3">3월</option>
-                            <option value="4">4월</option>
-                            <option value="5">5월</option>
-                            <option value="6">6월</option>
-                            <option value="7">7월</option>
-                            <option value="8">8월</option>
-                            <option value="9">9월</option>
-                            <option value="10">10월</option>
-                            <option value="11">11월</option>
-                            <option value="12">12월</option>
-                        </select>
+
+                    <hr class="mt20">
+
+                    <div class="row mt20 px-0 justify-content-start">
+                        <div class="col-4 bf-3">월단위 선택</div>
+                        <div class="col-8">
+                            <select id="selectMonth" class="form-control sf-3">
+                                <option>날짜 선택</option>
+                                <option value="1">1월</option>
+                                <option value="2">2월</option>
+                                <option value="3">3월</option>
+                                <option value="4">4월</option>
+                                <option value="5">5월</option>
+                                <option value="6">6월</option>
+                                <option value="7">7월</option>
+                                <option value="8">8월</option>
+                                <option value="9">9월</option>
+                                <option value="10">10월</option>
+                                <option value="11">11월</option>
+                                <option value="12">12월</option>
+                            </select>
+                        </div>
+
                     </div>
+
+
                     <div id="pickLogic">
                         <input type="text" width="50" class="datepicker" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="text" width="50" class="datepicker" readonly>
                     </div>
-                    <div style="float: right">
-                        <button id="searchBtn">조회</button>
+                    <div class="mt20">
+                        <button class="c-button" id="searchBtn">조회</button>
                     </div>
                 </div>
                     <div id="searchResult">
