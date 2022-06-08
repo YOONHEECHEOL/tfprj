@@ -30,60 +30,67 @@
                 <table class="table-hover table f16 text-center bf-2" >
                     <thead>
                     <tr>
-                        <th th:width="50">근무자명</th>
-                        <th th:width="50">출근시간</th>
-                        <th th:width="50">퇴근시간</th>
+                        <th>근무자명</th>
+                        <th>출근시간</th>
+                        <th>퇴근시간</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody th:each="l, status: ${nowWorker}">
                     <tr>
-                        <td th:width="50" th:text="${nowWorker.workerName}">홍길동</td>
+                        <td th:text="${nowWorker.workerName}">홍길동</td>
                         <!--                <td th:width="100" th:text="${nowWorker.workerId}">홍길동</td>-->
                         <!--                값 조회가 안될때 청크에러 뜸.             -->
-                        <td th:width="50" id="goingTime">13:00</td>
+                        <td id="goingTime">13:00</td>
                         <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
-                        <td th:width="50" id="quittingTime">18:00</td>
+                        <td id="quittingTime">18:00</td>
                         <!--                스크립트에서 값을 정제해준 뒤에 html()로 넣어줌 (완)            -->
+                        <td></td>
                     </tr>
                     <tr id="realInOutTime">
-                        <td th:width="100"></td>
-                        <td th:width="100" style="color:red">실제출근시간</td>
-                        <td th:width="100" style="color:red"></td>
+                        <td></td>
+                        <td style="color:red">실제출근시간</td>
+                        <td style="color:red"></td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <th th:width="100">총 지각횟수</th>
+                        <th>총 지각횟수</th>
                         <!--  총 지각횟수, 결근 횟수는 work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 지각횟수를 전부다 더한 값을 넣어줌. -->
                         <!--                        select sum(is_late)-->
                         <!--                        from staff_attendance-->
                         <!--                        where worker_id = 'test3';-->
-                        <th th:width="100">주간지각</th>
+                        <th>주간지각</th>
                         <!--  주간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 주의 지각횟수를 전부다 더한 값을 넣어줌. -->
                         <!--                        select sum(is_late)-->
                         <!--                        from staff_attendance-->
                         <!--                        where worker_id = 'test3'-->
                         <!--                        and att_dt IN(trunc(current_date,'d'), trunc(current_date,'d')+1, trunc(current_date,'d')+2, trunc(current_date,'d')+3, trunc(current_date,'d')+4, trunc(current_date,'d')+5, trunc(current_date,'d')+6)-->
-                        <th th:width="100">월간 지각</th>
+                        <th>월간 지각</th>
                         <!--  월간 지각횟수, work_attendance 테이블에서 해당 아이디를 조회했을때 나오는 현재 달의 지각횟수를 전부다 더한 값을 넣어줌. -->
                         <!--                        SELECT  -->
                         <!--                        SUM(is_late)  -->
                         <!--                        FROM staff_attendance-->
                         <!--                        WHERE SUBSTR(att_dt,0,8) BETWEEN (TO_CHAR(TRUNC(current_date,'MM'),'YYYYMMDD') ) AND (LAST_DAY(current_date))-->
                         <!--                        AND worker_id = 'test3-->
-                        <th th:width="100">결근</th>
+                        <th>결근</th>
                     </tr>
                     <tr>
-                        <td th:width="100" id="allLate">5회</td>
-                        <td th:width="100" id="weekLate">2회</td>
-                        <td th:width="100" id="monthLate">4회</td>
-                        <td th:width="100" id="allAbsence">0회</td>
+                        <td id="allLate">5회</td>
+                        <td id="weekLate">2회</td>
+                        <td id="monthLate">4회</td>
+                        <td id="allAbsence">0회</td>
                     </tr>
                     <tr>
-                        <th th:width="100">근무 시작일</th>
-                        <th th:width="300">지급금액</th>
+                        <th>근무 시작일</th>
+                        <th>지급금액</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     <tr>
-                        <td th:width="400" id="startDay">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
-                        <td id="payAll" th:width="100">컴마 붙여서 숫자 표현</td>
+                        <td id="startDay">Date 포맷 정제해서 던져주기 + 근무일 계산</td>
+                        <td id="payAll" >컴마 붙여서 숫자 표현</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>
@@ -102,19 +109,18 @@
         <div class="col-6 a__box">
             <t-h2 ko="종합관리"></t-h2>
             <div>
-                <span class="text-center bf-2">다음 근무자 &nbsp;&nbsp;&nbsp; 근무자 명
-                    <div id="nextWorker">기홍길</div>
-                </span>
+                <span class="text-center bf-2">다음 근무자</span>
+                <div id="nextWorker" class="bf-3" style="color: #029ef3">기홍길</div>
                 <br><br>
-                <button id="makeWorksheet" class="btn btn-outline-dark">근무표 작성</button>
-                <button onclick="location.href = '/adm/worker_hrm' " class="btn btn-outline-dark">인사관리</button>
-                <button onclick="location.href = '/adm/work_record' " class="btn btn-outline-dark">근태관리</button>
+                <button id="makeWorksheet" class="c-button">근무표 작성</button>
+                <button onclick="location.href = '/adm/worker_hrm' " class="c-button">인사관리</button>
+                <button onclick="location.href = '/adm/work_record' " class="c-button">근태관리</button>
             </div>
         </div>
 
         <div class="col-12 a__box">
             <t-h2 ko="주간 근무표"></t-h2>
-            <div id="today" class="bf-3">
+            <div id="today" class="bf-3" style="color: #029ef3">
                 주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
             </div>
 
@@ -242,7 +248,7 @@
                 }).done(function (response) {
                     console.log(response);
                     // 1부 근무자들을 대상으로 동적으로 tr태그를 만들어줌.
-                    tr = "<tr>";
+                    tr = "<tr style='color: #18181c'>";
                     for (let i = 0; i < response.length; i++) {
                         if (response[i].quittingTime.substring(11, 21).replace('24', '') == "07:30:00") {
                             tr += "<td>" + response[i].workerId + "</td>"
@@ -252,7 +258,7 @@
                     $('#tbody').append(tr);
 
                     // 2부 근무자들
-                    var tr2 = "<tr>";
+                    var tr2 = "<tr style='color: #18181c'>";
                     for (let i = 0; i < response.length; i++) {
                         if (response[i].quittingTime.substring(11, 21).replace('24', '') == "11:59:00") {
                             tr2 += "<td>" + response[i].workerId + "</td>"

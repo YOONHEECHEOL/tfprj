@@ -39,7 +39,7 @@
                         <col width="15%">
                     </colgroup>
                     <thead>
-                    <tr>
+                    <tr class="text-center bf-4" style='color: #18181c'>
                         <th>해결여부</th>
                         <th>체크박스</th>
                         <th>NO</th>
@@ -249,9 +249,9 @@
             if (response.processComplete == 1) {
                 process = 'processCompleteYn'
             }
-            content = "<tr class='container'>";
+            content = "<tr class='container text-center bf-4' style='color: #18181c'>";
             content += `<td width='30' class="${process}">` + "</td>"
-            content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList">` + "</td>"
+            content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList btn btn-success btn-circle btn-lg">` + "</td>"
             content += "<td>" + makeCheckListNum() + "</td>"
             content += `<td style=${textDeco}; class="${response.chkPicFileName}">` + response.chkContents + "</td>"
             content += "<td><button type='submit' class='processComplete c-button'>해결</button></td>"
@@ -359,7 +359,7 @@
             let todoMake = "";
             todoMake = `
                 <div class="row justify-content-between">
-                  <input id='toDoInput' class="col-6 form-control"  type='text' placeholder="할 일을 입력해주세요!">
+                  <input id='toDoInput' class="col-6 form-control bf-4"  type='text' placeholder="할 일을 입력해주세요!">
                   <button class='c-button col-4' onclick='createToDo()'>TODO 추가</button>
                 </div>
             `;

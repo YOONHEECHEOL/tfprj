@@ -14,7 +14,7 @@
         }
         #myProgress {
             position: relative;
-            width: 50%;
+            width: 100%;
             height: 30px;
             background-color: #ddd;
         }
@@ -36,18 +36,37 @@
 
         <div class="col-4 a__box">
             <t-h2 ko="현재 출근한 근무자"></t-h2>
-            <div class="bf-3" id="notInComment"></div>
+            <br><br><br>
+            <h1 class="text-center bf-4" style="color: #18181c">현재 근무자</h1>
+            <h2 class="text-center bf-3" style='color: #72ca19' th:text="${session.workerId} + '님'"></h2>
             <div id="myProgress" style="display: none">
                 <div id="myBar">
-                    <div id="label">0%</div>
+                    <div id="label" class="bf-3">0%</div>
                 </div>
             </div>
-            <div id="div2"><br>
+            <div id="div2">
                 <p id="dd"></p>
             </div>
-            <div id="out"><br>
+            <div id="out" class="text-center bf-3" style="color: #18181c">
+                <h2 class="bf-2" style="color: #d34747">📢퇴근까지</h2>
                 <h1 id="demo"></h1>
+                <br><br>
+                <div class="button__box mt20">
+                    <button class="c-button" onclick = "location.href = '/adm/work_record' ">바로가기</button>
+                </div>
             </div>
+<!--            <div class="bf-3" id="notInComment"></div>-->
+<!--            <div id="myProgress" style="display: none">-->
+<!--                <div id="myBar">-->
+<!--                    <div id="label">0%</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div id="div2"><br>-->
+<!--                <p id="dd"></p>-->
+<!--            </div>-->
+<!--            <div id="out"><br>-->
+<!--                <h1 id="demo"></h1>-->
+<!--            </div>-->
         </div>
 
         <div class="col-4 a__box">
@@ -131,7 +150,7 @@
             // 이번주 날짜가 들어간 태그 만들기.
             // 오늘은 빨간색으로 표시됨.
             //<td>태그 안에 실제근무자가 한번 더 표시되게.
-            var tr =  "<tr>";
+            var tr =  "<tr class='text-center bf-2'>";
             for (let i = 0; i < thisWeek.length; i++) {
                 if(thisWeek[i].indexOf(dateString) == -1){
                     tr += "<td>" + thisWeek[i] + "</td>";
@@ -147,7 +166,7 @@
             }).done(function(response){
                 console.log(response);
                 // 1부 근무자들을 대상으로 동적으로 tr태그를 만들어줌.
-                tr = "<tr>";
+                tr = "<tr class='text-center bf-2' style='color: #18181c'>";
                 for (let i = 0; i < response.length; i++) {
                     if(response[i].quittingTime.substring(11,21).replace('24', '') == "07:30:00"){
                         tr += "<td>" + response[i].workerId + "</td>"
@@ -157,7 +176,7 @@
                 $('#tbody').append(tr);
 
                 // 2부 근무자들
-                var tr2 = "<tr>";
+                var tr2 = "<tr class='text-center bf-2' style='color: #18181c'>";
                 for (let i = 0; i < response.length; i++) {
                     if(response[i].quittingTime.substring(11,21).replace('24', '') == "11:59:00"){
                         tr2 += "<td>" + response[i].workerId + "</td>"
@@ -265,12 +284,12 @@
             if (response.processComplete == 1) {
                 process = 'processCompleteYn'
             }
-            content = "<tr class='container' readonly>";
+            content = "<tr class='container text-center bf-3' style='color: #18181c' readonly>";
             content += `<td width='30' class="${process}">` + "</td>"
-            content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList" onClick="return false;">` + "</td>"
+            content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList btn btn-success btn-circle" onClick="return false;">` + "</td>"
             content += "<td>" + makeCheckListNum() + "</td>"
             content += `<td style=${textDeco}; class="${response.chkPicFileName}">` + response.chkContents + "</td>"
-            content += "<td><button type='submit' class='processComplete c-button'>해결</button></td>"
+            content += "<td><a href='#' class='btn btn-success btn-circle btn-lg'><i style='padding: 12px' class='fas fa-check'></i></a></td>"
             content += `<td><button type='submit' class='c-button' chk-no='${response.chkNo}'>상세정보</button></td>`
             content += "</tr>"
 

@@ -36,7 +36,7 @@
                             if (response[i].workerId == 'admin') {
 
                             } else {
-                                selectTr = `<tr data-workerid = ${response[i].workerId}>`;
+                                selectTr = `<tr class="text-center bf-2" style="color: #18181c" data-workerid = ${response[i].workerId}>`;
                                 selectTr += "<td>" + response[i].workerName + "</td>";
                                 selectTr += "<td>" + response[i].startDay + "</td>";
                                 selectTr += "<td>" + response[i].late + " 회" + "</td>";
@@ -63,7 +63,7 @@
                         var selectTr = "";
                         let numberFormat = new Intl.NumberFormat('en-US')
                         for (let i = 0; i < response.length; i++) {
-                            selectTr = `<tr data-workerid = ${response[i].workerId}>`;
+                            selectTr = `<tr class="text-center bf-2" style="color: #18181c" data-workerid = ${response[i].workerId}>`;
                             selectTr += "<td>" + response[i].workerName + "</td>";
                             selectTr += "<td>" + response[i].startDay + "</td>";
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
@@ -102,7 +102,7 @@
                         var selectTr = "";
                         $('#tbodyOut').empty();
                         for (let i = 0; i < response.length; i++) {
-                            selectTr = `<tr data-workerid = ${response[i].workerId}>`;
+                            selectTr = `<tr class="text-center bf-2" style="color: #18181c" data-workerid = ${response[i].workerId}>`;
                             selectTr += "<td>" + response[i].workerName + "</td>";
                             selectTr += "<td>" + response[i].startDay + "</td>";
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
@@ -144,7 +144,7 @@
                         var selectTr = "";
                         $('#tbody').empty();
                         for (let i = 0; i < response.length; i++) {
-                            selectTr += `<tr data-workerid = ${response[i].workerId}>`;
+                            selectTr += `<tr class="text-center bf-2" style="color: #18181c" data-workerid = ${response[i].workerId}>`;
                             selectTr += "<td>" + response[i].workerName + "</td>";
                             selectTr += "<td>" + response[i].startDay + "</td>";
                             selectTr += "<td>" + response[i].late + " 회" + "</td>";
@@ -202,7 +202,7 @@
             <t-h2 ko="현재 근무자"></t-h2>
             <table id="table" class="table tableSubHeadingColor">
                 <thead>
-                <tr>
+                <tr class='text-center bf-2'>
                     <th th:width="100">이름</th>
                     <th th:width="300">근무 시작일</th>
                     <th th:width="100">총 지각</th>
@@ -222,7 +222,7 @@
             <t-h2 ko="퇴직한 근무자"></t-h2>
             <table class="table">
                 <thead>
-                <tr>
+                <tr class='text-center bf-2'>
                     <th th:width="100">이름</th>
                     <th th:width="300">근무 시작일</th>
                     <th th:width="100">총 지각</th>

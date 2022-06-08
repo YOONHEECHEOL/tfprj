@@ -5,6 +5,15 @@
     <title>Title</title>
 </head>
 <body>
+<!-- Custom fonts for this template-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Noto+Sans+KR:wght@100;400;700;900&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Custom styles for this template-->
+<link th:href="@{/css/h_style.css}" rel="stylesheet" type="text/css" >
 <script
         src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -59,7 +68,7 @@
     <h4>근무자 세부정보</h4>
     <div>
         <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_update}" enctype="multipart/form-data">
-            <table>
+            <table class="table tableSubHeadingColor">
                 <tr>
                     <td>아이디</td>
                     <td><input type="text" th:value="${workerInfo.workerId}" name="workerId"></td>
