@@ -107,5 +107,15 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.updateId(memberId,memberName,gameId);
     }
 
+    @Override
+    public int updateGameStatus(String resId) {
+        return mapper.updateGameStatus(resId);
+    }
+
+    @Override
+    public int updatePaidStatus(String resId) {
+        return mapper.updatePaidStatus(resId);
+    }
+
 
 }

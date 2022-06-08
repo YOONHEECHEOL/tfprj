@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
     @Autowired
     MsgService msgServiceImpl;
-    @Scheduled(cron = "0 50 23 * * *")
+    @Scheduled(cron = "0 44 11 * * *")
     public void scheduleInsertTodoMsg() {
-        System.out.println("스케줄러 실행됌");
+        System.out.println("Admin Message Count Start");
         msgServiceImpl.insertTodoMsg();
     }
 

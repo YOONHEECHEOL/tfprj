@@ -30,17 +30,11 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         HttpSession httpSession = request.getSession();
 
         vo = memberMapper.selectMember(vo);
-        if (vo != null) {
-            httpSession.setAttribute("member", vo);
-            httpSession.setAttribute("memberId", vo.getMemberId());
-            httpSession.setAttribute("log", "y");
-            httpSession.setAttribute("message", vo.getMemberId() + "님 로그인되었습니다.");
 
-            // 단일 리스트 또는 로그인
+        if(vo != null)
             return vo;
-        } else
+        else
             return null;
-
     }
 
     // 로그아웃
@@ -75,8 +69,10 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 
     @Transactional //회원가입
     public int insertMember(MemberVO vo) {
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+
         memberMapper.insertMember(vo);
         return '1';
     }
@@ -187,6 +183,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         MemberVO vo = new MemberVO();
         vo.setMemberId(memberId);
         vo = memberMapper.selectMember(vo);
+        vo.setMemberAuth("ROLE_USER");
         if (vo == null){
             throw new UsernameNotFoundException("User not authorized.");
         }

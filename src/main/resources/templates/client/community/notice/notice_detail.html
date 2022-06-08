@@ -4,51 +4,53 @@
       layout:decorate="~{layout/cli_layout}">
 
 <th:block layout:fragment="content">
-    <t-h1 en="NOTICE" ko="공지사항"></t-h1>
+  <t-h1 en="NOTICE" ko="공지사항"></t-h1>
 
-    <div class="container">
-        <form th:id="details" method="post" action="/cli/noticeUpdate">
+  <t-h2 ko="공지사항 상세보기"></t-h2>
+  <div class="row px-0">
 
-            <div>
-                <h1>공지사항 상세보기</h1>
-            </div>
+    <div class="col-12">
+      <form th:id="details" method="post" action="/cli/noticeUpdate">
+        <table th:each="n, status : ${notice}" class="table f16" id="frm">
+          <colgroup>
+            <col width="25%">
+          </colgroup>
+          <tr>
+            <th>글번호</th>
+            <td th:text="${n.nNo}"></td>
+          </tr>
+          <tr>
+            <th>작성일자</th>
+            <td th:text="${n.wdate}"></td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td th:text="${n.title}" colspan="6"></td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td th:text="${n.details}" colspan="6">
+              <textarea id="details" name="details" class="form-control" rows="10" cols="80"
+                        required="required">
+              </textarea>
+            </td>
+          </tr>
 
-            <div class="container" style="max-width: 880px;">
-                <table th:each="n, status : ${notice}" border="1" class="card" id="frm">
-                    <tr>
-                        <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
-                        <td th:text="${n.nNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
+          <input type="hidden" id="nNo" name="nNo" th:value="${n.nNo}">
+          <input type="hidden" id="title" name="title" th:value="${n.title}">
+          <input type="hidden" id="wdate" name="wdate" th:value="${n.wdate}">
+          <input type="hidden" id="views" name="views" th:value="${n.views}">
+          <input type="hidden" id="tdetails" name="details" th:value="${n.details}">
 
-                        <th width="105" height="39" style="padding: 1px 1px 1px 10px">작성일자</th>
-                        <td th:text="${n.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
-                    </tr>
-                    <tr>
-                        <th height="39" style="padding: 1px 1px 1px 10px">제목</th>
-                        <td th:text="${n.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
-                    </tr>
-                    <tr>
-                        <th style="padding:50px 50px 50px 50px">내용</th>
-                        <td th:text="${n.details}" colspan="6">
-                        <textarea id="details" name="details" class="form-control" rows="10" cols="80"
-                                  required="required">
-                        </textarea>
-                        </td>
-                    </tr>
-
-                    <input type="hidden" id="nNo" name="nNo" th:value="${n.nNo}">
-                    <input type="hidden" id="title" name="title" th:value="${n.title}">
-                    <input type="hidden" id="wdate" name="wdate" th:value="${n.wdate}">
-                    <input type="hidden" id="views" name="views" th:value="${n.views}">
-                    <input type="hidden" id="tdetails" name="details" th:value="${n.details}">
-
-                </table>
-            </div>
-            <br>
-            <input th:type="hidden" th:id="nNo" th:name="nNo">
-        </form>
+        </table>
+      </form>
     </div>
+    <input th:type="hidden" th:id="nNo" th:name="nNo">
+  </div>
 
-    <button onclick="location.href = '/cli/notice'">뒤로가기</button>
+  <div class="button__box mt20">
+    <button class="c-button" onclick="location.href = '/cli/notice'">뒤로가기</button>
+  </div>
 
 </th:block>
 

@@ -1,5 +1,6 @@
 package com.yedam.tfprj.client.member.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +22,9 @@ public class MemberVO implements UserDetails {
     private String preferred;
     private int    teamId;
     private int ROWNUM;
-    private String memberAuth ="USER";
+    private String memberAuth = "ROLE_USER";
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(this.memberAuth));

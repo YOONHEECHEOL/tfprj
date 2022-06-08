@@ -316,6 +316,7 @@ main.contents {
     background: #222;
     color: #fff;
     padding: 0 0 3rem;
+    margin: 4rem 0 0;
 }
 .footer::before {
     content: '';
@@ -385,6 +386,8 @@ main.contents {
     border: .1rem solid #ccc;
     border-radius: 100rem;
     cursor: pointer;
+    transition: all .3s ease;
+    box-sizing: border-box;
 }
 .c-button.active {
     background: #3765C7;
@@ -405,6 +408,21 @@ main.contents {
 }
 .c-button.bb {
     border: .5rem solid #3765C7;
+}
+.c-button.bb i {
+    color: #3765C7;
+}
+.c-button.sec {
+    border: .5rem solid #1cc88a;
+}
+.c-button.sec i {
+    color: #1cc88a;
+}
+.c-button.rr {
+    border: .5rem solid #FF4F4F;
+}
+.c-button.rr i {
+    color: #FF4F4F;
 }
 #inningValue > button {
     border: .5rem solid #3765C7;
@@ -1018,4 +1036,36 @@ i.black {
     font-size: 1.6rem;
     border-radius: .4rem;
     cursor: pointer;
+}
+
+/* opensea */
+.openseaItems {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.openseaItems > div {
+    width: calc(50% - 2.4rem - 1.2rem);
+    height: 0;
+    margin: 1.2rem .6rem;
+    padding: .6rem;
+    padding-top: calc(50% - 2.4rem - 1.2rem);
+    border: 1px solid #bbb;
+    border-radius: .4rem;
+    position: relative;
+}
+.openseaItems > div > a {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0;
+    text-align: center;
+}
+.fc-toolbar-title {
+    font-family: esM;
+    color: #222;
 }

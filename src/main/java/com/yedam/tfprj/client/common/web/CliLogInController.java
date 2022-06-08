@@ -47,6 +47,7 @@ public class CliLogInController {
     public String idCheck(HttpServletRequest request, MemberVO memberVO) {
 
         memberVO = memberServiceImpl.selectMember(request, memberVO);
+
         if (memberVO != null) {
             return "y";
         } else
