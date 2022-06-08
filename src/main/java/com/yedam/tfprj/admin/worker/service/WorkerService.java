@@ -22,6 +22,5 @@ public interface WorkerService {
     public int updateAllLateAbsence(int isLate, int isAbsence, String workerId);
     public int updateLastMonthPay(String workerId, float lastMonthPay);
     public int updateSumPay(String workerId, float allPay);
-
-
+    public WorkerVO isIdCheck(String workerId);
 }

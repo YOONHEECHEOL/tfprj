@@ -9,40 +9,37 @@
 
     <t-h2 ko="팀 조회"></t-h2>
 
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h1>팀</h1>
-        </div>
-    </div>
-    <div th:class="row">
-        <div th:class="col-auto">
+    <div class="row px-0">
+        <div th:class="col-12">
             <div th:if="${team eq null}">
-                <button th:onclick="|location.href = '@{/cli/myTeamCreateForm}'|" >팀생성</button>
+                <button class="c-button" th:onclick="|location.href = '@{/cli/myTeamCreateForm}'|" >팀생성</button>
             </div>
             <div th:unless="${team eq null}">
                 <div th:each="team, i : ${team}">
                     <form th:id="frm">
-                    <table>
+                    <table class="table f16">
                         <tbody>
                         <tr>
-                            <th>팀명</th>
+                            <th class="bf-2 p">팀명</th>
                             <td><span th:id="teamName" th:text="${team.teamName}"></span></td>
                         </tr>
                         <tr>
-                            <th>팀장</th>
+                            <th class="bf-2 p">팀장</th>
                             <td><span th:id="teamLeader" th:text="${team.leader}"></span></td>
                         </tr>
                         </tbody>
                     </table>
-                        <input type="hidden" th:id="teamId" th:value="${team.teamId}">
-                        <input th:type="button" id="leaderBtn" th:if="${session.memberId eq team.leader}" th:value="${'팀 상세 조회'}">
-                        <input th:type="button" id="memberBtn" th:if="${session.memberId ne team.leader}" th:value="${'팀 상세 조회'}">
+                        <div class="button__box">
+                            <input class="c-button" type="hidden" th:id="teamId" th:value="${team.teamId}">
+                            <input class="c-button" th:type="button" id="leaderBtn" th:if="${session.memberId eq team.leader}" th:value="${'팀 상세 조회'}">
+                            <input class="c-button" th:type="button" id="memberBtn" th:if="${session.memberId ne team.leader}" th:value="${'팀 상세 조회'}">
+                        </div>
                     </form>
                 </div>
 
                 <!--팀원 추가-->
-                <div th:id="addMem">
-                    <input th:type="button" th:class="addMemBtn" th:value="팀원추가">
+                <div th:id="addMem" class="button__box">
+                    <input th:type="button" class="addMemBtn c-button sec" th:value="팀원추가">
                 </div>
 
             </div>

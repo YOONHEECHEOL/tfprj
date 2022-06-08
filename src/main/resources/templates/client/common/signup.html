@@ -10,12 +10,16 @@
 
     <form id="frm" action="/cli/insertMember" method="post" onsubmit="return formCheck()">
 
-        <input class="form-control" type="text" name="memberId" id="memberId" required="required" placeholder="아이디 입력.."/>
+        <div class="bf-3 p">아이디 입력</div>
+        <input class="form-control mt12" type="text" name="memberId" id="memberId" required="required" placeholder="아이디 입력.."/>
         <button type="button" id="checkId"
-                class="c-button" value="No" onclick="isIdCheck()">중복체크
+                class="c-button mt12" value="No" onclick="isIdCheck()">중복체크
         </button>
 
-        <div class="form-group">
+        <hr class="mt20">
+
+        <div class="bf-3 p mt20">비밀번호 입력</div>
+        <div class="form-group mt12">
             <input class="form-control" type="password" name="password" id="password" placeholder="비밀번호 입력.."/>
         </div>
 
@@ -23,30 +27,60 @@
             <input class="form-control" type="password" style="-ms-ime-mode: inactive" id="password1" placeholder="비밀번호 확인.."/>
         </div>
 
-        <div class="form-group">
+        <hr class="mt20">
+
+        <div class="bf-3 p mt20">이름 입력</div>
+        <div class="form-group mt20">
             <input class="form-control" type="text" name="memberName" id="member_name" placeholder="이름 입력.." korOnly/>
         </div>
+
+        <hr class="mt20">
+
+        <div class="bf-3 p mt20">연락처 입력</div>
         <div class="form-group">
             <input class="form-control" type="text" name="tel" id="tel" maxlength="11" minlength="11" placeholder='휴대폰 -없이 입력'
                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
         </div>
-        <div class="form-group form-button">
+
+        <hr class="mt20">
+
+        <!-- 중복체크 -->
+        <div>
+            <div class="bf-3 mt20">중복방지</div>
+            <div class="row mt12 px-0 justify-content-between align-items-center">
+                <div class="col-6">
+                    <input type="text" class="form-control" id="capt" readonly="readonly">
+                </div>
+                <div class="col-5">
+                    <div id="refresh">
+                        <span class="c-button" onclick="cap()"><i class="fa-solid fa-rotate"></i>새로고침</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row px-0 justify-content-between align-items-center">
+                <div class="col-6">
+                    <input type="text" id="textinput" class="form-control mt12" placeholder="코드를 입력해주세요">
+                </div>
+                <div class="col-5">
+                    <span id="codeChk" class="c-button mt12" onclick="validcap()">중복방지 코드 확인</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="button__box mt20">
             <input type="submit" name="signup" id="signup"
-                   class="c-button" value="회원가입"/>
+                   class="button button-primary" value="회원가입"/>
         </div>
 
     </form>
 
-    <p class="mt-4">
-        이미 회원이신가요? <a href="login.html">로그인</a>
-    </p>
+    <div class="mt20 bf-2 text-center">
+        이미 회원이신가요? <a href="login.html" class="bf-3">로그인 하기</a>
+    </div>
 
-    <t-h2 ko="매크로 방지"></t-h2>
-    <input type="text" id="capt" readonly="readonly">
-    <div id="refresh"><img src="/images/refresh.png" width="50px" onclick="cap()"></div>
 
-    <input type="text" id="textinput">
-    <button onclick="validcap()">check</button>
 
     <script>
         $(document).ready(function () {
@@ -87,10 +121,14 @@
             var string1 = document.getElementById('capt').value;
             var string2 = document.getElementById('textinput').value;
             if (string1 == string2) {
-                alert("두 문자가 일치합니다");
+                document.querySelector('#codeChk').innerHTML = `<i class="fa-solid fa-circle-check"></i>문자일치`;
+                document.querySelector('#codeChk').classList.add('sec')
+                document.querySelector('#codeChk').classList.remove('rr')
                 capresult = true;
             } else {
-                alert("똑바로 보고 해라");
+                document.querySelector('#codeChk').innerHTML = `<i class="fa-solid fa-circle-xmark"></i>문자틀림`;
+                document.querySelector('#codeChk').classList.add('rr')
+                document.querySelector('#codeChk').classList.remove('sec')
                 capresult = false;
 
             }
@@ -108,12 +146,13 @@
                 type: "get",
                 success: function (result) {
                     if (result == 'n') {
-                        alert("사용 가능한 아이디입니다.");
-                        $("#checkId").attr("class", "c-button disabled");
+                        $("#checkId").html(`<i class="fa-solid fa-circle-check"></i> 사용가능한 아이디입니다!`);
+                        $("#checkId").attr("class", "c-button sec mt12");
                         $("#checkId").val('Yes');
                         $("#password").focus();
                     } else {
-                        alert("사용 불가능한 아이디입니다.");
+                        $("#checkId").html(`<i class="fa-solid fa-circle-xmark"></i> 사용 불가능한 아이디! 다시 체크해주세요!`);
+                        $("#checkId").attr("class", "c-button rr mt12");
                         $("#memberId").val('');
                         $("#memberId").focus();
                     }

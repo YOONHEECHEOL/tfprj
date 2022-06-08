@@ -32,5 +32,11 @@ public class AdmReservationRestController {
         }
     }
 
+    @PostMapping("/adm/reservation/updateGameStatus")
+    public int updateGameStatus(@RequestParam String resId){
+        int i = reservationServiceImpl.updatePaidStatus(resId);
+        return reservationServiceImpl.updateGameStatus(resId);
+    }
+
 
 }

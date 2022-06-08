@@ -58,5 +58,8 @@ public class CliReservationServiceImpl implements CliReservationService {
         return reservationMapper.teamList();
     }
 
+    @Override
+    public void deleteReservation() {
 
+    }
 }

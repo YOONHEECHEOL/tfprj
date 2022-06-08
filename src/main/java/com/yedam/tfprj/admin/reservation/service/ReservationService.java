@@ -23,4 +23,8 @@ public interface ReservationService {
     //아이디 업데이트
     public int updateId(String memberId, String memberName, String gameId );
 
+    public int updateGameStatus(String resId);
+
+    public int updatePaidStatus(String resId);
+
 }

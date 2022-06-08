@@ -316,6 +316,7 @@ main.contents {
     background: #222;
     color: #fff;
     padding: 0 0 3rem;
+    margin: 4rem 0 0;
 }
 .footer::before {
     content: '';
@@ -385,6 +386,8 @@ main.contents {
     border: .1rem solid #ccc;
     border-radius: 100rem;
     cursor: pointer;
+    transition: all .3s ease;
+    box-sizing: border-box;
 }
 .c-button.active {
     background: #3765C7;
@@ -405,6 +408,21 @@ main.contents {
 }
 .c-button.bb {
     border: .5rem solid #3765C7;
+}
+.c-button.bb i {
+    color: #3765C7;
+}
+.c-button.sec {
+    border: .5rem solid #1cc88a;
+}
+.c-button.sec i {
+    color: #1cc88a;
+}
+.c-button.rr {
+    border: .5rem solid #FF4F4F;
+}
+.c-button.rr i {
+    color: #FF4F4F;
 }
 #inningValue > button {
     border: .5rem solid #3765C7;

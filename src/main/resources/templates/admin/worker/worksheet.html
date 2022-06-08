@@ -184,26 +184,30 @@
 
             function deleteCalendar(){
                 $('#deleteBtn').on('click', function(){
-                    if (!confirm($('#fc-dom-1').html() + "의 데이터를 삭제하시겠습니까?")) {
-                        // 취소(아니오)
-                    } else {
-                        // 확인(예)
-                        let date = $('#fc-dom-1').html().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ).replace(' ', '-');
-                        $.ajax({
-                            url : "deleteCalendar",
-                            data : {date : date}
-                        }).done(function(response){
-                            console.log(response);
-                            if(response == "0"){
-                                alert('삭제할 데이터가 없습니다.')
-                            }else{
-                                let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
-                                let dateOffset = new Date(calendar.getDate().getTime() - offset);
+                    if('[[${session.positionCd}]]' != 1){
+                        alert('권한이 없습니다.');
+                    }else {
+                        if (!confirm($('#fc-dom-1').html() + "의 데이터를 삭제하시겠습니까?")) {
+                            // 취소(아니오)
+                        } else {
+                            // 확인(예)
+                            let date = $('#fc-dom-1').html().replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '').replace(' ', '-');
+                            $.ajax({
+                                url: "deleteCalendar",
+                                data: {date: date}
+                            }).done(function (response) {
+                                console.log(response);
+                                if (response == "0") {
+                                    alert('삭제할 데이터가 없습니다.')
+                                } else {
+                                    let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
+                                    let dateOffset = new Date(calendar.getDate().getTime() - offset);
 
-                                window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0,10))
-                                window.location.reload();
-                            }
-                        })
+                                    window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0, 10))
+                                    window.location.reload();
+                                }
+                            })
+                        }
                     }
                 })
             }
@@ -344,30 +348,34 @@
 
                     console.log(workerArr);
 
-                    if(b.workerId != c.workerId && b.workerId != 'admin' && c.workerId != 'admin') {
-                        $.ajax({
-                            url: "worksheetInsert",
-                            method: 'POST',
-                            data: {
-                                workerArr: JSON.stringify(workerArr),
-                                date: date
-                            },
-                        }).done(function (response) {
-                            console.log(response);
-                            if (response == 0) {
-                                alert('해당 월에 이미 값이 존재합니다.')
-                            } else {
-                                alert('근무표가 생성되었습니다.')
-                                let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
-                                let dateOffset = new Date(calendar.getDate().getTime() - offset);
-
-                                window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0,10))
-                                window.location.reload();
-
-                            }
-                        })
+                    if('[[${session.positionCd}]]' != 1){
+                        alert('권한이 없습니다.');
                     }else{
-                        alert('1부, 혹은 2부 근무자를 변경해주세요.')
+                        if(b.workerId != c.workerId && b.workerId != 'admin' && c.workerId != 'admin') {
+                            $.ajax({
+                                url: "worksheetInsert",
+                                method: 'POST',
+                                data: {
+                                    workerArr: JSON.stringify(workerArr),
+                                    date: date
+                                },
+                            }).done(function (response) {
+                                console.log(response);
+                                if (response == 0) {
+                                    alert('해당 월에 이미 값이 존재합니다.')
+                                } else {
+                                    alert('근무표가 생성되었습니다.')
+                                    let offset = calendar.getDate().getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
+                                    let dateOffset = new Date(calendar.getDate().getTime() - offset);
+
+                                    window.localStorage.setItem("saveDate", dateOffset.toISOString().substring(0,10))
+                                    window.location.reload();
+
+                                }
+                            })
+                        }else{
+                            alert('1부, 혹은 2부 근무자를 변경해주세요.')
+                        }
                     }
                 })
             })

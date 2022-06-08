@@ -14,18 +14,30 @@
         <span>기록이 없습니다.</span>
     </div>
     <div th:if="${score.size ne 0}">
-        <div th:each="scr, i : ${score}">
-            <span th:text="${scr.memberId}"></span>
-            <span th:text="${scr.memberName}"></span>
-            <span th:text="${scr.groundCd}"></span>
-            <span th:text="${scr.hits}"></span>
-            <span th:text="${scr.homeruns}"></span>
-            <span th:text="${scr.highestDistance}"></span>
-            <span th:text="${scr.batCounts}"></span>
-            <span th:text="${scr.batOrder}"></span>
-            <span th:text="${scr.difficultyCd}"></span>
-            <span th:text="${scr.gameId}"></span>
-        </div>
+        <table>
+            <tbody>
+            <tr>
+                <th>구장</th>
+                <th>안타</th>
+                <th>홈런</th>
+                <th>최고비거리</th>
+                <th>총 타수</th>
+                <th>타순</th>
+                <th>난이도</th>
+                <th>게임진행일자</th>
+            </tr>
+            <tr th:each="scr, i : ${score}">
+                <td th:text="${scr.groundCd}+'구장'"></td>
+                <td th:text="${scr.hits}"></td>
+                <td th:text="${scr.homeruns}"></td>
+                <td th:text="${scr.highestDistance}"></td>
+                <td th:text="${scr.batCounts}"></td>
+                <td th:text="${scr.batOrder}"></td>
+                <td th:text="${scr.difficultyCd}"></td>
+                <td th:text="${scr.resDate}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div>
@@ -83,7 +95,7 @@
             }).done(function (datas) {
                 jsonData = [];
                 for (dt of datas) {
-                    var avg = dt.hits / dt.batCounts;
+                    var avg = (dt.hits / dt.batCounts);
                     jsonData.push([dt.resDate, avg])
                 }
                 data.addRows(jsonData);

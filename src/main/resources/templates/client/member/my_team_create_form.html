@@ -10,37 +10,30 @@
 
     <t-h2 ko="팀 생성"></t-h2>
 
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h1>팀</h1>
-        </div>
-    </div>
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>팀 생성</h3>
-        </div>
-    </div>
-    <div th:class="row">
-        <div th:class="col-auto">
+    <div class="row px-0">
+        <div th:class="col-12">
             <form method="POST" action="/cli/myTeamCreate">
                 <div>
-                    <table>
+
+                    <table class="table f16">
                         <tbody>
                         <tr>
-                            <th>팀명</th>
-                            <td><input th:type="text" th:id="teamName" th:name="teamName"></td>
+                            <th class="bf-2 p">팀명</th>
+                            <td><input th:type="text" th:id="teamName" class="form-control" th:name="teamName"></td>
                         </tr>
                         <tr>
-                            <th>팀장</th>
-                            <td><input th:type="text" th:id="leader" th:name="leader" th:value="|${session.memberId}|">
+                            <th class="bf-2 p">팀장</th>
+                            <td><input th:type="text" th:id="leader" class="form-control" th:name="leader" th:value="|${session.memberId}|">
                             </td>
                         </tr>
                         </tbody>
                     </table>
+
                     <input th:type="hidden" th:id="memberId" th:name="memberId" th:value="|${session.memberId}|">
-                    <button th:type="submit" th:id="createBtn">저장하기</button>
+                    <button class="c-button" th:type="submit" th:id="createBtn">저장하기</button>
                 </div>
-                <hr>
+                <hr class="mt20">
+                <div class="mt20"></div>
             </form>
         </div>
     </div>
