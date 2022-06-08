@@ -4,6 +4,8 @@
       layout:decorate="/layout/cli_layout">
 
 <th:block layout:fragment="content">
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"></script>
 
     <t-h1 ko="예약결제" en="RES-PAY"></t-h1>
 
@@ -48,8 +50,7 @@
 
     <ul id="paymentMethod">
         <li><button class="c-button" data-val="1701">현장결제</button></li>
-        <li><button class="c-button" data-val="1702">네이버페이</button></li>
-        <li><button class="c-button" data-val="1703">카카오페이</button></li>
+        <li><button class="c-button" data-val="1702">카드결제</button></li>
         <li><button class="c-button" data-val="1704">무통장입금</button></li>
     </ul>
 
@@ -81,8 +82,10 @@
         let $startTime = document.querySelector('#startTime').value;
         let $endTime = document.querySelector('#endTime').value;
 
+
         // paymentAmount value insert
         let $paymentAmount = ($endTime - $startTime) * 50000;
+        console.log($paymentAmount);
         document.querySelector('#paymentAmount').value = $paymentAmount;
 
         const paymentMethod = () => {
@@ -127,12 +130,45 @@
 
         // 결제하기
         const pay = () => {
+            let t = document.querySelector('#paymentMethod');
+            let c = $("#paymentMethod")
+            let payMethod = document.querySelector('.c-button.active').getAttribute("data-val");
+            if(payMethod == 1702){
+                var IMP = window.IMP; // 생략가능
+                IMP.init('imp66037800'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+                var msg;
 
-            //validate 추가
+                let paymentAmount = $("#paymentAmount").val()
+                let prodInfoCd = $("#prodInfoCd").val()
+                let memberId = $("#memberId").val()
+                let paymentMethodCd = $("#paymentMethodCd").val()
+                let paymentStatusCd = $("#paymentStatusCd").val()
 
+                IMP.request_pay({
+                    pg : 'html5_inicis',
+                    pay_method : 'card',
+                    merchant_uid : 'merchant_' + new Date().getTime(),
+                    name : 'BatHeroes 예약 결제',
+                    amount : paymentAmount,
 
-            document.querySelector('#payDoneFrm').submit();
+                    m_redirect_url : 'http://localhost:18000/cli/resPayDone?paymentAmount=' + paymentAmount + '&prodInfoCd=' + prodInfoCd + '&memberId=' + memberId
+                                                + '&paymentMethodCd=' + paymentMethodCd + '&paymentStatusCd=' + paymentStatusCd
+            },function (rsp) {
+                    if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+                    } else {
+                        alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+                    }
+                });
+            }
+            else{
+                document.getElementById('payDoneFrm').submit();
+            }
         }
+
+    </script>
+    <script>
+
+
 
     </script>
 
