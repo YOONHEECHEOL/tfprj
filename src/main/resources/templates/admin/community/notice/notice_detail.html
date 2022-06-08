@@ -8,7 +8,6 @@
 <div class="container">
     <form th:id="details" method="post" action="/adm/noticeUpdate">
 
-
         <div class="container" style="max-width: 880px;">
             <table th:each="n, status : ${notice}" border="1" class="card" id="frm">
                 <tr>
@@ -44,9 +43,9 @@
     </form>
 </div>
 
-<button onclick="location.href = '/adm/notice'">뒤로가기</button>
-<button th:onclick="|location.href = '@{/adm/noticeDelete?nNo={no}(no=${notice.nNo})}'|" style="float: right">삭제</button>
-<button id="submitFrm" style="float: right">수정</button>
+<button onclick="location.href = '/adm/notice'" class="c-button col-2" style="float: left">뒤로가기</button>
+<button th:onclick="|location.href = '@{/adm/noticeDelete?nNo={no}(no=${notice.nNo})}'|" class="c-button col-1" style="float: right">삭제</button>
+<button id="submitFrm" style="float: right" class="c-button col-1">수정</button>
 
 <script>
 

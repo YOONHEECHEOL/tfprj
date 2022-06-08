@@ -6,43 +6,57 @@
 <th:block layout:fragment="content">
     <t-h1 en="FAQ 작성"></t-h1>
 
+    <script src="/ckeditor/ckeditor.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<article>
-    <div class="container" role="main">
+    <article>
+        <div class="container" role="main">
 
 
+            <form name="form" id="form" role="form" method="post" action="/adm/faqInsert">
 
-        <form name="form" id="form" role="form" method="post" action="/adm/faqInsert">
 
+                <select name="title">
+                    <th:block th:each="t:${title}">
+                        <option th:value="${t.title}" th:text="${t.title}">로그인</option>
+                    </th:block>
+                </select>
 
-            <select name="title">
-                <th:block th:each="t:${title}">
-                    <option th:value="${t.title}" th:text="${t.title}">로그인</option>
-                </th:block>
-            </select>
+                <div class="mb-3">
+                    <label for="subTitle">제목</label>
+                    <input type="text" class="form-control" name="subTitle" id="subTitle" placeholder="제목을 입력해 주세요">
+                </div>
 
-            <div class="mb-3">
-                <label for="subTitle">제목</label>
-                <input type="text" class="form-control" name="subTitle" id="subTitle" placeholder="제목을 입력해 주세요">
-            </div>
+                <div class="mb-3">
+                    <label for="details">내용</label>
+                    <textarea class="form-control" rows="5" name="details" id="details"
+                              placeholder="내용을 입력해 주세요"></textarea>
+                </div>
 
-            <div class="mb-3">
-                <label for="details">내용</label>
-                <textarea class="form-control" rows="5" name="details" id="details"
-                          placeholder="내용을 입력해 주세요"></textarea>
-            </div>
+                <div>
+                    <input type="submit" style="float: right" class="c-button col-1" id="btnSave" value="생성">
 
-            <div>
-                <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                    <input type="button" onclick="formCheck()" style="float: right" onclick="location.href = '/adm/faq'"
+                           class="c-button col-1">목록
+                    </button>
+                </div>
+            </form>
+        </div>
+    </article>
+    <script>
+        CKEDITOR.replace("details", {
+            filebrowserUploadUrl: "/cli/imageUpload"
+        });
 
-                <button type="button" style="float: right" onclick="location.href = '/adm/faq'"
-                        class="btn btn-sm btn-primary">목록
-                </button>
-            </div>
-        </form>
-    </div>
-</article>
+        function formCheck() {
+            if (form.title.value == "") {
+                alert("제목을 입력하세요.");
+                form.title.focus();
+                return false;
+            }
+            form.submit();
+        }
+    </script>
 </th:block>
 </html>

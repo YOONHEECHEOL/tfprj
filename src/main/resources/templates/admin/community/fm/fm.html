@@ -5,17 +5,19 @@
 <th:block layout:fragment="content">
     <t-h1 en="" ko="친선 경기 게시판"></t-h1>
 
-    <form>
-        <div class="mt20">
-            <input class="form-control" type="text" th:value="${admFmVO.title}"
-                   onclick="this.select()"
-                   name="title" placeholder="제목을 입력하세요"/>
-            <div class="button__box">
-                <button class="c-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+    <div class="col-12 a__box nh">
+        <t-h2 ko="친선경기 검색 및 작성"></t-h2>
+        <form>
+            <div class="button__box f16">
+                <input class="form-control col-9" type="text" th:value="${admFmVO.title}"
+                       onclick="this.select()"
+                       name="title" placeholder="제목을 입력하세요"/>
+                <button class="c-button col-1" type="submit">검색</button>
+                <a class="c-button col-1" onclick="location.href = '/adm/fmWrite'">작성</a>
+                <a class="c-button col-1" onclick="location.href = '/adm/index'" >홈</a>
             </div>
-        </div>
-    </form>
-
+        </form>
+    </div>
     <form th:id="details" method="post">
         <table class="table f14 mt20">
             <thead>

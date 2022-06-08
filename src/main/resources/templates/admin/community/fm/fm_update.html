@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="/ckeditor/ckeditor.js"></script>
 
 
 <div class="container">
@@ -32,7 +33,7 @@
             <label>내용</label>
             <textarea name="details" type="text" class="form-control" rows="5" th:value="${fm.details}" th:text="${fm.details}"></textarea>
         </div>
-        <button type="button" onclick="formCheck()" id="frm" style="float: left">전송</button>
+        <button type="button" class="c-button col-2" onclick="formCheck()" id="frm" style="float: left">전송</button>
     </form>
 
     <input type="hidden" id="fNo" name="fNo" th:value="${fm.fNo}">
@@ -43,6 +44,9 @@
 </div>
 
 <script>
+    CKEDITOR.replace("details", {
+        filebrowserUploadUrl: "/cli/imageUpload"
+    });
 
     function formCheck() {
         if (fm.title.value == "") {
