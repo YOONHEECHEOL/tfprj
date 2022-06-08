@@ -3,24 +3,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>회원리스트 조회</h3>
-        </div>
-    </div>
+
+    <t-h1 ko="회원 관리" en="MEMBERLIST"></t-h1>
+
+    <t-h2 ko="회원리스트"></t-h2>
     <!--MemberList Start-->
-    <div th:class="row">
-        <div th:class="col-auto">
+    <div class="row f14">
+        <div class="col-12">
             <form th:id="frm" action="/adm/searchMember" method="get">
                 <div>
                     <input type="text" class="form-control" id="memberId"
                            name="memberId" placeholder="Search"
                            aria-label="Search">
-                    <button class="btn btn-outline-secondary" id="searchBtn"
+                    <button class="c-button" id="searchBtn"
                             type="submit">Search
                     </button>
                 </div>
-                <table>
+                <table class="table f14">
                     <thead>
                     <tr>
                         <th>번호</th>
@@ -36,7 +35,7 @@
                         <td><span th:text="${list.memberId}"></span></td>
                         <td><span th:text="${list.memberName}"></span></td>
                         <td><span th:text="${list.tel}"></span></td>
-                        <td><select onchange="chargeSelect(this)">
+                        <td><select class="form-control" onchange="chargeSelect(this)">
                             <option th:if="${list.grade == 301}" th:text="일반" th:value=301 selected></option>
                             <option th:if="${list.grade == 302}" th:text="VIP" th:value=302 selected></option>
                             <option th:if="${list.grade == 303}" th:text="VVIP" th:value=303 selected></option>
@@ -52,19 +51,19 @@
                 <!--MemberList End-->
                 <!-- 페이징 -->
                 <nav>
-                    <ul>
+                    <ul class="pagination">
                         <!-- getPrePage : 이전 페이지 -->
-                        <li th:classappend="${searchInfo.getPrePage() == 0} ? 'disabled'">
-                            <a th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${searchInfo.getPrePage()})}">Previous</a>
+                        <li class="page-item" th:classappend="${searchInfo.getPrePage() == 0} ? 'disabled'">
+                            <a th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${searchInfo.getPrePage()})}"><</a>
                         </li>
                         <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                        <li th:each="page: ${#numbers.sequence(searchInfo.getNavigateFirstPage(), searchInfo.getNavigateLastPage())}"
+                        <li class="page-item" th:each="page: ${#numbers.sequence(searchInfo.getNavigateFirstPage(), searchInfo.getNavigateLastPage())}"
                             th:classappend="${page == searchInfo.getPageNum()} ? 'active'">
                             <a th:text="${page}" th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${page})}"></a>
                         </li>
                         <!-- getPrePage : 다음 페이지 -->
-                        <li th:classappend="${searchInfo.getNextPage() == 0} ? 'disabled'">
-                            <a th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${searchInfo.getNextPage()})}">Next</a>
+                        <li class="page-item" th:classappend="${searchInfo.getNextPage() == 0} ? 'disabled'">
+                            <a th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${searchInfo.getNextPage()})}">></a>
                         </li>
                     </ul>
                 </nav>
@@ -87,19 +86,25 @@
             })
         })
 
-        function chargeSelect(e) {
-            var gradeVal = e.options[e.selectedIndex].value;
-            var memId = e.parentElement.parentElement.children[1].children[0].innerHTML;
-            if (confirm("수정하시겠습니까?") == true) {
+        var prev_val;
+        $('#memberlistYn').focus(function () {
+            prev_val = $(this).val();
+        }).change(function () {
+            console.log($('#blacklistYn option:selected').val())
+            var success = confirm("수정하시겠습니까?");
+            var memId = $(this).parent().parent().children().children().eq(1).text();
+            var gradeVal = $('#memberlistYn option:selected').val();
+            if (success) {
                 $.ajax({
                     url: "/adm/gradeUpdate",
                     method: "POST",
                     data: {memberId: memId, grade: gradeVal}
                 })
             } else {
-                return;
+                $(this).val(prev_val);
+                return false;
             }
-        }
+        });
     </script>
 </th:block>
 </html>
