@@ -15,8 +15,7 @@
                 <tr>
                     <th>아이디</th>
                     <td>
-                        <span th:text="${member.memberId}">
-                        <input th:type="hidden" class="form-control-lg" th:name="memberId" th:value="${member.memberId}" readonly>
+                        <input th:type="text" class="form-control-lg" th:name="memberId" th:value="${member.memberId}" readonly>
                     </td>
                 </tr>
                 <tr>
@@ -27,7 +26,6 @@
                     <th>비밀번호</th>
                     <td>
                         <input th:type="password" class="form-control-lg" th:name="password" value="" >
-<!--                        <input th:type="password" class="form-control-lg" th:name="password" th:value="${member.password}" >-->
                     </td>
                 </tr>
                 <tr>

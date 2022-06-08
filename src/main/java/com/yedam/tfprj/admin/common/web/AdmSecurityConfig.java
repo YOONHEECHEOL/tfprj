@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+@Order(0)
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Order(1)
 public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
     private final WorkerServiceImpl workerServiceImpl;
     /**
@@ -22,14 +23,19 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     @Override
+    public void configure(WebSecurity web) throws Exception
+    {
+        // static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
+        web.ignoring().antMatchers("/resources/**","/css/**","/ckeditor/**","/font/**","/images/**","/js/**","/vendor/**");
+    }
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/adm/login","/adm/loginview","/resources/**","/css/**","/ckeditor/**","/font/**","/images/**","/js/**","/vendor/**").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
-                // USER, ADMIN 접근 허용
+                .antMatchers("/adm/loginview","/adm/login").permitAll()
                 .and()
                 .antMatcher("/adm/**")
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests().anyRequest().hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/adm/loginview")

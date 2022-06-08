@@ -8,6 +8,7 @@ import com.yedam.tfprj.client.league.service.LeagueVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +31,12 @@ public class HomeController {
   }
 
   @RequestMapping("/cli/home")
-  public String toClientHome(HttpServletRequest request) {
+  public String toClientHome(HttpServletRequest request, Model model) {
     // login 임시 체크
     HttpSession session = request.getSession();
-
+    if(request.getParameter("message") != null){
+      model.addAttribute("message",request.getParameter("message"));
+    }
     if (session.getAttribute("log") == null) {
       session.setAttribute("log", "null");
     }
