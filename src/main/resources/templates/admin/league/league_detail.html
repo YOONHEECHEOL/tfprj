@@ -6,14 +6,17 @@
 
 <th:block layout:fragment="content">
 
-    <t-h1 ko="리그조회" en="LEAGUE-DETAIL"></t-h1>
+    <a-h1 ko="리그조회" en="LEAGUE-DETAIL"></a-h1>
 
 
     <div class="row">
         <!-- league 상세정보 -->
         <div class="col-6 a__box os">
             <!-- league 정보 출력 -->
-            <t-h2 ko="리그 정보"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="리그 정보"></a-h2>
+            </div>
+
             <input type="hidden" th:value="${l.getLeagueVO().getLeagueId()}" id="leagueId">
             <ul class="f16">
                 <li>
@@ -54,7 +57,10 @@
 
         <div class="col-6 a__box os">
             <!-- league 신청한 팀 목록 -->
-            <t-h2 ko="신청목록"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="신청목록"></a-h2>
+            </div>
+
             <div id="tournament-table">
                 <table class="table text-center a-table">
                     <thead>
@@ -97,7 +103,10 @@
         <div class="col-6 a__box os">
             <div id="tm-root">
                 <!-- 대진표 -->
-                <t-h2 ko="대진표"></t-h2>
+                <div class="h_box">
+                    <a-h2 ko="대진표"></a-h2>
+                </div>
+
                 <div class="tm-r">
                     <ul class="tm-table" id="tm-table1">
                         <!--                        <li th:each="i: ${statusTeam}">-->
@@ -111,7 +120,10 @@
 
         <div class="col-6 a__box os">
             <!-- 참가 승인된 팀 목록 -->
-            <t-h2 ko="리그 참가 팀 목록"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="참가 팀 목록"></a-h2>
+            </div>
+
             <table class="table text-center a-table">
                 <thead>
                 <tr>

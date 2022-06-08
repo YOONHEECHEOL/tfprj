@@ -539,9 +539,9 @@ class aH1 extends HTMLElement {
           font-family: "esB";
           font-size: 4rem;
           position: absolute;
-          color: #3765C7;
+          color: #222;
           bottom: 0;
-          left: 0rem;
+          left: 1rem;
           padding: 2rem 0 0;
           margin: 0;
           display: inline-block;
@@ -554,17 +554,16 @@ class aH1 extends HTMLElement {
       .h1__box > div > span {
           font-family: "esB";
           position: absolute;
-          bottom: -2rem;
-          left: 2rem;
+          top: 6rem;
+          left: 1rem;
           font-size: 4.4rem;
           color: #fff;
           animation: appear 1s forwards ease;
       }
       .h1__box > div {
-          width: calc(100% + 4rem);
-          transform: translate(-2rem, 0);
+          width: 100%;
           height: 6rem;
-          background: #3765C7;
+          background: #222;
       }
       .h1__box > img {
           position: absolute;
@@ -573,10 +572,10 @@ class aH1 extends HTMLElement {
       }
       @keyframes appear {
             0% {
-                bottom: -4.8rem;
+                top: 6rem;
             }
             100% {
-                bottom: -2rem;
+                top: 1.2rem;
             }
         }
         @keyframes appear2 {
@@ -595,5 +594,90 @@ class aH1 extends HTMLElement {
     }
 }
 
+// h2 custrom tag
+class aH2 extends HTMLElement {
+    connectedCallback() {
+        let tit = this.shadowRoot.querySelector('#tit');
+        tit.innerText = this.getAttribute('ko');
+
+    }
+
+    constructor() {
+        super();
+
+        const shadow = this.attachShadow({mode: "open"})
+
+        const box = document.createElement('div')
+        box.setAttribute('class', 'h2__box')
+
+        const h2 = document.createElement('h2')
+        h2.setAttribute('class', 'h2')
+        h2.setAttribute('id', 'tit')
+
+        box.append(h2)
+
+        const style = document.createElement('style')
+        style.innerText = `            
+      h2.h2 {
+          font-family: 'esM';
+          font-weight: 400;
+          font-size: 2.2rem;
+          position: relative;
+          padding: 0.4rem 0 0 1.2rem;
+          margin: 0;
+          display: inline-block;
+          color: #fff;
+      }
+      .h2__box {
+          padding: 1.2rem 0 .8rem;
+      }
+      h2.h2::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 0%;
+          height: .1rem;
+          background-color: #fff;
+          animation: line 1s forwards ease;
+      }
+      h2.h2::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: -.4rem;
+          left: 100%;
+          width: 1rem;
+          height: 1rem;
+          border-radius: 12rem;
+          background-color: #fff;
+          animation: dot 1s forwards ease;
+      }
+      @keyframes dot {
+            0% {
+                left: 100%;
+                top: -.4rem;
+            }
+            100% {
+                left: 0;
+                top: -.4rem;
+            }
+        }
+      @keyframes line {
+            0% {
+                width:0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+    `;
+
+        shadow.append(style, box)
+    }
+}
+
 customElements.define('a-h1', aH1)
+customElements.define('a-h2', aH2)
 

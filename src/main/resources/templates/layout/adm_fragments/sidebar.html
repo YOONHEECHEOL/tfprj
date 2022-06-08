@@ -9,12 +9,12 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/adm/index">
-      <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-laugh-wink"></i>
-      </div>
-      <div class="sidebar-brand-text mx-3"> 매장관리 <sup></sup></div>
-    </a>
+<!--    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/adm/index">-->
+<!--      <div class="sidebar-brand-icon rotate-n-15">-->
+<!--        <i class="fas fa-laugh-wink"></i>-->
+<!--      </div>-->
+<!--      <div class="sidebar-brand-text mx-3"> 매장관리 <sup></sup></div>-->
+<!--    </a>-->
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -23,7 +23,7 @@
     <li class="nav-item active">
       <a class="nav-link" href="/adm/index">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
+        <span>BAT-HUB</span></a>
     </li>
 
     <!-- Divider -->
@@ -31,7 +31,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-      Interface
+      M E N U
     </div>
 
 
@@ -41,6 +41,8 @@
               <span>예약 목록</span>
           </a>
       </li>
+
+      <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
@@ -59,6 +61,13 @@
       </div>
     </li>
 
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+          <a class="nav-link" href="/adm/salesManage">
+              <i class="fas fa-fw fa-table"></i>
+              <span>매출관리</span></a>
+      </li>
+
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
       <a class="nav-link" href="/adm/todo">
@@ -66,6 +75,8 @@
         <span>할일 목록</span>
       </a>
     </li>
+
+      <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
@@ -86,12 +97,7 @@
       </div>
     </li>
 
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-      <a class="nav-link" href="/adm/salesManage">
-        <i class="fas fa-fw fa-table"></i>
-        <span>매출관리</span></a>
-    </li>
+
 
 <!--    <li class="nav-item">-->
 <!--      <a class="nav-link" href="/adm/todo">-->
@@ -116,16 +122,17 @@
         <span>리그관리</span></a>
     </li>
 
+      <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-      <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+<!--    <div class="text-center d-none d-md-inline">-->
+<!--      <button class="rounded-circle border-0" id="sidebarToggle"></button>-->
+<!--    </div>-->
 
     <!-- Sidebar Message -->
-    <div class="sidebar-card d-none d-lg-flex">
-      message
-    </div>
+<!--    <div class="sidebar-card d-none d-lg-flex">-->
+<!--      message-->
+<!--    </div>-->
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -139,7 +146,7 @@
                   <!--          <h6 class="collapse-header">근무자</h6>-->
                   <a class="collapse-item" href="/adm/memberList">회원 등급 관리</a>
                   <a class="collapse-item" href="/adm/blackList">블랙리스트 조회</a>
-                  <a class="collapse-item" href="/adm/teamList">팀 조회/블랙리스트 등록</a>
+                  <a class="collapse-item" href="/adm/teamList">팀 조회</a>
               </div>
           </div>
       </li>
@@ -147,7 +154,7 @@
       <!-- Sidebar Logout-->
       <div class="button__box mt20">
           <a th:if="${#session.getAttribute('log') == 'y'}"
-             href="/adm/logout" class="button button-danger">logout</a>
+             href="/adm/logout" class="btn btn-danger">logout</a>
       </div>
 
   </ul>
