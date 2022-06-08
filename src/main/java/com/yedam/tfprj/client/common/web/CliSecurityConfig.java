@@ -30,7 +30,10 @@ public class CliSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/cli/home","/cli/signUp", "/cli/loginview", "/resources/**", "/cli/noticeListHome", "/cli/leagueListHome", "/cli/chkResNow", "/cli/idCheck", "/cli/insertMember", "/cli/leagueDetail", "/cli/searchMember").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
+                .antMatchers("/cli/home","/cli/signUp", "/cli/loginview", "/resources/**", "/cli/noticeListHome",
+                        "/cli/leagueListHome", "/cli/chkResNow", "/cli/idCheck", "/cli/insertMember", "/cli/leagueDetail",
+                        "/cli/searchMember","/cli/notice","/cli/noticeDetail","/cli/faq",
+                        "/cli/fm","/cli/fmDetail","/cli/qna","/cli/qnaDetail").permitAll() // 로그인 권한은 누구나, resources파일도 모든권한
                 // USER, ADMIN 접근 허용
                 .and()
                 .antMatcher("/cli/**")
