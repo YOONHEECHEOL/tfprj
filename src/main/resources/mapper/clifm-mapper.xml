@@ -5,7 +5,11 @@
 <mapper namespace="com.yedam.tfprj.client.community.mapper.CliFmMapper">
 
     <select id="CliFmList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
-        SELECT f_no, title, writer, wdate, views, details, team
+        SELECT f_no, title, writer, wdate, views, details, (select team_name
+                                                            from team
+                                                            where team_id =(select team_id
+                                                                            from member
+                                                                            where member_id = fm_board.writer ))team_name
         FROM fm_board
         <where>
             <if test="title != null and title !=''">
@@ -22,7 +26,7 @@
     </update>
 
     <select id="CliReplyList" resultType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
-        SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, F.F_NO , C.TEAM
+        SELECT  C.C_NO, C.CDATE, C.CDETAILS, C.CWRITER, F.F_NO , C.TEAM_NAME
         FROM    FM_ANSWER C, FM_BOARD F
         WHERE   F.F_NO = C.F_NO
           AND     F.F_NO = #{fNo}
