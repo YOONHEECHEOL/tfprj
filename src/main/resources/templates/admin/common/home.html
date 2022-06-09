@@ -190,6 +190,12 @@
         weekFind();
 
         $.ajax({
+            url : "notInValidation"
+        }).done(function (response){
+
+        })
+
+        $.ajax({
             url: "bringTodayList"
         }).done(function (response) {
             console.log(response);
