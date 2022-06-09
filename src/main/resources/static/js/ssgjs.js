@@ -34,7 +34,7 @@ $(function () {
 //client 예약 목록 전체 조회
 function reservationList() {
     $.ajax({
-        url: '/reservationList'
+        url: '/cli/reservation/reservationList'
     }).done(function (data) {
         console.log(data);
     })
@@ -43,7 +43,7 @@ function reservationList() {
 //예약시간 데이트 체크
 function reservedTimeCheck(date, room) {
     $.ajax({
-        url: "reservationCheck",
+        url: "/cli/reservation/reservationCheck",
         data: {
             date: date,
             room: room

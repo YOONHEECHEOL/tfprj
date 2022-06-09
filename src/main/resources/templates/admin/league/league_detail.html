@@ -129,7 +129,6 @@
             </div>
         </div>
 
-
         <!-- league 대진표 -->
         <div class="col-6 a__box os">
             <div id="tm-root">
@@ -138,7 +137,7 @@
                     <a-h2 ko="대진표"></a-h2>
                 </div>
 
-                <div class="tm-r">
+                <div class="tm-r" id="t-tree">
                     <ul class="tm-table" id="tm-table1">
                         <!--                        <li th:each="i: ${statusTeam}">-->
                         <!--                            <span th:text="${i.getTeamId()}">맛없는사슴</span>-->
@@ -180,7 +179,186 @@
 
     </div>
 
+    <div class="modal adm" id="resPannel">
+        <div class="row">
+            <div class="col-12 a__box nh">
+                <div class="h_box bg-green">
+                    <a-h2 ko="리그 경기 예약"></a-h2>
+                </div>
+            </div>
+            <div class="col-12 a__box os">
+
+                <div>
+                    <div class="row align-items-center justify-content-between px-0">
+                        <div class="col-4">
+                            <span id="dateVal" class="bf-3" onchange="reservedTimeCheck()" readonly></span>
+                        </div>
+                        <div class="col-4 text-right">
+                            <input th:type="button" class="btn btn-dark" id="rsvBtn" th:value="날짜변경">
+                        </div>
+                    </div>
+
+                    <hr class="mt20">
+
+                    <div class="row align-items-center justify-content-between mt20">
+                        <button onclick="prev()" class="c-button col-3"><i class="fa-solid fa-angle-left"></i></button>
+                        <div>
+                            <span class="bf-4" id="room">1</span><span class="bf-4"> 구장</span>
+                        </div>
+                        <button onclick="next()" class="c-button col-3"><i class="fa-solid fa-angle-right"></i></button>
+                    </div>
+
+                    <div class="mt20">
+                        <div>
+                            <table class="res-time">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <button id="12" onclick="clickTimetable(12)">12:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="13" onclick="clickTimetable(13)">13:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="14" onclick="clickTimetable(14)">14:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="15" onclick="clickTimetable(15)">15:00</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button id="16" onclick="clickTimetable(16)">16:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="17" onclick="clickTimetable(17)">17:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="18" onclick="clickTimetable(18)">18:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="19" onclick="clickTimetable(19)">19:00</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button id="20" onclick="clickTimetable(20)">20:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="21" onclick="clickTimetable(21)">21:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="22" onclick="clickTimetable(22)">22:00</button>
+                                    </td>
+                                    <td>
+                                        <button id="23" onclick="clickTimetable(23)">23:00</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <form name="myForm" method="post" action="info">
+                        <input type="hidden" id="date" name="date" required>
+                        <input type="hidden" id="roomNo" name="room" required>
+                        <input th:type="hidden" id="startTime" name="startTime" readonly required>
+                        <input th:type="hidden" id="endTime" name="endTime" readonly required>
+                    </form>
+
+                    <script th:defer th:src="@{/js/ssgjs.js}" ></script>
+                    <!--class="btn btn-success"-->
+                    <script>
+                        let roomNo = $('#room').text()
+                        $('#roomNo').val(roomNo);
+                        let date = $('#dateVal').text()
+                        $('#date').val(date);
+                    </script>
+                    <script>
+                        function check(f) {
+                            //this.form ==> document.myForm --> f
+                            if (f.date.value === "" || f.date.value.length === 0) {
+                                alert("일자를 선택해 주십시오")
+                            } else if (f.roomNo.value === "" || f.roomNo.value.length === 0) {
+                                alert("방을 선택해 주십시오")
+                            } else if (f.startTime.value === "" || f.startTime.value.length === 0) {
+                                alert("시간을 선택해 주십시오")
+                            } else {
+
+                                f.submit();
+                            }
+
+                        }
+                    </script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            let date = new Date();
+
+                            let year = date.getFullYear();
+                            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+                            let day = ('0' + date.getDate()).slice(-2);
+
+                            let dateString = year + '-' + month  + '-' + day;
+
+                            document.querySelector('#dateVal').innerText = dateString;
+
+                            let dt = document.querySelector('#date');
+                            dt.value = dateString;
+                            let room = document.querySelector('#room');
+                            room.value = '1';
+
+                            removeClass();
+                            reservedTimeCheck(dt.value, room.value);
+
+                            console.log(date)
+                            // document.querySelector('#dateVal').innerText = dateString;
+                        })
+                    </script>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 button__box">
+                <button class="c-button rr" onclick="closeResPannel()">취소하기</button>
+                <button class="c-button bb" onclick="resInsert()">예약하기</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        let $tournamentTeamArr = []
+
+        const closeResPannel = () => {
+            $('#resPannel').fadeOut();
+        }
+
+        const resInsert = () => {
+
+        }
+
+        // tournament tree btn event
+        // 토너먼트 표 클릭 시 reservation 건 insert 를 위한 이벤트
+        const treeEvent = () => {
+            let tree = document.querySelector('#t-tree');
+
+            tree.addEventListener('click', () => {
+                if(event.target.tagName == 'LI' && event.target.innerText == '-') {
+
+                    if(confirm('리그 경기를 예약하시겠습니까?')) {
+                        // 모달
+                        $('#resPannel').fadeIn();
+
+                        //
+
+
+                    }
+
+                }
+            })
+        }
+
+
         // tournament 대진표 그리기
         const drawTable = () => {
 
@@ -238,11 +416,13 @@
                                 ul.classList.add('lastbl')
                             }
 
+                            let c = 0;
                             game.game.forEach(l => {
                                 console.log(l)
 
                                 let li = document.createElement('li')
                                 li.innerText = l.teamId;
+                                $tournamentTeamArr.push(l.teamId)
                                 ul.append(li)
                             })
 
@@ -258,6 +438,9 @@
             }
 
             getLeagueStatusTeamList(leagueId);
+
+            // tree event
+            treeEvent();
         }
 
 
