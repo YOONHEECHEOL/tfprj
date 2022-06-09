@@ -26,7 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         for(int i=0; i<list.size();i++){
             map = new HashMap<String, Object>();
-            map.put("title", list.get(i).getGameId() + "번 게임");
+            map.put("title", "예약자 " + list.get(i).getMemberId());
             map.put("start", list.get(i).getStartTime());
             map.put("end", list.get(i).getEndTime());
 
