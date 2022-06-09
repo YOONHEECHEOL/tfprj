@@ -89,6 +89,9 @@ public class CliMemberController {
     @RequestMapping("cli/notIntoTeam")
     @ResponseBody
     public void cliNotIntoTeam(MessageVO messageVO, HttpServletRequest request) {
+
+        System.out.println(">>>messageVO = " + messageVO);
+
         msgServiceImpl.invResUpdate(messageVO, request);
     }
 
