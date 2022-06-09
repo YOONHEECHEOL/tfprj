@@ -56,12 +56,12 @@
 
     <insert id="CliFmInsert" parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
         INSERT INTO FM_BOARD
-        VALUES(fno_seq.nextval, #{title}, #{writer}, current_date, 0, #{details}, #{team})
+        VALUES(fno_seq.nextval, #{title}, #{writer}, current_date, 0, #{details}, #{teamName})
     </insert>
 
     <insert id="CliFmAnswerInsert" parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">
         INSERT INTO FM_ANSWER
-        VALUES(fcno_seq.nextval, current_date, #{cdetails}, #{writer}, #{fNo}, #{team})
+        VALUES(fcno_seq.nextval, current_date, #{cdetails}, #{writer}, #{fNo}, #{teamName})
     </insert>
 
     <delete id="CliFmAnswerDelete" parameterType="com.yedam.tfprj.client.community.service.fm.CliFmVO">

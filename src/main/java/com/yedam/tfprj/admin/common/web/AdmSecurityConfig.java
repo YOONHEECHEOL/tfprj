@@ -32,7 +32,7 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/adm/loginview","/adm/login").permitAll()
+                .antMatchers("/adm/loginview","/adm/login","/download","/cli/imageUpload").permitAll()
                 .and()
                 .antMatcher("/adm/**")
                 .authorizeRequests().anyRequest().hasRole("ADMIN")
