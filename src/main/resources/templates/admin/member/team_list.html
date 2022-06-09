@@ -100,6 +100,7 @@
             </div>`)
                 $(".modal").fadeIn();
                 f4();
+                f19();
             })
         })
 
@@ -107,27 +108,34 @@
             var tr = $("<tr>");
             tr.append(`
                 <th>팀원</th><td class="text-center">${data.memberId}</td><td>
-                <select class="form-control" id="memberlistYn" name="blackReason" onchange="chargeSelect(this)">
+                <select class="form-control blackReason">
                     <option value="${data.blacklistYn}">${data.blacklistYn == 0 ? '-' : '블랙'}</option>
-                    <option value="1">블랙리스트 - 기물 파손</option>
-                    <option value="2">블랙리스트 - 불량한 게임 태도</option>
+                    <option value=1>블랙리스트 - 기물 파손</option>
+                    <option value=2>블랙리스트 - 불량한 게임 태도</option>
                 </select></td>`)
             return tr;
         }
-
-        function chargeSelect(e) {
-            var reasonVal = e.options[e.selectedIndex].value;
-            var memId = e.parentElement.parentElement.children[1].innerHTML;
-            if (confirm("수정하시겠습니까?") == true) {
-                $.ajax({
-                    url: "/adm/reasonUpdate",
-                    method: "POST",
-                    data: {memberId: memId, blacklistYn: reasonVal}
-                })
-            } else {
-                return;
-            }
+        const f19 = () => {
+            var prev_val;
+            $('.blackReason').focus(function () {
+                prev_val = $(this).val();
+                console.log($(this).parent().parent().children().eq(1).text())
+            }).change(function () {
+                var reasonVal = $('.blackReason option:selected').val();
+                var memId = $(this).parent().parent().children().eq(1).text();
+                if (confirm("수정하시겠습니까?") == true) {
+                    $.ajax({
+                        url: "/adm/reasonUpdate",
+                        method: "POST",
+                        data: {memberId: memId, blacklistYn: reasonVal}
+                    })
+                } else {
+                    $(this).val(prev_val);
+                    return false;
+                }
+            });
         }
+
     </script>
 </th:block>
 </html>

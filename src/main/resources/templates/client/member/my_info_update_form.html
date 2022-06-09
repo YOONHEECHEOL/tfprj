@@ -9,7 +9,7 @@
 
     <t-h2 ko="나의 정보 수정"></t-h2>
 
-    <form th:id="updateView" action="/cli/myInfoUpdate" method="POST">
+    <form th:id="updateView" method="POST">
         <div th:each="member, i : ${member}">
             <table class="table f14">
                 <tr>
@@ -25,7 +25,13 @@
                 <tr>
                     <th>비밀번호</th>
                     <td>
-                        <input th:type="password" class="form-control-lg" th:name="password" value="" >
+                        <input th:type="password" class="form-control-lg" th:id="password" th:name="password" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호 확인</th>
+                    <td>
+                        <input th:type="password" class="form-control-lg" th:id="passwordChk" th:name="passwordChk" value="">
                     </td>
                 </tr>
                 <tr>
@@ -42,11 +48,25 @@
             </table>
             <div class="button__box mt20">
                 <a onclick="javascript: history.back()" class="c-button">취소하기</a>
-                <button type="submit" class="c-button">변경사항저장</button>
+                <button type="button" onclick="callUpdate()" class="c-button">변경사항저장</button>
             </div>
         </div>
     </form>
+<script>
+    function callUpdate(){
+        if($("#password").val() == "" || $("#passwordChk").val() == ""){
+            alert("비밀번호를 입력해주세요!");
+            return false;
+        }else if($("#password").val() != $("#passwordChk").val()){
+            alert("비밀번호를 확인해주세요!");
+            return false;
+        }else if ($("#password").val() == $("#passwordChk").val()){
+            updateView.action="/cli/myInfoUpdate";
+            updateView.submit();
+        }
+    }
 
+</script>
 
 </th:block>
 

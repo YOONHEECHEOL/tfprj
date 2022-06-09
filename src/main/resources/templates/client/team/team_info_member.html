@@ -5,22 +5,32 @@
 
 
 <th:block layout:fragment="content">
-    <div>
-        <table>
-            <tbody>
-            <tr>
-                <th>팀명</th>
-                <td><span th:text="${team.teamName}"></span></td>
-            </tr>
-            <tr>
-                <th>팀장</th>
-                <td><span th:text="${team.leader}"></span></td>
-            </tr>
-            </tbody>
-        </table>
-        <h1>팀원</h1>
-        <div th:each="list, i : ${list}">
-            <td th:if="${team.leader ne list.memberId}" th:text="${list.memberId}"></td>
+
+    <t-h1 ko="마이페이지" en="MY-TEAM"></t-h1>
+
+    <t-h2 ko="팀 상세조회"></t-h2>
+    <div class="row px-0">
+        <div th:class="col-12">
+            <table class="table f16">
+                <tbody>
+                <tr>
+                    <th class="bf-2 p">팀명</th>
+                    <td><span th:text="${team.teamName}"></span></td>
+                </tr>
+                <tr>
+                    <th class="bf-2 p">팀장</th>
+                    <td><span th:text="${team.leader}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <t-h2 ko="팀원"></t-h2>
+            <table class="table f14">
+                <tr th:each="list, i : ${list}">
+                    <th class="bf-2 p" th:if="${team.leader ne list.memberId}">팀원</th>
+                    <td th:if="${team.leader ne list.memberId}" th:text="${list.memberId}"></td>
+                </tr>
+            </table>
+            <a onclick="javascript: history.back()" class="c-button">취소하기</a>
         </div>
     </div>
 </th:block>
