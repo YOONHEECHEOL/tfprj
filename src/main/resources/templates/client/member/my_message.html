@@ -17,7 +17,7 @@
         <table class="table" th:each="m:${msg}">
             <tbody class="f16" id="messageList">
                 <tr>
-                    <td colspan="2" class="bf-2" th:text="${m.getMessageContents() + '&nbsp&nbsp&nbsp&nbsp&nbsp' +m.getMsgTime}"></td>
+                    <td colspan="2" class="bf-1 text-center" th:text="${m.getMessageContents()+'&nbsp&nbsp&nbsp&nbsp&nbsp'+m.getMsgTime}"></td>
                 </tr>
                 <tr>
                     <td th:if="${m.getIsChk() != 2}">
