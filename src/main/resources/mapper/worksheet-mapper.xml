@@ -12,6 +12,7 @@
         SELECT worksheet_no, work_dt, worker_id, position_cd, user_type, going_time, quitting_time
         FROM WORKSHEET
         WHERE work_dt IN(trunc(current_date,'d'), trunc(current_date,'d')+1, trunc(current_date,'d')+2, trunc(current_date,'d')+3, trunc(current_date,'d')+4, trunc(current_date,'d')+5, trunc(current_date,'d')+6)
+        ORDER BY GOING_TIME
     </select>
 
     <select id="sheetValidation" resultType="com.yedam.tfprj.admin.worksheet.service.WorksheetVO">

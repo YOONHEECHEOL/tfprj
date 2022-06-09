@@ -17,6 +17,7 @@
                             ON I.WORKER_ID = W.WORKER_ID
         WHERE TO_CHAR(current_date, 'yy-MM-dd hh24:mi') BETWEEN A.IN_TIME AND TO_CHAR(W.QUITTING_TIME, 'yy-MM-dd hh24:mi')
           AND TO_DATE(A.ATT_DT, 'yy-MM-dd') = TO_DATE(current_date, 'yy-MM-dd')
+          AND A.OUT_TIME IS NULL
           and to_char(w.going_time, 'yy-MM-dd') = a.att_dt
     </select>
 

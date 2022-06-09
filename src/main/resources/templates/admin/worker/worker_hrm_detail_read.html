@@ -134,7 +134,7 @@
                 </tr>
                 <tr>
                     <td>프로필</td>
-                    <td><input type="file" name="file" onchange="setThumbnail(event);"></td>
+                    <td><input type="file" name="file" onchange="setThumbnail(event); "></td>
                 </tr>
             </table>
             <div id="image_container"></div>
@@ -259,7 +259,7 @@
         reader.onload = function(event) {
             var img = document.createElement("img");
             img.setAttribute("src", event.target.result);
-            img.setAttribute("style", "width=10px; height=10px")
+            img.setAttribute("style", "width=300px; height=200px")
             document.querySelector("div#image_container").appendChild(img);
         };
     reader.readAsDataURL(event.target.files[0]);
