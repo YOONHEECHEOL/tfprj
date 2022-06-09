@@ -55,7 +55,7 @@
                 <p id="dd"></p>
             </div>
             <div id="out" class="text-center bf-3" style="color: #18181c">
-                <h2 class="bf-2" style="color: #d34747">📢퇴근까지</h2>
+                <h2 id="untilOut" class="bf-2" style="color: #d34747"></h2>
                 <h1 id="demo"></h1>
                 <br><br>
                 <div class="button__box mt20">
@@ -224,7 +224,10 @@
         $.ajax({
             url : "getNowWorkerName"
         }).done(function(response){
-            $('#nowWorker').html(response.workerId + "님");
+            if(response.workerId != null){
+                $('#nowWorker').html(response.workerId + "님");
+                $('#untilOut').html('📢퇴근까지')
+            }
         })
 
         function move(percent, leftTime) {

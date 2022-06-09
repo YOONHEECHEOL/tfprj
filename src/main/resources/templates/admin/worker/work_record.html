@@ -129,7 +129,7 @@
             }).done(function (response) {
                 console.log(response);
                 $('#allTag').remove();
-                var h1 = "<h1>" + '고생하셧습니다.' + "</h1>"
+                var h1 = "<h1 class='text-center bf-5'>" + '고생하셧습니다.' + "</h1>"
                 $('#newTag').append(h1);
             })
         }
@@ -261,7 +261,7 @@
 
             timer(response.vo.getMTime);
 
-            var btn = "<button id='outBtn' class='btn btn-primary'>" + '퇴근' + "</button>";
+            var btn = "<button id='outBtn' class='c-button'>" + '퇴근' + "</button>";
             $('#out').append(btn);
 
             //퇴근버튼을 찍었을때 조기퇴근 등을 계산해주는 function
@@ -376,7 +376,9 @@
             $.ajax({
                 url : "getNowWorkerName"
             }).done(function(response){
-                $('#nowWorker').html(response.workerId + "님");
+                if(response.workerId != null){
+                    $('#nowWorker').html(response.workerId + "님");
+                }
             })
 
         }
