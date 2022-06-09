@@ -5,6 +5,7 @@
 
 
 <th:block layout:fragment="content">
+
     <t-h1 en="FM" ko="친선경기"></t-h1>
 
 
@@ -29,14 +30,13 @@
             <form name="form" id="form" role="form" method="post" action="/cli/fmInsert">
 
                 <div class="mb-3">
-                    <label for="title">제목</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+                    <label for="title" class="bf-3 p">제목</label>
+                    <input type="text" class="form-control"  name="title" id="title" placeholder="제목을 입력해 주세요" style="font-weight: bold; font-size: large;">
                 </div>
 
                 <div class="mb-3">
-                    <label for="details">내용</label>
-                    <textarea class="form-control" rows="20" name="details" id="details"
-                              placeholder="내용을 입력해 주세요"></textarea>
+                    <label for="details" class="bf-3 p">내용</label>
+                    <textarea class="form-control"  rows="20" name="details" id="details"></textarea>
                 </div>
 
                 <div>

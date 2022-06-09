@@ -4,58 +4,67 @@
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <style>
+        .form-control {
+            font-size: 1.6rem !important;
+        }
+    </style>
+
+    <a-h1 en="FM" ko="친선경기"></a-h1>
+
     <script src="/ckeditor/ckeditor.js"></script>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-<div class="container">
+    <div class="row f16 justify-content-end">
+        <div class="col-12">
 
-    <div>
-        <h1>친선경기 수정</h1>
+            <form th:id="fm" name="fm" method="post" action="/adm/fmUpdateForm">
+                <div>
+                    <label class="bf-3 p">게시글 번호</label>
+                    <input name="fNo" readonly="readonly" class="form-control" th:value="${fm.fNo}">
+                </div>
+                <div>
+                    <label class="bf-3 p">작성자</label>
+                    <input name="writer" readonly="readonly" class="form-control" th:value="${fm.writer}">
+                </div>
+                <div>
+                    <label class="bf-3 p">제목</label>
+                    <input name="title" type="text" class="form-control" th:value="${fm.title}">
+                </div>
+                <div class="form-group form-group-lg">
+                    <label class="bf-3 p">내용</label>
+                    <textarea name="details" type="text" class="form-control" rows="5" th:value="${fm.details}"
+                              th:text="${fm.details}"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <div  class="col-2">
+            <button type="button" class="c-button sec" onclick="formCheck()" id="frm" >전송</button>
+        </div>
+
+        <input type="hidden" id="fNo" name="fNo" th:value="${fm.fNo}">
+        <input type="hidden" id="writer" name="writer" th:value="${fm.writer}">
+        <input type="hidden" id="title" name="title" th:value="${fm.title}">
+        <input type="hidden" id="fdetails" name="details" th:value="${fm.details}">
+
     </div>
 
+    <script>
+        CKEDITOR.replace("details", {
+            filebrowserUploadUrl: "/cli/imageUpload"
+        });
 
-    <form th:id="fm" name="fm" method="post" action="/adm/fmUpdateForm">
-        <div>
-            <label>게시글 번호</label>
-            <input name="fNo" readonly="readonly" class="form-control" th:value="${fm.fNo}">
-        </div>
-        <div>
-            <label>작성자</label>
-            <input name="writer" readonly="readonly" class="form-control" th:value="${fm.writer}">
-        </div>
-        <div>
-            <label>제목</label>
-            <input name="title" type="text" class="form-control" th:value="${fm.title}">
-        </div>
-        <div class="form-group form-group-lg">
-            <label>내용</label>
-            <textarea name="details" type="text" class="form-control" rows="5" th:value="${fm.details}" th:text="${fm.details}"></textarea>
-        </div>
-        <button type="button" class="c-button col-2" onclick="formCheck()" id="frm" style="float: left">전송</button>
-    </form>
-
-    <input type="hidden" id="fNo" name="fNo" th:value="${fm.fNo}">
-    <input type="hidden" id="writer" name="writer" th:value="${fm.writer}">
-    <input type="hidden" id="title" name="title" th:value="${fm.title}">
-    <input type="hidden" id="fdetails" name="details" th:value="${fm.details}">
-
-</div>
-
-<script>
-    CKEDITOR.replace("details", {
-        filebrowserUploadUrl: "/cli/imageUpload"
-    });
-
-    function formCheck() {
-        if (fm.title.value == "") {
-            alert("제목을 입력하세요.");
-            fm.title.focus();
-            return false;
+        function formCheck() {
+            if (fm.title.value == "") {
+                alert("제목을 입력하세요.");
+                fm.title.focus();
+                return false;
+            }
+            fm.submit();
         }
-        fm.submit();
-    }
-</script>
+    </script>
 </th:block>
 </html>

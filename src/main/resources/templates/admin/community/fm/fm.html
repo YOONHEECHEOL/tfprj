@@ -3,73 +3,79 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-    <t-h1 en="" ko="친선 경기 게시판"></t-h1>
+    <a-h1 en="" ko="친선 경기 게시판"></a-h1>
+    <div class="row">
 
-    <div class="col-12 a__box nh">
-        <t-h2 ko="친선경기 검색 및 작성"></t-h2>
-        <form>
-            <div class="button__box f16">
-                <input class="form-control col-9" type="text" th:value="${admFmVO.title}"
-                       onclick="this.select()"
-                       name="title" placeholder="제목을 입력하세요"/>
-                <button class="c-button col-1" type="submit">검색</button>
-                <a class="c-button col-1" onclick="location.href = '/adm/fmWrite'">작성</a>
-                <a class="c-button col-1" onclick="location.href = '/adm/index'" >홈</a>
+        <div class="col-12 a__box nh">
+
+            <div class="h_box">
+                <a-h2 ko="친선경기 검색 및 작성"></a-h2>
             </div>
-        </form>
-    </div>
-    <form th:id="details" method="post">
-        <table class="table f14 mt20">
-            <thead>
-            <tr>
-                <th>no</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>팀명</th>
-                <th>조회수</th>
-            </tr>
-            </thead>
-            <tbody>
-            <div id="fm">
-                <tr th:attr="onclick=|callDetails('${fm.fNo}')|" th:each="fm : ${pageInfo.list}"
-                    onmouseover='this.style.background="#fcecae";'
-                    onmouseleave='this.style.background="#FFFFFF";'>
-                    <td th:text="${fm.fNo}"></td>
-                    <td th:text="${fm.title}"></td>
-                    <td th:text="${fm.writer}"></td>
-                    <td th:text="${fm.wdate}"></td>
-                    <td th:text="${fm.team}"></td>
-                    <td th:text="${fm.views}"></td>
+
+            <form>
+                <div class="button__box f16">
+                    <input class="form-control col-9" type="text" th:value="${admFmVO.title}"
+                           onclick="this.select()"
+                           name="title" placeholder="제목을 입력하세요"/>
+                    <button class="c-button col-1" type="submit">검색</button>
+                    <a class="c-button col-1" onclick="location.href = '/adm/fmWrite'">작성</a>
+                    <a class="c-button col-1" onclick="location.href = '/adm/index'">홈</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 a__box">
+            <div class="h_box">
+                <a-h2 ko="친선경기 리스트"></a-h2>
+            </div>
+
+        <form th:id="details" method="post">
+            <table class="table f14 mt20">
+                <thead>
+                <tr>
+                    <th>no</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>팀명</th>
+                    <th>조회수</th>
                 </tr>
-            </div>
-            </tbody>
-        </table>
-        <input th:type="hidden" th:id="fNo" th:name="fNo">
-    </form>
+                </thead>
+                <tbody>
+                <div id="fm">
+                    <tr th:attr="onclick=|callDetails('${fm.fNo}')|" th:each="fm : ${pageInfo.list}">
+                        <td th:text="${fm.fNo}"></td>
+                        <td th:text="${fm.title}"></td>
+                        <td th:text="${fm.writer}"></td>
+                        <td th:text="${fm.wdate}"></td>
+                        <td th:text="${fm.teamName}"></td>
+                        <td th:text="${fm.views}"></td>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+            <input th:type="hidden" th:id="fNo" th:name="fNo">
+        </form>
 
-    <!-- 페이징 -->
-    <nav>
-        <ul class="pagination">
-            <!-- getPrePage : 이전 페이지 -->
-            <li class="page-item" th:classappend="${pageInfo.getPrePage() == 0} ? 'disabled'">
-                <a th:href="@{fm(pageNum=${pageInfo.getPrePage()})}"><i class="fa-solid fa-angle-left"></i></a>
-            </li>
-            <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-            <li class="page-item"
-                th:each="page: ${#numbers.sequence(pageInfo.getNavigateFirstPage(), pageInfo.getNavigateLastPage())}"
-                th:classappend="${page == pageInfo.getPageNum()} ? 'active'">
-                <a th:text="${page}" th:href="@{fm(pageNum=${page})}"></a>
-            </li>
-            <!-- getPrePage : 다음 페이지 -->
-            <li class="page-item" th:classappend="${pageInfo.getNextPage() == 0} ? 'disabled'">
-                <a th:href="@{fm(pageNum=${pageInfo.getNextPage()})}"><i class="fa-solid fa-angle-right"></i></a>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="button__box">
-        <button class="c-button" onclick="location.href = '/adm/fmWrite'" style="float: right">작성</button>
+        <!-- 페이징 -->
+        <nav>
+            <ul class="pagination">
+                <!-- getPrePage : 이전 페이지 -->
+                <li class="page-item" th:classappend="${pageInfo.getPrePage() == 0} ? 'disabled'">
+                    <a th:href="@{fm(pageNum=${pageInfo.getPrePage()})}"><i class="fa-solid fa-angle-left"></i></a>
+                </li>
+                <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
+                <li class="page-item"
+                    th:each="page: ${#numbers.sequence(pageInfo.getNavigateFirstPage(), pageInfo.getNavigateLastPage())}"
+                    th:classappend="${page == pageInfo.getPageNum()} ? 'active'">
+                    <a th:text="${page}" th:href="@{fm(pageNum=${page})}"></a>
+                </li>
+                <!-- getPrePage : 다음 페이지 -->
+                <li class="page-item" th:classappend="${pageInfo.getNextPage() == 0} ? 'disabled'">
+                    <a th:href="@{fm(pageNum=${pageInfo.getNextPage()})}"><i class="fa-solid fa-angle-right"></i></a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <script>

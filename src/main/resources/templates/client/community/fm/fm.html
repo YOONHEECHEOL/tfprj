@@ -3,9 +3,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/cli_layout}">
 
-<body>
 
 <th:block layout:fragment="content">
+    <style>
+        .title{
+            width        : 100px;
+            text-overflow: ellipsis;
+            white-space  : nowrap;
+            overflow     : hidden;
+        }
+    </style>
     <t-h1 en="FM" ko="친선경기"></t-h1>
 
     <form>
@@ -34,10 +41,11 @@
             <div id="fm">
                 <tr th:attr="onclick=|callDetails('${fm.fNo}')|" th:each="fm : ${pageInfo.list}">
                     <td th:text="${fm.fNo}"></td>
-                    <td th:text="${fm.title}"></td>
+                    <td th:if="${#strings.length(fm.title) > 12}" th:text="${#strings.substring(fm.title, 0, 12) + '...'}" class="title"></td>
+                    <td th:if="${#strings.length(fm.title) <= 12}" th:text="${#strings.substring(fm.title, 0, #strings.length(fm.title))}" class="title"></td>
                     <td th:text="${fm.writer}"></td>
                     <td th:text="${#strings.substring(fm.wdate, 0, 10)}"></td>
-                    <td th:text="${fm.team}"></td>
+                    <td th:text="${fm.teamName}"></td>
                 </tr>
             </div>
             </tbody>
@@ -77,6 +85,6 @@
         }
     </script>
 </th:block>
-</body>
+
 </html>
 

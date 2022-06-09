@@ -3,51 +3,63 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-    <t-h1 en="" ko="공지사항"></t-h1>
+
+    <style>
+        .form-control {
+            font-size: 1.6rem !important;
+        }
+    </style>
+
+    <a-h1 en="NOTICE" ko="공지사항"></a-h1>
 
     <script src="/ckeditor/ckeditor.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<div class="container">
 
+    <div class="row f16 justify-content-end">
+        <div class="col-12">
 
-
-    <form th:id="notice" name="notice" method="post" action="/adm/noticeUpdateForm">
-        <div>
-            <label>게시글 번호</label>
-            <input name="nNo" readonly="readonly" class="form-control" th:value="${notice.nNo}">
+            <form th:id="notice" name="notice" method="post" action="/adm/noticeUpdateForm">
+                <div>
+                    <label class="bf-3 p">게시글 번호</label>
+                    <input name="nNo" readonly="readonly" class="form-control" th:value="${notice.nNo}">
+                </div>
+                <div class="mt20">
+                    <label class="bf-3 p">제목</label>
+                    <input name="title" type="text" class="form-control" th:value="${notice.title}">
+                </div>
+                <div class="form-group form-group-lg mt20">
+                    <label class="bf-3 p">내용</label>
+                    <textarea name="details" type="text" class="form-control" rows="5" th:value="${notice.details}"
+                              th:text="${notice.details}"></textarea>
+                </div>
+            </form>
         </div>
-        <div>
-            <label>제목</label>
-            <input name="title" type="text" class="form-control" th:value="${notice.title}">
+
+        <div class="col-2">
+            <button class="c-button sec" type="button" onclick="formCheck()" id="frm">전송</button>
         </div>
-        <div class="form-group form-group-lg">
-            <label>내용</label>
-            <textarea name="details" type="text" class="form-control" rows="5" th:value="${notice.details}" th:text="${notice.details}"></textarea>
-        </div>
-        <button type="button" onclick="formCheck()" id="frm" style="float: left">전송</button>
-    </form>
 
-    <input type="hidden" id="nNo" name="nNo" th:value="${notice.nNo}">
-    <input type="hidden" id="title" name="title" th:value="${notice.title}">
-    <input type="hidden" id="tdetails" name="details" th:value="${notice.details}">
+        <input type="hidden" id="nNo" name="nNo" th:value="${notice.nNo}">
+        <input type="hidden" id="title" name="title" th:value="${notice.title}">
+        <input type="hidden" id="tdetails" name="details" th:value="${notice.details}">
 
-</div>
+    </div>
 
-<script>
-    CKEDITOR.replace("details", {
-        filebrowserUploadUrl: "/cli/imageUpload"
-    });
+    <script>
+        CKEDITOR.replace("details", {
+            filebrowserUploadUrl: "/cli/imageUpload"
+        });
 
-    function formCheck() {
-        if (notice.title.value == "") {
-            alert("제목을 입력하세요.");
-            notice.title.focus();
-            return false;
+        function formCheck() {
+            if (notice.title.value == "") {
+                alert("제목을 입력하세요.");
+                notice.title.focus();
+                return false;
+            }
+            notice.submit();
         }
-        notice.submit();
-    }
-</script>
+    </script>
 </th:block>
 </html>

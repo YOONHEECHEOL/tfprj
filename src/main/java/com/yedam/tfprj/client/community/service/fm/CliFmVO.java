@@ -10,7 +10,7 @@ public class CliFmVO {
     private String  wdate;
     private int     views;
     private String  details;
-    private String  team;
+    private String  teamName;
     private int     cNo;
     private String  cdate;
     private String  cdetails;
