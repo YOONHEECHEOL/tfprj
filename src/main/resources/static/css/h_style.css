@@ -128,7 +128,7 @@ h4.h4 {
     z-index: 3 !important;
     width: 45vw !important;
     position: absolute;
-    top: 50% !important;
+    top: 40% !important;
     left: 50% !important;
     transform: translate(-50%, -50%);
 }
@@ -140,6 +140,9 @@ h4.h4 {
     color: #fff;
     z-index: 999;
 }
+.currentRes span, .currentRes h2  {
+    color: #fff;
+}
 .look_down {
     font-size: 2rem;
     text-align: center;
@@ -147,6 +150,7 @@ h4.h4 {
 }
 .look_down i {
     animation: look-down 1s infinite ease;
+    color: #fff;
 }
 @keyframes look-down {
     0% {
@@ -546,6 +550,7 @@ select {
     display: flex;
     align-items: center;
     flex-direction: column-reverse;
+    margin-top: 6rem;
 }
 .tm-table {
     width: 100%;
@@ -562,6 +567,15 @@ select {
     display: block;
     text-align: center;
     position: relative;
+    transition: all .3s ease;
+    font-size: 1.4rem;
+    font-family: esL;
+    cursor: pointer;
+}
+.tm-table > li:hover {
+    background: #3765C7;
+    color: #fff;
+    border: 1px solid #3765C7;
 }
 .tm-table > li::after {
     content: '';
@@ -1051,3 +1065,14 @@ i.black {
     color: #222;
 }
 
+ul.a_list {
+    width: 100%;
+}
+ul.a_list li {
+    padding: .8rem 2rem;
+    border-bottom: 1px dashed #ddd;
+}
+ul.a_list li span {
+    font-family: esL;
+    font-size: 1.6rem;
+}
