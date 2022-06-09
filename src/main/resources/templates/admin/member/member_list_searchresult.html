@@ -35,15 +35,15 @@
                         <td><span th:text="${list.memberId}"></span></td>
                         <td><span th:text="${list.memberName}"></span></td>
                         <td><span th:text="${list.tel}"></span></td>
-                        <td><select class="form-control" onchange="chargeSelect(this)">
+                        <td><select class="form-control memberlistYn">
                             <option th:if="${list.grade == 301}" th:text="일반" th:value=301 selected></option>
                             <option th:if="${list.grade == 302}" th:text="VIP" th:value=302 selected></option>
                             <option th:if="${list.grade == 303}" th:text="VVIP" th:value=303 selected></option>
                             <option th:if="${list.grade == 304}" th:text="SVIP" th:value=304 selected></option>
-                            <option th:value=301>일반</option>
-                            <option th:value=302>VIP</option>
-                            <option th:value=303>VVIP</option>
-                            <option th:value=304>SVIP</option>
+                            <option th:if="${list.grade != 301}" th:value=301>일반</option>
+                            <option th:if="${list.grade != 302}" th:value=302>VIP</option>
+                            <option th:if="${list.grade != 303}" th:value=303>VVIP</option>
+                            <option th:if="${list.grade != 304}" th:value=304>SVIP</option>
                         </select></td>
                     </tr>
                     </tbody>
@@ -57,9 +57,11 @@
                             <a th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${searchInfo.getPrePage()})}"><</a>
                         </li>
                         <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                        <li class="page-item" th:each="page: ${#numbers.sequence(searchInfo.getNavigateFirstPage(), searchInfo.getNavigateLastPage())}"
+                        <li class="page-item"
+                            th:each="page: ${#numbers.sequence(searchInfo.getNavigateFirstPage(), searchInfo.getNavigateLastPage())}"
                             th:classappend="${page == searchInfo.getPageNum()} ? 'active'">
-                            <a th:text="${page}" th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${page})}"></a>
+                            <a th:text="${page}"
+                               th:href="@{searchMember(memberId=${#request.getParameter('memberId')} ,pageNum=${page})}"></a>
                         </li>
                         <!-- getPrePage : 다음 페이지 -->
                         <li class="page-item" th:classappend="${searchInfo.getNextPage() == 0} ? 'disabled'">
@@ -78,27 +80,23 @@
             $.ajax({
                 url: "/adm/searchMember",
                 data: {memberId: $("#searchVal").val()}
-            }).done(function (data) {
-                $("#memberBody").html('');
-                for (list of data) {
-                    $("#memberBody").append(makeTr(list));
-                }
             })
         })
 
         var prev_val;
-        $('#memberlistYn').focus(function () {
+        $('.memberlistYn').focus(function () {
             prev_val = $(this).val();
         }).change(function () {
-            console.log($('#blacklistYn option:selected').val())
             var success = confirm("수정하시겠습니까?");
             var memId = $(this).parent().parent().children().children().eq(1).text();
-            var gradeVal = $('#memberlistYn option:selected').val();
+            var gradeVal = $('.memberlistYn option:selected').val();
             if (success) {
                 $.ajax({
                     url: "/adm/gradeUpdate",
                     method: "POST",
                     data: {memberId: memId, grade: gradeVal}
+                }).done(function () {
+                    location.reload();
                 })
             } else {
                 $(this).val(prev_val);

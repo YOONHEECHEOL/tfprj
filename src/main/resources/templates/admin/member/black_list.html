@@ -33,7 +33,7 @@
                         <convert-c-code th:data="${list.grade}"></convert-c-code>
                     </td>
                     <td>
-                        <select class="form-control" id="blacklistYn" th:name="blacklistYn">
+                        <select class="form-control blacklistYn">
                             <option th:if="${list.blacklistYn == 1 or list.blacklistYn ==2}" th:text="블랙리스트" th:value=1
                                     selected></option>
                             <option th:value=0>해제</option>
@@ -67,20 +67,20 @@
     <script>
 
         var prev_val;
-        $('#blacklistYn').focus(function () {
+        $('.blacklistYn').focus(function () {
             prev_val = $(this).val();
         }).change(function () {
-            console.log($('#blacklistYn option:selected').val())
+            console.log(prev_val)
             var success = confirm("블랙리스트를 해제하시겠습니까?");
             var memId = $(this).parent().parent().children().children().eq(1).text();
-            var blackVal = $('#blacklistYn option:selected').val();
+            var blackVal = 0;
             if (success) {
                 $.ajax({
                     url: "/adm/blackUpdate",
                     method: "POST",
                     data: {memberId: memId, blacklistYn: blackVal}
                 }).done(function () {
-                    location.href = "/adm/blackList";
+                    location.reload();
                 })
             } else {
                 $(this).val(prev_val);
