@@ -8,6 +8,7 @@
         FROM PAYMENT
         WHERE TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
         AND PAYMENT_STATUS_CD NOT IN (801, 803)
+        AND PAYMENT_METHOD_CD NOT IN (1703)
         <if test='day != 0'>
             AND TO_CHAR(PAYMENT_DATE, 'D') = #{day}
         </if>

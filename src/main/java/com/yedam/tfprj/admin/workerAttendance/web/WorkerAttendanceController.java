@@ -48,6 +48,18 @@ public class WorkerAttendanceController {
         return "admin/worker/now_worker_attendance";
     }
 
+    @ResponseBody
+    @RequestMapping("/adm/getNowWorkerName")
+    public WorkerAttendanceVO getNowWorkerName(){
+        WorkerAttendanceVO vo = service.getNowWorker();
+        if(vo == null){
+            vo = new WorkerAttendanceVO();
+        }
+        return vo;
+    }
+
+
+
 
     @ResponseBody
     @RequestMapping("/adm/jsonSheetList")

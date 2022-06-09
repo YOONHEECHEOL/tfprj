@@ -157,6 +157,11 @@
              href="/adm/logout" class="btn btn-danger">logout</a>
       </div>
 
+      <div>
+          <h2 class="text-center bf-3">현재 로그인한 회원</h2>
+          <h1 class="text-center bf-3" style="color: #72ca19" th:text="${session.workerId}"></h1>
+      </div>
+
   </ul>
   <!-- End of Sidebar -->
 </th:block>

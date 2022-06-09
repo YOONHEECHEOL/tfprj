@@ -14,8 +14,15 @@
     <div>
         <div class="row">
             <div class="col-12 a__box">
+
+                <div class="h_box bg-blue">
+                    <a-h2 ko="검색 옵션"></a-h2>
+                </div>
+
                 <div id="container">
-                    <t-h2 ko="검색 옵션"></t-h2>
+
+
+<!--                    <t-h2 ko="검색 옵션"></t-h2>-->
                     <div class="bf-4" id="today"></div>
 
                     <hr class="mt20">
@@ -24,15 +31,15 @@
                         <div class="col-2">
                             <div class="bf-3">요일선택</div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-4">
                             <div class="bf-3">
-                                <input type="radio" name="day" value="1">일
-                                <input type="radio" name="day" value="2">월
-                                <input type="radio" name="day" value="3">화
-                                <input type="radio" name="day" value="4">수
-                                <input type="radio" name="day" value="5">목
-                                <input type="radio" name="day" value="6">금
-                                <input type="radio" name="day" value="7">토
+                                <input type="radio" name="day" value="1" style="margin-left: 20px">일
+                                <input type="radio" name="day" value="2" style="margin-left: 20px">월
+                                <input type="radio" name="day" value="3" style="margin-left: 20px">화
+                                <input type="radio" name="day" value="4" style="margin-left: 20px">수
+                                <input type="radio" name="day" value="5" style="margin-left: 20px">목
+                                <input type="radio" name="day" value="6" style="margin-left: 20px">금
+                                <input type="radio" name="day" value="7" style="margin-left: 20px">토
                             </div>
                         </div>
                     </div>
@@ -40,43 +47,58 @@
                     <hr class="mt20">
 
                     <div class="row mt20 px-0 justify-content-start">
-                        <div class="col-4 bf-3">월단위 선택</div>
+                        <div class="col-2 bf-3">월단위 선택</div>
                         <div class="col-8">
                             <select id="selectMonth" class="form-control sf-3">
-                                <option>날짜 선택</option>
-                                <option value="1">1월</option>
-                                <option value="2">2월</option>
-                                <option value="3">3월</option>
-                                <option value="4">4월</option>
-                                <option value="5">5월</option>
-                                <option value="6">6월</option>
-                                <option value="7">7월</option>
-                                <option value="8">8월</option>
-                                <option value="9">9월</option>
-                                <option value="10">10월</option>
-                                <option value="11">11월</option>
-                                <option value="12">12월</option>
+                                <option class="bf-3">날짜 선택</option>
+                                <option value="1" class="bf-3">1월</option>
+                                <option value="2" class="bf-3">2월</option>
+                                <option value="3" class="bf-3">3월</option>
+                                <option value="4" class="bf-3">4월</option>
+                                <option value="5" class="bf-3">5월</option>
+                                <option value="6" class="bf-3">6월</option>
+                                <option value="7" class="bf-3">7월</option>
+                                <option value="8" class="bf-3">8월</option>
+                                <option value="9" class="bf-3">9월</option>
+                                <option value="10" class="bf-3">10월</option>
+                                <option value="11" class="bf-3">11월</option>
+                                <option value="12" class="bf-3">12월</option>
                             </select>
                         </div>
 
                     </div>
 
+                    <hr class="mt20">
 
-                    <div id="pickLogic">
-                        <input type="text" width="50" class="datepicker" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" width="50" class="datepicker" readonly>
+                    <div class="row px-0 justify-content-start mt20">
+                        <div class="col-2">
+                            <div class="bf-3">월 선택</div>
+                        </div>
+                        <div class="col-4">
+                            <div id="pickLogic">
+                                <input type="text" width="50" class="datepicker form-control-sm" readonly> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="text" width="50" class="datepicker form-control-sm" readonly>
+                            </div>
+                        </div>
                     </div>
+
+                    <br><br>
                     <div class="mt20">
                         <button class="c-button" id="searchBtn">조회</button>
                     </div>
                 </div>
-                    <div id="searchResult">
+                <div id="searchResult">
 
-                    </div>
+                </div>
                 <br><br><br><br><br>
-                <div id="chart_div2"></div>
-                <div id="chart_div3"></div>
-                <div id="chart_div4"></div>
+
+                <div class="row">
+
+                    <div class="colBoxAdd"><div id="chart_div2"></div></div>
+                    <div class="colBoxAdd"><div id="chart_div3"></div></div>
+                    <div class="colBoxAdd"><div id="chart_div4"></div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -105,10 +127,6 @@
             ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
             ,changeYear: true //콤보박스에서 년 선택 가능
             ,changeMonth: true //콤보박스에서 월 선택 가능
-            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
-            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
-            ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
             ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
             ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
             ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
@@ -118,11 +136,13 @@
 
 
         //회원, 비회원을 구분해 매출을 계산하는 구글차트
-        function drawMemNonMemChart(){
-            var options = {'title':'회원 비회원 구분',
-                'width':400,
-                'height':300,
-                legend: { position: 'bottom' }
+        function drawMemNonMemChart() {
+            var options = {
+                'title': '회원 비회원 구분',
+                'width': 400,
+                'height': 300,
+                'hAxis': { minValue: 0 },
+                legend: {position: 'bottom'}
             };
 
             // Create the data table.
@@ -136,21 +156,22 @@
             let lastDate = $('#pickLogic').children('input:eq(1)').val();
 
             //요일 선택하지 않았을때
-            if(day == undefined){
+            if (day == undefined) {
                 day = 0;
             }
 
             //ajax 호출
             $.ajax({
-                url : "findMemNonMem",
-                data : {firstDate : firstDate,
-                        lastDate : lastDate,
-                        day : day
+                url: "findMemNonMem",
+                data: {
+                    firstDate: firstDate,
+                    lastDate: lastDate,
+                    day: day
                 }
-            }).done(function(datas){
+            }).done(function (datas) {
                 console.log(datas);
                 jsonData = [];
-                for(let data of datas){
+                for (let data of datas) {
                     jsonData.push([data.member, data.paymentAmount])
                 }
                 console.log(jsonData);
@@ -161,10 +182,12 @@
         }
 
         //온라인, 오프라인을 구분해서 매출을 계산하는 구글차트
-        function drawPayTypeChart(){
-            var options = {'title':'온라인 오프라인 구분',
-                'width':400,
-                'height':300};
+        function drawPayTypeChart() {
+            var options = {
+                'title': '온라인 오프라인 구분',
+                'width': 400,
+                'height': 300,
+            };
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -177,21 +200,22 @@
             let lastDate = $('#pickLogic').children('input:eq(1)').val();
 
             //요일 선택하지 않았을때
-            if(day == undefined){
+            if (day == undefined) {
                 day = 0;
             }
 
             //ajax 호출
             $.ajax({
-                url : "findPayType",
-                data : {firstDate : firstDate,
-                        lastDate : lastDate,
-                        day : day
+                url: "findPayType",
+                data: {
+                    firstDate: firstDate,
+                    lastDate: lastDate,
+                    day: day
                 }
-            }).done(function(datas){
+            }).done(function (datas) {
                 console.log(datas);
                 jsonData = [];
-                for(let data of datas){
+                for (let data of datas) {
                     jsonData.push([data.pay, data.paymentAmount])
                 }
                 console.log(jsonData);
@@ -202,18 +226,21 @@
         }
 
         //요일별 평균 매출량을 계산하는 구글차트
-        function avgSalesByDay(){
-            var options = {'title':'요일별 평균 매출량',
-                'width':400,
-                'height':300,
-                legend: { position: 'bottom' },
+        function avgSalesByDay() {
+            var options = {
+                'title': '요일별 평균 매출량',
+                'width': 400,
+                'height': 300,
+                'hAxis': { minValue: 0 },
+                legend: {position: 'bottom'},
                 series: {
-                    0: { color: '#a561bd' },
-                    1: { color: '#c784de' },
-                    2: { color: '#f1ca3a' },
-                    3: { color: '#2980b9' },
-                    4: { color: '#e67e22' }
-                }};
+                    0: {color: '#a561bd'},
+                    1: {color: '#c784de'},
+                    2: {color: '#f1ca3a'},
+                    3: {color: '#2980b9'},
+                    4: {color: '#e67e22'}
+                }
+            };
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -226,20 +253,21 @@
             let lastDate = $('#pickLogic').children('input:eq(1)').val();
 
             //요일 선택하지 않았을때
-            if(day == undefined){
+            if (day == undefined) {
                 day = 0;
             }
 
             //ajax 호출
             $.ajax({
-                url : "avgSalesByDay",
-                data : {firstDate : firstDate,
-                        lastDate : lastDate,
+                url: "avgSalesByDay",
+                data: {
+                    firstDate: firstDate,
+                    lastDate: lastDate,
                 }
-            }).done(function(datas){
+            }).done(function (datas) {
                 console.log(datas);
                 jsonData = [];
-                for(let data of datas){
+                for (let data of datas) {
                     jsonData.push([data.day, data.paymentAmount])
                 }
                 console.log(jsonData);
@@ -250,8 +278,8 @@
         }
 
         //현재날짜 이전을 선택할 수 없음.
-        function monthPick(){
-            $('#selectMonth').on('change', function(){
+        function monthPick() {
+            $('#selectMonth').on('change', function () {
                 let today = new Date();
 
                 let selectDay = new Date(today.getFullYear(), $(this).val(), 0);
@@ -260,15 +288,15 @@
                 let selectDateFirstDay = today.getFullYear() + "-" + ('0' + $(this).val()).slice(-2) + "-01";
                 let selectDateLastDay = today.getFullYear() + "-" + ('0' + $(this).val()).slice(-2) + "-" + selectDay.getDate();
 
-                if($(this).val() > today.getMonth()+1){
-                    alert('현재 ' + (today.getMonth()+1) + '월까지 조회 가능합니다.')
+                if ($(this).val() > today.getMonth() + 1) {
+                    alert('현재 ' + (today.getMonth() + 1) + '월까지 조회 가능합니다.')
                     $("#selectMonth option:eq(0)").prop("selected", true);
                     $('#pickLogic').children('input:eq(0)').val("");
                     $('#pickLogic').children('input:eq(1)').val("");
-                }else if($(this).val() == today.getMonth()+1){
+                } else if ($(this).val() == today.getMonth() + 1) {
                     $('#pickLogic').children('input:eq(0)').val(selectDateFirstDay)
                     $('#pickLogic').children('input:eq(1)').val(`${todayDate}`)
-                }else{
+                } else {
                     $('#pickLogic').children('input:eq(0)').val(selectDateFirstDay)
                     $('#pickLogic').children('input:eq(1)').val(selectDateLastDay)
                 }
@@ -278,15 +306,15 @@
         }
 
         // 앞에서 선택한 날짜가 뒤에서 선택한 날짜보다 길면 날짜를 다시선택해야함.
-        function pickLogic(){
-            $('#pickLogic').on('change', 'input', function(){
+        function pickLogic() {
+            $('#pickLogic').on('change', 'input', function () {
                 $('#pickLogic').children('input:eq(0)').val()
                 $('#pickLogic').children('input:eq(1)').val()
 
                 let today = new Date($('#pickLogic').children('input:eq(0)').val())
                 let nextDay = new Date($('#pickLogic').children('input:eq(1)').val())
 
-                if(today - nextDay > 0){
+                if (today - nextDay > 0) {
                     alert('날짜를 다시 선택해주세요.')
                     $('#pickLogic').children('input:eq(1)').val("");
                 }
@@ -294,8 +322,8 @@
         }
 
         //날짜를 선택하고 검색했을 때 조건에 맞춰서 값을 받아오는 function
-        function search(){
-            $('#searchBtn').on('click', function() {
+        function search() {
+            $('#searchBtn').on('click', function () {
                 $('#searchResult').empty();
                 if ($('#pickLogic').children('input:eq(0)').val() == "" || $('#pickLogic').children('input:eq(1)').val() == "") {
                     alert('날짜를 선택해주세요.')
@@ -303,45 +331,74 @@
                     let firstDate = $('#pickLogic').children('input:eq(0)').val();
                     let lastDate = $('#pickLogic').children('input:eq(1)').val();
                     let day = $('input[name="day"]:checked').val()
-                    if(day == undefined){
+                    if (day == undefined) {
                         day = 0;
                     }
                     console.log(day);
                     $.ajax({
                         url: "searchSales",
-                        data : { firstDate : firstDate,
-                                 lastDate : lastDate,
-                                 day : day
+                        data: {
+                            firstDate: firstDate,
+                            lastDate: lastDate,
+                            day: day
                         }
-                    }).done(function(response){
+                    }).done(function (response) {
                         console.log(response);
 
                         let sum = 0;
                         let count = 0;
 
-                        for(let i=0; i<response.length; i++){
+                        for (let i = 0; i < response.length; i++) {
                             sum += response[i].sum;
                             count += response[i].count;
                         }
 
                         let div = `<div id="allSell"></div> <br>`
-                            div += `<div> ${firstDate} - ${lastDate}  </div>`
+                        $(`<div class="h_box bg-blue">
+                                    <a-h2 ko="조회 결과"></a-h2>
+                                </div>`).appendTo($('#searchBtn'))
 
-                        for(let i=0; i<response.length; i++){
-                            div += `<div><convert-c-code data="${response[i].paymentMethodCd}"></convert-c-code>
-                                        <span>${response[i].count}회<span>
+                        div += `<div class="bf-3"> ${firstDate} - ${lastDate}  </div>`
+
+                        div += '<table class="table text-center bf-2">'
+
+                        for (let i = 0; i < response.length; i++) {
+                            div += '<tr>'
+                            div += `<td><convert-c-code data="${response[i].paymentMethodCd}"></convert-c-code>
+                                        <span style="color:#ca2819;">${response[i].count}회<span>
                                         <span>${response[i].sum}원</span>
-                                    </div>`
+                                    </td>`
+                            div += '</tr>'
                         }
-                            div += `<div> 총 ${count}회 </div>
-                                    <div>${sum}원</div>`
+                        div += '</table>'
+
+                        div += `<div class="text-center bf-3" style="color: #2e9ad0"> 총 ${count}회 </div>
+                                    <div class="text-center bf-3" style="color: #2e9ad0">${sum}원</div>`
                         $('#searchResult').append(div);
                     })
 
-                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.load('current', {'packages': ['corechart']});
                     google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart(){
+                    function drawChart() {
+                        $('.colBoxAdd').addClass('col-4 a__box')
+
+                        let $tit = '';
+                        $.each( $('.colBoxAdd'), function(index, el) {
+                            console.log(el)
+
+                            if(index == 0)
+                                $tit = '회원 비회원 매출 구분'
+                            else if(index == 1)
+                                $tit = '요일별 평균 매출량'
+                            else if(index == 2)
+                                $tit = '온라인 오프라인 매출 구분'
+
+                            $(`<div class="h_box bg-blue">
+                                    <a-h2 ko="${$tit}"></a-h2>
+                                </div>`).appendTo(el)
+                        })
+
                         drawMemNonMemChart();
                         drawPayTypeChart();
                         avgSalesByDay();

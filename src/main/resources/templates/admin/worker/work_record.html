@@ -9,37 +9,37 @@
 
 <body>
 <th:block layout:fragment="content">
-        <style>
-            #myProgress {
-                position: relative;
-                width: 100%;
-                height: 50px;
-                background-color: #ddd;
-                text-align: center;
-            }
+    <style>
+        #myProgress {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background-color: #ddd;
+            text-align: center;
+        }
 
-            #myBar {
-                position: absolute;
-                height: 100%;
-                background-color: #4CAF50;
-                text-align: center;
-            }
+        #myBar {
+            position: absolute;
+            height: 100%;
+            background-color: #4CAF50;
+            text-align: center;
+        }
 
-            #label {
-                text-align: center;
-                line-height: 50px;
-                color: white;
-            }
-        </style>
-<!--     msg 만들기용-->
+        #label {
+            text-align: center;
+            line-height: 50px;
+            color: white;
+        }
+    </style>
+    <!-- msg 만들기용 -->
     <input type="hidden" id="chkWork" value="출근">
 
     <a-h1 ko="근무자 출퇴근" en="WORKER"></a-h1>
-
+    
     <div id="newTag"></div>
     <div id="allTag">
         <h1 class="text-center bf-4" style="color: #18181c">현재 근무자</h1>
-        <h2 class="text-center bf-3" style='color: #72ca19' th:text="${session.workerId} + '님'"></h2>
+        <h2 class="text-center bf-3" style='color: #72ca19' id="nowWorker"></h2>
         <div id="myProgress" style="display: none">
             <div id="myBar">
                 <div id="label" class="bf-3">0%</div>
@@ -49,14 +49,14 @@
             <p id="dd"></p>
         </div>
         <div id="out" class="text-center bf-3" style="color: #18181c">
-            <h2 class="bf-2" style="color: #d34747">📢퇴근까지</h2>
+            <h2 id="msg" class="bf-2" style="color: #d34747"></h2>
             <h1 id="demo"></h1>
 
         </div>
         <hr>
         <table class="table" id="getTable"></table>
         <br>
-        <button type="button" id="btn" class="btn btn-primary">출근하기</button>
+        <button type="button" id="btn" class="c-button">출근하기</button>
     </div>
     <script>
 
@@ -146,6 +146,7 @@
                 min = parseInt(time / 60 % 60);
                 sec = time % 60;
 
+                $('#msg').html("📢퇴근까지")
                 $('#demo').html(hour + "시간" + min + "분" + sec + "초");
                 time--;
 
@@ -370,50 +371,12 @@
                     document.querySelector('#getTable').append(tr2);
                 })
 
+            })
 
-
-                // var tr2 = "<tr>";
-                //
-                // for (let i = 0; i < response.length; i++) {
-                //     for (let j = 0; j < weekFind().length; j++) {
-                //         if (response[i].workerId == '[[${session.workerId}]]') {
-                //             console.log(weekFind()[j].substring(2, 10));
-                //             console.log(response[i].inTime.substring(0, 8));
-                //             if (weekFind()[j].substring(2, 10) == response[i].inTime.substring(0, 8)) {
-                //                 var firtr = $('.firstTr');
-                //
-                //                 if (response[i].inTime != null) {
-                //                     tr2 += "<td width='100'>" + response[i].inTime + "</td>"
-                //                 } else {
-                //                     tr2 += "<td width='100'>" + "출근 전" + "</td>"
-                //                 }
-                //
-                //                 // if ($('.firstTr').html() == response[i].inTime.substring(0, 8)) {
-                //                 //
-                //                 // }
-                //             }
-                //         }
-                //     }
-                // }
-                //
-                // tr2 += "</td>";
-                // $('#getTable').append(tr2);
-
-                // var tr3 = "<tr>";
-                //
-                //
-                // for (let i = 0; i < response.length; i++) {
-                //     if (response[i].workerId == '[[${session.workerId}]]') {
-                //         console.log('dd');
-                //         if (response[i].outTime != null) {
-                //             tr3 += "<td width='100'>" + response[i].outTime + "</td>"
-                //         } else {
-                //             tr3 += "<td width='100'>" + "퇴근 전" + "</td>"
-                //         }
-                //     }
-                // }
-                // tr3 += "</td>";
-                // $('#getTable').append(tr3);
+            $.ajax({
+                url : "getNowWorkerName"
+            }).done(function(response){
+                $('#nowWorker').html(response.workerId + "님");
             })
 
         }

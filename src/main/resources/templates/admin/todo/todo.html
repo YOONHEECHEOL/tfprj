@@ -10,24 +10,25 @@
 <th:block layout:fragment="content">
     <style>
         .processCompleteYn {
-            background-color: #25f54e;
-            width: 30px;
-            height: 30px;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
+            background: url("[[@{/images/adm/circle-check-solid.png}]]") no-repeat ;
         }
     </style>
 
 
-    <t-h1 ko="오늘 할일" en="TODO-LIST"></t-h1>
+    <a-h1 ko="오늘 할일" en="TODO-LIST"></a-h1>
 
     <div class="container-fluid">
         <div class="row" id="tg">
             <div class="col a__box">
                 <t-h2 ko="등록된 할일 리스트"></t-h2>
-                <div th:if="${session.positionCd == 1}">
-                    <button class="c-button" id="selectAllBtn">전체선택</button>
-                    <button class="c-button" id="completeAllBtn">해결</button>
-                    <button class="c-button" id="deleteAllBtn">삭제</button>
+                <div th:if="${session.positionCd == 1}" class="button__box">
+                    <button class="c-button" id="selectAllBtn" style="margin-bottom: 10px">전체선택</button>
+                    <button class="c-button" id="completeAllBtn" style="margin-bottom: 10px">해결</button>
+                    <button class="c-button" id="deleteAllBtn" style="margin-bottom: 10px">삭제</button>
                 </div>
                 <table class="table f16">
                     <colgroup>
@@ -102,7 +103,7 @@
                             return;
                         } else {
                             // 확인(예)
-                            if ($(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").attr('class') == '') {
+                            if ($(`#${response[i].chkNo}`).parents('tr').find("span").attr('class') == '') {
                                 $.ajax({
                                     url: "deleteAll"
                                 }).done(function (response) {
@@ -130,20 +131,20 @@
 
                 let arr = [];
                 for(let i= 0; i<response.length; i++){
-                    arr.push($(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").attr('class'));
+                    arr.push($(`#${response[i].chkNo}`).parents('tr').find("span").attr('class'));
                 }
 
                 if(arr.indexOf('') != '-1'){
-                    $(this).parents('div').parents('div').find('tbody').find('tr').find("td:eq(0)").removeClass('processCompleteYn')
+                    $(this).parents('div').parents('div').find('tbody').find('tr').find("span").removeClass('processCompleteYn')
                 }else{
-                    $(this).parents('div').parents('div').find('tbody').find('tr').find("td:eq(0)").addClass('processCompleteYn')
+                    $(this).parents('div').parents('div').find('tbody').find('tr').find("span").addClass('processCompleteYn')
                 }
 
                     for (let i = 0; i < response.length; i++) {
-                        if ($(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").attr('class') == '') {
+                        if ($(`#${response[i].chkNo}`).parents('tr').find("span").attr('class') == '') {
                             if ($(':checkbox').prop('checked') == true) {
 
-                                $(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").addClass('processCompleteYn')
+                                $(`#${response[i].chkNo}`).parents('tr').find("span").addClass('processCompleteYn')
                                 $.ajax({
                                     url: "completeAllUpdate",
                                     data: {processComplete: 1}
@@ -156,7 +157,7 @@
                                 return;
                             }
                         } else {
-                            $(`#${response[i].chkNo}`).parents('tr').find("td:eq(0)").removeClass('processCompleteYn')
+                            $(`#${response[i].chkNo}`).parents('tr').find("span").removeClass('processCompleteYn')
 
                             $.ajax({
                                 url: "completeAllUpdate",
@@ -178,7 +179,7 @@
 
             $("body").on("click", "#selectAllBtn", function () {
                 // if ($(`#${response[0].chkNo}`).parents('tr').find("td:eq(0)").hasClass('processCompleteYn')) {
-                if ($(this).parents('div').parents('div').find('tbody').find('tr').find("td:eq(0)").hasClass('processCompleteYn')) {
+                if ($(this).parents('div').parents('div').find('tbody').find('tr').find("span").hasClass('processCompleteYn')) {
                     alert('해결버튼 해제해주세요.')
                     return;
                 } else {
@@ -250,7 +251,7 @@
                 process = 'processCompleteYn'
             }
             content = "<tr class='container text-center bf-4' style='color: #18181c'>";
-            content += `<td width='30' class="${process}">` + "</td>"
+            content += `<td width='30' class="text-center"><span class="${process}"></span>` + "</td>"
             content += `<td><input type='checkbox' value="${response.isChk}" id="${response.chkNo}" ${checked} class="checkList btn btn-success btn-circle btn-lg">` + "</td>"
             content += "<td>" + makeCheckListNum() + "</td>"
             content += `<td style=${textDeco}; class="${response.chkPicFileName}">` + response.chkContents + "</td>"
@@ -288,7 +289,7 @@
             $('tbody').on('click', '.processComplete', function () {
                 let chkNo = $(this).parents('td').parents('tr').find("input").attr('id');
                 let fileCheck = $(this).parents('td').parents('tr').find("td:eq(3)").attr('class');
-                let classAttribute = $(this).parents('td').parents('tr').find("td:eq(0)");
+                let classAttribute = $(this).parents('td').parents('tr').find("span");
 
                 if('[[${session.positionCd}]]' == 1){
                     if ($(this).parents('td').parents('tr').find("input").is(":checked") == true) {
@@ -336,7 +337,7 @@
 
         //9. 해결 버튼을 눌렀을때 해당 Class를 가지고 있는지 true, false로 판단 후 ajax function으로 전달
         function processCompleteCheck(yn, chkNo) {
-            let processYn = yn.parents('td').parents('tr').find("td:eq(0)").hasClass('processCompleteYn');
+            let processYn = yn.parents('td').parents('tr').find("span").hasClass('processCompleteYn');
             console.log(processYn);
 
             ajaxProcessCompleteUpdate(chkNo, processYn);
@@ -572,7 +573,6 @@
 
         //댓글 삭제, delete가 아니라 update로 comment의 값을 null로 만들어줌.
         function ajaxCommentDelete(chkNo) {
-
             if('[[${session.positionCd}]]' == 1){
                 $('#updateContent').val("");
                 if (!confirm("삭제하시겠습니까?")) {
@@ -587,9 +587,9 @@
                     }).done(function (response) {
                         console.log(response);
                         $('#commentArea').hide();
-                        //$('#commentUpdateArea').hide();
                         $('#allComment').css('display', 'flex');
                         $('#commentUpdateArea').hide();
+                        $('#commentPlace').html('');
                     })
                     // 확인(예) 버튼 클릭 시 이벤트
                 }
@@ -618,7 +618,7 @@
             let isChk = '';
             let textContents = '';
             $('tbody').on('click', '.checkList', function () {
-                if ($(this).parents('td').parents('tr').find("td:eq(0)").hasClass('processCompleteYn') == true) {
+                if ($(this).parents('td').parents('tr').find("span").hasClass('processCompleteYn') == true) {
                     $($(this)).prop("checked", true);
                     alert('이미 해결된 사항입니다.')
                     // disabled="disabled"

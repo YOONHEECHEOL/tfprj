@@ -22,6 +22,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<!-- yhc 개인 js -->
+<script th:defer th:src="@{/js/yjs.js}" ></script>
+<script th:defer th:src="@{/js/sb-admin.js}" ></script>
+<script th:defer th:src="@{/js/jquery-easing.js}" ></script>
+
 <script th:inline="javascript">
     $(document).ready(function () {
         // 성별에 따라서 라디오버튼이 선택됨.
@@ -63,30 +68,45 @@
         alert('수정완료.')
     }
 </script>
+<style>
+    .input {
+        width: 100%;
+        border:none;
+        outline:none;
+        color: #636e72;
+        font-size:16px;
+        height:25px;
+        background: none;
+    }
+
+    .select{
+        width: 30px;
+        border: none;
+        outline:none;
+        color: #636e72;
+        font-size:16px;
+        height:25px;
+        background: none;
+    }
+
+</style>
+<t-h1 ko="근무자 조회" en="WORKER-INFO"></t-h1>
 <div>
-    <h3>상세조회 </h3>
-    <h4>근무자 세부정보</h4>
+    <br><br>
     <div>
         <form method="post" id="submitFrm" th:action="@{/adm/worker_hrm_detail_update}" enctype="multipart/form-data">
-            <table class="table tableSubHeadingColor">
+            <table class="table tableSubHeadingColor bf-2">
                 <tr>
                     <td>아이디</td>
-                    <td><input type="text" th:value="${workerInfo.workerId}" name="workerId"></td>
+                    <td><input type="text" class="input" th:value="${workerInfo.workerId}" name="workerId"></td>
                 </tr>
                 <tr>
                     <td>이름</td>
-                    <td><input type="text" th:value="${workerInfo.workerName}" name="workerName"></td>
+                    <td><input type="text" class="input"  th:value="${workerInfo.workerName}" name="workerName"></td>
                 </tr>
                 <tr>
                     <td>연락처</td>
-                    <td><input type="text" th:value="${workerInfo.phoneNo}" name="phoneNo"></td>
-                </tr>
-                <tr>
-                    <td>출근시간</td>
-                    <td><select name="userType">
-                        <option value="0">1부</option>
-                        <option value="1">2부</option>
-                    </select></td>
+                    <td><input type="text" class="input"  th:value="${workerInfo.phoneNo}" name="phoneNo"></td>
                 </tr>
                 <tr>
                     <td>성별</td>
@@ -95,19 +115,22 @@
                 </tr>
                 <tr>
                     <td>시급</td>
-                    <td><input type="text" name="payPerHour" th:value="${workerInfo.payPerHour}"></td>
+                    <td><input type="text" class="input" name="payPerHour" th:value="${workerInfo.payPerHour}"></td>
                 </tr>
                 <tr>
                     <td>생년월일</td>
                     <td><input type="text" class="datepicker" name="birth" th:value="${#dates.format(workerInfo.birth, 'yyyy-MM-dd')}"  readonly></td>
                 </tr>
                 <tr>
-                    <td>근무자타입</td>
-                    <td><select name="positionCd"><option value="0">월/목</option><option value="1">화/수/금</option></select></td>
+                    <td>병역</td>
+                    <td><select name="militaryCd" class="select"><option value="0">필</option><option value="1">미필</option></select></td>
                 </tr>
                 <tr>
-                    <td>병역</td>
-                    <td><select name="militaryCd"><option value="0">필</option><option value="1">미필</option></select></td>
+                    <td>상태</td>
+                    <td><select class="select" name="staffStatusCd">
+                        <option value="0">알바 중</option>
+                        <option value="1">퇴직</option>
+                    </select></td>
                 </tr>
                 <tr>
                     <td>프로필</td>
@@ -116,63 +139,63 @@
             </table>
             <div id="image_container"></div>
             <div id="image"><img id="realImage" th:src="@{'/images/adm/'  + ${workerInfo.fileName}}" style="width:250px; height:300px;"/></div>
-            <input type="text" th:value="${workerInfo.postcode}" id="sample4_postcode" placeholder="우편번호" name="postcode">
-            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-            <input type="text" th:value="${workerInfo.roadAddress}" id="sample4_roadAddress" placeholder="도로명주소" name="roadAddress">
-            <input type="text" th:value="${workerInfo.jibunAddress}" id="sample4_jibunAddress" placeholder="지번주소" name="jibunAddress">
-            <span id="guide" style="color:#999;display:none"></span>
-            <input type="text" th:value="${workerInfo.detailAddress}" id="sample4_detailAddress" placeholder="상세주소" name="detailAddress">
-
-            <br><br>
-            <table>
+            <table class="table bf-1">
                 <tr>
-                    <td>메모</td>
-                    <td><textarea name="memo" th:text="${workerInfo.memo}"></textarea><br><br></td>
+                    <td><input type="text" th:value="${workerInfo.postcode}" id="sample4_postcode" placeholder="우편번호" name="postcode"></td>
+                    <td> <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br></td>
                 </tr>
                 <tr>
-                    <td>상태</td>
-                    <td><select name="staffStatusCd">
-                        <option value="0">알바 중</option>
-                        <option value="1">퇴직</option>
-                    </select></td>
+                    <td><input type="text" th:value="${workerInfo.roadAddress}" id="sample4_roadAddress" placeholder="도로명주소" name="roadAddress"></td>
+                    <td><input type="text" th:value="${workerInfo.jibunAddress}" id="sample4_jibunAddress" placeholder="지번주소" name="jibunAddress"></td>
+                    <td><input type="text" th:value="${workerInfo.detailAddress}" id="sample4_detailAddress" placeholder="상세주소" name="detailAddress"></td>
                 </tr>
             </table>
-            <table th:border="1">
+
+            <input type="hidden" id="guide">
+<!--            <span id="guide" style="color:#999;display:none"></span>-->
+
+
+            <br><br>
+            <table class="table bf-2">
                 <tr>
                     <th th:width="100">근무자명</th>
                     <th th:width="100">출근시간</th>
                     <th th:width="100">퇴근시간</th>
+                    <th></th>
                 </tr>
                 <tr>
                     <td th:width="100" th:text="${workerInfo.workerName}">-</td>
                     <td th:width="100" id="goingTime">-</td>
                     <td th:width="100" id="quittingTime">-</td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <th th:width="100">총 지각횟수</th>
-                    <th th:width="100">주간지각</th>
-                    <th th:width="100">월간지각</th>
+                    <th th:width="100">지각</th>
                     <th th:width="100">결근 </th>
+                    <th th:width="100"></th>
+                    <th th:width="100"></th>
                 </tr>
                 <tr>
-                    <td th:text="${workerInfo.late}">0회</td>
-                    <td>0회</td>
-                    <td>0회</td>
-                    <td th:text="${workerInfo.absence}">0회</td>
+                    <td th:text="${workerInfo.late} + '회'">0회</td>
+                    <td th:text="${workerInfo.absence + '회'}">0회</td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <th th:width="100">근무시작일</th>
-                    <th th:width="100">직책</th>
                     <th th:width="100">총 지급금액</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tr>
                     <td th:text="${#dates.format(workerInfo.startDay, 'yyyy/MM/dd')}">0회</td>
-                    <td id="workDay">0회</td>
                     <td id="payAll">0회</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
-            <span><button type="button" onclick="validateForm()">저장하기</button></span>
-            <span><button>취소하기</button></span>
+            <span><button type="button" onclick="validateForm()" class="c-button" style="margin-bottom: 10px">저장하기</button></span>
+            <span><button class="c-button" style="margin-bottom: 10px" onclick="closeForm()">취소하기</button></span>
         </form>
     </div>
 </div>
@@ -191,6 +214,10 @@
     //         $('#payAll').html(numberFormat.format(Math.floor(response * '[[${workerInfo.payPerHour}]]'))+'원')
     //     })
     // }
+
+    function closeForm(){
+        window.close();
+    }
 
 
     function lastMonth(){
@@ -242,16 +269,12 @@
 
 <script>
     //데이트피커
-    $("#datepicker").datepicker({
+    $(".datepicker").datepicker({
         dateFormat: 'yy-mm-dd' //Input Display Format 변경
         ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
         ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
         ,changeYear: true //콤보박스에서 년 선택 가능
         ,changeMonth: true //콤보박스에서 월 선택 가능
-        ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
-        ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-        ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
-        ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
         ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
         ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
         ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트

@@ -76,7 +76,7 @@ public class WorkerServiceImpl implements WorkerService, UserDetailsService {
         }
         System.out.println("vo = " + vo);
         PrintWriter out = response.getWriter();
-        out.println("<script>window.close()</script> ");
+//        out.println("<script>window.close()</script> ");
         // 자바스크립트에서 window.close()를 사용할 경우 데이터를 submit 하기전에 window.close()가 실행되기 때문에,
         // 컨트롤러에서 스크립트 코드 사용
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
