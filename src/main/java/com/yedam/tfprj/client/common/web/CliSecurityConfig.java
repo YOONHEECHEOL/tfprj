@@ -51,6 +51,9 @@ public class CliSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .invalidateHttpSession(true)
                 .and()
+                .headers()
+                .frameOptions().sameOrigin()
+                .and()
                 .csrf().disable();        //로그인 창
     }
 
