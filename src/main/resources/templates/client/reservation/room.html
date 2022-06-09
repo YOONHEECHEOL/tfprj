@@ -5,6 +5,61 @@
 
 <th:block layout:fragment="content">
 
+    <style>
+
+        .ui-datepicker {
+            position: absolute;
+            top: 27vh !important;
+            left: 2vw !important;
+            z-index: 1;
+            /*display: block;*/
+            width: 96vw !important;
+            height: 44vh !important;
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, .4);
+        }
+        .ui-datepicker * {
+            font-size: 1.6rem;
+        }
+        .ui-datepicker-calendar {
+            width: 100%;
+            font-size: .9em;
+            height: 38vh;
+            border-collapse: collapse;
+            margin: 0 0 0.4em;
+        }
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+            border: 1px solid #ddd;
+            background: #fff !important;
+            font-weight: normal;
+            height: 100%;
+            color: #454545;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: .4rem;
+            font-family: esM;
+        }
+        .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+            background: #fff4b0 !important;
+        }
+        .ui-datepicker td {
+            padding: .4rem .3rem !important;
+        }
+        .ui-widget-header {
+            border: 0px !important;
+            background: #fff !important;
+            color: #333333;
+            font-weight: bold;
+            border-bottom: 1px solid #3765C7 !important;
+        }
+        .ui-datepicker-title {
+            font-size: 2rem !important;
+        }
+        .ui-datepicker-title * {
+            font-size: 2rem !important;
+        }
+    </style>
+
     <t-h1 ko="예약" en="RES"></t-h1>
 
     <div class="row align-items-center px-0">

@@ -35,10 +35,15 @@
     <div class="row">
 
         <div class="col-4 a__box">
-            <t-h2 ko="현재 출근한 근무자"></t-h2>
-            <br><br><br>
+
+            <div class="h_box bg-blue">
+                <a-h2 ko="현재 출근한 근무자"></a-h2>
+            </div>
+
             <h1 class="text-center bf-4" style="color: #18181c">현재 근무자</h1>
             <h2 class="text-center bf-3" style='color: #72ca19' th:text="${session.workerId} + '님'"></h2>
+
+            <div class="bf-3" id="notInComment"></div>
             <div id="myProgress" style="display: none">
                 <div id="myBar">
                     <div id="label" class="bf-3">0%</div>
@@ -55,18 +60,6 @@
                     <button class="c-button" onclick = "location.href = '/adm/work_record' ">바로가기</button>
                 </div>
             </div>
-<!--            <div class="bf-3" id="notInComment"></div>-->
-<!--            <div id="myProgress" style="display: none">-->
-<!--                <div id="myBar">-->
-<!--                    <div id="label">0%</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="div2"><br>-->
-<!--                <p id="dd"></p>-->
-<!--            </div>-->
-<!--            <div id="out"><br>-->
-<!--                <h1 id="demo"></h1>-->
-<!--            </div>-->
         </div>
 
         <div class="col-4 a__box">
@@ -85,12 +78,16 @@
 
 
         <div class="col-4 a__box">
-            <t-h2 ko="금일의 매출"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="금일의 매출"></a-h2>
+            </div>
             <div id="chart_div2"></div><br>
         </div>
 
         <div class="col-12 a__box f16">
-            <t-h2 ko="주간 근무표"></t-h2>
+            <div class="h_box bg-green">
+                <a-h2 ko="주간 근무표"></a-h2>
+            </div>
 
             <div id="today" class="bf-3 p">
                 주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷

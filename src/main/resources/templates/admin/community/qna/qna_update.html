@@ -4,52 +4,52 @@
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
     <t-h1 en="" ko="QNA"></t-h1>
-
+    <script src="/ckeditor/ckeditor.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<div class="container">
+    <div class="container">
 
+        <form th:id="qna" name="qna" method="post" action="/adm/qnaUpdateForm">
+            <div>
+                <label>게시글 번호</label>
+                <input name="qNo" readonly="readonly" class="form-control" th:value="${qna.qNo}">
+            </div>
+            <div>
+                <label>작성자</label>
+                <input name="writer" readonly="readonly" class="form-control" th:value="${qna.writer}">
+            </div>
+            <div>
+                <label>제목</label>
+                <input name="title" type="text" class="form-control" th:value="${qna.title}">
+            </div>
+            <div class="form-group form-group-lg">
+                <label>내용</label>
+                <textarea name="details" type="text" class="form-control" rows="5" th:value="${qna.details}"
+                          th:text="${qna.details}"></textarea>
+            </div>
+            <button type="button" onclick="formCheck()" id="frm" style="float: left">전송</button>
+        </form>
 
+        <input type="hidden" id="qNo" name="qNo" th:value="${qna.qNo}">
+        <input type="hidden" id="writer" name="writer" th:value="${qna.writer}">
+        <input type="hidden" id="title" name="title" th:value="${qna.title}">
+        <input type="hidden" id="qdetails" name="details" th:value="${qna.details}">
 
+    </div>
 
-    <form th:id="qna" name="qna" method="post" action="/adm/qnaUpdateForm">
-        <div>
-            <label>게시글 번호</label>
-            <input name="qNo" readonly="readonly" class="form-control" th:value="${qna.qNo}">
-        </div>
-        <div>
-            <label>작성자</label>
-            <input name="writer" readonly="readonly" class="form-control" th:value="${qna.writer}">
-        </div>
-        <div>
-            <label>제목</label>
-            <input name="title" type="text" class="form-control" th:value="${qna.title}">
-        </div>
-        <div class="form-group form-group-lg">
-            <label>내용</label>
-            <textarea name="details" type="text" class="form-control" rows="5" th:value="${qna.details}" th:text="${qna.details}"></textarea>
-        </div>
-        <button type="button" onclick="formCheck()" id="frm" style="float: left">전송</button>
-    </form>
+    <script>
+        CKEDITOR.replace("details", {
+            filebrowserUploadUrl: "/cli/imageUpload"
+        });
 
-    <input type="hidden" id="qNo" name="qNo" th:value="${qna.qNo}">
-    <input type="hidden" id="writer" name="writer" th:value="${qna.writer}">
-    <input type="hidden" id="title" name="title" th:value="${qna.title}">
-    <input type="hidden" id="qdetails" name="details" th:value="${qna.details}">
-
-</div>
-
-<script>
-
-
-    function formCheck() {
-        if (qna.title.value == "") {
-            alert("제목을 입력하세요.");
-            qna.title.focus();
-            return false;
+        function formCheck() {
+            if (qna.title.value == "") {
+                alert("제목을 입력하세요.");
+                qna.title.focus();
+                return false;
+            }
+            qna.submit();
         }
-        qna.submit();
-    }
-</script>
+    </script>
 </th:block>
 </html>

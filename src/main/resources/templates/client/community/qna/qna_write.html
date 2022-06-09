@@ -4,10 +4,8 @@
       layout:decorate="~{layout/cli_layout}">
 
 
-
 <th:block layout:fragment="content">
     <t-h1 en="QNA" ko="문의 사항"></t-h1>
-
 
 
     <!-- jQuery -->
@@ -39,10 +37,11 @@
                 </div>
 
                 <div>
-                    <input type="submit" style="float: right" class="btn btn-sm btn-primary" id="btnSave" value="생성">
+                    <input type="button" onclick="formCheck()" style="float: right" class="c-button col-3"
+                           id="btnSave" value="생성">
 
                     <button type="button" style="float: right" onclick="location.href = '/cli/qna'"
-                            class="btn btn-sm btn-primary">목록
+                            class="c-button col-3">목록
                     </button>
                 </div>
 
@@ -51,25 +50,23 @@
         </div>
     </article>
     <script>
-        ClassicEditor
+        CKEDITOR.replace("details", {
+            filebrowserUploadUrl: "/cli/imageUpload"
+        });
 
-            .create(document.querySelector('#details'))
-
-            .then(editor => {
-
-                console.log(editor);
-
-            })
-
-            .catch(error => {
-
-                console.error(error);
-
-            });
+        function formCheck() {
+            if (form.title.value == "") {
+                alert("제목을 입력하세요.");
+                form.title.focus();
+                return false;
+            }
+            form.submit();
+        }
 
         CKEDITOR.replace("details", {
             filebrowserUploadUrl: "/cli/imageUpload"
         });
+
     </script>
 </th:block>
 </html>

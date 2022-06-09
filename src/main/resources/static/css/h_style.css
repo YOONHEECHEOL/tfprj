@@ -21,8 +21,12 @@
 html, body {
     font-family: 'Noto Sans kr';
     font-size: 10px !important;
+    color: #222;
 }
-
+div, span {
+    font-size: 1.4rem;
+    color: #222;
+}
 /* common */
 .wrap {
     width: 100%;
@@ -388,6 +392,10 @@ main.contents {
     cursor: pointer;
     transition: all .3s ease;
     box-sizing: border-box;
+    transition: all .3s ease;
+}
+.c-button:hover {
+    background: #f1f1f1;
 }
 .c-button.active {
     background: #3765C7;
@@ -463,10 +471,10 @@ select {
     background-color: #222 !important;
     background-image: none !important;
 }
-#adm-content {
-    flex: 1 0 auto;
-    padding: 0 2rem;
-}
+/*#adm-content {*/
+/*    flex: 1 0 auto;*/
+/*    padding: 0 2rem;*/
+/*}*/
 
 .home-table td, .home-table th {
     /*pointer-events: none;*/
@@ -499,6 +507,7 @@ select {
 /* admin font size 설정 */
 .navbar-nav * {
     font-size: 1.4rem !important;
+    color: #fff;
 }
 
 /* adm leauge detail list */
@@ -767,7 +776,7 @@ hr {
     100% { transform: translate(34%); }
 }
 
-/* font size */
+ /*font size */
 .f20 * {
     font-size: 2rem;
 }
@@ -890,58 +899,9 @@ i.black {
     color: #222;
 }
 
-.ui-datepicker {
-    position: absolute;
-    top: 27vh !important;
-    left: 2vw !important;
-    z-index: 1;
-    display: block;
-    width: 96vw !important;
-    height: 44vh !important;
-    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, .4);
+.pd0 {
+    padding: 0;
 }
-.ui-datepicker * {
-    font-size: 1.6rem;
-}
-.ui-datepicker-calendar {
-    width: 100%;
-    font-size: .9em;
-    height: 38vh;
-    border-collapse: collapse;
-    margin: 0 0 0.4em;
-}
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
-    border: 1px solid #ddd;
-    background: #fff !important;
-    font-weight: normal;
-    height: 100%;
-    color: #454545;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: .4rem;
-    font-family: esM;
-}
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
-    background: #fff4b0 !important;
-}
-.ui-datepicker td {
-    padding: .4rem .3rem !important;
-}
-.ui-widget-header {
-    border: 0px !important;
-    background: #fff !important;
-    color: #333333;
-    font-weight: bold;
-    border-bottom: 1px solid #3765C7 !important;
-}
-.ui-datepicker-title {
-    font-size: 2rem !important;
-}
-.ui-datepicker-title * {
-    font-size: 2rem !important;
-}
-
 .row.px-0 > div {
     padding: 0 !important;
 }
@@ -994,13 +954,15 @@ i.black {
 
 /* 관리자 페이지 레이아웃 */
 .a__box {
-    padding: 2rem !important;
-    width: calc(100% - 4rem - 4rem - 2px) !important;
-    margin: 2rem;
-    border-radius: 1.2rem;
+    padding: 7.2rem 1.2rem 2rem !important;
+    width: calc(100% - 4.4rem - 2px) !important;
+    box-sizing: content-box;
+    border-radius: 0.4rem;
+    margin: 1rem;
     min-height: calc(42vh - 4.2rem);
-    /*border: 1px solid #19AAD8;*/
+    border: 1px solid #ddd;
     box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+    position: relative;
 }
 .a__box.nh {
     min-height: 0 !important;
@@ -1010,21 +972,40 @@ i.black {
     overflow: scroll;
 }
 .col-12.a__box {
-    max-width: calc(100% - 4.2rem) !important;
+    max-width: calc(100% - 4.6rem) !important;
 }
 .col-6.a__box {
-    max-width: calc(100% / 2 - 4.2rem) !important;
+    max-width: calc(100% / 2 - 4.6rem) !important;
 }
 .col-4.a__box {
-    max-width: calc(100% / 3 - 4.2rem) !important;
+    max-width: calc(100% / 3 - 4.6rem) !important;
 }
 .col-3.a__box {
-    max-width: calc(100% / 4 - 4.2rem) !important;
+    max-width: calc(100% / 4 - 4.6rem) !important;
+}
+.h_box {
+    width: 100%;
+    padding: 0.4rem 1.2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #373840;
+}
+.h_box.bg-red {
+    background: #FF4F4F;
+}
+.h_box.bg-blue {
+    background: #3765C7;
+}
+.h_box.bg-green {
+    background: #17a673;
 }
 
+
 .btn {
+    font-family: esL;
+    font-weight: 400;
     font-size: 1.6rem !important;
-    padding: 1.2rem !important;
     text-align: center;
     border-radius: .4rem;
 }
@@ -1069,3 +1050,4 @@ i.black {
     font-family: esM;
     color: #222;
 }
+
