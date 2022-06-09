@@ -33,7 +33,7 @@
                         console.log(numberFormat.format(response[1].allPay) + '원')
                         var selectTr = "";
                         for (let i = 0; i < response.length; i++) {
-                            if (response[i].workerId == 'admin') {
+                            if (response[i].workerId == 'ADMIN') {
 
                             } else {
                                 selectTr = `<tr class="text-center bf-2" style="color: #18181c" data-workerid = ${response[i].workerId}>`;
