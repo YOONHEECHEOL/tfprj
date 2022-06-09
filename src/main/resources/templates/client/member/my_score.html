@@ -6,64 +6,161 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+
+    <style>
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            display: flex;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 0;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .nav-item {
+            border-right: 1px solid #bbb;
+        }
+        .nav-item:last-child {
+            border-right: 0px solid #bbb;
+        }
+    </style>
+
+
     <t-h1 ko="마이페이지" en="MY-SCORE"></t-h1>
 
     <t-h2 ko="나의 스코어 조회"></t-h2>
 
-    <div th:if="${score.size eq 0}">
-        <span>기록이 없습니다.</span>
-    </div>
-    <div th:if="${score.size ne 0}">
-        <table>
-            <tbody>
-            <tr>
-                <th>구장</th>
-                <th>안타</th>
-                <th>홈런</th>
-                <th>최고비거리</th>
-                <th>총 타수</th>
-                <th>타순</th>
-                <th>난이도</th>
-                <th>게임진행일자</th>
-            </tr>
-            <tr th:each="scr, i : ${score}">
-                <td th:text="${scr.groundCd}+'구장'"></td>
-                <td th:text="${scr.hits}"></td>
-                <td th:text="${scr.homeruns}"></td>
-                <td th:text="${scr.highestDistance}"></td>
-                <td th:text="${scr.batCounts}"></td>
-                <td th:text="${scr.batOrder}"></td>
-                <td th:text="${scr.difficultyCd}"></td>
-                <td th:text="${scr.resDate}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="tab">
+        <button class="tablinks bf-3 text-center active"onclick="openCity(event, 'London')">표</button>
+        <button class="tablinks bf-3 text-center" onclick="openCity(event, 'Paris')">그래프</button>
     </div>
 
-    <div>
-        <ul class="row nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="myHighestDistance" data-toggle="pill" onclick="drawChart1()" role="tab"
-                   aria-controls="pills-profile" aria-selected="true">최고비거리</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="myBattingAverage" data-toggle="pill" onclick="drawChart2()" role="tab"
-                   aria-controls="pills-contact" aria-selected="true">타율</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="myHomeRun" data-toggle="pill" onclick="drawChart3()" role="tab"
-                   aria-controls="pills-contact" aria-selected="true">홈런</a>
-            </li>
-        </ul>
-    </div>
-    <div id="chart_div">
+    <div id="London" class="tabcontent active">
+
+        <div th:if="${score.size eq 0}">
+            <span>기록이 없습니다.</span>
+        </div>
+        <div th:if="${score.size ne 0}">
+            <table class="table f14">
+                <tbody>
+                <tr>
+                    <th>구장</th>
+                    <th>안타</th>
+                    <th>홈런</th>
+                    <th>최고비거리</th>
+                    <th>총 타수</th>
+                    <th>타순</th>
+                    <th>난이도</th>
+                    <th>게임진행일자</th>
+                </tr>
+                <tr th:each="scr, i : ${score}">
+                    <td th:text="${scr.groundCd}+'구장'"></td>
+                    <td th:text="${scr.hits}"></td>
+                    <td th:text="${scr.homeruns}"></td>
+                    <td th:text="${scr.highestDistance}"></td>
+                    <td th:text="${scr.batCounts}"></td>
+                    <td th:text="${scr.batOrder}"></td>
+                    <td th:text="${scr.difficultyCd}"></td>
+                    <td th:text="${#dates.format(scr.resDate, 'yy.MM.dd')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
     </div>
+
+    <div id="Paris" class="tabcontent">
+
+        <div>
+            <ul class="row nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item col-4 text-center" role="presentation">
+                    <a class="nav-link bf-2" id="myHighestDistance" data-toggle="pill" onclick="drawChart1()" role="tab"
+                       aria-controls="pills-profile" aria-selected="true">최고비거리</a>
+                </li>
+                <li class="nav-item col-4 text-center" role="presentation">
+                    <a class="nav-link bf-2" id="myBattingAverage" data-toggle="pill" onclick="drawChart2()" role="tab"
+                       aria-controls="pills-contact" aria-selected="true">타율</a>
+                </li>
+                <li class="nav-item col-4 text-center" role="presentation">
+                    <a class="nav-link bf-2" id="myHomeRun" data-toggle="pill" onclick="drawChart3()" role="tab"
+                       aria-controls="pills-contact" aria-selected="true">홈런</a>
+                </li>
+            </ul>
+        </div>
+        <div id="chart_div" style="width: 400px; height: 300px;">
+
+        </div>
+
+    </div>
+
+
+    <script>
+        function openCity(evt, cityName) {
+            if(cityName == 'London'){
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }else{
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+                $("#myHighestDistance").click();
+            }
+
+        }
+    </script>
+
 
     <script>
         google.charts.load('current', {'packages': ['corechart']});
-        google.charts.setOnLoadCallback(drawChart1);
-
+        $(document).ready(function(){
+            $("#myHighestDistance").trigger('click');
+        });
         function drawChart1() {
             var options = {title: '내 기록'};
             var data = new google.visualization.DataTable();
@@ -75,7 +172,7 @@
             }).done(function (datas) {
                 jsonData = [];
                 for (dt of datas) {
-                    jsonData.push([dt.resDate, dt.highestDistance])
+                    jsonData.push([dt.resDate.substring(0,10), dt.highestDistance])
                 }
                 data.addRows(jsonData);
 
@@ -96,7 +193,7 @@
                 jsonData = [];
                 for (dt of datas) {
                     var avg = (dt.hits / dt.batCounts);
-                    jsonData.push([dt.resDate, avg])
+                    jsonData.push([dt.resDate.substring(0,10), avg])
                 }
                 data.addRows(jsonData);
 
@@ -116,7 +213,7 @@
             }).done(function (datas) {
                 jsonData = [];
                 for (dt of datas) {
-                    jsonData.push([dt.resDate, dt.homeruns])
+                    jsonData.push([dt.resDate.substring(0,10), dt.homeruns])
                 }
                 data.addRows(jsonData);
 

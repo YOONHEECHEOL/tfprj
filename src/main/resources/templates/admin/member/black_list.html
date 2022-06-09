@@ -3,15 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>블랙리스트 조회</h3>
-        </div>
-    </div>
+
+    <t-h1 ko="회원 관리" en="BLACKLIST"></t-h1>
+
+    <t-h2 ko="블랙리스트"></t-h2>
+
     <!--BlackList Start-->
-    <div th:class="row">
-        <div th:class="col-auto">
-            <table>
+    <div class="row f14">
+        <div class="col-12">
+            <table class="table f14">
                 <thead>
                 <tr>
                     <th>번호</th>
@@ -29,11 +29,15 @@
                     <td><span th:text="${list.memberId}"></span></td>
                     <td><span th:text="${list.memberName}"></span></td>
                     <td><span th:text="${list.tel}"></span></td>
-                    <td><convert-c-code th:data="${list.grade}"></convert-c-code></td>
-                    <td><select th:id="blacklistYn" th:name="blacklistYn" onchange="chargeSelect(this)">
-                        <option th:if="${list.blacklistYn == 1 or list.blacklistYn ==2}" th:text="블랙리스트" th:value=1 selected></option>
-                        <option th:value=0>해제</option>
-                    </select></td>
+                    <td>
+                        <convert-c-code th:data="${list.grade}"></convert-c-code>
+                    </td>
+                    <td>
+                        <select class="form-control blacklistYn">
+                            <option th:if="${list.blacklistYn == 1 or list.blacklistYn ==2}" th:text="블랙리스트" th:value=1
+                                    selected></option>
+                            <option th:value=0>해제</option>
+                        </select></td>
                     <td><span th:text="${list.blacklistReason}"></span></td>
                 </tr>
                 </tbody>
@@ -41,40 +45,49 @@
             <!--BlackList End-->
             <!-- 페이징 -->
             <nav>
-                <ul>
+                <ul class="pagination">
                     <!-- getPrePage : 이전 페이지 -->
-                    <li th:classappend="${blackInfo.getPrePage() == 0} ? 'disabled'">
-                        <a th:href="@{blackList(pageNum=${blackInfo.getPrePage()})}">Previous</a>
+                    <li class="page-item" th:classappend="${blackInfo.getPrePage() == 0} ? 'disabled'">
+                        <a th:href="@{blackList(pageNum=${blackInfo.getPrePage()})}"><</a>
                     </li>
                     <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                    <li th:each="page: ${#numbers.sequence(blackInfo.getNavigateFirstPage(), blackInfo.getNavigateLastPage())}"
+                    <li class="page-item"
+                        th:each="page: ${#numbers.sequence(blackInfo.getNavigateFirstPage(), blackInfo.getNavigateLastPage())}"
                         th:classappend="${page == blackInfo.getPageNum()} ? 'active'">
                         <a th:text="${page}" th:href="@{blackList(pageNum=${page})}"></a>
                     </li>
                     <!-- getPrePage : 다음 페이지 -->
-                    <li th:classappend="${blackInfo.getNextPage() == 0} ? 'disabled'">
-                        <a th:href="@{blackList(pageNum=${blackInfo.getNextPage()})}">Next</a>
+                    <li class="page-item" th:classappend="${blackInfo.getNextPage() == 0} ? 'disabled'">
+                        <a th:href="@{blackList(pageNum=${blackInfo.getNextPage()})}">></a>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
     <script>
-        function chargeSelect(e) {
-            var blackVal = e.options[e.selectedIndex].value;
-            var memId = e.parentElement.parentElement.children[1].children[0].innerHTML;
-            if (confirm("블랙리스트를 해제하시겠습니까?") == true) {
+
+        var prev_val;
+        $('.blacklistYn').focus(function () {
+            prev_val = $(this).val();
+        }).change(function () {
+            console.log(prev_val)
+            var success = confirm("블랙리스트를 해제하시겠습니까?");
+            var memId = $(this).parent().parent().children().children().eq(1).text();
+            var blackVal = 0;
+            if (success) {
                 $.ajax({
                     url: "/adm/blackUpdate",
                     method: "POST",
                     data: {memberId: memId, blacklistYn: blackVal}
-                }).done(function(){
-                    location.href="/adm/blackList";
+                }).done(function () {
+                    location.reload();
                 })
             } else {
-                return;
+                $(this).val(prev_val);
+                return false;
             }
-        }
+        });
+
     </script>
 </th:block>
 </html>

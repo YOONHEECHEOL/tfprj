@@ -9,24 +9,27 @@
 
     <a-h1 ko="리그관리" en="LEAGUE"></a-h1>
 
-    <div class="row justify-content-end">
-        <div class="col-2">
-            <button class="c-button" id="addLeague">리그생성</button>
+    <div class="row justify-content-start">
+        <div class="button__box col-2">
+            <button class="c-button sec" id="addLeague">리그생성</button>
         </div>
+
     </div>
 
     <div class="row f16" id="output">
         <div class="col">
             <div class="row">
                 <div class="col-12 a__box os" id="admLeagueList">
+                    <div class="h_box bg-blue">
+                        <a-h2 ko="현재 진행 중 리그"></a-h2>
+                    </div>
 
-                    <t-h2 ko="현재 진행 중 리그"></t-h2>
-                    <table class="table">
+                    <table class="table table-hover">
                         <tbody>
                         <tr th:each="l, status: ${l.currentList}">
                             <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
                             <td>
-                                <h4 class="h4" th:text="${l.leagueName}">리그명</h4>
+                                <h4 class="bf-3 p" th:text="${l.leagueName}">리그명</h4>
                                 <convert-c-code th:data="${l.leagueStatusCd}"></convert-c-code>
                                 <br>
                                 <!--          <span>등록일</span><span th:text="${#dates.format(l.rgstDate, 'yyyy-MM-dd')}">등록일</span><br>-->
@@ -44,8 +47,11 @@
                 </div>
 
                 <div class="col-12 a__box os">
-                    <t-h2 ko="지난 리그"></t-h2>
-                    <table class="table">
+                    <div class="h_box">
+                        <a-h2 ko="지난 리그"></a-h2>
+                    </div>
+
+                    <table class="table table-hover">
                         <tbody>
                         <tr th:each="l, status: ${l.passedList}">
                             <td><span class="ttt" th:text="${l.leagueId}">리그ID</span></td>
@@ -85,7 +91,9 @@
         c.setAttribute('class', 'col-4 a__box')
 
         c.innerHTML = `
-        <t-h2 ko="리그 생성하기"></t-h2>
+        <div class="h_box bg-green">
+            <a-h2 ko="현재 진행 중 리그"></a-h2>
+        </div>
           <form action="/adm/insertLeague" id="frm" class="league-create-form" method="post">
             <input type="hidden" placeholder="리그상태코드" name="leagueStatusCd" id="leagueStatusCd" value="501">
             <input type="hidden" placeholder="토너먼트ID" name="tournamentId" id="tournamentId" value="0">
@@ -187,7 +195,7 @@
 
           </form>
           <div class="button__box">
-            <button class="button button-primary" id="submitFrm">리그생성</button>
+            <button class="button button-success" id="submitFrm">리그생성</button>
           </div>
                     `
         // form 태그 입력 끝

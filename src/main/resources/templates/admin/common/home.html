@@ -35,7 +35,11 @@
     <div class="row">
 
         <div class="col-4 a__box">
-            <t-h2 ko="현재 출근한 근무자"></t-h2>
+
+            <div class="h_box bg-blue">
+                <a-h2 ko="현재 출근한 근무자"></a-h2>
+            </div>
+
             <div class="bf-3" id="notInComment"></div>
             <div id="myProgress" style="display: none">
                 <div id="myBar">
@@ -51,8 +55,10 @@
         </div>
 
         <div class="col-4 a__box">
-            <t-h2 ko="체크리스트"></t-h2>
 
+            <div class="h_box bg-red">
+                <a-h2 ko="체크리스트"></a-h2>
+            </div>
 
             <table class="table table-hover">
                 <tbody id="checkList">
@@ -66,12 +72,16 @@
 
 
         <div class="col-4 a__box">
-            <t-h2 ko="금일의 매출"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="금일의 매출"></a-h2>
+            </div>
             <div id="chart_div2"></div><br>
         </div>
 
         <div class="col-12 a__box f16">
-            <t-h2 ko="주간 근무표"></t-h2>
+            <div class="h_box bg-green">
+                <a-h2 ko="주간 근무표"></a-h2>
+            </div>
 
             <div id="today" class="bf-3 p">
                 주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷

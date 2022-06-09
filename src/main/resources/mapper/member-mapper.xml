@@ -50,6 +50,8 @@
         SELECT*
         FROM MEMBER_GAME
         WHERE MEMBER_ID = #{memberId}
+        AND BAT_COUNTS IS NOT NULL
+        ORDER BY RES_DATE DESC
     </select>
 
     <select id="searchMember" parameterType="com.yedam.tfprj.client.member.service.MemberVO"

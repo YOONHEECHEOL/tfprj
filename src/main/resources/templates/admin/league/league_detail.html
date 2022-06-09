@@ -6,55 +6,92 @@
 
 <th:block layout:fragment="content">
 
-    <t-h1 ko="리그조회" en="LEAGUE-DETAIL"></t-h1>
+    <a-h1 ko="리그조회" en="LEAGUE-DETAIL"></a-h1>
 
 
     <div class="row">
         <!-- league 상세정보 -->
         <div class="col-6 a__box os">
             <!-- league 정보 출력 -->
-            <t-h2 ko="리그 정보"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="리그 정보"></a-h2>
+            </div>
+
             <input type="hidden" th:value="${l.getLeagueVO().getLeagueId()}" id="leagueId">
-            <ul class="f16">
-                <li>
-                    <span>리그명 : </span><span th:text="${l.getLeagueVO().getLeagueName()}"></span>
-                </li>
-                <li>
-                    <span>상태 : </span>
-                    <convert-c-code th:data="${l.getLeagueVO().getLeagueStatusCd()}"></convert-c-code>
-                </li>
-                </li>
-                <li>
-                    <span></span>
-                    <span th:text="${l.getLeagueVO().getParticipationMember()}"></span>
-                </li>
-                <li>
-                    <span></span>
-                    <span id="participationTeam" th:text="${l.getLeagueVO().getParticipationTeam()}"></span>
-                </li>
-                <li>
-                    <span></span>
-                    <span th:text="${l.getLeagueVO().getEntryFee()}"></span>
-                </li>
-                <li>
-                    <span></span>
-                    <span th:text="${l.getLeagueVO().getStartDate()}"></span>
-                    <span th:text="${l.getLeagueVO().getEndDate()}"></span>
-                </li>
-                <li>
-                    <span></span>
-                    <span th:text="${l.getLeagueVO().getPrizeGood()}"></span>
-                </li>
-                <li>
-                    <span></span>
-                    <span th:text="${l.getLeagueVO().getPrizeMoney()}"></span>
-                </li>
-            </ul>
+            <table class="table table f16">
+                <tr>
+                    <td class="bf-2 p">리그명</td>
+                    <td class="bf-2">
+                        <span th:text="${l.getLeagueVO().getLeagueName()}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        상태
+                    </td>
+                    <td>
+                        <button class="btn btn-primary">
+                            <convert-c-code th:data="${l.getLeagueVO().getLeagueStatusCd()}"></convert-c-code>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        팀별 멤버 수
+                    </td>
+                    <td class="bf-2">
+                        <span th:text="${l.getLeagueVO().getParticipationMember()}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        참가팀 수
+                    </td>
+                    <td class="bf-2">
+                        <span id="participationTeam" th:text="${l.getLeagueVO().getParticipationTeam()}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        참가비
+                    </td>
+                    <td class="bf-2">
+                        <span th:text="${l.getLeagueVO().getEntryFee()}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        리그 기간
+                    </td>
+                    <td class="bf-2">
+                        <span th:text="${#dates.format(l.getLeagueVO().getStartDate(), 'yy.MM.dd') + ' - ' + #dates.format(l.getLeagueVO().getEndDate(), 'MM.dd')}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        우승 상품
+                    </td>
+                    <td class="bf-2">
+                        <span th:text="${l.getLeagueVO().getPrizeGood()}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bf-2 p">
+                        우승 상금
+                    </td>
+                    <td class="bf-2">
+                        <span th:text="${l.getLeagueVO().getPrizeMoney()}"></span>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="col-6 a__box os">
             <!-- league 신청한 팀 목록 -->
-            <t-h2 ko="신청목록"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="신청목록"></a-h2>
+            </div>
+
             <div id="tournament-table">
                 <table class="table text-center a-table">
                     <thead>
@@ -97,7 +134,10 @@
         <div class="col-6 a__box os">
             <div id="tm-root">
                 <!-- 대진표 -->
-                <t-h2 ko="대진표"></t-h2>
+                <div class="h_box">
+                    <a-h2 ko="대진표"></a-h2>
+                </div>
+
                 <div class="tm-r">
                     <ul class="tm-table" id="tm-table1">
                         <!--                        <li th:each="i: ${statusTeam}">-->
@@ -111,7 +151,10 @@
 
         <div class="col-6 a__box os">
             <!-- 참가 승인된 팀 목록 -->
-            <t-h2 ko="리그 참가 팀 목록"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="참가 팀 목록"></a-h2>
+            </div>
+
             <table class="table text-center a-table">
                 <thead>
                 <tr>

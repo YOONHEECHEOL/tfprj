@@ -3,24 +3,24 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
-    <div th:class="row">
-        <div th:class="col-auto">
-            <h3>팀 리스트 조회</h3>
-        </div>
-    </div>
+
+    <t-h1 ko="회원 관리" en="TEAMLIST"></t-h1>
+
+    <t-h2 ko="팀리스트"></t-h2>
+
     <!--TeamList Start-->
-    <div th:class="row">
-        <div th:class="col-auto">
+    <div class="row f14">
+        <div class="col-12">
             <form th:id="frm" action="/adm/searchTeam" method="get">
                 <div>
                     <input type="text" class="form-control" id="teamName"
                            name="teamName" placeholder="Search"
                            aria-label="Search">
-                    <button class="btn btn-outline-secondary" id="searchBtn"
+                    <button class="c-button" id="searchBtn"
                             type="submit">Search
                     </button>
                 </div>
-                <table>
+                <table class="table f14">
                     <thead>
                     <tr>
                         <th>번호</th>
@@ -34,7 +34,7 @@
                         <td>[[${list.teamName}]]</td>
                         <td>[[${list.leader}]]</td>
                         <td>
-                            <button type="button" th:class="addTeamBtn">상세보기</button>
+                            <button type="button" class="addTeamBtn c-button">상세보기</button>
                         </td>
                         <input type="hidden" th:value="${list.teamId}">
                     </tr>
@@ -43,20 +43,20 @@
                 <!--TeamList End-->
                 <!-- 페이징 -->
                 <nav>
-                    <ul>
+                    <ul class="pagination">
                         <!-- getPrePage : 이전 페이지 -->
-                        <li th:classappend="${teamSearchInfo.getPrePage() == 0} ? 'disabled'">
-                            <a th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${teamSearchInfo.getPrePage()})}">Previous</a>
+                        <li class="page-item" th:classappend="${teamSearchInfo.getPrePage() == 0} ? 'disabled'">
+                            <a th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${teamSearchInfo.getPrePage()})}"><</a>
                         </li>
                         <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                        <li th:each="page: ${#numbers.sequence(teamSearchInfo.getNavigateFirstPage(), teamSearchInfo.getNavigateLastPage())}"
+                        <li class="page-item" th:each="page: ${#numbers.sequence(teamSearchInfo.getNavigateFirstPage(), teamSearchInfo.getNavigateLastPage())}"
                             th:classappend="${page == teamSearchInfo.getPageNum()} ? 'active'">
                             <a th:text="${page}"
                                th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${page})}"></a>
                         </li>
                         <!-- getPrePage : 다음 페이지 -->
-                        <li th:classappend="${teamSearchInfo.getNextPage() == 0} ? 'disabled'">
-                            <a th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${teamSearchInfo.getNextPage()})}">Next</a>
+                        <li class="page-item" th:classappend="${teamSearchInfo.getNextPage() == 0} ? 'disabled'">
+                            <a th:href="@{searchTeam(teamName=${#request.getParameter('teamName')} ,pageNum=${teamSearchInfo.getNextPage()})}">></a>
                         </li>
                     </ul>
                 </nav>
@@ -66,8 +66,10 @@
     <!-- modal -->
     <div th:class="modal">
         <t-h2 ko="팀 상세 조회"></t-h2>
-        <div th:class="modal-content">
+        <div>
+            <table class="modal-content table f14">
 
+            </table>
 
         </div>
     </div>
@@ -95,10 +97,11 @@
                     $(".modal-content").append(makeTr(data));
                 }
                 $(".modal-content").append(`<div class="button__box">
-                <button id="cancelBtn">나가기</button>
+                <button id="cancelBtn" class="c-button">나가기</button>
             </div>`)
                 $(".modal").fadeIn();
                 f5();
+                f18();
             })
         })
 
@@ -106,7 +109,7 @@
             var tr = $("<tr>");
             tr.append(`
                 <th>팀원</th><td class="text-center">${data.memberId}</td><td>
-                <select name="blackReason" onchange="chargeSelect(this)">
+                <select class="form-control blackReason">
                     <option value="${data.blacklistYn}">${data.blacklistYn == 0 ? '-' : '블랙'}</option>
                     <option value="1">블랙리스트 - 기물 파손</option>
                     <option value="2">블랙리스트 - 불량한 게임 태도</option>
@@ -114,18 +117,25 @@
             return tr;
         }
 
-        function chargeSelect(e) {
-            var reasonVal = e.options[e.selectedIndex].value;
-            var memId = e.parentElement.parentElement.children[1].innerHTML;
-            if (confirm("수정하시겠습니까?") == true) {
-                $.ajax({
-                    url: "/adm/reasonUpdate",
-                    method: "POST",
-                    data: {memberId: memId, blacklistYn: reasonVal}
-                })
-            } else {
-                return;
-            }
+        const f18 = () => {
+            var prev_val;
+            $('.blackReason').focus(function () {
+                prev_val = $(this).val();
+                console.log($(this).parent().parent().children().eq(1).text())
+            }).change(function () {
+                var reasonVal = $('.blackReason option:selected').val();
+                var memId = $(this).parent().parent().children().eq(1).text();
+                if (confirm("수정하시겠습니까?") == true) {
+                    $.ajax({
+                        url: "/adm/reasonUpdate",
+                        method: "POST",
+                        data: {memberId: memId, blacklistYn: reasonVal}
+                    })
+                } else {
+                    $(this).val(prev_val);
+                    return false;
+                }
+            });
         }
     </script>
 </th:block>
