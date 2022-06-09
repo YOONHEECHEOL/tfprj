@@ -9,15 +9,15 @@
             border: 1px solid #ddd;
         }
 
-        th {
+        th, td {
             border-right: 1px solid #ddd;
         }
     </style>
 
-    <a-h1 en="" ko="자주묻는질문"></a-h1>
+    <a-h1 en="Q & A" ko="자주묻는질문"></a-h1>
 
     <div class="row">
-        <div class="container">
+        <div class="col-12 a__box nh">
             <form th:id="updateFrm" method="post" action="/adm/qnaUpdate">
                 <div class="h_box">
                     <a-h2 ko="Q & A 상세보기"></a-h2>
@@ -38,11 +38,8 @@
                         <td th:text="${q.wdate}"></td>
                     </tr>
                     <tr>
-
-                    </tr>
-                    <tr>
                         <th class="bf-2"><span>내용</span></th>
-                        <td colspan="5">
+                        <td colspan="7">
                         <textarea th:utext="${q.details}" id="details" name="details" class="f16 bf-2" rows="10"
                                   cols="80"
                                   required="required" style="min-height: 20rem;padding: 1.2rem;">
@@ -77,46 +74,66 @@
         </div>
     </div>
 
-    <form method="post" action="/adm/qnaAnswerInsert">
-        <div class="mb-3">
-            <label for="cdetails">내용</label>
-            <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
-                      placeholder="내용을 입력해 주세요"></textarea>
+    <div class="row">
+        <div class="col-6 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="댓글 작성하기"></a-h2>
+            </div>
+
+            <form method="post" action="/adm/qnaAnswerInsert">
+                <div class="row">
+                    <div class="col-8">
+                        <!--                    <label for="cdetails">내용</label>-->
+                        <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
+                                  placeholder="내용을 입력해 주세요"></textarea>
+
+                    </div>
+
+                    <div class="col-4">
+                        <input type="submit" class="c-button sec" id="btnSave" value="작성">
+                    </div>
+                    <input type="hidden" name="qNo" th:value="${qna.qNo}">
+                </div>
+            </form>
         </div>
-        <div class="col-2">
-            <input type="submit" class="c-button" id="btnSave" value="작성">
-        </div>
-        <input type="hidden" name="qNo" th:value="${qna.qNo}">
-    </form>
 
+        <div class="col-6 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="댓글 목록"></a-h2>
+            </div>
 
-    <div class="col-12 a__box nh">
-        <form>
-            <table th:each="re : ${reply}" id="table2" class="table">
-                <tr>
-                    <th class="bf-2"><span>작성자</span></th>
-                    <td th:text="${re.cwriter}"></td>
+            <form>
+                <table th:each="re : ${reply}" id="table2" class="table f16">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="40%">
+                        <col width="20%">
+                        <col width="20%">
+                    </colgroup>
+                    <tr>
+                        <th class="bf-2"><span>작성자</span></th>
+                        <td th:text="${re.cwriter}"></td>
 
-                    <th class="bf-2"><span>작성일</span></th>
-                    <td th:text="${re.cdate}"></td>
-                </tr>
-
-                <tr>
-                </tr>
+                        <th class="bf-2"><span>작성일</span></th>
+                        <td th:text="${#strings.substring(re.cdate, 0, 10)}"></td>
+                    </tr>
 
                     <tr>
                         <th class="bf-2"><span>내용</span></th>
-                        <td th:utext="${re.cdetails}"></td>
-                        <button type="button" class="c-button col-1" style="float: right"
-                                th:onclick="|location.href = '@{/adm/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
-                        </button>
+                        <td colspan="2" th:utext="${re.cdetails}"></td>
+                        <td>
+                            <button type="button" class="btn btn-danger"
+                                    th:onclick="|location.href = '@{/adm/qnaAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
+                            </button>
+                        </td>
                     </tr>
 
+                </table>
+                <input th:type="hidden" th:id="qNo" th:name="qNo">
+            </form>
 
-            </table>
-            <input th:type="hidden" th:id="qNo" th:name="qNo">
-        </form>
-    </diV>
+        </diV>
+    </div>
 
 
     <script>

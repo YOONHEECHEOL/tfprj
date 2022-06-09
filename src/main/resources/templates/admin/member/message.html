@@ -4,25 +4,28 @@
       layout:decorate="/layout/adm_layout">
 <th:block layout:fragment="content">
 
-    <t-h1 ko="오늘 할일" en="TODO-LIST"></t-h1>
+    <a-h1 ko="오늘 할일" en="TODO-LIST"></a-h1>
 
 
-    <div class="container-fluid">
-        <div class="col a__box">
-            <t-h2 ko="메세지"></t-h2>
+    <div class="row">
+        <div class="col-12 a__box">
+            <div class="h_box">
+                <a-h2 ko="메세지"></a-h2>
+            </div>
+
             <div>
                 <table class="table f16">
-                    <tbody th:each="m:${msg}">
-                    <tr>
-                        <td class="text-left" th:text="${m.getMessageContents()}"></td>
-                        <td class="text-center msgTime"
-                            th:if="${#strings.substring(m.getMsgTime(),0,10) == #calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
-                            th:text="${m.getMsgTime()}"></td>
-                        <td class="text-center"
-                            th:unless="${#strings.substring(m.getMsgTime(),0,10) == #calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
-                            th:text="${m.getMsgTime()}"></td>
+                    <tbody>
+                        <tr th:each="m:${msg}">
+                            <td class="text-left" th:text="${m.getMessageContents()}"></td>
+                            <td class="text-center msgTime"
+                                th:if="${#strings.substring(m.getMsgTime(),0,10) == #calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+                                th:text="${m.getMsgTime()}"></td>
+                            <td class="text-center"
+                                th:unless="${#strings.substring(m.getMsgTime(),0,10) == #calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"
+                                th:text="${m.getMsgTime()}"></td>
 
-                    </tr>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -40,10 +43,10 @@
             return date.getFullYear() + '-' + month + '-' + day;
         }
 
-        $( document ).ready(curDate());
+        $(document).ready(curDate());
 
-        function curDate(){
-            $('.msgTime').attr('style','color:red')
+        function curDate() {
+            $('.msgTime').attr('style', 'color:red')
         }
 
 

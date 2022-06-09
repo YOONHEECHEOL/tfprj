@@ -6,70 +6,103 @@
 
     <t-h1 ko="회원 관리" en="TEAMLIST"></t-h1>
 
-    <t-h2 ko="팀리스트"></t-h2>
+    <!--    <t-h2 ko="팀리스트"></t-h2>-->
 
     <!--TeamList Start-->
     <div class="row f14">
-        <div class="col-12">
+        <div class="col-12 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="검색"></a-h2>
+            </div>
+
             <form th:id="frm" action="/adm/searchTeam" method="get">
-                <div>
-                    <input type="text" class="form-control" id="teamName"
-                           name="teamName" placeholder="Search"
-                           aria-label="Search">
-                    <button class="c-button" id="searchBtn"
-                            type="submit">Search
-                    </button>
+                <div class="row">
+
+                    <div class="col-10">
+
+                        <div>
+                            <input type="text" class="form-control" id="teamName"
+                                   name="teamName" placeholder="Search"
+                                   aria-label="Search">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button class="c-button bb" id="searchBtn"
+                                type="submit">Search
+                        </button>
+                    </div>
+
                 </div>
-                <table class="table f14">
-                    <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>팀명</th>
-                        <th>팀장</th>
-                    </tr>
-                    </thead>
-                    <tbody th:id="teamBody">
-                    <tr th:each="list:${teamInfo.list}">
-                        <td>[[${list.ROWNUM}]]</td>
-                        <td>[[${list.teamName}]]</td>
-                        <td>[[${list.leader}]]</td>
-                        <td>
-                            <button type="button" class="addTeamBtn c-button">상세보기</button>
-                        </td>
-                        <input type="hidden" th:value="${list.teamId}">
-                    </tr>
-                    </tbody>
-                </table>
-                <!--TeamList End-->
-                <!-- 페이징 -->
-                <nav>
-                    <ul class="pagination">
-                        <!-- getPrePage : 이전 페이지 -->
-                        <li class="page-item" th:classappend="${teamInfo.getPrePage() == 0} ? 'disabled'">
-                            <a th:href="@{teamList(pageNum=${teamInfo.getPrePage()})}"><</a>
-                        </li>
-                        <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
-                        <li class="page-item" th:each="page: ${#numbers.sequence(teamInfo.getNavigateFirstPage(), teamInfo.getNavigateLastPage())}"
-                            th:classappend="${page == teamInfo.getPageNum()} ? 'active'">
-                            <a th:text="${page}" th:href="@{teamList(pageNum=${page})}"></a>
-                        </li>
-                        <!-- getPrePage : 다음 페이지 -->
-                        <li class="page-item" th:classappend="${teamInfo.getNextPage() == 0} ? 'disabled'">
-                            <a th:href="@{teamList(pageNum=${teamInfo.getNextPage()})}">></a>
-                        </li>
-                    </ul>
-                </nav>
             </form>
+
+        </div>
+
+        <div class="col-12 a__box">
+            <div class="h_box">
+                <a-h2 ko="팀리스트"></a-h2>
+            </div>
+
+            <table class="table f14">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>팀명</th>
+                    <th>팀장</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody th:id="teamBody">
+                <tr th:each="list:${teamInfo.list}">
+                    <td>[[${list.ROWNUM}]]</td>
+                    <td>[[${list.teamName}]]</td>
+                    <td>[[${list.leader}]]</td>
+                    <td>
+                        <button type="button" class="addTeamBtn btn btn-primary">상세보기</button>
+                    </td>
+                    <input type="hidden" th:value="${list.teamId}">
+                </tr>
+                </tbody>
+            </table>
+            <!--TeamList End-->
+            <!-- 페이징 -->
+            <nav>
+                <ul class="pagination">
+                    <!-- getPrePage : 이전 페이지 -->
+                    <li class="page-item" th:classappend="${teamInfo.getPrePage() == 0} ? 'disabled'">
+                        <a th:href="@{teamList(pageNum=${teamInfo.getPrePage()})}"><</a>
+                    </li>
+                    <!-- getNavigateFirstPage() : 페이징의 처음 숫자 getNavigateLastPage : 페이징의 마지막 숫자를 이용해 페이징 숫자 출력 -->
+                    <li class="page-item"
+                        th:each="page: ${#numbers.sequence(teamInfo.getNavigateFirstPage(), teamInfo.getNavigateLastPage())}"
+                        th:classappend="${page == teamInfo.getPageNum()} ? 'active'">
+                        <a th:text="${page}" th:href="@{teamList(pageNum=${page})}"></a>
+                    </li>
+                    <!-- getPrePage : 다음 페이지 -->
+                    <li class="page-item" th:classappend="${teamInfo.getNextPage() == 0} ? 'disabled'">
+                        <a th:href="@{teamList(pageNum=${teamInfo.getNextPage()})}">></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
+
+
     <!-- modal -->
-    <div th:class="modal">
-        <t-h2 ko="팀 상세 조회"></t-h2>
-        <div>
-            <table class="modal-content table f14">
 
-            </table>
 
+    <div class="modal adm">
+
+        <div class="row">
+            <div class="col-12 a__box nh">
+                <div class="h_box bg-green">
+                    <a-h2 ko="팀 상세 조회"></a-h2>
+                </div>
+
+                <table class="modal-content table f14">
+
+                </table>
+
+            </div>
         </div>
     </div>
     <script>
@@ -115,6 +148,7 @@
                 </select></td>`)
             return tr;
         }
+
         const f19 = () => {
             var prev_val;
             $('.blackReason').focus(function () {
