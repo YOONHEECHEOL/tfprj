@@ -143,7 +143,7 @@
                 $("#memberList").html('');
                 for (list of data) {
                     console.log(list.teamId)
-                    if (list.teamId != $('#teamId').val()) {
+                    if (list.teamId != $('#teamId').val() && list.teamId == 0) {
                         $("#memberList").append(makeTr(list));
                     }
                 }
