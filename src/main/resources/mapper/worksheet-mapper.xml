@@ -49,13 +49,15 @@
     </select>
 
     <select id="yesterDayWorker" resultType="com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO">
-        SELECT DISTINCT TO_CHAR(CURRENT_DATE - 1, 'YY-MM-DD') AS dated, worker_Id
-        FROM WORKSHEET
+        SELECT DISTINCT TO_CHAR(CURRENT_DATE - 1, 'YY-MM-DD') AS dated, w.worker_Id
+        FROM WORKSHEET w, STAFF_ATTENDANCE s
+        WHERE W.WORKER_ID = S.WORKER_ID
+        AND TO_DATE(W.WORK_DT, 'YY-MM-DD') = TO_DATE(CURRENT_DATE, 'YY-MM-DD')
     </select>
 
     <update id="updateWeekend">
         update worksheet
-        set worker_id = 'admin',
+        set worker_id = 'ADMIN',
             color = '#FF0000'
         where TO_CHAR(work_dt, 'YYYY-MM-DD') BETWEEN #{firstDate} AND #{lastDate}
           AND TO_CHAR(work_dt, 'D') In(1,7)
