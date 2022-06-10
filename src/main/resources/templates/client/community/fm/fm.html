@@ -32,7 +32,6 @@
             <tr>
                 <th>no</th>
                 <th>제목</th>
-                <th>작성자</th>
                 <th>작성일</th>
                 <th>팀명</th>
             </tr>
@@ -43,7 +42,6 @@
                     <td th:text="${fm.fNo}"></td>
                     <td th:if="${#strings.length(fm.title) > 12}" th:text="${#strings.substring(fm.title, 0, 12) + '...'}" class="title"></td>
                     <td th:if="${#strings.length(fm.title) <= 12}" th:text="${#strings.substring(fm.title, 0, #strings.length(fm.title))}" class="title"></td>
-                    <td th:text="${fm.writer}"></td>
                     <td th:text="${#strings.substring(fm.wdate, 0, 10)}"></td>
                     <td th:text="${fm.teamName}"></td>
                 </tr>

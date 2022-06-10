@@ -44,8 +44,8 @@
                     </tr>
                     <tr>
                         <th class="bf-2"><span>내용</span></th>
-                        <td colspan="9">
-                        <textarea th:utext="${f.details}" id="details" name="details" class="f16 bf-2" rows="10"
+                        <td th:utext="${f.details}" colspan="9">
+                        <textarea id="details" name="details" class="f16 bf-2" rows="10"
                                   cols="80"
                                   required="required" style="min-height: 20rem;padding: 1.2rem;">
                         </textarea>
@@ -72,7 +72,7 @@
         <div class="col-4">
             <div class="button__box">
                 <button class="c-button rr" th:onclick="|location.href = '@{/adm/fmDelete?fNo={no}(no=${fm.fNo})}'|"
-                        >삭제
+                >삭제
                 </button>
                 <button id="submitFrm" class="c-button bb">수정</button>
             </div>
@@ -88,7 +88,7 @@
 
             <form method="post" action="/adm/fmAnswerInsert">
                 <div class="mb-3">
-<!--                    <label for="cdetails">내용</label>-->
+                    <!--                    <label for="cdetails">내용</label>-->
                     <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
                               placeholder="내용을 입력해 주세요"></textarea>
                 </div>
@@ -105,21 +105,29 @@
             </div>
 
             <form>
-                <table th:each="re : ${reply}" id="table2" class="table">
+                <table th:each="re : ${reply}" id="table2" class="table f16">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="40%">
+                        <col width="20%">
+                        <col width="20%">
+                    </colgroup>
                     <tr>
                         <th class="bf-2"><span>작성자</span></th>
                         <td th:text="${re.cwriter}"></td>
 
                         <th class="bf-2"><span>작성일</span></th>
-                        <td th:text="${re.cdate}"></td>
+                        <td th:text="${#strings.substring(re.cdate, 0, 10)}"></td>
                     </tr>
 
                     <tr>
                         <th class="bf-2"><span>내용</span></th>
-                        <td th:utext="${re.cdetails}"></td>
-                        <button type="button" class="c-button col-1" style="float: right"
-                                th:onclick="|location.href = '@{/adm/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
-                        </button>
+                        <td colspan="2" th:utext="${re.cdetails}"></td>
+                        <td>
+                            <button type="button" class="btn btn-danger"
+                                    th:onclick="|location.href = '@{/adm/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
+                            </button>
+                        </td>
                     </tr>
 
                 </table>
@@ -128,11 +136,6 @@
         </diV>
 
     </div>
-
-
-
-
-
 
 
     <script>

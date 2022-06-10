@@ -20,7 +20,7 @@
                         <th>작성자</th>
                         <td th:text="${f.writer}"></td>
                         <th>작성일자</th>
-                        <td th:text="${f.wdate}" ></td>
+                        <td th:text="${#strings.substring(f.wdate, 0, 10)}" ></td>
                     </tr>
                     <tr>
                         <th>제목</th>

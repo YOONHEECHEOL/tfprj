@@ -49,6 +49,9 @@ public class AdmSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(admLogoutSuccessHandler())
                 .invalidateHttpSession(true)
                 .and()
+                .headers()
+                .frameOptions().sameOrigin()
+                .and()
                 .csrf().disable();		//로그인 창
     }
 
