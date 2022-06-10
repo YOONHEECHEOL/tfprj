@@ -36,7 +36,8 @@
                     onmouseover='this.style.background="#fcecae";'
                     onmouseleave='this.style.background="#FFFFFF";'>
                     <td th:text="${qna.qNo}"></td>
-                    <td th:text="${qna.title}"></td>
+                    <td th:if="${#strings.length(qna.title) > 12}" th:text="${#strings.substring(qna.title, 0, 12) + '...'}" class="title"></td>
+                    <td th:if="${#strings.length(qna.title) <= 12}" th:text="${#strings.substring(qna.title, 0, #strings.length(qna.title))}" class="title"></td>
                     <td th:text="${qna.writer}"></td>
                     <td th:text="${#strings.substring(qna.wdate, 0, 10)}"></td>
 <!--                    <td th:text="${qna.views}"></td>-->

@@ -37,7 +37,7 @@
                         <th:block th:each="t:${f.admFaqList} ">
                             <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
                             <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
-                            <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
+                            <div><p th:utext="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
                                 내용내용내용내용내용내용내용내용내용내용내용내용
                                 내용내용내용내용내용내용내용내용내용내용내용내용
                                 내용내용내용내용내용내용내용내용내용내용내용내용</p></div>

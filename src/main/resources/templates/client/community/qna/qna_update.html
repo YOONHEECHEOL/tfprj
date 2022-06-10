@@ -36,9 +36,10 @@
                 <textarea name="details" type="text" class="form-control" rows="5" th:value="${qna.details}"
                           th:text="${qna.details}"></textarea>
             </div>
-            <button type="submit"  class="c-button col-3" id="frm" style="float: left">전송</button>
+            <button type="submit" class="c-button col-3" id="frm" style="float: left">전송</button>
             <button type="button" style="float: right" onclick="location.href = '/cli/qna'"
                     class="c-button col-3">목록
+            </button>
         </form>
 
         <input type="hidden" id="qNo" name="qNo" th:value="${qna.qNo}">

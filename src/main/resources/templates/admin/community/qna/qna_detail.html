@@ -39,8 +39,8 @@
                     </tr>
                     <tr>
                         <th class="bf-2"><span>내용</span></th>
-                        <td colspan="7">
-                        <textarea th:utext="${q.details}" id="details" name="details" class="f16 bf-2" rows="10"
+                        <td colspan="7" th:utext="${q.details}">
+                        <textarea  id="details" name="details" class="f16 bf-2" rows="10"
                                   cols="80"
                                   required="required" style="min-height: 20rem;padding: 1.2rem;">
                         </textarea>
@@ -131,7 +131,6 @@
                 </table>
                 <input th:type="hidden" th:id="qNo" th:name="qNo">
             </form>
-
         </diV>
     </div>
 

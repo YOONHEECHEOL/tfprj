@@ -43,7 +43,8 @@
             <div id="notice">
                 <tr th:attr="onclick=|callDetails('${notice.nNo}')|" th:each="notice : ${pageInfo.list}">
                     <td th:text="${notice.nNo}"></td>
-                    <td th:text="${notice.title}"></td>
+                    <td th:if="${#strings.length(notice.title) > 12}" th:text="${#strings.substring(notice.title, 0, 12) + '...'}" class="title"></td>
+                    <td th:if="${#strings.length(notice.title) <= 12}" th:text="${#strings.substring(notice.title, 0, #strings.length(notice.title))}" class="title"></td>
                     <td th:text="${#strings.substring(notice.wdate, 0, 10)}"></td>
                     <td th:text="${notice.views}"></td>
                 </tr>
