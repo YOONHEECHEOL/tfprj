@@ -866,7 +866,7 @@ hr {
 .faq input[id*="answer"] + label {
     display: block;
     padding: 1.2rem;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px dashed #bbb;
     color: #222;
     font-family: esL;
     font-size: 1.6rem;
@@ -874,8 +874,11 @@ hr {
     cursor: pointer;
     position: relative;
     margin: 0;
+    transition: all .3s ease;
 }
-
+.faq input[id*="answer"] + label:hover {
+    background: #f6f6f6;
+}
 .faq input[id*="answer"] label em {
     position: absolute;
     top: 50%;

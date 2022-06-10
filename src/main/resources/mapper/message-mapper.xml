@@ -8,6 +8,7 @@
         SELECT *
         FROM MESSAGE
         WHERE MEMBER_ID = #{memberId}
+        ORDER BY MSGTIME DESC
     </select>
 
     <select id="getTeamMsg" parameterType="com.yedam.tfprj.client.message.service.MessageVO"
@@ -46,7 +47,7 @@
     <update id="invResUpdate" parameterType="com.yedam.tfprj.client.message.service.MessageVO">
         UPDATE MESSAGE
         SET IS_CHK = 2
-        WHERE MEMBER_ID = #{memberId}
+        WHERE message_id = #{messageId}
     </update>
 
     <insert id="insertTodoMsg">

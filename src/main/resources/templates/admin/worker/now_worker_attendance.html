@@ -25,7 +25,10 @@
 
     <div class="row">
         <div class="col-6 a__box">
-            <t-h2 ko="현재 근무자 조회"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="현재 근무자 조회"></a-h2>
+            </div>
+<!--            <t-h2 ko="현재 근무자 조회"></t-h2>-->
             <div th:if="${nowWorker.workerName != null}">
                 <table class="table-hover table f16 text-center bf-2" style="color: #18181c">
                     <thead>
@@ -107,19 +110,28 @@
         </div>
 
         <div class="col-6 a__box">
-            <t-h2 ko="종합관리"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="종합관리"></a-h2>
+            </div>
+<!--            <t-h2 ko="종합관리"></t-h2>-->
             <div>
                 <span class="text-center bf-2">다음 근무자</span>
                 <div id="nextWorker" class="bf-3" style="color: #029ef3">기홍길</div>
-                <br><br>
-                <button id="makeWorksheet" class="c-button" style="margin-bottom: 10px">근무표 작성</button>
-                <button onclick="location.href = '/adm/worker_hrm' " class="c-button" style="margin-bottom: 10px">인사관리</button>
-                <button onclick="location.href = '/adm/work_record' " class="c-button" style="margin-bottom: 10px">근태관리</button>
+
+                <div class="button__box mt20">
+                    <button id="makeWorksheet" class="c-button" style="margin-bottom: 10px"><i class="fa-solid fa-table"></i>근무표 작성</button>
+                    <button onclick="location.href = '/adm/worker_hrm' " class="c-button" style="margin-bottom: 10px"><i class="fa-solid fa-people-line"></i>인사관리</button>
+                    <button onclick="location.href = '/adm/work_record' " class="c-button" style="margin-bottom: 10px"><i class="fa-solid fa-user-pen"></i>근태관리</button>
+                </div>
+
             </div>
         </div>
 
         <div class="col-12 a__box">
-            <t-h2 ko="주간 근무표"></t-h2>
+            <div class="h_box">
+                <a-h2 ko="주간 근무표"></a-h2>
+            </div>
+<!--            <t-h2 ko="주간 근무표"></t-h2>-->
             <div id="today" class="bf-3" style="color: #029ef3">
                 주간 근무표 + 자바스크립트로 오늘 날짜 시간 포맷
             </div>

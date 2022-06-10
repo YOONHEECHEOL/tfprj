@@ -131,7 +131,6 @@ public class CliQnaController {
         printWriter.println("<script>window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + fileUrl
                 + "','이미지가 업로드되었습니다.')" + "</script>");
         printWriter.flush();
-
     }
 
     @RequestMapping("/download")

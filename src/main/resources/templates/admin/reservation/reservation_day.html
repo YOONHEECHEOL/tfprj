@@ -7,18 +7,20 @@
           src="https://code.jquery.com/jquery-3.6.0.js"
           integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
           crossorigin="anonymous"></script>
+    <link th:href="@{/css/h_style.css}" rel="stylesheet" type="text/css" >
   <script th:defer th:src="@{/js/yjs.js}"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-<body class="container-fluid">
-<t-h1 ko="일별조회" en="RESERVATION"></t-h1>
-<t-h2 ko="날짜별 예약현황"></t-h2>
 
-        <div class="bf-5" th:text="${'[ ' + date + ' ]'}"></div>
+<body>
+<a-h1 ko="일별조회" en="RESERVATION"></a-h1>
 
 <div class="col-12 a__box nh">
+    <div class="h_box bg-blue">
+        <a-h2 th:ko="${'[ ' + date + ' ] 예약현황'}"></a-h2>
+    </div>
+
   <table class="table f16">
     <thead>
     <tr>
@@ -75,11 +77,12 @@
 
   </table>
 
-  <div class="row justify-content-end">
-    <div class="col-4">
-      <button class="c-button">예약생성</button>
-    </div>
-  </div>
+<!--  <div class="row justify-content-end">-->
+<!--    <div class="col-4">-->
+<!--      <button class="c-button">예약생성</button>-->
+<!--    </div>-->
+<!--  </div>-->
+
 </div>
 
 

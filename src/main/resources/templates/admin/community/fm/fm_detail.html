@@ -2,124 +2,145 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/adm_layout">
+
 <th:block layout:fragment="content">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <style>
+        table {
+            border: 1px solid #ddd;
+        }
 
-<style>
-    #frm{
-        padding-top: 50px;
-        padding-bottom: 50px;
-        border: none;
-    }
-    #table2{
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-</style>
+        th, td {
+            border-right: 1px solid #ddd;
+        }
+    </style>
 
+    <a-h1 en="FM-BOARD" ko="친선경기"></a-h1>
 
-<div class="container">
-    <form th:id="details" method="post" action="/adm/fmUpdate">
+    <div class="row">
 
-        <t-h1 en="" ko="FM"></t-h1>
+        <div class="col-12 a__box nh">
+            <form th:id="updateFrm" method="post" action="/adm/fmUpdate">
+                <div class="h_box">
+                    <a-h2 ko="친선경기 상세보기"></a-h2>
+                </div>
 
+                <table th:each="f, status : ${fm}" class="table" id="frm">
+                    <tr>
+                        <th class="bf-2"><span>글번호</span></th>
+                        <td th:text="${f.fNo}"></td>
 
-        <div class="container" style="max-width: 880px;">
-            <table th:each="f, status : ${fm}" border="1" class="card" id="frm">
-                <tr>
-                    <th width="205" height="39" style="padding: 1px 1px 1px 10px">글번호</th>
-                    <td th:text="${f.fNo}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
-                    <th width="105" style="padding: 1px 1px 1px 10px">작성자</th>
-                    <td th:text="${f.writer}" width="155" height="39" style="padding: 1px 1px 1px 10px"></td>
-                    <th width="105" height="39" style="padding: 1px 1px 1px 10px">작성일자</th>
-                    <td th:text="${f.wdate}" width="155" style="padding: 1px 1px 1px 10px"></td>
-                </tr>
-                <tr>
-                    <th height="39" style="padding: 1px 1px 1px 10px">제목</th>
-                    <td th:text="${f.title}" colspan="6" style="padding: 1px 1px 1px 10px"></td>
-                </tr>
-                <tr>
-                    <th style="padding:50px 50px 50px 50px">내용</th>
-                    <td th:utext="${f.details}" colspan="6">
-                        <textarea id="details" name="details" class="form-control" rows="10" cols="80"
-                                  required="required">
+                        <th class="bf-2"><span>제목</span></th>
+                        <td th:text="${f.title}"></td>
+
+                        <th class="bf-2"><span>작성자</span></th>
+                        <td th:text="${f.writer}"></td>
+
+                        <th class="bf-2"><span>작성일자</span></th>
+                        <td th:text="${#strings.substring(f.wdate, 0, 10)}"></td>
+
+                        <th class="bf-2"><span>팀명</span></th>
+                        <td th:text="${f.teamName}"></td>
+                    </tr>
+                    <tr>
+                        <th class="bf-2"><span>내용</span></th>
+                        <td colspan="9">
+                        <textarea th:utext="${f.details}" id="details" name="details" class="f16 bf-2" rows="10"
+                                  cols="80"
+                                  required="required" style="min-height: 20rem;padding: 1.2rem;">
                         </textarea>
-                    </td>
-                </tr>
-                <input type="hidden" id="fNo" name="fNo" th:value="${f.fNo}">
-                <input type="hidden" id="title" name="title" th:value="${f.title}">
-                <input type="hidden" id="wdate" name="wdate" th:value="${f.wdate}">
-                <input type="hidden" id="views" name="views" th:value="${f.views}">
-                <input type="hidden" id="fdetails" name="details" th:value="${f.details}">
-                <input type="hidden" id="writer" name="writer" th:value="${f.writer}">
-            </table>
+                        </td>
+                    </tr>
 
+                    <input type="hidden" id="fNo" name="fNo" th:value="${f.fNo}">
+                    <input type="hidden" id="title" name="title" th:value="${f.title}">
+                    <input type="hidden" id="wdate" name="wdate" th:value="${f.wdate}">
+                    <input type="hidden" id="views" name="views" th:value="${f.views}">
+                    <input type="hidden" id="fdetails" name="details" th:value="${f.details}">
+                    <input type="hidden" id="writer" name="writer" th:value="${f.writer}">
 
+                </table>
+            </form>
         </div>
-        <br>
         <input th:type="hidden" th:id="fNo" th:name="fNo">
-    </form>
-</div>
-
-<button class="c-button col-2" onclick="location.href = '/adm/fm'">뒤로가기</button>
-<button th:onclick="|location.href = '@{/adm/fmDelete?fNo={no}(no=${fm.fNo})}'|" class="c-button col-1" style="float: right">삭제</button>
-<button id="submitFrm" class="c-button col-1" style="float: right">수정</button>
-
-<h1>답글</h1>
-
-<form method="post" action="/adm/fmAnswerInsert">
-    <div class="mb-3">
-        <label for="cdetails">내용</label>
-        <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
-                  placeholder="내용을 입력해 주세요"></textarea>
     </div>
-    <div>
-        <input type="submit" style="float: right" class="c-button col-1" id="btnSave" value="작성">
-    </div>
-    <input type="hidden" name="fNo" th:value="${fm.fNo}">
-</form>
 
-
-
-<div class="container" >
-    <form>
-        <table id="table2" class="table">
-            <thead>
-            <tr>
-                <th>작성자 + 작성일</th>
-                <th>내용</th>
-            </tr>
-            </thead>
-            <tbody>
-            <div id="fm" th:attr="onclick=|callDetails('${re.cNo}')|" th:each="re : ${reply}">
-                <tr>
-                    <td th:text="${re.cwriter}"></td>
-
-                    <td th:text="${re.cdetails}"></td>
-                </tr>
-                <tr>
-                    <td th:text="${re.cdate}"></td>
-                </tr>
-                <tr>
-                    <td><button type="button" style="float: right" th:onclick="|location.href = '@{/adm/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제</button></td>
-                </tr>
+    <div class="row justify-content-between">
+        <div class="col-2">
+            <button class="c-button" onclick="location.href = '/adm/fm'">뒤로가기</button>
+        </div>
+        <div class="col-4">
+            <div class="button__box">
+                <button class="c-button rr" th:onclick="|location.href = '@{/adm/fmDelete?fNo={no}(no=${fm.fNo})}'|"
+                        >삭제
+                </button>
+                <button id="submitFrm" class="c-button bb">수정</button>
             </div>
-            </tbody>
-        </table>
-        <input th:type="hidden" th:id="fNo" th:name="fNo">
-    </form>
-</diV>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-6 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="댓글 작성하기"></a-h2>
+            </div>
+
+            <form method="post" action="/adm/fmAnswerInsert">
+                <div class="mb-3">
+<!--                    <label for="cdetails">내용</label>-->
+                    <textarea class="form-control" rows="5" name="cdetails" id="cdetails"
+                              placeholder="내용을 입력해 주세요"></textarea>
+                </div>
+                <div class="col-2">
+                    <input type="submit" class="c-button" id="btnSave" value="작성">
+                </div>
+                <input type="hidden" name="fNo" th:value="${fm.fNo}">
+            </form>
+        </div>
+
+        <div class="col-6 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="댓글 리스트"></a-h2>
+            </div>
+
+            <form>
+                <table th:each="re : ${reply}" id="table2" class="table">
+                    <tr>
+                        <th class="bf-2"><span>작성자</span></th>
+                        <td th:text="${re.cwriter}"></td>
+
+                        <th class="bf-2"><span>작성일</span></th>
+                        <td th:text="${re.cdate}"></td>
+                    </tr>
+
+                    <tr>
+                        <th class="bf-2"><span>내용</span></th>
+                        <td th:utext="${re.cdetails}"></td>
+                        <button type="button" class="c-button col-1" style="float: right"
+                                th:onclick="|location.href = '@{/adm/fmAnswerDelete?cNo={no}(no=${re.cNo})}'|">삭제
+                        </button>
+                    </tr>
+
+                </table>
+                <input th:type="hidden" th:id="fNo" th:name="fNo">
+            </form>
+        </diV>
+
+    </div>
 
 
 
-<script>
 
-    submitFrm.addEventListener('click', () => {
-        details.submit()
-    })
 
-</script>
+
+
+    <script>
+
+        submitFrm.addEventListener('click', () => {
+            updateFrm.submit()
+        })
+
+    </script>
 </th:block>
 </html>

@@ -13,61 +13,65 @@
         <span>수신된 메세지가 없습니다!</span>
     </div>
 
-    <div th:each="m:${msg}">
-
-        <!-- 출력할때 메세지 코드에 맞는 문자를 출력하는 태그 -->
-
-
-        <span th:if="${m.getIsMessageCd() == 1002}">재고 msg</span>
-        <!-- -->
-
-        <span th:if="${m.getIsMessageCd() == 1004}">예약 msg</span>
-        <!-- -->
-
-        <span th:if="${m.getIsMessageCd() == 1005}">결제 msg</span>
-        <!-- -->
-
-        <span th:if="${m.getIsMessageCd() == 1006}">팀초대 msg</span>
-        <!-- -->
-
-        <!--        <msg th:msg-type="${m.codeName}" ></msg>-->
-        <span th:text="${m.getMessageContents()}"></span>
-        <input type="hidden" th:id="teamId" th:value="${m.getTemp()}">
-        <input type="hidden" th:id="memberId" th:value="${session.memberId}">
-        [[${session.memberId}]]
-        [[${session.workerId}]]
-        <!-- isChk 가 0 이면  -->
-        <div class="button__box" th:if="${m.getIsChk() != 2}">
-            <button id="noBtn">거절</button>
-            <button id="okBtn">수락</button>
-        </div>
-        <!-- isChk 가 1(읽음)이면  -->
-
+    <div id="btnEvent">
+        <table class="table" th:each="m:${msg}">
+            <tbody class="f16" id="messageList">
+                <tr>
+                    <td colspan="2" class="bf-1 text-center" th:text="${m.getMessageContents()+'&nbsp&nbsp&nbsp&nbsp&nbsp'+m.getMsgTime}"></td>
+                </tr>
+                <tr>
+                    <td th:if="${m.getIsChk() != 2}">
+                        <input type="hidden" th:id="teamId" th:value="${m.getTemp()}">
+                        <input type="hidden" th:value="${m.getMessageId}">
+                        <button class="c-button rr noBtn">거절</button>
+                        <input type="hidden" th:id="memberId" th:value="${session.memberId}">
+                    </td>
+                    <td th:if="${m.getIsChk() != 2}">
+                        <input type="hidden" th:id="teamId" th:value="${m.getTemp()}">
+                        <input type="hidden" th:value="${m.getMessageId}">
+                        <button class="c-button bb okBtn">수락</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
-        $("#okBtn").on("click", function () {
-            var ti = $("#teamId").val();
+
+        $('#btnEvent').on('click', 'button', function () {
+
             var mi = $("#memberId").val();
-            $.ajax({
-                url: "/cli/intoTeam",
-                data: {teamId: ti, memberId: mi}
-            }).done(function () {
-                console.log("클릭");
-                location.href = "/cli/myTeam";
-            })
+            let msgId = $(this).parent().children().eq(1).val();
+            var ti = $(this).parent().children().eq(0).val();
+
+            console.log(msgId)
+            console.log(ti)
+
+            if(event.target.innerText == '수락') {
+                // 수락버튼 클릭 시
+
+                $.ajax({
+                    url: "/cli/intoTeam",
+                    data: {teamId: ti, memberId: mi}
+                }).done(function () {
+                    console.log("클릭");
+                    location.href = "/cli/myTeam";
+                })
+
+            } else {
+                // 거절버튼 클릭 시
+
+                $.ajax({
+                    url: "/cli/notIntoTeam",
+                    data: {messageId: msgId}
+                }).done(function () {
+                    location.href = "/cli/myMessage";
+                })
+            }
+
         })
 
-        $("#noBtn").on("click", function () {
-            var mi = $("#memberId").val();
-            $.ajax({
-                url: "/cli/notIntoTeam",
-                data: {memberId: mi}
-            }).done(function () {
-                location.href = "/cli/myMessage";
-            })
-        })
-
+        //메세지 불러오기
         fetch('/msg/team', {
             method: 'post'
         })

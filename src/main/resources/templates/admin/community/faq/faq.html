@@ -4,35 +4,57 @@
       layout:decorate="/layout/adm_layout">
 
 <th:block layout:fragment="content">
-    <t-h1 en="FAQ" ko="자주 묻는 질문"></t-h1>
+    <a-h1 en="FAQ" ko="자주 묻는 질문"></a-h1>
 
 <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"-->
 <!--          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">-->
 
-<form method="post" action="/adm/faqTitleInsert">
-    <div class="button__box f16">
-    <input type="text" class="form-control col-9" name="title" id="title" placeholder="제목을 입력해 주세요">
-        <input class="c-button col-2" type="submit" value="대분류 생성" id="create">
-    </div>
-</form>
 
-    <div class="faq">
-        <div th:each="f:${faq}">
-            <h3 th:text="${f.title}">대분류</h3>
+    <div class="row justify-content-end">
+        <div class="col-12 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="대분류 생성"></a-h2>
+            </div>
 
-            <div class="accordion">
-                <th:block th:each="t:${f.admFaqList}">
-                    <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
-                    <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
-                    <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
-                        내용내용내용내용내용내용내용내용내용내용내용내용
-                        내용내용내용내용내용내용내용내용내용내용내용내용
-                        내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
-                </th:block>
+            <form method="post" action="/adm/faqTitleInsert">
+                <div class="button__box f16">
+                    <input type="text" class="form-control col-10" name="title" id="title" placeholder="제목을 입력해 주세요" style="font-size: 1.6rem;">
+                    <input class="c-button col-2" type="submit" value="대분류 생성" id="create">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 a__box nh">
+            <div class="h_box">
+                <a-h2 ko="FAQ 리스트"></a-h2>
+            </div>
+
+            <div class="faq mt20">
+                <div th:each="f:${faq}" class="mt20">
+                    <h3 th:text="${'💬 '+ f.title}" class="bf-3 p">대분류</h3>
+
+                    <div class="accordion">
+                        <th:block th:each="t:${f.admFaqList} ">
+                            <input type="radio" name="accordion" th:id="'answer' + ${t.aNo}">
+                            <label th:for="'answer' + ${t.aNo}" th:text="${t.subTitle}">컨텐츠 제목 부분<em></em></label>
+                            <div><p th:text="${t.details}">내용내용내용내용내용내용내용내용내용내용내용
+                                내용내용내용내용내용내용내용내용내용내용내용내용
+                                내용내용내용내용내용내용내용내용내용내용내용내용
+                                내용내용내용내용내용내용내용내용내용내용내용내용</p></div>
+                        </th:block>
+                    </div>
+                </div>
             </div>
         </div>
-        <a class="c-button col-1" onclick="location.href = '/adm/faqWrite'">작성</a>
+
+        <div class="button__box col-3">
+            <a class="c-button sec" onclick="location.href = '/adm/faqWrite'">작성</a>
+        </div>
+
     </div>
+
+
+
 
 </th:block>
 </html>

@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="/layout/adm_layout">
 
 <th:block layout:fragment="content">
-    <t-h1 en="FAQ 작성"></t-h1>
+    <style>
+        select {
+            width: 200px; /* 원하는 너비설정 */
+            padding: .8em .5em; /* 여백으로 높이 설정 */
+            font-family: inherit;  /* 폰트 상속 */
+            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */
+            border: 1px solid #999;
+            border-radius: 0px; /* iOS 둥근모서리 제거 */
+            -webkit-appearance: none; /* 네이티브 외형 감추기 */
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+    <a-h1 en="FAQ" ko="FAQ 게시글 작성"></a-h1>
 
     <script src="/ckeditor/ckeditor.js"></script>
 
@@ -19,27 +32,25 @@
 
                 <select name="title">
                     <th:block th:each="t:${title}">
-                        <option th:value="${t.title}" th:text="${t.title}">로그인</option>
+                        <option th:value="${t.title}" th:text="${t.title}" style="font-size: large; font-weight: bold"></option>
                     </th:block>
                 </select>
 
                 <div class="mb-3">
-                    <label for="subTitle">제목</label>
-                    <input type="text" class="form-control" name="subTitle" id="subTitle" placeholder="제목을 입력해 주세요">
+                    <label for="subTitle" class="bf-3 p">제목</label>
+                    <input type="text" class="form-control" name="subTitle" id="subTitle" placeholder="제목을 입력해 주세요" style="font-size: x-large; font-weight: bold">
                 </div>
 
                 <div class="mb-3">
-                    <label for="details">내용</label>
-                    <textarea class="form-control" rows="5" name="details" id="details"
-                              placeholder="내용을 입력해 주세요"></textarea>
+                    <label for="details"class="bf-3 p">내용</label>
+                    <textarea class="form-control" rows="5" name="details" id="details"></textarea>
                 </div>
 
                 <div>
-                    <input type="submit" style="float: right" class="c-button col-1" id="btnSave" value="생성">
+                    <input type="submit" style="float: right" class="c-button col-2" id="btnSave" value="생성">
 
-                    <input type="button" onclick="formCheck()" style="float: right" onclick="location.href = '/adm/faq'"
-                           class="c-button col-1">목록
-                    </button>
+                    <input type="button" value="목록" style="float: right" onclick="location.href = '/adm/faq'"
+                           class="c-button col-2">
                 </div>
             </form>
         </div>
