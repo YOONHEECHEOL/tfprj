@@ -49,10 +49,9 @@
     </select>
 
     <select id="yesterDayWorker" resultType="com.yedam.tfprj.admin.worksheet.service.NewWorkSheetVO">
-        SELECT DISTINCT TO_CHAR(CURRENT_DATE - 1, 'YY-MM-DD') AS dated, w.worker_Id
-        FROM WORKSHEET w, STAFF_ATTENDANCE s
-        WHERE W.WORKER_ID = S.WORKER_ID
-        AND TO_DATE(W.WORK_DT, 'YY-MM-DD') = TO_DATE(CURRENT_DATE, 'YY-MM-DD')
+        SELECT DISTINCT TO_CHAR(CURRENT_DATE - 1, 'YY-MM-DD') AS dated, worker_Id
+        FROM WORKSHEET
+        WHERE TO_DATE(WORK_DT, 'YY-MM-DD') = TO_DATE(CURRENT_DATE - 1, 'YY-MM-DD')
     </select>
 
     <update id="updateWeekend">
