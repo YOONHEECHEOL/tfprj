@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layout/cli_layout">
+      layout:decorate="layout/cli_layout">
 
 <th:block layout:fragment="content">
 
@@ -12,8 +12,8 @@
     </div>
 
     <div class="cover--black vh100">
-        <img th:src="@{/images/cli/f_logo.svg}" alt="메인 화면 로고" class="main__logo">
-        <img th:src="@{/images/cli/main_bg.jpg}" class="vh100" alt="">
+        <img th:src="@{../images/cli/f_logo.svg}" alt="메인 화면 로고" class="main__logo">
+        <img th:src="@{../images/cli/main_bg.jpg}" class="vh100" alt="">
 
         <div class="currentRes">
             <!-- 예약정보 출력 -->

@@ -4,6 +4,7 @@ plugins {
     id 'java'
 }
 
+
 group = 'com.yedam'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -37,4 +38,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-7

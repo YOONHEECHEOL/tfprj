@@ -17,18 +17,6 @@ class CliLeagueServiceImplTest {
 
   CliLeagueServiceImpl cliLeagueService = new CliLeagueServiceImpl();
 
-  @Test
-  void isLeaugeApply() {
-
-      LeagueApplyVO leagueApplyVO = new LeagueApplyVO();
-      leagueApplyVO.setLeagueId(1);
-      leagueApplyVO.setMemberId("lee");
-
-      System.out.println("leagueApplyVO = " + cliLeagueService.checkLeagueApply(leagueApplyVO));
-
-//      System.out.println("testVal = " + cliLeagueService.checkLeagueApply("lee", 1));
-  }
-
 
   @Test
     void getLeagueParticipatedMember() {

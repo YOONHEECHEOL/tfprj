@@ -3,7 +3,7 @@
 
 
 <!-- 공통 헤드-->
-<th:block th:replace="/layout/common/commonHead :: commonHeadFragment"></th:block>
+<th:block th:replace="layout/common/commonHead :: commonHeadFragment"></th:block>
 
 
 <body id="page-top">
@@ -16,11 +16,11 @@
 
 
     <!-- 상단바-->
-    <th:block th:replace="/layout/cli_fragments/top :: topbarFragment"></th:block>
+    <th:block th:replace="layout/cli_fragments/top :: topbarFragment"></th:block>
 
 <!--    <div th:if="${#request.getRequestURI()} != '/cli/home' || #request.getRequestURI() == '/cli/login' ? true : false"  class="main-margin" />-->
     <div th:attr="class=${(#request.getRequestURI() == '/cli/home' || #request.getRequestURI() == '/cli/login') ? 'main-margin disabled' : 'main-margin'}" />
-    <th:block th:replace="/layout/common/script :: scriptFragment"></th:block>
+    <th:block th:replace="layout/common/script :: scriptFragment"></th:block>
     <!-- 본문-->
     <main class="contents">
       <th:block layout:fragment="content"></th:block>
@@ -28,7 +28,7 @@
 
 
     <!-- 공통 하단-->
-    <th:block th:replace="/layout/cli_fragments/footer :: footerFragment"></th:block>
+    <th:block th:replace="layout/cli_fragments/footer :: footerFragment"></th:block>
 
   </div>
   <!-- 공통 스크립트-->
